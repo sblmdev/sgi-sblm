@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilox.css" rel="stylesheet"
+		type="text/css" />
+
+	<title>SBLM-SOCIEDAD DE BENEFICENCIA DE LIMA METROPOLITANA x</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="inmueble_IconoIdentificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">MANTENIMIENTOS</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Inmuebles</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+					<!-- CONTENIDO MODIFICABLE -->
+					<div class="inmueble_subFondo_Icono"></div>
+					<div id="lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">Datos
+						Generales</div>
+
+					<p:commandLink id="idGeneral" styleClass="btnDerivacion"
+						onclick="tabGeneral();">
+						<div class="btncentrado">Generales</div>
+					</p:commandLink>
+					<p:commandLink id="idRegistral" styleClass="btnDespacho"
+						onclick="tabRegistral();" update=":frmRegistral">
+						<div class="btncentrado">Registrales</div>
+					</p:commandLink>
+					<p:commandLink id="idTecnico" styleClass="btnConsultas"
+						onclick="tabTecnico();" update=":frmTecnico">
+						<div class="btncentrado">Tecnicos</div>
+					</p:commandLink>
+
+
+					<div class="contenidoPrincipal_fondo_formulario">
+						<div class="dgaiMonitoreo_Contenido">
+
+
+
+
+							<!-- PANEL GENERAL -->
+
+
+							<div id="idDivGeneral" class="recau_panelPendientes">
+								<h:form>
+									<div class="filaBtnNuevo">
+										<p:commandLink actionListener="#{inmuebleOldMB.limpiarCampos}"
+											style="margin-right:20px;" update=":frmGeneral">
+											<p:graphicImage
+												value="/resources/images/perfil/nuevo_mas.png"
+												alt="Limpiar formulario" title="limpiar" />
+										</p:commandLink>
+									</div>
+								</h:form>
+								<h:form id="frmGeneral">
+									<p:growl id="msjgeneral" showDetail="true" sticky="false"
+										life="5000" />
+									<div class="mante_gene_ContDescrip01">
+
+										<div class="filaencabezado">
+
+
+											<div class="col01">
+												<div class="filaRegSbn">
+													<h:outputText styleClass="lblRegSbn" value="Clave:" />
+													<p:inputMask styleClass="txtRegSbn" id="idContratoClave"
+														value="#{inmuebleOldMB.inmueble.clave}" mask="**-****-***">
+														<p:ajax event="blur"
+															listener="#{inmuebleOldMB.validarclaveRepetido(inmuebleOldMB.inmueble.clave)}"
+															update=":frmGeneral:msjgeneral" />
+													</p:inputMask>
+
+												</div>
+												<div class="filaRegSbn" style="margin-top: 5px;">
+													<h:outputText class="lblRegSbn"
+														value="Nro. Registro SBN(*):" />
+													<p:inputText id="txtRegSbn" styleClass="txtRegSbn"
+														value="#{inmuebleOldMB.inmueble.numregistrosbn}"
+														maxlength="9">
+														<p:ajax event="blur"
+															listener="#{inmuebleOldMB.validarsbnRepetido(inmuebleOldMB.inmueble.numregistrosbn)}"
+															update=":frmGeneral:msjgeneral" />
+													</p:inputText>
+												</div>
+												<div class="filaDenominacion">
+													<h:outputText class="lblDenominacion" value="Denominacion:" />
+													<p:inputText id="txtDenominacion"
+														styleClass="txtDenominacion"
+														value="#{inmuebleOldMB.inmueble.denominacion}" />
+												</div>
+											</div>
+											<div class="col02">
+												<div class="columFile">
+													
+
+												</div>
+											</div>
+										</div>
+										<br /> <br />
+
+										<p:separator />
+										<div class="filaCabecera">
+											<h:outputText class="lblCabecera" value="Ubicacion" />
+										</div>
+										<div class="filaDatoLargo">
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblDistrito" value="Departamento(*):" />
+												<div class="txtDistrito">
+													<p:selectOneMenu style="width: 184px;  font-size: 11px;"
+														onchange="limpiarvalidacion()" id="cbxLstDptos"
+														value="#{inmuebleOldMB.depa}">
+														<f:selectItem itemLabel="Seleccione Departamento"
+															itemValue="0" />
+														<f:selectItems value="#{inmuebleOldMB.listaDptos}" var="dpto"
+															itemLabel="#{dpto}" itemValue="#{dpto}">
+														</f:selectItems>
+														<p:ajax listener="#{inmuebleOldMB.cargarComboProvincias}"
+															update=":frmGeneral:cbxLstProvincias" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblDistrito" value="Provincia(*):" />
+												<div class="txtDistrito">
+													<p:selectOneMenu style="width: 184px;  font-size: 11px;"
+														id="cbxLstProvincias" onchange="limpiarvalidacion()"
+														value="#{inmuebleOldMB.prov}">
+														<f:selectItem itemLabel="Seleccione provincia"
+															itemValue="0" />
+														<f:selectItems value="#{inmuebleOldMB.listaProvincias}"
+															var="provi" itemLabel="#{provi}" itemValue="#{provi}">
+														</f:selectItems>
+														<p:ajax listener="#{inmuebleOldMB.cargarComboDistritos}"
+															update=":frmGeneral:cbxLstDistritos" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+										</div>
+										
+										<div class="filaDatoLargo">
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblDistrito" value="Distrito(*):" />
+												<div class="txtDistrito">
+													<p:selectOneMenu style="width: 184px;  font-size: 11px;"
+														onchange="limpiarvalidacion()" id="cbxLstDistritos"
+														value="#{inmuebleOldMB.dist}">
+														<f:selectItem itemLabel="Seleccione distrito"
+															itemValue="0" />
+														<f:selectItems value="#{inmuebleOldMB.listaDistritos}"
+															var="distri" itemLabel="#{distri}" itemValue="#{distri}">
+														</f:selectItems>
+														<p:ajax listener="#{inmuebleOldMB.cargarUbigeo}" />
+													</p:selectOneMenu>
+												</div>
+											</div>
+										</div>
+										<div class="filaDatoLargo">
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblDireccion" value="Direccion(*):" />
+												<p:inputText id="txtDireccion" styleClass="txtDireccion"
+													value="#{inmuebleOldMB.inmueble.direccion}" />
+												<p:watermark for="txtDireccion" value="Ejm:Jr. Puno" />
+											</div>
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblNroPrincipal" value="N&uacute;mero:" />
+												<p:inputText id="txtNroPrincipal"
+													styleClass="txtNroPrincipal"
+													value="#{inmuebleOldMB.inmueble.numeroprincipal}">
+
+												</p:inputText>
+											</div>
+										</div>
+										<div class="filaDatoLargo">
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblManzana" value="Manzana:" />
+												<p:inputText id="txtManzana" styleClass="txtManzana"
+													value="#{inmuebleOldMB.inmueble.manzana}">
+
+												</p:inputText>
+											</div>
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblLote" value="Lote:" />
+												<p:inputText id="txtLote" styleClass="txtLote"
+													value="#{inmuebleOldMB.inmueble.lote}" />
+											</div>
+										</div>
+										<div class="filaDatoLargo">
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblManzana" value="Urbanizacion:" />
+												<p:inputText id="txtUrbanizacion" styleClass="txtManzana"
+													value="#{inmuebleOldMB.inmueble.urbanizacion}" />
+											</div>
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblEtapa" value="Etapa:" />
+												<p:inputText id="txtEtapa" styleClass="txtEtapa"
+													value="#{inmuebleOldMB.inmueble.etapa}" />
+											</div>
+										</div>
+										
+										<div class="filaDatoLargo">
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblNroInterior" value="Nro. Interior:" />
+												<p:inputText id="txtNroInterior" styleClass="txtNroInterior"
+													value="#{inmuebleOldMB.inmueble.numnombreinterior}" />
+											</div>
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblNroGrupal" value="Nro. Grupal:" />
+												<p:inputText id="txtNroGrupal" styleClass="txtNroGrupal"
+													value="#{inmuebleOldMB.inmueble.numerogrupal}" />
+											</div>
+										</div>
+										<div class="filaDatoLargo">
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblZona" value="Zona:" />
+												<p:inputText id="txtZona" styleClass="txtZona"
+													value="#{inmuebleOldMB.inmueble.zona}" />
+											</div>
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblSector" value="Sector:" />
+												<p:inputText id="txtSector" styleClass="txtSector"
+													value="#{inmuebleOldMB.inmueble.sector}" />
+											</div>
+										</div>
+										<div class="filaDatoLargo">
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblUbicPiso" value="Ubicado en Piso:" />
+												<p:inputText id="txtUbicPiso" styleClass="txtUbicPiso"
+													value="#{inmuebleOldMB.inmueble.ubicacionpiso}" />
+											</div>
+											<div class="filaDatoLargosCorto">
+												<h:outputText class="lblSubLote" value="Sub Lote:" />
+												<p:inputText id="txtSubLote" styleClass="txtSubLote"
+													value="#{inmuebleOldMB.inmueble.sublote}" />
+											</div>
+										</div>
+
+										<div class="fila08">
+											<div class="columReferencia">
+												<h:outputText class="lblReferencia" value="Referencia:" />
+												<p:inputTextarea id="txtReferencia"
+													styleClass="txtReferencia" rows="3"
+													value="#{inmuebleOldMB.inmueble.referenciainmueble}" />
+											</div>
+										</div>
+										<br /> <br />
+										<p:separator id="separator02" />
+
+										<div class="fila09">
+											<div class="columHabUrbana">
+												<h:outputText class="lblSaneamientoFL"
+													value="Habilitacion Urbana:" />
+												<p:selectBooleanCheckbox id="checkHU"
+													value="#{inmuebleOldMB.inmueble.habilitacionurbana}">
+													<p:ajax listener="#{inmuebleOldMB.mostrarNombreHabUrbana}"
+														update="pnlHU,xxx" oncomplete="verHU();" />
+												</p:selectBooleanCheckbox>
+												<p:inputText id="xxx" value="#{inmuebleOldMB.activoHU}"
+													style="display:none;" />
+
+											</div>
+
+											<div id="idHU" class="columNombreHabUrbana"
+												style="display: none;">
+												<p:outputPanel id="pnlHU">
+													<h:outputText class="lblNombreHabUrbana"
+														value="Nombre Hab. Urb.:" />
+													<p:inputText id="txtNombreHabUrbana"
+														styleClass="txtNombreHabUrbana"
+														value="#{inmuebleOldMB.inmueble.nombrehabilitacionurbana}" />
+												</p:outputPanel>
+											</div>
+
+										</div>
+
+										<p:separator id="separator03" />
+										<div class="mante_general_botonguardar">
+											<p:commandButton value="Guardar"
+												oncomplete="validacioInmuebleGeneral();" />
+										</div>
+
+									</div>
+
+								</h:form>
+								<h:form id="frmdlgGuardarInmuebleGeneral">
+									<p:confirmDialog message="¿Desea Guardar Inmueble?"
+										header="Registro Inmueble" severity="alert"
+										widgetVar="dlgRegistrarInmuebleGeneral">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmGeneral, :frmTablaGeneral"
+											actionListener="#{inmuebleOldMB.registrarInmueble}"
+											oncomplete="dlgRegistrarInmuebleGeneral.hide();"
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar" update=":frmGeneral"
+											oncomplete="dlgRegistrarInmuebleGeneral.hide();"
+											icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+								<h:form id="frmTablaGeneral">
+									<div class="dgaiMonitoreo_detalle">
+										<p:dataTable id="dtbGeneral" var="inmu"
+											value="#{inmuebleOldMB.inmuebles}" rowKey="#{inmu.idinmueble}"
+											selection="#{inmuebleOldMB.inmueble}" selectionMode="single"
+											stickyHeader="true" paginator="true"
+											filteredValue="#{inmuebleOldMB.filtroinmuebles}"
+											style="width:690px; font-size: 10px;  margin: 0px 0px 0px 0px;"
+											paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+											currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+											rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="690"
+											styleClass="ui-datatable-hor-scroll" emptyMessage="">
+											<p:ajax event="rowSelect"
+												listener="#{inmuebleOldMB.onRowSelect}" update=":frmGeneral" />
+											<p:column headerText="Clave" filterMatchMode="contains"
+												filterBy="#{inmu.clave}">
+												<h:outputText value="#{inmu.clave}" />
+											</p:column>
+											<p:column headerText="Nro. Registrp SBN">
+												<h:outputText value="#{inmu.numregistrosbn}" />
+											</p:column>
+											<p:column headerText="Direccion" filterMatchMode="contains"
+												filterBy="#{inmu.direccion}">
+												<h:outputText value="#{inmu.direccion}" />
+											</p:column>
+											<p:column headerText="Nro. Principal"
+												filterMatchMode="contains"
+												filterBy="#{inmu.numeroprincipal}">
+												<h:outputText value="#{inmu.numeroprincipal}" />
+											</p:column>
+											<p:column headerText="Nro. Interior">
+												<h:outputText value="#{inmu.numnombreinterior}" />
+											</p:column>
+											<p:column headerText="Nro. Grupal">
+												<h:outputText value="#{inmu.numerogrupal}" />
+											</p:column>
+
+											<p:column headerText="Lote">
+												<h:outputText value="#{inmu.lote}" />
+											</p:column>
+											<p:column headerText="tipo Via">
+												<h:outputText value="#{inmu.tipovia.descripcion}" />
+											</p:column>
+											<p:column headerText="Ubigeo">
+												<h:outputText value="#{inmu.ubigeo.ubigeo}" />
+											</p:column>
+											<p:column headerText="Sub Lote">
+												<h:outputText value="#{inmu.sublote}" />
+											</p:column>
+
+											<p:column headerText="Tipo Interior">
+												<h:outputText value="#{inmu.tipointerior.descripcion}" />
+											</p:column>
+
+											<p:column headerText="Zona">
+												<h:outputText value="#{inmu.zona}" />
+											</p:column>
+											<p:column headerText="Ubic. en piso">
+												<h:outputText value="#{inmu.ubicacionpiso}" />
+											</p:column>
+											<p:column headerText="Sector">
+												<h:outputText value="#{inmu.sector}" />
+											</p:column>
+											<p:column headerText="Manzana">
+												<h:outputText value="#{inmu.manzana}" />
+											</p:column>
+											<p:column headerText="Etapa">
+												<h:outputText value="#{inmu.etapa}" />
+											</p:column>
+											<p:column headerText="Referencia">
+												<h:outputText value="#{inmu.referenciainmueble}" />
+											</p:column>
+											<p:column headerText="Hab. Urbana">
+												<h:outputText value="#{inmu.habilitacionurbana?'Si':'No' }" />
+											</p:column>
+
+											<p:column headerText="denominacion">
+												<h:outputText value="#{inmu.denominacion}" />
+											</p:column>
+
+											<p:column headerText="Nombre">
+												<h:outputText value="#{inmu.nombrehabilitacionurbana}" />
+											</p:column>
+											<p:column headerText="Ubigeo">
+												<h:outputText value="#{inmu.numregistrosbn}" />
+											</p:column>
+
+											<p:column headerText="F. Creacion">
+												<h:outputText value="#{inmu.fechcre}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="Mat. Predominante">
+												<h:outputText
+													value="#{inmu.materialpredominante.idmaterialpredominante}" />
+											</p:column>
+
+											<p:column headerText="Año construcc.">
+												<h:outputText value="#{inmu.anhoconstruccion}" />
+											</p:column>
+											<p:column headerText="Num. Pisos">
+												<h:outputText value="#{inmu.numpisos}" />
+											</p:column>
+											<p:column headerText="Area terreno">
+												<h:outputText value="#{inmu.areaterreno}" />
+											</p:column>
+											<p:column headerText="Area construida">
+												<h:outputText value="#{inmu.areaconstruida}" />
+											</p:column>
+											<p:column headerText="Partida reg.">
+												<h:outputText
+													value="#{(inmu.opcpartidaregistral)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="Plano per.">
+												<h:outputText
+													value="#{ (inmu.opcplanoperimetrico)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="Plano ubic.">
+												<h:outputText
+													value="#{  (inmu.opcplanoubicacion)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="Memo. descrip.">
+												<h:outputText
+													value="#{  (inmu.opcmemoriadescrip)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="Fotografias">
+												<h:outputText value="#{  (inmu.opcfotos)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="Tasacion">
+												<h:outputText value="#{  (inmu.opctasacion)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="fecha">
+												<h:outputText value="#{inmu.fechatasacion}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+
+											</p:column>
+											<p:column headerText="Val. Terreno">
+												<h:outputText value="#{inmu.valorterreno}" />
+											</p:column>
+											<p:column headerText="Val. Edificacion">
+												<h:outputText value="#{inmu.valoredificacion}" />
+											</p:column>
+											<p:column headerText="Val. Obras complem.">
+												<h:outputText value="#{inmu.valorobracomplementaria}" />
+											</p:column>
+											<p:column headerText="Val. comercial">
+												<h:outputText value="#{inmu.valorcomercial}" />
+											</p:column>
+											<p:column headerText="Moneda terre.">
+												<h:outputText value="#{inmu.monedavalorterreno}" />
+											</p:column>
+											<p:column headerText="Moneda edif">
+												<h:outputText value="#{inmu.monedavaloredificacion}" />
+											</p:column>
+											<p:column headerText="Moneda Obras compl.">
+												<h:outputText value="#{inmu.monedavalorobracomple}" />
+											</p:column>
+											<p:column headerText="Moneda comer.">
+												<h:outputText value="#{inmu.monedavalorcomercial}" />
+											</p:column>
+											<p:column headerText="Depurado">
+												<h:outputText
+													value="#{ (inmu.opcinmuebledatodepurado)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="Habilitado">
+												<h:outputText
+													value="#{ (inmu.opcinmueblehabilitado)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="Titularidad">
+												<h:outputText value="#{inmu.titularidad.idtitularidad}" />
+											</p:column>
+											<p:column headerText="Tipo Titular">
+												<h:outputText
+													value="#{inmu.tipotitularidad.idtipotitularidad}" />
+											</p:column>
+											<p:column headerText="Nombre titular">
+												<h:outputText value="#{inmu.nombretitular}" />
+											</p:column>
+											<p:column headerText="Tipo Monumento">
+												<h:outputText value="#{inmu.tipomonumento}" />
+											</p:column>
+											<p:column headerText="Resolucion">
+												<h:outputText value="#{inmu.resolucion}" />
+											</p:column>
+											<p:column headerText="F. Resolucion">
+												<h:outputText value="#{inmu.fecharesolucion}" />
+											</p:column>
+											<p:column headerText="Asiento">
+												<h:outputText value="#{inmu.asiento}" />
+											</p:column>
+											<p:column headerText="Partida electronica">
+												<h:outputText value="#{inmu.partidaelectronica}" />
+											</p:column>
+											<p:column headerText="Fojas">
+												<h:outputText value="#{inmu.fojas}" />
+											</p:column>
+											<p:column headerText="Cod. predio">
+												<h:outputText value="#{inmu.codigopredio}" />
+											</p:column>
+											<p:column headerText="Tomo">
+												<h:outputText value="#{inmu.tomo}" />
+											</p:column>
+											<p:column headerText="F. Inscripcion">
+												<h:outputText value="#{inmu.fechainscripcion}" />
+											</p:column>
+											<p:column headerText="Ficha">
+												<h:outputText value="#{inmu.ficha}" />
+											</p:column>
+											<p:column headerText="Saneamiento fisico-legal">
+												<h:outputText value="#{(inmu.opcsaneamiento)?'si':'no'}" />
+											</p:column>
+											<p:column headerText="Situacion">
+												<h:outputText value="#{inmu.situacion}" />
+											</p:column>
+											<p:column headerText="Usuario creador">
+												<h:outputText value="#{inmu.usrcre}" />
+											</p:column>
+											<p:column headerText="F. Modificacion">
+												<h:outputText value="#{inmu.fechmod}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="Usuario Modificador">
+												<h:outputText value="#{inmu.usrmod}" />
+											</p:column>
+											<p:column width="15">
+												<p:commandButton
+													oncomplete="dlgEliminarInmuebleGeneral.show();"
+													style="margin-left:-4px;" update=":frmGeneral"
+													icon="icon-delete" title="Eliminar">
+													<f:setPropertyActionListener value="#{inmu}"
+														target="#{inmuebleOldMB.inmueblecapturado}" />
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+									</div>
+
+								</h:form>
+								<h:form id="frmEliminarInmuebleGeneral">
+
+									<p:confirmDialog id="dlgEliminar"
+										message="¿Desea eliminar registro de inmueble?"
+										header="Eliminar Inmueble" severity="alert"
+										widgetVar="dlgEliminarInmuebleGeneral">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTablaGeneral:dtbGeneral, :frmGeneral "
+											actionListener="#{inmuebleOldMB.eliminarInmueble}"
+											oncomplete="dlgEliminarInmuebleGeneral.hide()"
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar" update=":frmGeneral"
+											oncomplete="dlgEliminarInmuebleGeneral.hide()"
+											icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+							</div>
+
+
+							<!-- PANEL REGISTRAL -->
+
+							<div id="idDivRegistral" class="recau_panelPendientes">
+
+								<h:form id="frmRegistral">
+									<p:growl id="msjRegistral" showDetail="true" sticky="false"
+										life="4000" widgetVar="msjRegistralx" />
+									<div class="mante_gene_ContDescrip01">
+										<div class="filaRegSbn">
+											<h:outputText class="lblRegSbn" value="Clave:" />
+											<p:inputText id="txtRegSbn02" styleClass="txtRegSbn"
+												value="#{inmuebleOldMB.inmueble.clave}" disabled="true" />
+										</div>
+										<div class="filaDenominacion">
+											<h:outputText class="lblDenominacion" value="Dirección:" />
+											<p:inputText id="txtDenominacion02"
+												styleClass="txtDenominacion"
+												value="#{inmuebleOldMB.inmueble.direccion}  #{inmuebleOldMB.inmueble.numeroprincipal}"
+												disabled="true" />
+										</div>
+										<p:separator />
+										<div class="filaCabecera">
+											<h:outputText class="lblCabecera"
+												value="Propietario de predio" />
+
+										</div>
+										<div class="filaReg01">
+											<div class="columTitularidad">
+												<h:outputText class="lblTitularidad" value="Titularidad:" />
+
+												<div class="txtTitularidad">
+													<p:selectOneMenu id="txtTitularidad"
+														style="width: 184px;  font-size: 11px;"
+														value="#{inmuebleOldMB.idtitularidad}">
+
+														<f:selectItems value="#{inmuebleOldMB.listaTitularidad}"
+															var="titu" itemLabel="#{titu.nombre}"
+															itemValue="#{titu.idtitularidad}">
+														</f:selectItems>
+													</p:selectOneMenu>
+												</div>
+											</div>
+											<div class="columTipoTitularidad">
+												<h:outputText class="lblTipoTitularidad"
+													value="Tipo Titularidad:" />
+												<div class="txtTipoTitularidad">
+													<p:selectOneMenu id="txtTipoTitularidad"
+														style="width: 184px;  font-size: 11px;"
+														value="#{inmuebleOldMB.idtipotitularidad}">
+
+														<f:selectItems value="#{inmuebleOldMB.listaTipoTitularidad}"
+															var="tipotitu" itemLabel="#{tipotitu.descripcion}"
+															itemValue="#{tipotitu.idtipotitularidad}">
+														</f:selectItems>
+													</p:selectOneMenu>
+												</div>
+											</div>
+										</div>
+										<div class="filaReg02">
+											<div class="columNombreTitular">
+												<h:outputText class="lblNombreTitular"
+													value="Nombre Titular:" />
+												<p:inputText id="txtNombreTitular"
+													styleClass="txtNombreTitular"
+													value="#{inmuebleOldMB.inmueble.nombretitular}" />
+											</div>
+										</div>
+										<div class="filaReg03">
+											<div class="columTipoMonumento">
+												<h:outputText class="lblTipoMonumento"
+													value="Tipo Monumento:" />
+												<p:inputText id="txtTipoMonumento"
+													styleClass="txtTipoMonumento"
+													value="#{inmuebleOldMB.inmueble.tipomonumento}" />
+											</div>
+										</div>
+										<div class="filaReg04">
+											<div class="columResolucion">
+												<h:outputText class="lblResolucion" value="Resolucion:" />
+												<p:inputText id="txtResolucion" styleClass="txtResolucion"
+													value="#{inmuebleOldMB.inmueble.resolucion}" />
+											</div>
+											<div class="columFechaResolucion">
+												<h:outputText class="lblFechaResolucion"
+													value="Fecha Resolucion:" />
+												<p:calendar styleClass="txtFechaResolucion" navigator="true"
+													value="#{inmuebleOldMB.inmueble.fecharesolucion}" />
+											</div>
+										</div>
+
+										<p:separator />
+										<div class="filaCabecera">
+											<h:outputText class="lblCabecera" value="Registro" />
+
+										</div>
+										<div class="filaReg05">
+											<div class="columAsiento">
+												<h:outputText class="lblAsiento" value="Asiento:" />
+												<p:inputText id="txtAsiento" styleClass="txtAsiento"
+													value="#{inmuebleOldMB.inmueble.asiento}" />
+											</div>
+											<div class="columPartida">
+												<h:outputText class="lblPartida" value="Partida Electro. :" />
+												<p:inputText id="txtPartida" styleClass="txtPartida"
+													value="#{inmuebleOldMB.inmueble.partidaelectronica}" />
+											</div>
+										</div>
+										<div class="filaReg06">
+											<div class="columFojas">
+												<h:outputText class="lblFojas" value="Fojas:" />
+												<p:inputText id="txtFojas" styleClass="txtFojas"
+													value="#{inmuebleOldMB.inmueble.fojas}" />
+											</div>
+											<div class="columCodPredio">
+												<h:outputText class="lblCodPredio" value="Codigo Predio:" />
+												<p:inputText id="txtCodPredio" styleClass="txtCodPredio"
+													value="#{inmuebleOldMB.inmueble.codigopredio}" />
+											</div>
+										</div>
+										<div class="filaReg07">
+											<div class="columTomo">
+												<h:outputText class="lblTomo" value="Tomo:" />
+												<p:inputText id="txtTomo" styleClass="txtTomo"
+													value="#{inmuebleOldMB.inmueble.tomo}" />
+											</div>
+											<div class="columFechaInscrip">
+												<h:outputText class="lblFechaInscrip" value="Fecha Inscrip:" />
+												<p:calendar styleClass="txtFechaInscrip" navigator="true"
+													value="#{inmuebleOldMB.inmueble.fechainscripcion}" />
+											</div>
+										</div>
+										<div class="filaReg08">
+											<div class="columFicha">
+												<h:outputText class="lblFicha" value="Ficha:" />
+												<p:inputText id="txtFicha" styleClass="txtFicha"
+													value="#{inmuebleOldMB.inmueble.ficha}" />
+											</div>
+										</div>
+										<p:separator />
+										<div class="filaCabecera">
+											<h:outputText class="lblCabecera" value="Saneamiento" />
+
+										</div>
+										<div class="filaReg09">
+											<div class="columSaneamientoFL">
+												<h:outputText class="lblSaneamientoFL"
+													value="Saneamiento Fisico-Legal:" />
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opcsaneamiento}" />
+											</div>
+											<div class="columSituacion">
+												<h:outputText class="lblSituacion" value="Situacion:" />
+												<p:inputText id="txtSituacion" styleClass="txtSituacion"
+													value="#{inmuebleOldMB.inmueble.situacion}" />
+											</div>
+										</div>
+
+										<p:separator />
+
+										<div class="mante_general_botonguardar">
+											<p:commandButton value="Guardar"
+												oncomplete="validacionInmuebleRegistral();" />
+										</div>
+
+									</div>
+								</h:form>
+								<h:form id="frmdlgGuardarInmuebleRegitral">
+									<p:confirmDialog message="¿Desea Guardar Inmueble?"
+										header="Registro Inmueble" severity="alert"
+										widgetVar="dlgRegistrarInmuebleRegistral">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmRegistral, :frmTablaGeneral:dtbGeneral"
+											actionListener="#{inmuebleOldMB.registrarInmueble}"
+											oncomplete="dlgRegistrarInmuebleRegistral.hide()"
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmRegistral "
+											oncomplete="dlgRegistrarInmuebleRegistral.hide()"
+											icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+								<h:form id="frmTablaRegistral">
+									<div class="dgaiMonitoreo_detalle"></div>
+
+								</h:form>
+							</div>
+
+
+							<!-- PANEL TECNICO -->
+							<div id="idDivTecnico" class="recau_panelPendientes">
+
+								<h:form id="frmTecnico">
+									<p:growl id="msjTecnico" showDetail="true" sticky="false"
+										life="4000" widgetVar="msjTecnicox" />
+									<div class="mante_gene_ContDescrip01">
+										<div class="filaRegSbn">
+											<h:outputText class="lblRegSbn" value="Clave:" />
+											<p:inputText id="txtRegSbn03" styleClass="txtRegSbn"
+												value="#{inmuebleOldMB.inmueble.clave}" disabled="true" />
+										</div>
+										<div class="filaDenominacion">
+											<h:outputText class="lblDenominacion" value="Dirección" />
+											<p:inputText id="txtDenominacion03"
+												styleClass="txtDenominacion"
+												value="#{inmuebleOldMB.inmueble.direccion}  #{inmuebleOldMB.inmueble.numeroprincipal}"
+												disabled="true" />
+										</div>
+										<p:separator />
+										<div class="filaCabecera">
+											<h:outputText class="lblCabecera"
+												value="Construcciones y Areas (En metros cuadrados)" />
+
+										</div>
+										<div class="filaTec01">
+											<div class="columMatPredominante">
+												<h:outputText class="lblMatPredominante"
+													value="Mat. Predominante:" />
+												<div class="txtMatPredominante">
+
+													<p:selectOneMenu style="width: 184px;  font-size: 11px;"
+														id="txtMatPredominante"
+														value="#{inmuebleOldMB.idmaterialpredominante}">
+														<f:selectItems
+															value="#{inmuebleOldMB.listaMaterialPredominante}"
+															var="matpre" itemLabel="#{matpre.descripcion}"
+															itemValue="#{matpre.idmaterialpredominante}">
+														</f:selectItems>
+													</p:selectOneMenu>
+												</div>
+											</div>
+										</div>
+										<div class="filaTec02">
+											<div class="columAnhoConstru">
+												<h:outputText class="lblAnhoConstru"
+													value="Año Construccion:" />
+												<div class="txtAnhoConstru">
+
+													<p:selectOneMenu styleClass="cbxDatos" id="txtAnhoConstru"
+														onchange="limpiarvalidacion()"
+														style="width: 184px;  font-size: 11px;"
+														value="#{inmuebleOldMB.inmueble.anhoconstruccion}">
+														<f:selectItem itemLabel="Seleccione A&ntilde;o"
+															itemValue="0" />
+														<f:selectItems value="#{inicioMB.listaAnio}" var="an"
+															itemLabel="#{an}" itemValue="#{an}">
+														</f:selectItems>
+													</p:selectOneMenu>
+												</div>
+											</div>
+											<div class="columNumPisos">
+												<h:outputText class="lblNumPisos" value="Numero Pisos:" />
+												<p:inputText id="txtNumPisos" styleClass="txtNumPisos"
+													value="#{inmuebleOldMB.inmueble.numpisos}" />
+
+											</div>
+										</div>
+										<div class="filaTec03">
+											<div class="columAreaTerreno">
+												<h:outputText class="lblAreaTerreno"
+													value="Area Terreno (m2):" />
+												<p:inputText id="txtAreaTerreno" styleClass="txtAreaTerreno"
+													value="#{inmuebleOldMB.inmueble.areaterreno}" />
+											</div>
+											<div class="columAreaConstru">
+												<h:outputText class="lblAreaConstru"
+													value="Area Construida (m2):" />
+												<p:inputText id="txtAreaConstru" styleClass="txtAreaConstru"
+													value="#{inmuebleOldMB.inmueble.areaconstruida}" />
+											</div>
+										</div>
+										<p:separator />
+										<div class="filaCabecera">
+											<h:outputText class="lblCabecera"
+												value="Documentacion Existente" />
+										</div>
+
+										<div class="filaTec04">
+											<div class="columF4PartidaReg">
+
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opcpartidaregistral}"
+													styleClass="chkF4PartidaReg" />
+												<h:outputText class="lblF4PartidaReg"
+													value="Partida Registral" />
+											</div>
+											<div class="columF4PlanoPer">
+
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opcplanoperimetrico}"
+													styleClass="chkF4PlanoPer" />
+												<h:outputText class="lblF4PlanoPer"
+													value="Plano Perimetrico" />
+											</div>
+											<div class="columF4PlanoUbi">
+
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opcplanoubicacion}"
+													styleClass="chkF4PlanoUbi" />
+												<h:outputText class="lblF4PlanoUbi" value="Plano Ubicacion" />
+											</div>
+										</div>
+										<div class="filaTec05">
+											<div class="columF5MemoDescrip">
+
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opcmemoriadescrip}"
+													styleClass="chkF5MemoDescrip" />
+												<h:outputText class="lblF5MemoDescrip"
+													value="Memoria Descriptiva" />
+											</div>
+											<div class="columF5Fotografias">
+
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opcfotos}"
+													styleClass="chkF5Fotografias" />
+												<h:outputText class="lblF5Fotografias" value="Fotografias" />
+											</div>
+											<div class="columF5Tasacion">
+
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opctasacion}"
+													styleClass="chkF5Tasacion" />
+												<h:outputText class="lblF5Tasacion" value="Tasacion" />
+											</div>
+											<div class="columF5Fecha">
+												<h:outputText class="lblF5Fecha" value="Fecha(*)" />
+												<p:calendar styleClass="txtF5Fecha" navigator="true"
+													value="#{inmuebleOldMB.inmueble.fechatasacion}" />
+											</div>
+										</div>
+
+										<p:separator />
+										<div class="filaCabecera">
+											<h:outputText class="lblCabecera" value="Valorizaciones " />
+										</div>
+										<div class="filaTec06">
+											<div class="columF6TerrenoVal">
+												<h:outputText class="lblF6TerrenoVal" value="Terreno " />
+											</div>
+											<div class="columF6EdificacionesVal">
+												<h:outputText class="lblF6EdificacionesVal"
+													value="Edificaciones " />
+											</div>
+											<div class="columF6ObrasCompVal">
+												<h:outputText class="lblF6ObrasCompVal"
+													value="Obras Complemen. " />
+											</div>
+											<div class="columF6ComercialVal">
+												<h:outputText class="lblF6ComercialVal" value="Comercial " />
+											</div>
+										</div>
+										<div class="filaTec07">
+											<div class="columF7Valor">
+												<h:outputText class="lblF7Valor" value="Valor" />
+											</div>
+											<div class="columF7Terrenova">
+
+												<p:inputText id="txtTerrenova"
+													styleClass="txtF7ObrasCompleva"
+													value="#{inmuebleOldMB.inmueble.valorterreno}" />
+											</div>
+											<div class="columF7Edificacionesva">
+
+												<p:inputText id="txtEdificacionesva"
+													styleClass="txtF7ObrasCompleva"
+													value="#{inmuebleOldMB.inmueble.valoredificacion}" />
+											</div>
+											<div class="columF7ObrasCompleva">
+												<p:inputText id="txtObrasCompleva"
+													styleClass="txtF7ObrasCompleva"
+													value="#{inmuebleOldMB.inmueble.valorobracomplementaria}" />
+											</div>
+											<div class="columF7Comercialva">
+												<p:inputText id="txtComercialva"
+													styleClass="txtF7Comercialva"
+													value="#{inmuebleOldMB.inmueble.valorcomercial}" />
+											</div>
+										</div>
+										<div class="filaTec08">
+											<div class="columF8Moneda">
+												<h:outputText class="lblF8Moneda" value="Moneda" />
+											</div>
+											<div class="columF8Terrenomo">
+												<p:selectOneMenu
+													value="#{inmuebleOldMB.inmueble.monedavalorterreno}"
+													id="txtTerrenomo" style="width: 140px;  font-size: 11px;">
+													<f:selectItem itemLabel="Seleccione Moneda" itemValue="0" />
+													<f:selectItem itemLabel="Soles" itemValue="Soles" />
+													<f:selectItem itemLabel="Dolares" itemValue="Dolares" />
+													<f:selectItem itemLabel="Euros" itemValue="Euros" />
+												</p:selectOneMenu>
+											</div>
+											<div class="columF8Edificacionesmo">
+												<p:selectOneMenu
+													value="#{inmuebleOldMB.inmueble.monedavaloredificacion}"
+													id="txtEdificacionesmo"
+													style="width: 140px;  font-size: 11px;">
+													<f:selectItem itemLabel="Seleccione Moneda" itemValue="0" />
+													<f:selectItem itemLabel="Soles" itemValue="Soles" />
+													<f:selectItem itemLabel="Dolares" itemValue="Dolares" />
+													<f:selectItem itemLabel="Euros" itemValue="Euros" />
+												</p:selectOneMenu>
+											</div>
+											<div class="columF8ObrasComplemo">
+												<p:selectOneMenu
+													value="#{inmuebleOldMB.inmueble.monedavalorobracomple}"
+													id="txtObrasComplemo"
+													style="width: 140px;  font-size: 11px;">
+													<f:selectItem itemLabel="Seleccione Moneda" itemValue="0" />
+													<f:selectItem itemLabel="Soles" itemValue="Soles" />
+													<f:selectItem itemLabel="Dolares" itemValue="Dolares" />
+													<f:selectItem itemLabel="Euros" itemValue="Euros" />
+												</p:selectOneMenu>
+											</div>
+											<div class="columF8Comercialmo">
+												<p:selectOneMenu
+													value="#{inmuebleOldMB.inmueble.monedavalorcomercial}"
+													id="txtComercialmo" style="width: 140px;  font-size: 11px;">
+													<f:selectItem itemLabel="Seleccione Moneda" itemValue="0" />
+													<f:selectItem itemLabel="Soles" itemValue="Soles" />
+													<f:selectItem itemLabel="Dolares" itemValue="Dolares" />
+													<f:selectItem itemLabel="Euros" itemValue="Euros" />
+												</p:selectOneMenu>
+											</div>
+										</div>
+
+
+
+										<p:separator />
+
+										<div class="filaTec09">
+											<div class="columF9Depurado">
+
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opcinmuebledatodepurado}"
+													styleClass="chkF9Depurado" />
+												<h:outputText class="lblF9Depurado" value="Depurado" />
+											</div>
+											<div class="columF9Habilitado">
+
+												<p:selectBooleanCheckbox
+													value="#{inmuebleOldMB.inmueble.opcinmueblehabilitado}"
+													styleClass="chkF9Habilitado" />
+												<h:outputText class="lblF9Habilitado" value="Habilitado " />
+											</div>
+
+										</div>
+										<p:separator />
+										<div class="mante_general_botonguardar">
+											<p:commandButton value="Guardar"
+												oncomplete="validacionInmuebleTecnico();" />
+										</div>
+									</div>
+
+								</h:form>
+								<h:form id="frmdlgGuardarInmuebleTecnico">
+									<p:confirmDialog message="¿Desea Guardar Inmueble?"
+										header="Registro Inmueble" severity="alert"
+										widgetVar="dlgRegistrarInmuebleTecnico">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTecnico, :frmTablaGeneral:dtbGeneral"
+											actionListener="#{inmuebleOldMB.registrarInmueble}"
+											oncomplete="dlgRegistrarInmuebleTecnico.hide()"
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmRegistral "
+											oncomplete="dlgRegistrarInmuebleTecnico.hide()"
+											icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+								<h:form id="frmTablaTecnico">
+									<div class="dgaiMonitoreo_detalle"></div>
+
+
+
+								</h:form>
+
+							</div>
+
+
+						</div>
+
+
+					</div>
+				</div>
+
+
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

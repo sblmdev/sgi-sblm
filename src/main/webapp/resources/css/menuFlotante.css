@@ -1,0 +1,20 @@
+#top{
+	z-index: 50;
+}
+#menuflotante{
+	z-index: 50;
+}
+
+
+#content{
+	 position:absolute;
+	 top: 130px; /*  posicionamos para el tamaño del encabzado   */
+}
+#menuflotante {
+    position:absolute;
+    top:0px;
+    
+/*     right:10px;     */
+/*     width:200px; */
+}
+

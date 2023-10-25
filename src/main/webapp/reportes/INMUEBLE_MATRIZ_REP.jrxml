@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cobranza_Registro" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="821" leftMargin="11" rightMargin="10" topMargin="20" bottomMargin="20" uuid="f414ecdd-ea37-4f23-9c8c-1624afe62bff">
+	<property name="ireport.zoom" value="2.0490403660952117"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="13"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="USUARIOCREADOR" class="java.lang.String"/>
+	<parameter name="CONDICION" class="java.lang.String"/>
+	<parameter name="SICUOTASCANCELADAS" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LOGO_DIR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="condicion" class="java.lang.String">
+		<fieldDescription><![CDATA[condicion]]></fieldDescription>
+	</field>
+	<field name="clave" class="java.lang.String">
+		<fieldDescription><![CDATA[clave]]></fieldDescription>
+	</field>
+	<field name="feccre" class="java.util.Date">
+		<fieldDescription><![CDATA[feccre]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[direccion]]></fieldDescription>
+	</field>
+	<field name="distrito" class="java.lang.String">
+		<fieldDescription><![CDATA[distrito]]></fieldDescription>
+	</field>
+	<field name="provincia" class="java.lang.String">
+		<fieldDescription><![CDATA[provincia]]></fieldDescription>
+	</field>
+	<field name="departamento" class="java.lang.String">
+		<fieldDescription><![CDATA[departamento]]></fieldDescription>
+	</field>
+	<field name="usrcre" class="java.lang.String">
+		<fieldDescription><![CDATA[usrcre]]></fieldDescription>
+	</field>
+	<field name="codigopredio" class="java.lang.String">
+		<fieldDescription><![CDATA[codigopredio]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="115" splitType="Stretch">
+			<image>
+				<reportElement uuid="0701cc03-ae35-4609-af4b-f31211fb6671" x="0" y="0" width="393" height="64"/>
+				<imageExpression><![CDATA[$P{LOGO_DIR}+"logo-sblm-negro.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="06b4a39d-6f41-46ed-a58e-48999de20bd8" x="635" y="12" width="43" height="13" forecolor="#0099CC"/>
+				<textElement>
+					<font size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Emitido:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f1f2e28-d3c3-4a84-b465-79825f3d3e7c" x="635" y="25" width="43" height="13" forecolor="#0099CC"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fc542cb3-9a39-4ede-b748-ffa4623e718d" x="681" y="12" width="103" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f907c81f-2a37-4d61-bf28-332dd36e00f8" x="681" y="25" width="103" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{USUARIOCREADOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a1e3c4ff-4932-4139-9af0-b7abb530be24" x="0" y="77" width="821" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONDICION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="13">
+			<staticText>
+				<reportElement uuid="054e69e2-e81e-4da2-abab-d36b66f9d0fe" x="0" y="1" width="23" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a26e10c5-6678-46bb-bc4a-182c6df36107" x="24" y="1" width="51" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLAVE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72a3d4a1-4fce-4ae5-bd9b-dfe543385ee2" x="75" y="1" width="304" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72a3d4a1-4fce-4ae5-bd9b-dfe543385ee2" x="497" y="1" width="97" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DISTRITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72a3d4a1-4fce-4ae5-bd9b-dfe543385ee2" x="608" y="0" width="50" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROVINCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72a3d4a1-4fce-4ae5-bd9b-dfe543385ee2" x="674" y="0" width="71" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="224828fc-f2d6-4920-9789-20d7423bef43" x="381" y="1" width="116" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO PREDIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f49469d0-ad4a-4f7e-86b5-a165bbecb80b" x="75" y="0" width="304" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f49469d0-ad4a-4f7e-86b5-a165bbecb80b" x="497" y="0" width="97" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{distrito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fa3b5f25-f42d-4f02-b1d4-1f884e6603e3" x="23" y="0" width="52" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clave}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fe7fb184-b0bd-4ec1-b780-034aa48b54f5" x="0" y="0" width="23" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f49469d0-ad4a-4f7e-86b5-a165bbecb80b" x="381" y="0" width="116" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigopredio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f49469d0-ad4a-4f7e-86b5-a165bbecb80b" x="674" y="0" width="71" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f49469d0-ad4a-4f7e-86b5-a165bbecb80b" x="601" y="0" width="63" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{provincia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="50"/>
+	</summary>
+</jasperReport>

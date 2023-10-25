@@ -1,0 +1,1402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<title>SBLM</title>
+</h:head>
+<h:body>
+
+	<!-- PANEL REPORTES -->
+                   <div>
+					<h:form id="frmTablaReporteCobranza">
+							<div class="contenidoConsultaRegistroComprobante">
+					
+						<p:tabView style="margin-top:10px; width: 102%;" effect="slide">
+							
+							<p:tab title="Cartera Activa" >
+							<h:panelGrid columns="2">
+
+									<h:panelGrid columns="2" cellspacing="5" >
+											<h:outputText value="Numero Cartera:" />
+											<p:autoComplete value="#{cobranzaConsultaMB.carteraActivaReporteCartera}"
+															style="width:300px"
+															completeMethod="#{cobranzaConsultaMB.autoCompleteCartera}"
+															effect="fade" maxResults="10">
+											</p:autoComplete>
+											
+											<h:outputText value="Al día:" />
+											<p:calendar  pattern="dd-MM-yyyy"  navigator="true" locale="es" 
+														styleClass="anchoCalendar" value="#{cobranzaConsultaMB.fechaconsultacarteraactiva}">
+														<p:ajax event="dateSelect" listener="#{cobranzaConsultaMB.seleccionarTipoCambioxFecha}"/>
+											</p:calendar>
+											
+											<h:outputText value="Descarga:" />
+											<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.elegirReporteTabCartera('pdf')}"  icon="ui-icon-arrowthickstop-1-s"  onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+											 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" />
+												<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" />
+											</p:commandButton>
+											
+											<p:spacer width="20"/>
+											<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.elegirReporteTabCartera('xls')}" icon="ui-icon-arrowthickstop-1-s" onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false" update=":frmMaestra:listaMensajes">
+												 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+												<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" />
+											</p:commandButton>
+									</h:panelGrid>
+									
+									<h:panelGrid style="margin-left:50px;">
+										
+											<h:selectOneRadio value="#{cobranzaConsultaMB.tipoReporteSeleccionadoTabCarteraActiva}"  layout="pageDirection" >
+													<f:selectItem itemLabel="Upas para cobro detallado" itemValue="1" />
+										            <f:selectItem itemLabel="Upas no cobradas" itemValue="2" />
+										            <f:selectItem itemLabel="Upas no cobradas(Solo rentas pendientes)" itemValue="6" />
+										            <f:selectItem itemLabel="Upas cobradas" itemValue="3" />
+										            <f:selectItem itemLabel="Upas de cartera" itemValue="4" />
+										            <f:selectItem itemLabel="Al día" itemValue="5" />
+								            </h:selectOneRadio>
+									</h:panelGrid>
+							</h:panelGrid>
+							</p:tab>
+							
+							<p:tab  title="Cartera Pesada" >
+								<h:panelGrid>
+									<h:selectOneRadio value="#{cobranzaConsultaMB.tipoReporteSeleccionadoTabCarteraPasiva}">
+ 										<f:selectItem itemLabel="Upas de cartera pasiva" itemValue="1" />
+						            </h:selectOneRadio>
+	       						 </h:panelGrid>
+								<h:panelGrid columns="3">
+										<h:outputText value="Numero Cartera:" />
+										<p:autoComplete value="#{cobranzaConsultaMB.carteraPesadaReporteCartera}"
+														style="width:300px"
+														completeMethod="#{cobranzaConsultaMB.autoCompleteCartera}"
+														effect="fade" maxResults="10">
+										</p:autoComplete>
+										<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.elegirReporteTabCarteraPasiva('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+										 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" />
+											<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" />
+										</p:commandButton>
+								</h:panelGrid>
+							</p:tab>
+							
+					<!-- PANEL REPORTES UPA -->
+							
+							<p:tab title="Upa" >
+<!-- 							<p:tabView style="margin-top:10px; width: 102%;" effect="slide">							 -->
+<!-- 							     <p:tab title="Liquidaciones" > -->
+									<h:panelGrid id="grid">
+										<h:selectOneRadio value="#{cobranzaConsultaMB.tipoReporteSeleccionadoTabUpa}">
+										<f:selectItem itemLabel="Cancelados y Pendientes" itemValue="1" />
+							            <f:selectItem itemLabel="Cancelados" itemValue="2" />
+							            <f:selectItem itemLabel="Pendientes" itemValue="3" />
+							            <f:selectItem itemLabel="Liquidación" itemValue="4" />
+<!-- 							            <f:selectItem itemLabel="Liquidación con Detalle" itemValue="5" /> -->
+							            
+							            <p:ajax update="grid"/>
+							            </h:selectOneRadio>
+		       						 </h:panelGrid>
+		        
+									<h:panelGrid columns="4">
+										<h:outputText value="Clave:" />
+										<p:remoteCommand name="buscarclave"
+											actionListener="#{cobranzaConsultaMB.obtenerListaContratosDeUpa}"
+											update="listacontratosupaTabHistorico" />
+										<p:inputMask mask="**-****-***" value="#{cobranzaConsultaMB.claveupa}"
+											onkeypress="if (event.keyCode == 13) { buscarclave(); return false; }"
+											style="width:90px;text-align:center;font-size:15px;">
+										</p:inputMask>
+									</h:panelGrid>
+										
+									<p:dataTable id="listacontratosupaTabHistorico" var="contrato" rows="5"
+											rowKey="#{contrato.idcontrato}"
+											value="#{cobranzaConsultaMB.listaCondicionDeUpa}"
+											selection="#{cobranzaConsultaMB.condicionSeleccionado}" 
+											style="text-align:center;font-size:11px;margin-top:10px;width:600px"
+											emptyMessage="La upa no registra ningun contrato o sin contrato"
+											scrollWidth="600" styleClass="ui-datatable-hor-scroll">
+											
+											
+										<p:ajax event="rowSelectCheckbox"
+											listener="#{cobranzaConsultaMB.verificarTipoOpcionElegidaReporteUpa}"
+											process="@this" update="listacontratosupaTabHistorico"/>
+										<p:ajax event="rowUnselectCheckbox"
+											process="@this" update="listacontratosupaTabHistorico"
+											listener="#{cobranzaConsultaMB.verificarTipoOpcionElegidaReporteUpa}"  />											
+											
+											
+											<p:columnGroup type="header">
+												  <p:row>
+													  	<p:column rowspan="2" headerText="" style="vertical-align: middle;" />
+										                <p:column rowspan="2" headerText="Condición" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Nombre/Razón Social" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Estado" style="vertical-align: middle;"/>
+										                <p:column colspan="5" headerText="Contrato" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Inicio Cobro" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Fin Cobro" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Sin deuda" style="vertical-align: middle;"/>
+			
+									            </p:row>
+									            <p:row>
+														<p:column colspan="1" headerText="Nro Contrato" style="vertical-align: middle;"/>
+										                <p:column colspan="1" headerText="Inicio" style="vertical-align: middle;"/>
+										                <p:column colspan="1" headerText="Fin" style="vertical-align: middle;"/>
+										                <p:column rowspan="1" headerText="Resuelto" style="vertical-align: middle;"/>
+										                <p:column rowspan="1" headerText="Adenda" style="vertical-align: middle;"/>
+									            </p:row>
+											</p:columnGroup>
+												
+										        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+												<p:column>
+													<h:outputText value="#{contrato.condicion}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{contrato.nombresInquilino}" />
+												</p:column>
+												<p:column headerText="Estado">
+													<h:outputText value="#{contrato.estado}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{contrato.nrocontrato==NULL ? 'S/N':contrato.nrocontrato}" />
+												</p:column>
+			
+												<p:column>
+													<h:outputText value="#{contrato.iniciocontrato}" >
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText>
+												</p:column>
+												<p:column>
+													<h:outputText value="#{contrato.fincontrato}" >
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText>
+												</p:column>
+												<p:column headerText="Resuelto">
+													<h:outputText value="#{contrato.siresuelto=='true' ? 'Sí':'No'}" />
+												</p:column>
+												<p:column headerText="Adenda">
+													<h:outputText value="#{contrato.siadenda=='true' ? 'Sí':'No'}" />
+												</p:column>
+												
+												<p:column headerText="Inicio Cobro">
+													<h:outputText value="#{contrato.iniciocobro}" >
+													<f:convertDateTime pattern="MMM/yyyy" />
+													</h:outputText>
+												</p:column>
+												<p:column headerText="Fin Cobro">
+													<h:outputText value="#{contrato.fincobro}" >
+													<f:convertDateTime pattern="MMM/yyyy" />
+													</h:outputText>
+												</p:column>
+<!-- 												<p:column headerText=""> -->
+<!-- 													<h:outputText value="#{contrato.sicuotascanceladas=='true' ? 'Sí':'No'}" /> -->
+<!-- 												</p:column> -->
+												<p:column headerText="">
+													<h:outputText value="#{contrato.sicuotascanceladas=='1' ? 'Sí':'No'}" />
+												</p:column>
+		
+											<f:facet name="footer">
+												<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.elegirReporteTabUpa('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+												 	<p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" />
+													<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" />
+												</p:commandButton>
+<!-- 												<p:spacer width="20"/> -->
+<!-- 												<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.elegirReporteTabUpa('xls')}" icon="ui-icon-arrowthickstop-1-s" onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false"> -->
+<!-- 													 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" /> -->
+<!-- 													<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" /> -->
+<!-- 												</p:commandButton> -->
+												<p:spacer width="20"/>
+												<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.elegirReporteTabUpaNuevo('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+												 	<p:graphicImage value="/resources/icons/tipoArchivo/pdf_new.png" width="32px" height="32px"/>
+													<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" />
+												</p:commandButton>
+												<p:spacer width="20"/>
+												<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.elegirReporteTabUpaNuevo('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+												 	<p:graphicImage value="/resources/icons/tipoArchivo/xls.png" width="32px" height="32px"/>
+													<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" />
+												</p:commandButton>
+											</f:facet>
+									</p:dataTable>
+							</p:tab>
+
+							
+
+						<!-- **********Reporte de Extincion de Deuda -->
+						<p:tab title="Extinción de Deuda" >
+<!-- 						<h:panelGrid id="gridExtDeuda"> -->
+<!-- 						<h:selectOneRadio value="#{cobranzaConsultaMB.tipoReporteSeleccionadoTabUpa}"> -->
+<!-- 										<f:selectItem itemLabel="Extincion de Deuda" itemValue="1" /> -->
+<!-- 							            <f:selectItem itemLabel="Cancelados" itemValue="2" /> -->
+<!-- 							            <f:selectItem itemLabel="Pendientes" itemValue="3" /> -->
+<!-- 							            <f:selectItem itemLabel="Liquidación(Inc. Mora)" itemValue="4" /> -->
+							            
+<!-- 							            <p:ajax update="gridExtDeuda"/> -->
+<!-- 							            </h:selectOneRadio> -->
+<!-- 						</h:panelGrid> -->
+						<h:panelGrid columns="4">
+										<h:outputText value="Clave:" />
+										<p:remoteCommand name="buscarclaveDOC"
+											actionListener="#{cobranzaConsultaMB.buscarDocumentoAdministrativo}"
+											update="listacomprobantespagoExtDeuda" />
+										<p:inputMask mask="**-****-***" value="#{cobranzaConsultaMB.claveupaDocAdm}"
+											onkeypress="if (event.keyCode == 13) { buscarclaveDOC(); return false; }"
+											style="width:90px;text-align:center;font-size:15px;">
+										</p:inputMask>
+						</h:panelGrid>
+					<h:panelGrid columns="5">
+						<p:calendar id="inicio3"
+							value="#{cobranzaConsultaMB.desdeDocumento}" pattern="dd-MM-yyyy"
+							styleClass="styleWidthCalendar" navigator="true" locale="es">
+							<p:ajax event="dateSelect"
+								listener="#{cobranzaConsultaMB.setDesdeDocumento}" update="fin3" />
+						</p:calendar>
+						<p:watermark for="inicio3" value="Desde" />
+						<p:calendar id="fin3" value="#{cobranzaConsultaMB.hastaDocumento}"
+							pattern="dd-MM-yyyy" styleClass="styleWidthCalendar"
+							navigator="true" locale="es" />
+						<p:watermark for="fin3" value="Hasta" />
+
+						<p:commandButton icon="ui-icon-search" value="Buscar"
+							actionListener="#{cobranzaConsultaMB.buscarDocumentoAdministrativo}"
+							update="listacomprobantespagoExtDeuda" />
+					</h:panelGrid>
+					<p:dataTable id="listacomprobantespagoExtDeuda" var="cp" 
+						rowKey="#{cp.idcomprobante}"
+						filteredValue="#{cobranzaConsultaMB.filtrolistacomprobantespago}"
+						value="#{cobranzaConsultaMB.listacomprobantespago}"
+						selection="#{cobranzaConsultaMB.comprobantepagoExt}"
+						selectionMode="single"
+						emptyMessage="No se ha encontrado ningún registro"
+						paginator="true"
+						style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;"
+						paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+						rowsPerPageTemplate="10,15,20" rows="5" scrollWidth="680"
+						styleClass="ui-datatable-hor-scroll" editable="true"
+						rowStyleClass="#{cp.sianulado le 'TRUE' ? 'red' : null}">
+
+						<!-- 					<p:ajax event="rowSelect" -->
+						<!-- 						listener="#{cobranzaConsultaMB.obtenerDetalleComprobante}" /> -->
+						<!-- 					<p:ajax event="rowEdit" listener="#{cobranzaConsultaMB.actualizarComprobante}"  update=":frmMaestra:listaMensajes"/> -->
+
+						<p:ajax event="rowSelect"
+							listener="#{cobranzaConsultaMB.obtenerDetalleComprobanteExtDeuda}"
+							process="@this" update="listacomprobantespagoExtDeuda" />
+						<p:ajax event="rowUnselect" 
+							process="@this" update="listacomprobantespagoExtDeuda"
+							listener="#{cobranzaConsultaMB.obtenerDetalleComprobanteExtDeuda}" />
+						<!-- 					<p:column style="width:32px"> -->
+						<!-- 			           <p:rowEditor /> -->
+						<!-- 			       </p:column> -->
+<!-- 						<p:column selectionMode="single" style="width:16px;text-align:center" /> -->
+						<p:column headerText="Concepto" style="width:32px">
+							<h:outputText value="#{cp.concepto}" />
+						</p:column>
+						<p:column headerText="Clave" style="width:32px">
+							<h:outputText value="#{cp.claveUpa}" />
+						</p:column>
+						<p:column headerText="Inquilino" style="width:64px">
+							<h:outputText value="#{cp.nombreInquilino}" />
+						</p:column>
+						<p:column headerText="Nº Serie" filterBy="#{cp.nroserie}"
+							filterMatchMode="contains" style="width:32px;text-align: left;">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cp.nroserie}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{cp.nroserie}"
+										disabled="#{cp.sifacturacionelectronica}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+						<p:column headerText="Nº Comprobante"
+							filterBy="#{cp.nrocomprobante}" filterMatchMode="contains"
+							sortBy="#{cp.nrocomprobante}"
+							style="width:60px;text-align: left;">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cp.nrocomprobante}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{cp.nrocomprobante}"
+										disabled="#{cp.sifacturacionelectronica}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Tipo Comprobante" sortBy="#{cp.idtipdocu}"
+							filterBy="#{cp.idtipdocu}" filterMatchMode="contains">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cp.idtipdocu}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{cp.idtipdocu}"
+										disabled="#{cp.sifacturacionelectronica}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="F. Emisión" filterBy="#{cp.fecEmision}"
+							sortBy="#{cp.fecEmision}" filterMatchMode="contains">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cp.fecEmision}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar pattern="dd-MM-yyyy" mask="true"
+										style="width:150px;" navigator="true" locale="es"
+										value="#{cp.fecEmision}"
+										readonlyInput="#{carteraMB.sicobrador}"
+										disabled="#{cp.sifacturacionelectronica}" />
+								</f:facet>
+							</p:cellEditor>
+
+						</p:column>
+
+						<p:column headerText="F. Cancelaci&oacute;n"
+							sortBy="#{cp.fecCancelacion}" filterBy="#{cp.fecCancelacion}"
+							filterMatchMode="contains">
+
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cp.fecCancelacion}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar pattern="dd-MM-yyyy" mask="true"
+										style="width:150px;" navigator="true" locale="es"
+										value="#{cp.fecCancelacion}"
+										readonlyInput="#{carteraMB.sicobrador}"
+										disabled="#{cp.sifacturacionelectronica and cp.fecCancelacion!=NULL}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="F. Vencimiento"
+							sortBy="#{cp.fecVencimiento}" filterBy="#{cp.fecCancelacion}"
+							filterMatchMode="contains">
+
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cp.fecVencimiento}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar pattern="dd-MM-yyyy" mask="true"
+										style="width:150px;" navigator="true" locale="es"
+										value="#{cp.fecVencimiento}"
+										readonlyInput="#{carteraMB.sicobrador}"
+										disabled="#{cp.sifacturacionelectronica}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Sub Total" style="text-align: right;">
+							<h:outputText value="#{cp.subtotal}">
+								<f:convertNumber currencySymbol="" groupingUsed="true"
+									locale="en" maxFractionDigits="2" type="currency" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="IGV" style="text-align: right;">
+							<h:outputText value="#{cp.igv}">
+								<f:convertNumber currencySymbol="" groupingUsed="true"
+									locale="en" maxFractionDigits="2" type="currency" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Total" style="text-align: right;">
+							<h:outputText value="#{cp.total}">
+								<f:convertNumber currencySymbol="S/. " groupingUsed="true"
+									locale="en" maxFractionDigits="2" type="currency" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Mora" style="text-align: right;">
+							<h:outputText value="#{cp.mora}">
+								<f:convertNumber currencySymbol="" groupingUsed="true"
+									locale="en" maxFractionDigits="2" type="currency" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Comprobante. Ref."
+							style="text-align: right;" filterBy="#{cp.nrocomprobanteref}"
+							filterMatchMode="contains">
+							<h:outputText value="#{cp.nrocomprobanteref}">
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Nota D&eacute;bito Ref."
+							style="text-align: right;" filterBy="#{cp.nronotadebitoref}"
+							filterMatchMode="contains">
+							<h:outputText value="#{cp.nronotadebitoref}">
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Nombre Cobrador"
+							sortBy="#{cp.nombrecobrador}" filterBy="#{cp.nombrecobrador}"
+							filterMatchMode="contains">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cp.nombrecobrador}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:selectOneMenu disabled="#{carteraMB.sicobrador}"
+										value="#{cp.nombrecobrador}" style="width: 200px;">
+										<f:selectItems value="#{cobranzaConsultaMB.listaCobradores}"
+											var="cobrador" itemLabel="#{cobrador.descripcion}"
+											itemValue="#{cobrador.descripcion}" />
+									</h:selectOneMenu>
+
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Nº de Operación"
+							filterBy="#{cp.numerooperacion}" filterMatchMode="contains">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{cp.numerooperacion}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{cp.numerooperacion}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Usu. Creador" sortBy="#{cp.usrcre}"
+							style="width:32px">
+							<h:outputText value="#{cp.usrcre}" />
+						</p:column>
+
+						<p:column headerText="F. Creación" sortBy="#{cp.feccre}"
+							style="width:32px">
+							<h:outputText value="#{cp.feccre}">
+								<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+							</h:outputText>
+						</p:column>
+						
+						<f:facet name="footer" >
+							<h:outputText value="Observación: "
+								style="font-size:18px;color:#806300;margin: 0px 520px 0px 0px;text-align: center;" />
+							<h:outputText value="#{cobranzaConsultaMB.observacionElemSelecionadoc}" style="font-size:12px;margin: 0px 0px 0px 0px;float:left">
+							</h:outputText>
+							<br />
+							<br />
+							<br />
+							<p:commandButton style="width:20px;height:20px;"
+								actionListener="#{cobranzaConsultaMB.PDFValidar}"
+								icon="ui-icon-arrowthickstop-1-s"
+								onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+								<p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" />
+								<p:fileDownload value="#{cobranzaConsultaMB.report}"
+									contentDisposition="attachment" />
+							</p:commandButton>
+							<p:spacer width="20" />
+<!-- 							<p:commandButton style="width:20px;height:20px;" -->
+<!-- 								actionListener="#{cobranzaConsultaMB.elegirReporteTabUpa('xls')}" -->
+<!-- 								icon="ui-icon-arrowthickstop-1-s" -->
+<!-- 								onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false"> -->
+<!-- 								<p:graphicImage value="/resources/icons/tipoArchivo/xls.png" /> -->
+<!-- 								<p:fileDownload value="#{cobranzaConsultaMB.report}" -->
+<!-- 									contentDisposition="attachment" /> -->
+<!-- 							</p:commandButton> -->
+						</f:facet>
+                 </p:dataTable>
+				
+				</p:tab>
+				<!-- **********************************GERENCIAL***************************** -->
+				<p:tab title="Gerencial">
+
+					<br />
+					<p:panel header="Deuda acumulada de upa de Cartera Activa"
+						toggleable="true">
+						<br />
+						<h:outputText
+							value="Lista de upas con deuda acumulada de cartera activa al día: " />
+						<p:calendar pattern="dd-MM-yyyy" navigator="true" locale="es"
+							styleClass="anchoCalendar"
+							value="#{cobranzaConsultaMB.fechaReporteGerencialCA}">
+						</p:calendar>
+						<br />
+						<p:commandButton style="width:20px;height:20px;"
+							actionListener="#{cobranzaConsultaMB.generarReporteDeudaCA('xls')}"
+							icon="ui-icon-arrowthickstop-1-s"
+							onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+							<p:graphicImage value="/resources/icons/tipoArchivo/xls.png"
+								style="margin-left:20px;margin-top:15px;" />
+							<p:fileDownload value="#{cobranzaConsultaMB.report}"
+								contentDisposition="attachment" />
+						</p:commandButton>
+
+					</p:panel>
+
+					<p:panel header="1. Reporte" toggleable="true">
+						<br />
+						<p:commandButton style="width:20px;height:20px;"
+							actionListener="#{cobranzaConsultaMB.generarReporteUpasPendienteAnio('xls')}"
+							icon="ui-icon-arrowthickstop-1-s"
+							onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+							<p:graphicImage value="/resources/icons/tipoArchivo/xls.png"
+								style="margin-left:20px;margin-top:15px;" />
+							<p:fileDownload value="#{cobranzaConsultaMB.report}"
+								contentDisposition="attachment" />
+						</p:commandButton>
+
+					</p:panel>
+
+				</p:tab>
+				<!-- **********************************DEUDA SGI***************************** -->
+				<p:tab title="Deuda SGI">
+				<h:panelGrid columns="1" cellspacing="5" >
+				<h:selectOneRadio value="#{cobranzaConsultaMB.tipoReporteSeleccionadoTabDeudaMoneda}" >
+								<f:selectItem itemLabel="Soles" itemValue="1" />
+							    <f:selectItem itemLabel="Dolares" itemValue="2" />
+							    
+							 </h:selectOneRadio>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+				
+				<h:panelGrid columns="2" cellspacing="5" >
+						    
+						<h:outputText value="Descarga :" />
+						
+						<p:commandButton style="width:20px;height:20px;"
+							actionListener="#{cobranzaConsultaMB.elegirReporteTabUpaDeuda('xls',1)}"
+							icon="ui-icon-arrowthickstop-1-s"
+							onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+							<p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+							<p:fileDownload value="#{cobranzaConsultaMB.report}"
+								contentDisposition="attachment" />
+						</p:commandButton>
+						<p:spacer width="20"/>
+						<p:commandButton style="width:20px;height:20px;"
+							actionListener="#{cobranzaConsultaMB.elegirReporteTabUpaDeuda('xls',2)}"
+							icon="ui-icon-arrowthickstop-1-s"
+							onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+							<p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+							<p:fileDownload value="#{cobranzaConsultaMB.report}"
+								contentDisposition="attachment" />
+						</p:commandButton>
+						<p:spacer width="20"/>
+						<p:commandButton style="width:20px;height:20px;"
+							actionListener="#{cobranzaConsultaMB.elegirReporteTabUpaDeuda('xls',3)}"
+							icon="ui-icon-arrowthickstop-1-s"
+							onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+							<p:graphicImage value="/resources/icons/tipoArchivo/xls_azul.png" width="32px" height="32px"/>
+							<p:fileDownload value="#{cobranzaConsultaMB.report}"
+								contentDisposition="attachment" />
+						</p:commandButton>
+						
+						</h:panelGrid>
+						<h:panelGrid style="margin-left:50px;"  >
+							<h:selectOneRadio value="#{cobranzaConsultaMB.tipoReporteSeleccionadoTabDeuda}" layout="pageDirection" >
+								<f:selectItem itemLabel="Vigentes" itemValue="1" />
+							    <f:selectItem itemLabel="Finalizados" itemValue="2" />
+							    <f:selectItem itemLabel="Todos" itemValue="3" />
+							 </h:selectOneRadio>
+		       			</h:panelGrid>
+		       						  
+					</h:panelGrid>
+					
+				</p:tab>
+			     <!-- ***********************************DOCUMENTOS DE PAGO ************************************************ -->
+					<p:tab title="#Documento" >
+						<p:outputPanel id="panelDocumentos">
+							
+							<h:panelGrid columns="2"  cellpadding="5" >
+	       						<h:outputText value="Solo Documentos Anulados " />
+								<p:selectBooleanCheckbox value="#{cobranzaConsultaMB.selectedSiDocumentosAnulados}" >
+									<p:ajax  event="change" update="idSelectedIncluirAnulados" listener="#{cobranzaConsultaMB.cambiarIncluirAnulados}"/>
+								</p:selectBooleanCheckbox>
+							</h:panelGrid>
+							
+							<p:selectCheckboxMenu value="#{cobranzaConsultaMB.selectedComprobanteTabCobrador}" label="Tipo documento"  style="float: right;"
+						                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px; ">
+												<f:selectItem itemLabel="Boleta de Venta" itemValue="03" />
+												<f:selectItem itemLabel="Factura" itemValue="01" />
+												<f:selectItem itemLabel="Nota d&eacute;bito" itemValue="08"/>
+												<f:selectItem itemLabel="Nota cr&eacute;dito" itemValue="09" />
+												<f:selectItem itemLabel="Recibo de caja" itemValue="04" />
+												<f:selectItem itemLabel="Documento administrativo" itemValue="DA" />
+												
+												
+						     </p:selectCheckboxMenu>
+						     <h:panelGrid columns="3" cellpadding="5" style="margin-top:10px;">
+							    <p:selectBooleanCheckbox value="#{cobranzaConsultaMB.selectedSiCobrador}" id="idSelectedCobrador" >
+								 <p:ajax  update="idSelectedCobrador,idSelectedUsuario,listacobrador,listausuario" listener="#{cobranzaConsultaMB.cambiarTipoConsultaCobrador}" />
+								</p:selectBooleanCheckbox>
+								<h:outputText value="Por Nombre de Cobrador: " />
+								<p:autoComplete disabled="#{!cobranzaConsultaMB.selectedSiCobrador || carteraMB.sicobrador}" id="listacobrador" var="cobrador" itemLabel="#{cobrador.descripcion}" itemValue="#{cobrador}"
+													value="#{cobranzaConsultaMB.selectedCobrador}" 
+													style="width:210px " size="30" converter="converterCobradorUsuario"
+													completeMethod="#{carteraMB.completarUsuarioCobrador}"
+													effect="fade" maxResults="10" >
+								</p:autoComplete>
+							</h:panelGrid>
+							<h:panelGrid columns="2" style="margin-bottom:10px;float: right;" cellpadding="5" >
+       						<h:outputText value="Incluir Anulados " />
+							<p:selectBooleanCheckbox value="#{cobranzaConsultaMB.selectedSiIncluirAnulados}" id="idSelectedIncluirAnulados" disabled="#{cobranzaConsultaMB.selectedSiDocumentosAnulados}"/>
+							</h:panelGrid>
+						     <h:panelGrid columns="3"  cellpadding="5" style="text-align: left;width: 50% ;border-width: 0px !important;"  >	       						
+								<p:selectBooleanCheckbox value="#{cobranzaConsultaMB.selectedSiUsuario}" id="idSelectedUsuario" disabled="#{carteraMB.sicobrador}" >
+									<p:ajax  update="idSelectedUsuario,idSelectedCobrador,listausuario,listacobrador" listener="#{cobranzaConsultaMB.cambiarTipoConsultaUsuario}" />
+								</p:selectBooleanCheckbox>
+								<h:outputText style="width:80%;min-width:147px; float:left;text-align:left" value="Por Usuario SGI  :"/>
+							    
+							    <p:selectOneMenu  filterText="Filter" filter="true" filterMatchMode="startsWith" panelStyle="width:220px"  disabled="#{!cobranzaConsultaMB.selectedSiUsuario || carteraMB.sicobrador}" id="listausuario"
+													style="width:50%;min-width:220px; float:left;text-align:left"  value="#{cobranzaConsultaMB.idUsuarioSeleccionado}">
+													<f:selectItem itemLabel="Seleccionar" itemValue=""/>
+													<f:selectItems value="#{cobranzaConsultaMB.listaUsuarios}" var="u" itemLabel="#{u.nombrescompletos.toUpperCase()}" 
+													itemValue="#{u.idusuario}"/>
+													<p:ajax  listener="#{cobranzaConsultaMB.setearUsuarioSeleccionado}"/>
+								
+								</p:selectOneMenu>
+							    
+								
+							</h:panelGrid>
+							
+							<br />
+							
+							<h:panelGrid id="fechaLabel">
+								<h:outputText  value="Fecha Creacion: " rendered="#{!cobranzaConsultaMB.selectedSiFacturacionElectronicaTabCobrador}"/>
+								<h:outputText  value="Fecha Emisión: " rendered="#{cobranzaConsultaMB.selectedSiFacturacionElectronicaTabCobrador}" />
+							</h:panelGrid>
+							
+							<h:panelGrid columns="5">
+								<p:calendar id="inicio0" pattern="dd-MM-yyyy"  styleClass="styleWidthCalendar"
+									value="#{cobranzaConsultaMB.desdeConsulta_Compr}" navigator="true" locale="es" >
+								<p:ajax event="dateSelect" listener="#{cobranzaConsultaMB.setConsulta_Compr}" update="fin0"/>
+								</p:calendar>
+								<p:watermark for="inicio0" value="Desde" />
+								<p:calendar id="fin0" pattern="dd-MM-yyyy" styleClass="styleWidthCalendar"
+									value="#{cobranzaConsultaMB.hastaConsulta_Compr}" navigator="true" locale="es" />
+								<p:watermark for="fin0" value="Hasta" />
+								<p:commandButton icon="ui-icon-search" value="Buscar"
+								actionListener="#{cobranzaConsultaMB.buscarComprobantepago}"
+								update="listadocumentospago" />
+							</h:panelGrid>
+								 <!-- *****************************************************  TABLA DE LISTA DE COMPROBANTES **************************************************************************************************** -->
+				<p:dataTable id="listadocumentospago" var="cp" 
+					rowKey="#{cp.idcomprobante}"
+					filteredValue="#{cobranzaConsultaMB.filtrolistacomprobantespago}"
+					value="#{cobranzaConsultaMB.listacomprobantespago}"
+					selection="#{cobranzaConsultaMB.comprobantepago}"
+					selectionMode="single" 
+					emptyMessage="No se ha encontrado ningún registro" paginator="true"
+					style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;"
+					paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+					rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="680"
+					styleClass="ui-datatable-hor-scroll-horizontal2" editable="true"
+					 rowStyleClass="#{cp.accion_aud =='ANULADO' ? 'red' : null}">
+
+					<p:ajax event="rowSelect"
+						listener="#{cobranzaConsultaMB.obtenerDetalleComprobante}" />
+					<p:ajax event="rowEdit" listener="#{cobranzaConsultaMB.actualizarComprobante}"  update=":frmMaestra:listaMensajes"/>
+<!-- 					<f:facet name="header"> -->
+<!-- 						<p:commandLink  -->
+<!-- 							actionListener="#{cobranzaConsultaMB.vercomprobante}"  -->
+<!-- 							update=":formConsultaComprobantes:verComprobante,:formConsultaComprobantes:verNotadebito" > -->
+<!-- 								<p:graphicImage width="25" height="25" -->
+<!-- 								value="../resources/images/varios/search.png" -->
+<!-- 								alt="Ver" title="Ver comprobante" /> -->
+<!-- 						</p:commandLink> -->
+<!-- 						<p:commandLink  style="margin-left:10px;" -->
+<!-- 							actionListener="#{cobranzaConsultaMB.validareliminarcomprobante}" > -->
+<!-- 							<p:graphicImage width="25" height="25" -->
+<!-- 								value="../resources/images/varios/folder_delete.png" -->
+<!-- 								alt="Eliminar" title="Eliminar comprobante" /> -->
+<!-- 						</p:commandLink> -->
+					
+<!-- 					</f:facet> -->
+<!-- 					<p:column style="width:32px"> -->
+<!-- 			           <p:rowEditor /> -->
+<!-- 			       </p:column> -->
+			       <p:column headerText="Estado" style="width:32px">
+			       		<h:outputLabel value="#{cp.accion_aud==null?  'REGISTRADO':'ANULADO'}" />
+			       </p:column>
+					<p:column headerText="Concepto" style="width:32px" >
+						<h:outputText value="#{cp.concepto}" />
+					</p:column>
+					<p:inputText value="#{cp.idtipconcepto}" id="hiddenfield" type="hidden" />
+					<p:inputText value="#{cp.nombrecobrador}" id="hiddenfield2" type="hidden" />
+					<p:inputText value="#{cp.montodetraccion}" id="hiddenfield3" type="hidden" />
+					<p:inputText value="#{cp.montoautodetraccion}" id="hiddenfield4" type="hidden" />
+					<p:column headerText="Clave" style="width:32px">
+						<h:outputText value="#{cp.claveUpa}" />
+					</p:column>
+					<p:column headerText="Inquilino" style="width:64px" >
+						<h:outputText value="#{cp.nombreInquilino}" />
+					</p:column>
+					<p:column  headerText="Nº Serie" filterBy="#{cp.nroserie}" filterMatchMode="contains" style="width:32px;text-align: left;">
+						<p:cellEditor>
+			               <f:facet name="output"><h:outputText value="#{cp.nroserie}" /></f:facet>
+			               <f:facet name="input"><p:inputText value="#{cp.nroserie}"  disabled="#{cp.sifacturacionelectronica}"/></f:facet>
+           				</p:cellEditor>
+					</p:column>
+					
+
+					<p:column headerText="Nº Comprobante" 
+						filterBy="#{cp.nrocomprobante}" filterMatchMode="contains" sortBy="#{cp.nrocomprobante}"
+						style="width:60px;text-align: left;" >
+						<p:cellEditor >
+			               <f:facet name="output"><h:outputText value="#{cp.nrocomprobante}" /></f:facet>
+			               <f:facet name="input"><p:inputText value="#{cp.nrocomprobante}" disabled="#{cp.sifacturacionelectronica}"/></f:facet>
+           				</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Tipo Comprobante" sortBy="#{cp.idtipdocu}"
+						filterBy="#{cp.idtipdocu}" filterMatchMode="contains">
+						<p:cellEditor>
+			              <f:facet name="output"><h:outputText value="#{cp.idtipdocu}" /></f:facet>
+			               <f:facet name="input"><p:inputText value="#{cp.idtipdocu}" disabled="#{cp.sifacturacionelectronica}"/></f:facet>
+           				</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="F. Emisión" filterBy="#{cp.fecEmision}"  sortBy="#{cp.fecEmision}"
+						filterMatchMode="contains">
+						<p:cellEditor>
+			               <f:facet name="output">
+		               						  <h:outputText value="#{cp.fecEmision}" >
+		               						  <f:convertDateTime pattern="dd/MM/yyyy" />
+		               						  </h:outputText>
+			               </f:facet>
+			               <f:facet name="input">
+	               							<p:calendar  pattern="dd-MM-yyyy" mask="true"
+												style="width:150px;" navigator="true" locale="es"
+												value="#{cp.fecEmision}"
+												readonlyInput="#{carteraMB.sicobrador}"  disabled="#{cp.sifacturacionelectronica}" />
+							</f:facet>
+           				</p:cellEditor>
+						
+					</p:column>
+
+					<p:column headerText="F. Cancelaci&oacute;n" sortBy="#{cp.fecCancelacion}"
+						filterBy="#{cp.fecCancelacion}" filterMatchMode="contains">
+						
+						<p:cellEditor>
+			               <f:facet name="output"><h:outputText value="#{cp.fecCancelacion}" >
+			               						  <f:convertDateTime pattern="dd/MM/yyyy" />
+			               						  </h:outputText>
+			               </f:facet>
+			               <f:facet name="input"> 
+		               							<p:calendar   id="con-fechacancelacion" pattern="dd-MM-yyyy" mask="true"
+													style="width:150px;" navigator="true" locale="es"
+													value="#{cp.fecCancelacion}"
+													readonlyInput="#{carteraMB.sicobrador}" styleClass="calendarClass" />
+												<p:commandLink actionListener="#{cobranzaConsultaMB.actualizarfecha}"
+												update=":formConsultaComprobantes:listacomprobantespago:con-fechacancelacion "
+												process="@this" inmediate="true" >
+															<p:graphicImage width="25" height="25"
+																value="../resources/images/varios/limpiar.png" alt="Ver"
+																title="Limpiar" />
+												</p:commandLink>																																	
+							</f:facet>
+														
+           				</p:cellEditor>
+           				
+					</p:column>
+					<p:column headerText="F. Vencimiento" sortBy="#{cp.fecVencimiento}"
+						filterBy="#{cp.fecCancelacion}" filterMatchMode="contains">
+						
+						<p:cellEditor>
+			               <f:facet name="output"><h:outputText value="#{cp.fecVencimiento}" >
+			               						  <f:convertDateTime pattern="dd/MM/yyyy" />
+			               						  </h:outputText>
+			               </f:facet>
+			               <f:facet name="input">
+		               							<p:calendar  pattern="dd-MM-yyyy" mask="true"
+													style="width:150px;" navigator="true" locale="es"
+													value="#{cp.fecVencimiento}"
+													readonlyInput="#{carteraMB.sicobrador}"  disabled="#{cp.sifacturacionelectronica}"/>
+							</f:facet>
+           				</p:cellEditor>
+					</p:column>
+					                    <p:column headerText="Auto Detracción" style="width:55px" >
+<!-- 						<h:outputText value="#{cp.siautodetraccion=='true'? 'S&iacute;':'No'}" /> -->
+						<p:cellEditor>
+			               <f:facet name="output">
+			               <h:outputText value="#{cp.siautodetraccion=='true'? 'S&iacute;':'No'}" /></f:facet>
+			               <f:facet name="input">
+								<h:selectOneMenu disabled="#{cp.idtipdocu eq '00' or  cp.idtipdocu eq '03' or  cp.idtipdocu eq '04'or  cp.idtipdocu eq '08' or  cp.idtipdocu eq 'DA' or  cp.idtipdocu eq 'PD'}"
+											value="#{cp.siautodetraccion}"
+											style="width: 50x;">
+<!-- 											<f:selectItems value="#{cobranzaConsultaMB.listaCobradores}" var="cobrador" itemLabel="#{cobrador.descripcion}" itemValue="#{cobrador.descripcion}" /> -->
+											<f:selectItem  itemValue='false' itemLabel="No" /> 
+											<f:selectItem  itemValue='true' itemLabel="Si" />
+											
+								</h:selectOneMenu>
+							
+							</f:facet>
+           				</p:cellEditor>
+					</p:column>
+					<p:column headerText="Sub Total" style="text-align: right;">
+						<h:outputText value="#{cp.subtotal}">
+							<f:convertNumber currencySymbol="" groupingUsed="true" locale="en"
+                     			maxFractionDigits="2" type="currency" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="IGV" style="text-align: right;">
+						<h:outputText value="#{cp.igv}">
+							<f:convertNumber currencySymbol="" groupingUsed="true" locale="en"
+                     			maxFractionDigits="2" type="currency" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Total" style="text-align: right;">
+						<h:outputText value="#{cp.total}">
+							<f:convertNumber currencySymbol="S/. " groupingUsed="true" locale="en"
+                     			maxFractionDigits="2" type="currency" />
+						</h:outputText>
+<!-- 						<p:cellEditor> -->
+<!-- 			              <f:facet name="output"><h:outputText value="#{cp.total}" /></f:facet> -->
+<!-- 			               <f:facet name="input"><p:inputText value="#{cp.total}" disabled="#{cp.sifacturacionelectronica}"/></f:facet> -->
+<!--            				</p:cellEditor> -->
+					</p:column>
+					
+					<p:column headerText="Mora" style="text-align: right;">
+						<h:outputText value="#{cp.mora}">
+							<f:convertNumber currencySymbol="" groupingUsed="true" locale="en"
+                     			maxFractionDigits="2" type="currency" />
+						</h:outputText>
+					</p:column>
+<!-- 					<p:column headerText="Monto Detracci&oacute;n" style="text-align: right;"> -->
+<!-- 						<h:outputText value="#{cp.montodetraccion!=null? cp.montodetraccion: 0.0}"> -->
+<!-- 							<f:convertNumber currencySymbol="" groupingUsed="true" locale="en" -->
+<!--                      			maxFractionDigits="2" type="currency" /> -->
+<!-- 						</h:outputText> -->
+<!-- 					</p:column> -->
+					<p:column headerText="Comprobante. Ref." style="text-align: right;" filterBy="#{cp.nrocomprobanteref}"
+						filterMatchMode="contains">
+						<h:outputText value="#{cp.nrocomprobanteref}">
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Nota D&eacute;bito Ref." style="text-align: right;" filterBy="#{cp.nronotadebitoref}"
+						filterMatchMode="contains">
+						<h:outputText value="#{cp.nronotadebitoref}">
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Nombre Cobrador" sortBy="#{cp.nombrecobrador}"
+						filterBy="#{cp.nombrecobrador}" filterMatchMode="contains">
+						<p:cellEditor>
+			               <f:facet name="output">
+			               <h:outputText value="#{cp.nombrecobrador}" /></f:facet>
+			               <f:facet name="input">
+								<h:selectOneMenu disabled="#{carteraMB.sicobrador}"
+											value="#{cp.nombrecobrador}"
+											style="width: 200px;">
+											<f:selectItems value="#{cobranzaConsultaMB.listaCobradores}"
+												var="cobrador" itemLabel="#{cobrador.descripcion}" itemValue="#{cobrador.descripcion}" />
+								</h:selectOneMenu>
+							
+							</f:facet>
+           				</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="Nº de Operación"
+						filterBy="#{cp.numerooperacion}" filterMatchMode="contains">
+			               <p:cellEditor>
+			               <f:facet name="output"><h:outputText value="#{cp.numerooperacion}" /></f:facet>
+			               <f:facet name="input"><p:inputText value="#{cp.numerooperacion}" /></f:facet>
+           				</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Usu. Creador" sortBy="#{cp.usrcre}" style="width:32px" >
+						<h:outputText value="#{cp.usrcre}" />
+					</p:column>
+
+					<p:column headerText="F. Creación" sortBy="#{cp.feccre}" style="width:32px">
+						<h:outputText value="#{cp.feccre}">
+							<f:convertDateTime  pattern="dd/MM/yyyy hh:mm a " timeZone="GMT-5"/>
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+					<p:outputPanel id="outoutpanelDescarga">
+						<p:panel id="panelExportar" header="Exportar" style="margin-top:15px;text-align:center;" >
+							<h:panelGrid columns="8" >
+									<p:spacer width="20"/>
+									<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.Excel_Validacion}" icon="ui-icon-arrowthickstop-1-s" onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+										 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+										<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" />
+									</p:commandButton>
+									<p:spacer width="20"/>
+									<p:commandButton style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.PDF_DocumentoPago}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+										 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" />
+											<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" />
+									</p:commandButton>
+<!-- 									<p:spacer width="20"/> -->
+<!-- 									<p:commandButton ajax="false" style="width:20px;height:20px;" actionListener="#{cobranzaConsultaMB.DBF}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" > -->
+<!-- 										 <p:graphicImage value="/resources/icons/tipoArchivo/dbf.png" /> -->
+<!-- 											<p:fileDownload value="#{cobranzaConsultaMB.report}" contentDisposition="attachment" /> -->
+<!-- 									</p:commandButton> -->
+									
+									<p:selectBooleanCheckbox value="#{cobranzaConsultaMB.sidetallecomprobantes}" style="margin-left:60px;"/>
+									<h:outputText value="Incluir detalle de comprobante" style="margin-left:10px;font-size:11px;"/>
+							</h:panelGrid>
+						</p:panel>
+				   </p:outputPanel>
+					<br />
+				<!-- **************************************************************************************************************** -->									
+				<br />
+<!-- 				<p:outputPanel id="total" > -->
+<!-- 					<h:outputText value="TOTAL: " style="font-size:25px;color:#806300;" /> -->
+<!-- 					<h:outputText value="#{cobranzaConsultaMB.total}" -->
+<!-- 						style="font-size:20px;"> -->
+<!-- 						<f:convertNumber currencySymbol="S/. " groupingUsed="true" locale="en" -->
+<!--                      			maxFractionDigits="2" type="currency" /> -->
+<!-- 					</h:outputText> -->
+<!-- 					<h:outputText value="#{cobranzaConsultaMB.totaligv}" /> -->
+<!-- 					<h:outputText value="#{cobranzaConsultaMB.totaldetraccion}" /> -->
+<!-- 				</p:outputPanel> -->
+								
+							
+						</p:outputPanel>
+					</p:tab>
+					<!-- *********  LIQUIDACION DE DEUDA POR CONDICION DE CLAUSULA DE CONTRATO ******  -->
+					<p:tab title ="Liquidación Deuda">
+					   <h:panelGrid columns="4" >
+					               <h:outputText value="Clave:" />
+					               <p:remoteCommand name="buscarclaveDatos"
+											actionListener="#{cobranzaConsultaMB.obtenerListaContratosxUpa}"
+											update="listaContratoxUpaLiquidacion,:frmMaestra:listaMensajes" />
+										<p:inputMask mask="**-****-***" value="#{cobranzaConsultaMB.claveUpaLiq}"
+											onkeypress="if (event.keyCode == 13) { buscarclaveDatos(); return false; }"
+											style="width:90px;text-align:center;font-size:15px;">
+									</p:inputMask>
+					   </h:panelGrid>
+					   <p:dataTable id="listaContratoxUpaLiquidacion" var="contrato" rows="5" 
+					   						rowKey="#{contrato.idcontrato}" rowIndexVar="index" selectionMode="single"
+											value="#{cobranzaConsultaMB.listaCondicionDeUpa}"
+											selection="#{cobranzaConsultaMB.condicionSeleccionadoDeuda}" 
+											style="text-align:center;font-size:11px;margin-top:10px;width:600px"
+											emptyMessage="La upa no registra ningun contrato"
+											scrollWidth="600" styleClass="ui-datatable-hor-scroll">
+					 							  <p:columnGroup type="header">
+												  <p:row>
+												        <p:column rowspan="2" headerText="N°" style="vertical-align: middle;" /> 
+													  	<p:column rowspan="2" headerText="Liquidación" style="vertical-align: middle;" />
+										                <p:column rowspan="2" headerText="Condición" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Nombre/Razón Social" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Estado" style="vertical-align: middle;"/>
+										                <p:column colspan="5" headerText="Contrato" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Inicio Cobro" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Fin Cobro" style="vertical-align: middle;"/>
+										                <p:column rowspan="2" headerText="Interes/Penalidad" style="vertical-align: middle;"/>
+			
+									            </p:row>
+									            <p:row>
+														<p:column colspan="1" headerText="Nro Contrato" style="vertical-align: middle;"/>
+										                <p:column colspan="1" headerText="Inicio" style="vertical-align: middle;"/>
+										                <p:column colspan="1" headerText="Fin" style="vertical-align: middle;"/>
+										                <p:column rowspan="1" headerText="Resuelto" style="vertical-align: middle;"/>
+										                <p:column rowspan="1" headerText="Adenda" style="vertical-align: middle;"/>
+									            </p:row>
+											</p:columnGroup>
+											<p:column>
+											         <h:outputText value="#{index+1}" />
+											</p:column>
+											<p:column>
+												<p:commandLink	actionListener="#{cobranzaConsultaMB.generarReporte(contrato)}"
+															update=":frmReporteInteresPenalidad, :frmMaestra:listaMensajes"
+															rendered="#{contrato.sicondicionclausula}"
+															onclick="PF('statusDialog').show();"
+															oncomplete="PF('statusDialog').hide();"
+															>
+															<div class="btncentrado">
+												<p:outputLabel value="Ver"
+													style="margin-bottom:5px; float:center;margin-left:0px;font-size:14px;" />
+
+											</div>
+												</p:commandLink>
+											</p:column>
+											<p:column>
+													<h:outputText value="#{contrato.condicion}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{contrato.nombresInquilino}" />
+												</p:column>
+												<p:column headerText="Estado">
+													<h:outputText value="#{contrato.estado}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{contrato.nrocontrato==NULL ? 'S/N':contrato.nrocontrato}" />
+												</p:column>
+			
+												<p:column>
+													<h:outputText value="#{contrato.iniciocontrato}" >
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText>
+												</p:column>
+												<p:column>
+													<h:outputText value="#{contrato.fincontrato}" >
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText>
+												</p:column>
+												<p:column headerText="Resuelto">
+													<h:outputText value="#{contrato.siresuelto=='true' ? 'Sí':'No'}" />
+												</p:column>
+												<p:column headerText="Adenda">
+													<h:outputText value="#{contrato.siadenda=='true' ? 'Sí':'No'}" />
+												</p:column>
+												
+												<p:column headerText="Inicio Cobro">
+													<h:outputText value="#{contrato.iniciocobro}" >
+													<f:convertDateTime pattern="MMM/yyyy" />
+													</h:outputText>
+												</p:column>
+												<p:column headerText="Fin Cobro">
+													<h:outputText value="#{contrato.fincobro}" >
+													<f:convertDateTime pattern="MMM/yyyy" />
+													</h:outputText>
+												</p:column>
+<!-- 												<p:column headerText=""> -->
+<!-- 													<h:outputText value="#{contrato.sicuotascanceladas=='true' ? 'Sí':'No'}" /> -->
+<!-- 												</p:column> -->
+												<p:column headerText="">
+													<h:outputText value="#{contrato.sicondicionclausula ? 'Sí Registra':'No Registra'}" />
+												</p:column>
+					   </p:dataTable>
+					
+					</p:tab>
+				
+			</p:tabView>						
+						</div>
+					</h:form>
+					<h:form id="frmReporteInteresPenalidad">
+							<p:dialog header=" Liquidacion de Deuda por Renta" 
+															id="dlgReporteDeudaInteresPenalidad" width="auto" height="auto"
+															closable="true" widgetVar="dlgReporteDeudaInteresPenalidad"
+															modal="true"
+															style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+															<div class="RegistroCuotaContrato" style="width: auto; height: auto;">
+															<div class="RegistroCuotaContratoIzq" style="width: auto; height: auto;">
+															<h:panelGrid columns="2">
+																<h:panelGrid columns="2">
+																     <h:outputText value="ARRENDATARIO :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.nombresInquilino}" style="color:#BF9400;"/>
+																     <h:outputText value="INMUEBLE :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.direccion}" style="color:#BF9400;"/>
+																     <h:outputText value="UPA :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.claveUpa}" style="color:#BF9400;"/>
+																     <h:outputText value="USO :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.uso}" style="color:#BF9400;"/>
+																     <h:outputText value="MONEDA :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.moneda}" style="color:#BF9400;"/>
+																	 <h:outputText value="N° REPORTE :" /><h:inputText id="nroreporte" value="#{cobranzaConsultaMB.nro_reporte}" onkeyup="convertir_a_mayuscula(this);" /><p:watermark for="nroreporte" value="N° XX-W-202X-REC" style="color:#BF9400;" />
+																</h:panelGrid>
+																<h:panelGrid columns="2">
+																     <h:outputText value="CONTRATO :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.condicion}" style="color:#BF9400;"/>
+																     <h:outputText value="VIGENCIA :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.iniciocontrato}" style="color:#BF9400;"><f:convertDateTime pattern="MM-yyyy"/></h:outputText>
+																     <h:outputText value="PRIMER MES :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.iniciocontrato}" style="color:#BF9400;"><f:convertDateTime pattern="MM-yyyy"/></h:outputText>
+																     <h:outputText value="ULTIMO MES :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.fincontrato}" style="color:#BF9400;"> <f:convertDateTime pattern="MM-yyyy"/></h:outputText>
+																     <h:outputText value="N° MESES ADEUDOS :" /><h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.rentas.size()}" style="color:#BF9400;"/>
+																     <h:outputText value="FECHA DE ELABORACIÓN :" /><h:outputText value="#{session.lastAccessedTime}" style="color:#BF9400;">
+     																									 <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+																										</h:outputText>												     
+																</h:panelGrid>
+															
+															</h:panelGrid>
+													
+																
+																<!-- *****************************************************  TABLA DE LISTA RENTAS DEUDAS **************************************************************************************************** -->
+				<p:dataTable id="listarentapendiente" var="re" 
+					rowKey="#{re.id}"  rowIndexVar="index"
+					filteredValue="#{cobranzaConsultaMB.filtrolistacomprobantespago}"
+					value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.rentas}"
+					selection="#{cobranzaConsultaMB.rentaBean}"
+					selectionMode="single" 
+					emptyMessage="No se ha encontrado ningún registro" paginator="true"
+					style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;"
+					paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+					rowsPerPageTemplate="10,20,40,60,80" rows="12" scrollWidth="680"
+					styleClass="ui-datatable-hor-scroll-horizontal2" editable="true"
+					 >
+					 <p:column>
+						<h:outputText value="#{index+1}" />
+					</p:column>
+					 <p:column headerText="MES">
+					        <h:outputText value="#{re.mes}" />
+					 </p:column>
+					 <p:column headerText="AÑO">
+					        <h:outputText value="#{re.anio}" />
+					 </p:column>
+					 <p:column headerText="RENTA ASIGNADA">
+					        <h:outputText value="#{re.tipomoneda} #{re.renta}" />
+					 </p:column>
+					 <p:column headerText="RENTA PENDIENTE">
+					        <h:outputText value="#{re.tipomoneda} #{re.montopagar}" />
+					 </p:column>
+					 <p:column headerText="FECHA DE VENCIMIENTO">
+					        <h:outputText value="#{re.fechavencimiento}" >
+					        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+					        </h:outputText>
+					 </p:column>
+					 <p:column headerText="DIAS DE ATRASO">
+					        <h:outputText value="#{re.nrodias_adeudo}" />
+					 </p:column>
+					 <p:column headerText="INTERES MORATORIO">
+					        <h:outputText value="#{re.tipomoneda} #{re.interemoratorio}" />
+					 </p:column>
+					 <p:column headerText="PENALIDAD 1" rendered="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.total_penalidad_1 >0? 'true':'false'}">
+					        <h:outputText value="#{re.tipomoneda} #{re.penalDemoraPago }"  />
+					 </p:column>
+					 <p:column headerText="PENALIDAD 2" rendered="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.total_penalidad_2 >0? 'true':'false'}">
+					        <h:outputText value="#{re.tipomoneda} #{re.penalDemoraEntregaInmueble}" />
+					 </p:column>
+					 <p:column headerText="TOTAL ADEUDADO">
+					        <h:outputText value="#{re.tipomoneda} #{re.total_adeudado}" />
+					 </p:column>
+					 
+					 
+					</p:dataTable>
+					<br />
+				<p:outputPanel id="totalrenta" >
+				    <h:panelGrid columns="2" cellpadding="5" >
+
+					<h:outputText value="TOTAL RENTA : " style="font-size:20px;color:#806300;" />
+					 			<h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.total_renta}"
+						style="font-size:20px;"> 
+						<f:convertNumber currencySymbol=" " maxFractionDigits="2"  locale="en" groupingUsed="true" type="currency" />
+						</h:outputText>											
+					<h:outputText value="TOTAL ADEUDADO: " style="font-size:20px;color:#806300;" />
+					    <h:outputText value="#{cobranzaConsultaMB.condicionSeleccionadoDeuda.total_adeudado}"
+						style="font-size:20px;">
+						<f:convertNumber currencySymbol=" " maxFractionDigits="2"  locale="en" groupingUsed="true" type="currency" />
+						</h:outputText>	
+					
+					    
+					</h:panelGrid>
+					
+				</p:outputPanel>
+					
+					<p:panel id="infoContrato" style="margin-right:50px;">
+					<h:panelGrid columns="2" cellspacing="5">
+					  <h:panelGrid columns="2" cellspacing="5">
+					   <h:outputLabel style="color:#403100;" value="Interes Moratorio : " />
+					   <h:outputLabel style="color:#BF9400;"
+									value="#{cobranzaConsultaMB.condicionClausula.detalleclausula.nombre==null ? 'NO':'SI'}" />
+					   <h:outputLabel style="color:#403100;" value="Penalidad : " />
+					   <h:outputLabel style="color:#BF9400;"
+									value="#{cobranzaConsultaMB.listaCondicionClausulaPenalidad.size()>0 ? 'SI':'NO'}" />
+					  </h:panelGrid>
+					  <h:panelGrid columns="2" cellspacing="5">
+					   <h:outputLabel style="color:#403100;" value="Tipo de Interes: " />
+					   <h:outputLabel style="color:#BF9400;"
+									value="#{cobranzaConsultaMB.condicionClausula.detalleclausula.nombre==null ? '' : cobranzaConsultaMB.condicionClausula.detalleclausula.nombre}" />
+					  
+					  <h:outputLabel style="color:#403100;" value="Tipo de penalidad: " />
+					   <p:commandLink id="botonContratoSubTabContrato"  
+											 process="@this" oncomplete="dlgTipoPenalidades.show();"
+											update="tblPenalidadesContrato">
+											<div class="btncentrado">
+												<p:outputLabel value="#{cobranzaConsultaMB.listaCondicionClausulaPenalidad.size()>0 ? 'Sí':'No'}"
+													style="margin-bottom:5px; float:center;margin-left:0px;font-size:15px;" />
+<!-- 												<p:graphicImage value="/resources/images/varios/search.png"  width="15" height="20"  style="margin-top:-6px;" -->
+<!-- 													alt="Registro" title="Registro" /> -->
+											</div>
+										</p:commandLink>
+						<p:dialog header=" Tipo de Penalidades" 
+															id="dlgTipoPenalidades" width="auto" height="auto"
+															closable="true" widgetVar="dlgTipoPenalidades"
+															
+															style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+						<p:dataTable id="tblPenalidadesContrato" var="listcond"  
+																		rowKey="#{listcond.id_condicion_incumplimiento}"
+																		rowIndexVar="index" 
+																		value ="#{cobranzaConsultaMB.listaCondicionClausulaPenalidad}" 
+																		selection="#{cobranzaConsultaMB.condicionClausulaSeleccionada}"
+																		selectionMode="single" 
+																		emptyMessage="No se ha encontrado ningún registro "
+																
+																>
+																<p:column headerText="Nº">
+											        <h:outputText value="#{index + 1}" />										   
+											   </p:column>
+											   
+											   <p:column headerText="Tipo De Clausula" >
+											   		<h:outputText value="#{listcond.detalleclausula.nombre}" />
+											   </p:column>
+											   <p:column headerText="Valor Porcentaje" >
+											   		<h:outputText value="#{listcond.valor_porcentaje}" />
+											   </p:column>
+											   <p:column headerText="Ejecución" >
+											   		<h:outputText value="#{listcond.ejecucion_periodica}" />
+											   </p:column>
+											
+																
+																</p:dataTable>
+						
+						</p:dialog>
+					  </h:panelGrid>
+					 
+					  </h:panelGrid>
+					</p:panel>
+						<div class="perfilLeyendaLiquidacion">
+										<div class="perfilLeyendaTituloLiquidacion">
+											<p:graphicImage width="15" height="15"
+												style="margin-top:3px;margin-rigth:20px;"
+												value="/resources/icons/leyendaBandera.png" alt="Penalidad 1 : penalidad Demora en Pago"
+												 />
+											<p:outputLabel style="margin-left:5px;" value="Leyenda" />
+										</div>
+										<div class="perfilLeyendaDetalle">
+										   <h:panelGrid columns="1">
+										   <h:outputLabel value="Penalidad 1 : PENALIDAD DEMORA EN PAGO DE RENTA"/>
+										   <h:outputLabel value="Penalidad 2 : PENALIDAD DEMORA EN ENTREGA DE INMUEBLE"/>
+										   </h:panelGrid>											
+										</div>
+					     </div>
+					     
+					</div>
+					<div class="RegistroCuotaContratoDer">
+								<div class="paginaInterior2" style="height: auto;">
+                                    <div class="subcontenidoInfo_Cabecera">
+										<div class="subcontenidoInfo_logoTitulo" />
+										<div class="subcontenidoInfo_descripcionTitulo" >
+											#{cobranzaConsultaMB.interesMora.tipointeresmora.descripcion}
+											
+											</div>
+									</div>
+
+									<div class="subcontenidoInfo_detContenidoFondo" style="height: auto;">
+
+
+										<div class="descripcionTipoCambio">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Tasa Moneda Nacional: " />
+											<br />
+										</div>
+										<div class="valorTipoCambio" >
+											<h:outputText value=" #{cobranzaConsultaMB.interesMora.tamn} %" style="margin-left:25px;"/>
+										</div>
+										<div class="descripcionTipoCambio">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Tasa Moneda Extranjera: " />
+											<br />
+										</div>
+										<div class="valorTipoCambio" >
+											<h:outputText value=" #{cobranzaConsultaMB.interesMora.tamex} %" style="margin-left:25px;"/>
+										</div>
+									</div>
+									<div class="subcontenidoInfo_detUsuario">
+
+										<div class="detalleTopfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value="Del dia :" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value="#{cobranzaConsultaMB.interesMora.fec_reg}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</div>
+
+
+
+									</div>
+
+								</div>
+								<div class="paginaInterior2" style="height: auto;">
+										<div class="subcontenidoInfo_Cabecera">
+												<div class="subcontenidoInfo_logoTitulo" />
+												<div class="subcontenidoInfo_descripcionTitulo">
+												Tipo de Cambio</div>
+											</div>
+								<div class="subcontenidoInfo_detContenidoFondo" style="height: auto;">			
+									<div class="subcontenidoInfo_Numero2">
+											<h:outputText styleClass="informacion6" value="T.C" />
+										</div>
+										<div class="infoDialogoCobranza_detalle">
+											<p:outputPanel id="infoayudaContrato">
+												<p:inplace editor="true">
+												    
+													<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+														value="S/. #{cobranzaConsultaMB.tipoCambio.tipocambio}" style="width:20px;" />
+														
+												</p:inplace>
+												<br />
+												<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+													value="#{cobranzaConsultaMB.tipoCambio.fecha}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</p:outputPanel>
+										</div>
+									</div>
+								</div>
+								<div class="paginaInterior2" style="height: auto;">
+								  <div class="subcontenidoInfo_detContenidoFondo" style="height: auto;">
+								  		<div class="descripcionTipoCambio">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Exportar" />
+											<br />
+										</div>
+										<div class="valorTipoCambio" >
+										  
+										 <p:commandButton style="width:20px;height:20px;"  icon="ui-icon-arrowthickstop-1-s"
+							                               actionListener="#{cobranzaConsultaMB.generarReporteLiquidacionDeuda('pdf')}" 
+					                                       onclick="PrimeFaces.monitorDownload(start,stop)"  ajax="false"					                                       
+														   >
+												 	<p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" />
+													<p:fileDownload value="#{cobranzaConsultaMB.report}"  contentDisposition="attachment" />
+
+									</p:commandButton> 
+										 										 
+										</div>
+								  </div>
+								</div>
+								
+					</div>
+				<div>
+
+
+					<center>
+
+						<p:commandButton value="Cerrar"
+							onclick="dlgReporteDeudaInteresPenalidad.hide();"
+							icon="icon-cancel" style="font-size: 25px;"/>
+					</center>
+
+
+				</div>
+			</div>
+																
+													</p:dialog>
+					</h:form>
+			<script type="text/javascript">
+				  //<![CDATA[
+		     	function convertir_a_mayuscula(elemento) {
+					//alert("metodo");
+					elemento.value = elemento.value.toUpperCase();
+	 		   		//e.value = e.value.toUpperCase();
+				}
+		     	function validarKey(evt){
+		     	    
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57) { // is a number.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+		  	   //]]>
+				
+
+
+			</script>
+			</div>
+</h:body>
+</html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="administrador_paginasIcono"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Arrendamiento/Autoval&uacute;o</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Monitoreo-Arrendamiento
+							y Autoval&uacute;o</label>
+					</div>
+				</div>
+				<div class="menuAzul_fondoOpciones">
+					<div class="menuAzul_submenuOpciones">
+						<p:commandLink id="idmenuAzul_submenOpc1"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionSupervisor.jsf'"
+							styleClass="menuAzul_submenOpc1" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc1Submenu.png"
+								alt="Bandeja" title="Supervisor" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_submenOpc2"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionCobranza.jsf'"
+							styleClass="menuAzul_submenOpc2" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc2Submenu.png"
+								alt="Cobranzas" title="Recaudacion" />
+						</p:commandLink>
+
+					</div>
+					<div class="menuAzul_submenuItems">
+						<p:commandLink id="idmenuAzul_bandejaSubmenu"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionCobranza.jsf'"
+							styleClass="menuAzul_bandejaSubmenu"
+							oncomplete="tabDerivacion();">
+							<p:graphicImage styleClass="menuAzul_imgsubmenbandeja"
+								value="/resources/images/recaudacion/menuAzul_bandejaSubmenu.png"
+								alt="Bandeja" title="Bandeja" />
+							<h:outputText style="float:left;margin-left:5px; margin-top:2px;"
+								value="Bandeja" />
+						</p:commandLink>
+
+						<p:commandLink id="idmenuAzul_arbitriosSubmenu"
+							styleClass="menuAzul_arbitriosSubmenu" style="width:150px;"
+							oncomplete="tabDerivacion();">
+							<p:graphicImage styleClass="menuAzul_imgsubmenbandeja"
+								style="margin-top:2px;" width="22" height="22"
+								value="/resources/images/recaudacion/ico_c.png" alt="Bandeja"
+								title="Bandeja" />
+							<h:outputText
+								style="float:left;margin-left:5px; margin-top:7px;color:white;"
+								value="Arrendamiento" />
+						</p:commandLink>
+
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+
+					<!-- CONTENIDO MODIFICABLE -->
+					<div class="contenidoPrincipal_subFondo_Icono"></div>
+					<div id="lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">Seguimiento</div>
+
+
+					<p:commandLink id="idSeguimientoSeg" styleClass="btnSeguimiento"
+						onclick="tabSeguimientoSeg();">
+						<div class="btncentrado">Seguimiento</div>
+					</p:commandLink>
+					<p:commandLink id="idConsultaSeg" styleClass="btnDespacho"
+						onclick="tabConsultaSeg();">
+						<div class="btncentrado">Consulta</div>
+					</p:commandLink>
+					<p:commandLink id="idAlertaSeg" styleClass="btnDespacho"
+						onclick="tabAlertaSeg();">
+						<div class="btncentrado">Alerta</div>
+					</p:commandLink>
+					<p:commandLink id="idReporteSeg" styleClass="btnConsultas"
+						onclick="tabReporteSeg();">
+						<div class="btncentrado">Reporte</div>
+					</p:commandLink>
+					<div class="contenidoPrincipal_fondo_formulario">
+						<div class="dgaiMonitoreo_Contenido">
+							<!-- PANEL SEGUIMIENTO -->
+							<div id="idDivSeguimientoSeg">
+								<p:outputPanel id="pnlpgSeguimientoSeguimiento" >
+								<ui:include src="pgSeguimientoSeguimiento.xhtml" />
+								</p:outputPanel>
+							</div>
+							<!-- PANEL CONSULTA -->
+							<div id="idDivConsultaSeg">
+								<p:outputPanel id="pnlpgSeguimientoConsulta" >
+								<ui:include src="pgSeguimientoConsulta.xhtml" />
+								</p:outputPanel>
+							</div>
+							<!-- PANEL ALERTA -->
+							<div id="idDivAlertaSeg">
+								<p:outputPanel id="pnlpgSeguimientoAlerta" >
+								<ui:include src="pgSeguimientoAlerta.xhtml" />
+								</p:outputPanel>
+							</div>
+							<!-- PANEL REPORTE -->
+							<div id="idDivReporteSeg">
+								<p:outputPanel id="pnlpgSeguimientoReporte" >
+								<ui:include src="pgSeguimientoReporte.xhtml" /> 
+								</p:outputPanel>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

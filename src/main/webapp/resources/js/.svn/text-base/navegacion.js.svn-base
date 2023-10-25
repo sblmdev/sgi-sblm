@@ -1,0 +1,60 @@
+//bloquea history back
+javascript: window.history.forward(-1);
+// BLOQUEO DE TECLAS DE FUNCION, CONTROL y ALT CON FECLAS
+document.onkeydown = function(event) {
+	var evt;
+	if (window.event) {
+		evt = window.event;// para explorer
+	} else {
+		evt = event;// otros navegadores
+	}
+	var charCode = (evt.which) ? evt.which : evt.keyCode;
+	//alert(charCode);
+	// (window.event)
+	if (((charCode >= 113) && (charCode <= 123))) {
+		// Bloquear Backspace
+		// Bloquear Teclas Fxx (excepto F1)
+		window.event.cancelBubble = true;
+		window.event.keyCode = 8;
+		window.event.returnValue = false;
+		return false;
+	}
+
+	if (evt.altLeft) {
+		if ((charCode == 37) || (charCode == 39)) {
+			// Bloquear Alt + Cursor Izq/Der.
+			return false;
+		}
+	}
+
+	if (evt.ctrlKey) {
+		// Bloquear Ctrl
+		return false;
+	}
+	return true;
+};
+
+// opciones de click derecho sobre la ventana
+function derecha(e) {
+	if (navigator.appName == 'Netscape' && (e.which == 3 || e.which == 2)) {
+		//alert('Servicio de Administración Tributaria');
+		return false;
+	} else if (navigator.appName == 'Microsoft Internet Explorer'
+			&& (event.button == 2)) {
+		//alert('Servicio de Administración Tributaria');
+	}
+}
+document.onmousedown = derecha; 
+document.oncontextmenu = function() {
+	return false;
+};
+document.ondragstart = function() {
+	return false;
+};
+
+if (document.layers){
+	window.captureEvents(Event.MOUSEDOWN);
+}
+if (document.layers){
+	window.captureEvents(Event.MOUSEUP);
+}

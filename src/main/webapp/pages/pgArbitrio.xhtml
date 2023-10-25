@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+
+	<title>SBLM-SOCIEDAD DE BENEFICENCIA DE LIMA METROPOLITANA</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="head">
+			<f:metadata>
+<!-- 				<f:viewParam id="estado" name="estado" value="#{ccMB.estado}" required="false"/> -->
+			</f:metadata>
+		</ui:define>
+		<ui:define name="content">
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->	
+					<div class="contrato_IconoIdentificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">MANTENIMIENTO</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Arbitrio</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo" style="background-color: white;">
+				<h:form id="frmArbitrio">	
+				<p:toolbar styleClass="ui-saju-toolbar">
+					<p:toolbarGroup align="left">
+					   <p:commandButton  icon="ui-icon-disk" ajax="true" value="Grabar Arbitrio"  rendered="#{arbMB.arbitrioBean.idarbitrio==0? true:false}"
+												actionListener="#{arbMB.validarGrabarArbitrio}"
+												update=":frmMaestra:listaMensajes,:frmArbitrio"/>
+						<p:commandButton  icon="ui-icon-disk" ajax="true" value="Actualizar Arbitrio" rendered="#{arbMB.arbitrioBean.idarbitrio==0? false:true}"
+												actionListener="#{arbMB.validarActualizarArbitrio}"
+												update=":frmMaestra:listaMensajes,:frmArbitrio"/>
+						
+					   <p:commandButton value="UPA(*)" oncomplete="iddlgListaUpa.show();" rendered="#{arbMB.arbitrioBean.idarbitrio==0? true:false}"/>
+					   <p:commandButton value="Nueva Arbitrio" icon="ui-icon-plus"
+			  				actionListener="#{arbMB.limpiarFormulario}" update=":frmArbitrio,:frmConsulta,:frmMaestra:listaMensajes"/>
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right" >
+							<p:commandButton  icon="ui-icon-search" oncomplete="dlgListaCondiciones.show();" title="Buscar Arbitrio"/>
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:confirmDialog message="¿Desea #{arbMB.arbitrioBean.idarbitrio==0?'registrar ':'actualizar '}arbitrio ?"
+						header="#{arbMB.arbitrioBean.idarbitrio==0?'Registrar Arbitrio':'Actualizar Arbitrio'} " severity="alert"
+						widgetVar="dlgRegistrarArbitrio">
+						<center>
+						<p:commandButton value="&nbsp;Aceptar" icon="icon-save"
+								update=":frmArbitrio,:frmConsulta,:frmMaestra:listaMensajes"
+								actionListener="#{arbMB.grabarArbitrio}" oncomplete="dlgRegistrarArbitrio.hide()" onstart="statusLoading.show();" onsuccess="statusLoading.hide();"
+								/>
+						<p:commandButton value="&nbsp;Cancelar" onclick="dlgRegistrarArbitrio.hide()" icon="icon-cancel" />
+						</center>
+								
+				</p:confirmDialog>
+				<p:tabView activeIndex="0" >
+					<p:tab id="tabPropiedades" title="Arbitrio">
+					<!-- tipo de upa -->
+							<table width="600" style="margin: 0px 0px;" cellspacing="10">
+												<tr>
+													<td width="20%"><h:outputText  value="Clave:" /></td>
+													<td width="25%"><h:outputText  id="idArbitrioClave"  value="#{arbMB.arbitrioBean.clave}"  maxlength="9"  /></td>	
+													<td width="20%"><h:outputText value="Direcci&oacute;n:"  /></td>
+													<td width="20%"><p:inputText id="idArbitrioDireccion" value="#{arbMB.arbitrioBean.direccion}" readonly="#{arbMB.arbitrioBean.idarbitrio==0? false:true}"/>
+													</td>
+												</tr>
+
+							</table>
+							<table width="15%" style="margin: 0px 0px;" cellspacing="10" >
+								<tr>
+								    <td width="20%">
+								     	 <h:outputText  value="Periodo:"  />
+								     </td>
+								     <td width="20%"><p:inputText id="nroperiodo" readonly="#{arbMB.arbitrioBean.idarbitrio==0? false:true}"
+																	value="#{arbMB.arbitrioBean.periodo}" onkeypress="return validarKey(event)"
+																	style="width: 172px;" maxlength="150" /> 
+																	<p:watermark for="nroperiodo" value="Ejm: 2018,2019,2020" />
+									</td>
+									<td>
+									<p:commandButton value="Validar" actionListener="#{arbMB.validarDatosPeriodo(arbMB.arbitrioBean)}" 
+									 		update=":frmArbitrio,:frmMaestra:listaMensajes"
+											icon="ui-icon-search"
+										 	onclick="PF('statusDialog').show();"
+										 	oncomplete="PF('statusDialog').hide();"
+										 	disabled="#{arbMB.arbitrioBean.idarbitrio==0? false:true}"
+										 />
+									</td>
+								     </tr>
+						     </table>
+						     <p:outputPanel id="tblTrimestres">
+						     <table width="15%" style="margin: 0px 0px;" cellspacing="5" >
+						     		<tr>
+						     				<td width="20%"><p:inputText id="trimestres1"
+																	value="#{arbMB.arbitrioBean.trim1}" onkeypress="return isNumberKey(event)"
+																	style="width: 120px;" maxlength="150" readonly="#{arbMB.siexisteregistro}" /> 
+																	<p:watermark for="trimestres1" value="Trimestre 1" />
+											</td>
+											<td width="20%"><p:inputText id="trimestres2"
+																	value="#{arbMB.arbitrioBean.trim2}" onkeypress="return isNumberKey(event)"
+																	style="width: 120px;" maxlength="150" readonly="#{arbMB.siexisteregistro}" /> 
+																	<p:watermark for="trimestres2" value="Trimestre 2" />
+											</td>
+											<td width="20%"><p:inputText id="trimestres3"
+																	value="#{arbMB.arbitrioBean.trim3}" onkeypress="return isNumberKey(event)"
+																	style="width: 120px;" maxlength="150" readonly="#{arbMB.siexisteregistro}"/> 
+																	<p:watermark for="trimestres3" value="Trimestre 3" />
+											</td>
+											<td width="20%"><p:inputText id="trimestres4"
+																	value="#{arbMB.arbitrioBean.trim4}" onkeypress="return isNumberKey(event)"
+																	style="width: 120px;" maxlength="150" readonly="#{arbMB.siexisteregistro}"/> 
+																	<p:watermark for="trimestres4" value="Trimestre 4" />
+											</td>
+											<td  width="30%">
+											<p:commandButton value="Validar Trimestres" style="width: 125px !important;" actionListener="#{arbMB.verificarCalculoTotal(arbMB.arbitrioBean)}" 
+									 			update="total,:frmMaestra:listaMensajes"												
+										 		onclick="PF('statusDialog').show();"
+										 		oncomplete="PF('statusDialog').hide();"
+											 />
+											</td>
+											<td  width="20%">
+											<p:commandButton value="Limpiar" actionListener="#{arbMB.limpiarTrimestres}" 
+									 			update="tblTrimestres,:frmMaestra:listaMensajes"												
+										 		onclick="PF('statusDialog').show();"
+										 		oncomplete="PF('statusDialog').hide();"
+											 />
+											</td>
+										</tr>
+										<tr>
+											<td width="20%">
+								     	 		<h:outputText  value="TOTAL ARBITRIO:"  />
+								    		 </td>
+											<td width="20%"><p:inputText id="total"
+																	value="#{arbMB.arbitrioBean.total}"
+																	style="width: 120px;" maxlength="150" readonly="true" /> 
+																	<p:watermark for="total" value="total" />
+											</td>
+						     		
+						     		   </tr>
+						     </table>
+						     <p:dataTable id="listaCuotas" value="#{arbMB.listaCuotaArbitrioBean}" selection="#{arbMB.selectedCuota}" 
+										 var="cuota" editable="true" selectionMode="single" rowKey="#{cuota.nromes}"
+										style="font-size: 12px; text-align: center;"
+										emptyMessage="No ha generado ninguna cuota de arbitrios" rowIndexVar="index"
+										rows="12" paginator="true" paginatorPosition="bottom"
+				                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+										
+										<p:ajax event="rowEdit" listener="#{arbMB.validarPeriodo}" update="listaCuotas,:frmMaestra:listaMensajes" />
+										
+										<f:facet name="header">
+											<p:commandButton value="Generar Cuotas" actionListener="#{arbMB.validarPeriodosArbitrios}" update="listaCuotas,:frmMaestra:listaMensajes" icon="ui-icon-wrench"/>
+										</f:facet>
+										
+										
+	
+										
+<!-- 										<p:column style="width:32px"> -->
+<!-- 										           <p:rowEditor rendered="#{ccMB.contratoBean.idcontrato==0?true:false}"/> -->
+<!-- 										</p:column> -->
+										<p:column headerText="# " >
+											<h:outputText value="#{index+1}" />
+										</p:column>
+										
+										<p:column headerText="Periodo" >
+											<h:outputText value="#{cuota.periodo}" />
+										</p:column>
+										<p:column headerText="trimestre" >
+											<h:outputText value="#{cuota.trimestre}" />
+										</p:column>
+										<p:column headerText="Mes" >
+											<h:outputText value="#{cuota.mes}" />
+										</p:column>
+										<p:column headerText="Monto" >
+											<h:outputText value="#{cuota.monto}" />
+										</p:column>
+
+										</p:dataTable>
+						     </p:outputPanel>
+						      <p:outputPanel id="motivo_modificacion_arbitrio" rendered="#{arbMB.arbitrioBean.idarbitrio==0? false:true}">
+								<h:outputText value="Motivo de Modificación: " />
+								<p:inputTextarea style="width:100%;" value="#{arbMB.arbitrioBean.motivomod}"  rows="4" maxlength="200" />
+								<br />
+								<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+								<br />
+							</p:outputPanel>
+						     <br />
+						      
+								<h:outputText value="Observación: " />
+								<p:inputTextarea style="width:100%;" value="#{arbMB.arbitrioBean.observacion}"  rows="4" maxlength="200" readonly="#{arbMB.arbitrioBean.idarbitrio==0? false:true}" />
+								<br />
+								<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+							
+								<br />
+								 <br />
+							
+						     
+					
+					</p:tab>
+				
+				</p:tabView>
+				<p:dialog header="Seleccione Upa" id="iddlgListaUpa"
+										width="auto" height="auto" closable="true" closeOnEscape="true"
+										resizable="false" widgetVar="iddlgListaUpa" modal="true"
+										style="border-width:9px;border-style:solid;  border-color:#6741e3;">
+										
+										<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="tipobusquedaUpa" value="Consulta:" />
+										        <p:selectOneListbox id="tipobusquedaUpa" value="#{arbMB.tipobusquedaUpa}">
+										            <f:selectItem itemLabel="Clave" itemValue="1" />
+<!-- 										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="2" /> -->
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="testUpa" actionListener="#{arbMB.buscarUpa}" update="tblUpa,,:frmMaestra:listaMensajes"/>
+										        <p:inputText id="patronUpa"  value="#{arbMB.valorbusquedaUpa}" onkeypress="if (event.keyCode == 13) { testUpa(); return false; }" >
+										        	<p:watermark for="patronUpa" value="Ingrese campo"></p:watermark>
+										        </p:inputText>
+			 							</h:panelGrid>
+
+										<p:dataTable id="tblUpa" var="detall" value="#{arbMB.listUpa}"
+											emptyMessage="0 registros encontrados"
+											style="width:625px; font-size: 10px;  margin-right:0px;text-aling:center;" 
+											styleClass="ui-datatable-hor-scroll" rowKey="#{detall.idupa}"
+											rowIndexVar="row" selection="#{arbMB.upa}" 
+											selectionMode="single" paginator="true"
+											filteredValue="#{arbMB.listUpaFiltro}" rows="10"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											rowsPerPageTemplate="5,10,15">
+											<p:ajax event="rowSelect" listener="#{arbMB.seleccionarUpa}"
+												oncomplete="iddlgListaUpa.hide()"
+												update=":frmArbitrio,:frmMaestra:listaMensajes" />
+											<p:column headerText="Clave" filterBy="#{detall.clave}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.clave}" />
+											</p:column>
+
+											<p:column headerText="Ubigeo"
+												filterBy="#{detall.inmueble.ubigeo.ubigeo}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.ubigeo}" />
+											</p:column>
+
+											<p:column headerText="Departamento"
+												filterBy="#{detall.inmueble.ubigeo.depa}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.depa}" />
+											</p:column>
+
+											<p:column headerText="Provincia"
+												filterBy="#{detall.inmueble.ubigeo.prov}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.prov}" />
+											</p:column>
+
+											<p:column headerText="Distrito"
+												filterBy="#{detall.inmueble.ubigeo.dist}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.dist}" />
+											</p:column>
+
+											<p:column headerText="Direcci&oacute;n"
+												filterBy="#{detall.direccion}" filterMatchMode="startsWith">
+												<h:outputText value="#{detall.direccion}" />
+												<!-- <h:outputText value="#{detall.inmueble.direccion}" /> -->
+											</p:column>
+
+											<p:column headerText="N&uacute;mero Principal"
+												filterBy="#{detall.inmueble.numeroprincipal}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.numprincipal}" />
+												<!-- <h:outputText value="#{detall.inmueble.numeroprincipal}" /> -->
+											</p:column>
+
+											<p:column headerText="Nombre Num. Interior"
+												filterBy="#{detall.nombrenuminterior}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.nombrenuminterior}" />
+											</p:column>
+
+											<p:column headerText="Uso"
+												filterBy="#{detall.uso}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.uso}" />
+											</p:column>
+
+											<p:column headerText="Situacion">
+												<h:outputText value="#{detall.inmueble.situacion}" />
+											</p:column>
+
+										</p:dataTable>
+									</p:dialog>
+				</h:form>
+				
+					
+					
+					
+					
+							
+				</div>
+			</div>
+			<h:form id="frmConsulta">
+			      <p:dialog header="Consulta Arbitrio" 
+									    width="800px" height="500px" closable="true" closeOnEscape="true" showEffect="slide" hideEffect="slide"
+										resizable="false" widgetVar="dlgListaCondiciones"   
+										style="border-width:9px;border-style:solid;  border-color:#6741e3;">
+					
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="basic" value="Consulta:" />
+										        <p:selectOneListbox id="basic" value="#{arbMB.tipobusqueda}">
+										            <f:selectItem itemLabel="Clave Upa:" itemValue="1" />
+										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="2" />
+										           
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="consultaArbitrio" actionListener="#{arbMB.buscarArbitrio}" update="tblArbitrios"/>
+										        <p:inputText id="patron"  value="#{arbMB.valorbusqueda}" onkeypress="if (event.keyCode == 13) { consultaArbitrio(); return false; }" >
+										        	<p:watermark for="patron" value="Ingrese campo"/>
+										        </p:inputText>
+			 						</h:panelGrid>
+								
+									<p:dataTable id="tblArbitrios" var="detall" value="#{arbMB.listaArbitrio}" 
+										emptyMessage="0 registros encontrados" filteredValue="#{arbMB.listArbitrioFiltro}"
+										style="width:690px; font-size: 10px;  margin-left: 15px;text-aling:center;"
+										styleClass="ui-datatable-hor-scroll"
+										rowKey="#{detall.idarbitrio}" rowIndexVar="row"
+										selection="#{arbMB.arbitrioBean}" selectionMode="single"
+										paginator="true" rows="10"
+										paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="10,20,30">
+										<p:ajax event="rowSelect"
+											listener="#{arbMB.setearArbitrioSeleccionado}" 
+											update=":frmArbitrio,:frmConsulta,:frmMaestra:listaMensajes" oncomplete="dlgListaCondiciones.hide();" />
+
+										<p:column headerText="UPA"
+											filterBy="#{detall.clave}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.clave}" />
+										</p:column>
+
+										<p:column headerText="ESTADO"
+											filterBy="#{detall.estado}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.estado}" />
+										</p:column>
+
+										<p:column headerText="Direccion"
+											filterBy="#{detall.direccion}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.direccion}" />
+										</p:column>
+
+										<p:column headerText="Nº Periodo"
+											filterBy="#{detall.periodo}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.periodo}" />
+										</p:column>
+
+										<p:column headerText="Trim 1"
+											filterBy="#{detall.trim1}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.trim1}" />
+										</p:column>
+
+										<p:column headerText="Trim 2"
+											filterBy="#{detall.trim2}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.trim2}" />
+										</p:column>
+										<p:column headerText="Trim 3"
+											filterBy="#{detall.trim3}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.trim3}" />
+										</p:column>
+										<p:column headerText="Trim 4"
+											filterBy="#{detall.trim4}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.trim4}" />
+										</p:column>
+
+										<p:column headerText="Total"
+											filterBy="#{detall.total}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.total}" />
+										</p:column>
+										<p:column headerText="U. Creador"
+											filterBy="#{detall.usrcre}" filterMatchMode="contains">
+											<h:outputText value="#{detall.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											filterBy="#{detall.feccre}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											filterBy="#{detall.usrmod}" filterMatchMode="contains">
+											<h:outputText value="#{detall.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											filterBy="#{detall.fecmod}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+
+									</p:dataTable>
+							</p:dialog>
+			</h:form>
+				<script type="text/javascript">
+				  //<![CDATA[
+		     	function convertir_a_mayuscula(elemento) {
+					//alert("metodo");
+					elemento.value = elemento.value.toUpperCase();
+	 		   		//e.value = e.value.toUpperCase();
+				}
+		     	function validarKey(evt){
+		     	    
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57) { // is a number.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+		     	function limitDecimalPlaces(e, count) {
+		     		  if (e.target.value.indexOf(".") == -1) { return; }
+		     		  if ((e.target.value.length - e.target.value.indexOf(".")) > count) {
+		     		    e.target.value = parseFloat(e.target.value).toFixed(count);
+		     		  }
+		     		}
+
+		     	function isNumberKey(evt)
+		     		{
+		     		  var charCode = (evt.which) ? evt.which : evt.keyCode;
+		     		  if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+		     		    return false;
+
+		     		  return true;
+		     		}
+		     	function validarKey(evt){
+		     	    
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57) { // is a number.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+
+		  	   //]]>
+				
+
+
+			</script>
+			<ui:include src="archivo/pgUpload.xhtml" />
+			<ui:include src="archivo/pgDownload.xhtml"/>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+

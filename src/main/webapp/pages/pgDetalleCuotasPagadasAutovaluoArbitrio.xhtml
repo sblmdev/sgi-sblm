@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition>
+
+    <h:form id="frmCuotasPagadas" >
+
+        <p:dialog id="idEstadoCuenta" widgetVar="dlgCuotasPagadas" 
+                  resizable="false"
+                  width="auto" height="auto"  position="top" closeOnEscape="true">
+ <p:scrollPanel style="height:400px">                
+				<p:dataTable var="cuota_arbitrio" value="#{autovaluoconsultaMB.cuotasPagadas}" 
+							selection="#{autovaluoconsultaMB.cuotasPagadasSeleccion}"  selectionMode="multiple" 
+							rowKey="#{cuota_arbitrio.idcuota}"
+							emptyMessage="No se ha registrado ningún pago"
+							style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;width:600px;" 
+							rowIndexVar="index" filteredValue="#{autovaluoconsultaMB.cuotasPagadasFilter}">
+>
+							
+								<p:ajax event="rowSelect"
+									listener="#{autovaluoconsultaMB.determinarSumaTotalCuotasPagadasSeleccion}"
+									update=":frmCuotasPagadas:totales" />
+								<p:ajax event="rowUnselect"
+									update=":frmCuotasPagadas:totales"
+									listener="#{autovaluoconsultaMB.determinarSumaTotalCuotasPagadasSeleccion}" />
+
+								   		<p:column  headerText="#" style="width:5px;">
+								            <h:outputText value="#{index+1}" />
+								        </p:column>
+								        <p:column headerText="Info." style="width:15px;">
+								            	<p:commandButton id="cbVerDetalle" style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+						                			 actionListener="#{autovaluoconsultaMB.buscarComprobantesPeriodo(cuota_arbitrio.idcuota)}"
+													 process="@this"										 								 
+													 oncomplete="vistaPreviaComprobantesCuota.show();"
+													 icon="ui-icon-search"
+													 update=":frmDetalleComprobante"
+													 title="Ver Detalle" rendered="#{cuota_arbitrio.monto!=0}">
+												</p:commandButton>
+								        </p:column>
+								        <p:column headerText="A&ntilde;o" filterBy="#{cuota_arbitrio.periodo}" filterMatchMode="contains" style="width:15px;">
+											<h:outputText value="#{cuota_arbitrio.periodo}" />
+										</p:column>
+										<p:column headerText="Trimestre" filterBy="#{cuota_arbitrio.trimestre}" filterMatchMode="contains" style="width:45px;">
+											<h:outputText value="#{cuota_arbitrio.trimestre}" />
+										</p:column>
+										<p:column headerText="Mes" filterBy="#{cuota_arbitrio.mes}" filterMatchMode="contains" style="width:45px;">
+											<h:outputText value="#{cuota_arbitrio.mes}" />
+										</p:column>
+										<p:column style="text-align: right;width:25px;" headerText="Monto">
+											<h:outputText value="#{cuota_arbitrio.monto}" >
+												<f:convertNumber pattern="#0.00"  />
+											</h:outputText>
+										</p:column>
+
+<!-- 										<p:column style="text-align: right;width:25px;" headerText="Mora Soles"> -->
+<!-- 											<h:outputText value="#{cuota_arbitrio.mora}"> -->
+<!-- 											<f:convertNumber pattern="#0.00"  /> -->
+<!-- 											</h:outputText> -->
+<!-- 										</p:column> -->
+
+										<p:column headerText="Cancel." style="width:25px;">
+											<h:outputText
+												value="#{cuota_arbitrio.sipagado.equals('1') ? 'Sí':'No' }" />
+										</p:column>
+										
+										<p:column width="15" headerText="#Pagos" style="width:5px;">
+											<h:outputText value="#{cuota_arbitrio.nropagos}" />
+										</p:column>
+										
+						</p:dataTable>
+</p:scrollPanel>												
+										<p:panelGrid id="totales" style="width: 100%;">
+												<p:row>
+													<p:column>
+														<p:outputLabel
+															value="Total Monto"
+															style="color: #2E2EFE; font-size: 15px;" />										
+													</p:column>
+													<p:column>
+														<p:outputLabel
+															value="#{autovaluoconsultaMB.totalMontoCuotasPagadasSeleccion}"
+															style="font-size: 15px;" >
+															<f:convertNumber pattern="###,###,###,##0.00" />
+															</p:outputLabel>										
+													</p:column>
+												</p:row>
+												
+												<p:row>
+													<p:column>
+														<h:outputText value="Total Mora" 
+														style="color: #2E2EFE; font-size: 15px;"/>													
+													</p:column>
+													<p:column>
+														<p:outputLabel
+															value="#{autovaluoconsultaMB.totalMoraCuotasPagadasSeleccion}"
+															style="font-size: 15px;" >
+															<f:convertNumber pattern="###,###,###,##0.00" />
+															</p:outputLabel>									
+													</p:column>
+												</p:row>
+										 </p:panelGrid>
+            
+        </p:dialog>
+        </h:form>
+        <h:form id="frmDetalleComprobante">
+        	<p:dialog widgetVar="vistaPreviaComprobantesCuota"   header="Información de Comprobante de Pago"
+        			  closable="true" showEffect="explode" hideEffect="slide" closeOnEscape="true" resizable="false" 
+        			  height="auto" width="auto">
+											         <p:outputPanel id="listacomprobantes" style="text-align:center;">
+											         	<p:dataTable value="#{autovaluoconsultaMB.listaComprobantePeriodo}" var="cp"
+											         	 style="text-align:center;font-size:11px;margin-top:10px;width:630px" emptyMessage="No exite registros"
+														 scrollWidth="630" styleClass="ui-datatable-hor-scroll">
+											         			<p:column headerText="Tipo Doc">
+																<h:outputText value="#{cp.idtipdocu}" />
+																</p:column>
+											         			<p:column headerText="N° Comprobante">
+																<h:outputText value="#{cp.nroseriecomprobante}" />
+																</p:column>
+																<p:column headerText="Total">
+																<h:outputText value="#{cp.total}" />
+																</p:column>
+																<p:column headerText="Mora">
+																<h:outputText value="#{cp.mora}" />
+																</p:column>
+																<p:column headerText="Fec. Emisión">
+																	<h:outputText value="#{cp.fecEmision}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																<p:column headerText="Fec. Cancelación">
+																	<h:outputText value="#{cp.fecCancelacion}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																<p:column headerText="Cobrador">
+																	<h:outputText value="#{cp.nombrecobrador}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																
+																<p:column headerText="Nota D&eacute;bito Ref.">
+																	<h:outputText value="#{cp.nronotadebitoref}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																
+																<p:column headerText="Nota Cr&eacute;dito Ref.">
+																	<h:outputText value="#{cp.nronotacreditoref}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																<p:column headerText="Creador">
+																	<h:outputText value="#{cp.usrcre}" >
+																	</h:outputText>
+																</p:column>
+																<p:column headerText="Fec. Creación">
+																	<h:outputText value="#{cp.feccre}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+															</p:dataTable>
+											        </p:outputPanel>
+			</p:dialog>		
+        </h:form>
+</ui:composition>
+</html>

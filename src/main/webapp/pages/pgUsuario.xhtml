@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<script language="javascript" type="text/javascript">
+		
+	</script>
+
+	<title>SBLM</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="u_icono_identificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Administración</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Usuarios</label>
+					</div>
+				</div>
+				<h:form id="formSuperUsuarios" enctype="multipart/form-data">
+
+					<div class="contenidoPrincipal_SubFondoUsuario">
+
+						<div class="u_fondo_interno2">
+
+
+
+							<div class="u_panelGrid1">
+								<div class="u_iconoLapizUsuario"></div>
+								<div style="margin-top: -15px; margin-left: 70px;">Datos
+									de Usuario</div>
+
+								<h:panelGrid id="panelGrid1">
+
+									<p:row>
+										<p:column>
+											<p:spacer width="50" height="30" />
+											<p:inputText id="idNombre"
+												value="#{csuperusuarios.nombreRegistro}" style="">
+												<p:watermark value="Nuevo Nombre" for="idNombre"></p:watermark>
+											</p:inputText>
+											<p:spacer width="50" height="10" />
+											<p:inputText value="#{csuperusuarios.apellidoRegistro}"
+												style="" id="idApellidos">
+												<p:watermark value="Nuevo Apellido" for="idApellidos"></p:watermark>
+											</p:inputText>
+
+
+										</p:column>
+
+										<p:column>
+
+										</p:column>
+
+									</p:row>
+									<p:row>
+										<p:spacer width="105" height="10" />
+									</p:row>
+
+									<p:row>
+										<p:column>
+											<p:spacer width="50" height="10" />
+											<p:inputText id="idUsuario"
+												value="#{csuperusuarios.usuarioRegistro}" style="">
+												<p:watermark value="Nombre Usuario" for="idUsuario"></p:watermark>
+											</p:inputText>
+											<p:spacer width="50" height="10" />
+											<p:inputText id="idEmail"
+												value="#{csuperusuarios.emailRegistro}" style="">
+												<p:watermark value="Nuevo Email" for="idEmail"></p:watermark>
+											</p:inputText>
+
+										</p:column>
+
+										<p:column>
+
+										</p:column>
+
+									</p:row>
+									<p:row>
+										<p:spacer width="105" height="10" />
+									</p:row>
+
+									<p:row>
+										<p:spacer width="49" height="30" />
+
+										<p:column>
+											<p:calendar id="idNacimiento"
+												value="#{csuperusuarios.fechaNacimientoUsuario}"
+												showOn="button" pattern="dd/MM/yyyy" effect="slide">
+												<p:watermark value="Fecha Nacimiento" for="idNacimiento"></p:watermark>
+											</p:calendar>
+										</p:column>
+										<p:spacer width="21" height="10" />
+										<p:column>
+											<p:inputText id="idCargo"
+												value="#{csuperusuarios.cargoRegistro}" style="">
+												<p:watermark value="Nuevo Cargo" for="idCargo"></p:watermark>
+											</p:inputText>
+										</p:column>
+
+									</p:row>
+
+									<p:spacer width="105" height="20" />
+
+									<p:row>
+										<p:spacer width="49" height="0" />
+										<p:column>
+												<p:selectOneMenu id="idareauser"
+												style="width: 130px;  font-size: 11px;"
+												value="#{csuperusuarios.idarea}">
+												<f:selectItem itemLabel="Seleccione área" itemValue="0" />
+												<f:selectItems value="#{csuperusuarios.listaarea}"
+													var="area" itemLabel="#{area.desare}"
+													itemValue="#{area.idare}">
+												</f:selectItems>
+											</p:selectOneMenu>
+										</p:column>
+										<p:spacer width="25" height="0" />
+										<p:column>
+										
+										</p:column>
+
+
+									</p:row>
+
+
+								</h:panelGrid>
+							</div>
+							<div class="imagenUsuario">
+								<div class="u_nuevoUsuario" style="text-align: justify;">
+
+									<p:commandLink id="idCom"
+										actionListener="#{csuperusuarios.limpiarFormulario}"
+										immediate="true" process="@this" update=":formSuperUsuarios"
+										style="margin-right:20px;">
+										<p:graphicImage id="idNuevoUsuario"
+											value="../resources/images/usuario/nuevo_mas.png" />
+									</p:commandLink>
+									<div style="margin-top: -20px; margin-left: 20px;">Nuevo</div>
+								</div>
+
+								<div class="u_buttonUpload">
+
+									<div style="width: 50px; height: 20px">
+										<p:growl id="uploadMensaje" showDetail="true" sticky="true" />
+										<p:fileUpload styleClass="ui-fileupload"
+											style="visibility:hidden"
+											fileUploadListener="#{csuperusuarios.uploadImagenUsuario}"
+											mode="advanced" auto="true"
+											update=":formSuperUsuarios,uploadMensaje" sizeLimit="1000000"
+											label="" allowTypes="/(\.|\/)(png|jpg|jpeg)$/">
+										</p:fileUpload>
+									</div>
+								</div>
+
+								<div class="u_imagenPrevia2">
+
+									<p:graphicImage id="idImagenUsuario" width="120" height="130"
+										value="../resources/images/usuarios/#{csuperusuarios.rutaImagenUsuario}"
+										onclick="openUploadFileDialogue();" />
+
+
+								</div>
+
+							</div>
+
+							<div class="u_panelGrid3">
+								<div class="u_iconoLapizUsuario"></div>
+								<div style="margin-top: -15px; margin-left: 70px">Configuración</div>
+								<h:panelGrid id="panelGrid3">
+							
+									<p:row>
+										<p:spacer width="50" height="50" />
+										<p:selectCheckboxMenu id="idPerfil" label="Perfiles"
+												filterText="Filter" filter="true"
+												filterMatchMode="startsWith" panelStyle="width:220px"
+												style="width:150px" showCheckbox="true"
+												value="#{csuperusuarios.listPerfilSeleccionado}">
+												<f:selectItems value="#{csuperusuarios.listPerfiles}"
+													var="perfilItem" itemLabel="#{perfilItem.nombreperfil}"
+													itemValue="#{perfilItem.idperfil}" />
+										</p:selectCheckboxMenu>
+									</p:row>
+
+									<p:row>
+										<p:column>
+											<p:spacer width="50" height="10" />
+											<p:selectOneMenu value="#{csuperusuarios.estadoRegistro}">
+												<f:selectItem itemLabel="Activo" itemValue="1" />
+												<f:selectItem itemLabel="No Activo" itemValue="0" />
+											</p:selectOneMenu>
+										</p:column>
+									</p:row>
+
+								</h:panelGrid>
+							</div>
+
+							<div class="u_fondo_btnGuardar2">
+								<p:spacer width="55" height="30" />
+								<p:commandButton id="idGuardarUsuario" value="Guardar"
+									icon="ui-icon-save" oncomplete="validacionFranco();" />
+							</div>
+
+
+						</div>
+						<!-- 										<div class="u_fondo_interno2"> -->
+						<!-- 											<p:spacer width="50" height="10" /> -->
+						<!-- 											<div class="u_FechaDelDia"> -->
+						<!-- 												<p:graphicImage id="idFechaCreacion" style="margin-left: 8px;margin-top: 10px;" -->
+						<!-- 													value="../resources/images/usuario/fecha_usuario.png" /> -->
+						<!-- 												<div style="margin-top: -28px; margin-left: 43px; font-size: 10px;"> -->
+						<!-- 												Fecha de creación -->
+						<!-- 												</div> -->
+						<!-- 											</div> -->
+
+						<!-- 											<div class="u_contenidoFechaDelDia" style="margin-left: 43px;margin-top: -3px; "> -->
+						<!-- 												<h:outputText style="font-size: 11px;" value="#{ceditarusuarios.fechaCreacionUsuario} " /> -->
+						<!-- 											</div> -->
+						<!-- 										</div> -->
+
+						<div class="u_fondo_interno2Edicion">
+
+							<div class="subcontenidoInfo_Cabecera">
+								<div class="subcontenidoInfo_logoTitulo" />
+								<div class="subcontenidoInfo_descripcionTitulo">
+									Informaci&oacute;n</div>
+							</div>
+
+
+							<div class="subcontenidoInfo_detContenidoFondo">
+
+								<div class="u_FechaDelDia">
+									<p:graphicImage id="idFechaCreacion"
+										style="margin-left: 14px;margin-top: 10px;"
+										value="../resources/images/usuario/fecha_usuario.png" />
+									<div
+										style="margin-top: -28px; margin-left: 47px; font-size: 10px;"
+										class="informacion6">Fecha de creación</div>
+								</div>
+
+								<div class="subcontenidoInfo_textoconectadosfiltroDerecha2">
+									<div class="u_contenidoFechaDelDia"
+										style="margin-left: 42px; margin-top: -10px;">
+										<h:outputText style="font-size: 11px;"
+											value="#{ceditarusuarios.fechaCreacionUsuario} " />
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+
+
+
+					</div>
+
+
+					<p:dataTable id="idListUsuarios" var="usr" styleClass="noheader"
+						rowkey="#{usr.idusuario+''}"
+						selection="#{csuperusuarios.selectRegistroUsuario}"
+						selectionMode="single"
+						style="width:720px; text-align: center; font-size: 10px;margin-left:47px; padding-top:20px; "
+						value="#{csuperusuarios.compDataModelUsuario}"
+						resizableColumns="true" paginator="true" rows="10">
+
+						<p:ajax event="rowSelect"
+							listener="#{csuperusuarios.seleccionIdRegistroUsuario}" />
+
+						<p:column id="idmensaje" style="width:40%;" headerText="Nombres">
+							<h:outputText value="#{usr.nombres} " />
+							<h:outputText value="#{usr.apellidopat} " />
+							<h:outputText value="#{usr.apellidomat} " />
+						</p:column>
+
+
+						<p:column id="idusuario" headerText="Usuario " style="width:25%;">
+							<h:outputText value="#{usr.nombreusr}" />
+
+						</p:column>
+
+						<p:column id="idcargo" headerText="Cargo" style="width:30%;">
+							<h:outputText value="#{usr.cargo}" />
+						</p:column>
+
+						<p:column id="idemail" headerText="Cargo" style="width:30%;">
+							<h:outputText value="#{usr.emailusr}" />
+						</p:column>
+
+						<p:column id="idModulo" headerText="Estado" style="width:30%;">
+
+							<h:outputText value="#{(usr.estado) ? 'activo': 'inactivo'}" />
+
+						</p:column>
+
+						<f:facet name="footer">
+							<p:commandButton id="viewButton" value="Editar" immediate="true"
+								process="@this" icon="ui-icon-search"
+								actionListener="#{csuperusuarios.editarRegistroUsuario}"
+								update=":formSuperUsuarios" />
+
+							<p:spacer width="50" height="10" />
+
+							<p:commandButton id="deleteButton" value="Eliminar"
+								icon="ui-icon-trash" oncomplete="dlgConfirmaEliminar.show();"
+								immediate="true" process="@this" />
+
+						</f:facet>
+
+					</p:dataTable>
+
+					<p:growl id="messagesGuardar" showDetail="true" />
+					<p:confirmDialog id="confirm" header="SBLM" severity="alert"
+						message="¿Está seguro de grabar usuario?"
+						widgetVar="widgetDlgConfirmGuardar">
+						<center>
+							<p:commandButton id="btnGrabar" value="Aceptar"
+								actionListener="#{csuperusuarios.registroUsuario}"
+								oncomplete="widgetDlgConfirmGuardar.hide()" onclick=""
+								update=":formSuperUsuarios,messagesGuardar" />
+							<p:spacer width="10" />
+							<p:commandButton value="Cancelar"
+								onclick="widgetDlgConfirmGuardar.hide()" />
+						</center>
+					</p:confirmDialog>
+				</h:form>
+				<h:form id="frmdlgConElimnarUser">
+					<p:confirmDialog message="¿Desea Eliminar Usuario?"
+						header="Eliminar usuario" severity="alert"
+						widgetVar="dlgConfirmaEliminar">
+
+						<p:commandButton value="&nbsp;Aceptar"
+							update=":formSuperUsuarios"
+							actionListener="#{csuperusuarios.eliminarRegistroUsuario}"
+							oncomplete="dlgConfirmaEliminar.hide()" icon="icon-save">
+
+						</p:commandButton>
+						<p:commandButton value="&nbsp;Cancelar" update=":formSuperUsuarios "
+							oncomplete="dlgConfirmaEliminar.hide()" icon="icon-cancel" />
+
+					</p:confirmDialog>
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

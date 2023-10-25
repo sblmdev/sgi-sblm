@@ -1,0 +1,69 @@
+$(document)
+		.ready(
+				function() {
+
+					$("#datepickerDiv").find("input").css({
+						width : "80px"
+					});
+					
+					$("input[name*='codigoAtencion']").generalFunction(numericEvent,numericMask);
+					$("input[name*='datoConsulta']").generalFunction(numericEvent,numericMask);
+					
+					// aqui de un ejemplo alphanumeric
+					//$("input[name*='codigoAtencion']").generalFunction(AlpahnumericEvent,AlpahnumericMask);
+					
+					
+					
+					$("button[name*='btnBuscar']").unbind("click");
+					
+					$("button[name*='btnBuscar']")
+							.click(
+									function() {
+										
+										idfaces= $(this).attr("id").split(":")[0];
+										$fecini=$("input[name*='popupButtonFechaInicio']");
+										$fecfin=$("input[name*='popupButtonFechaFin']");
+										if ($.trim($fecini.val()) == "") {
+											$(".dialogMessageClass").html("Ingrese fecha de Inicio");
+											dialogMensaje.show();
+											$fecini.focus()
+											return false;
+										}
+										
+										if ($.trim($fecfin.val())=="") {
+											$(".dialogMessageClass").html("Ingrese fecha de Fin");
+											dialogMensaje.show();
+											$fecfin.focus();
+											return false;
+										}
+
+										errorMsgFecIni = validaFormatoFecha($("input")[3]);
+										if ($.trim(errorMsgFecIni) != "") {
+											$(".dialogMessageClass").html(errorMsgFecIni);
+											dialogMensaje.show();
+											return false;
+										}
+										errorMsgFecFin = validaFormatoFecha($("input")[4]);
+										if ($.trim(errorMsgFecFin) != "") {
+											$(".dialogMessageClass").html(errorMsgFecFin);
+											dialogMensaje.show();
+											return false;
+										}
+										
+										
+										errMsgRango = validaRangoFecha($("input")[3],$("input")[4]);
+										if($.trim(errMsgRango)!=""){
+											$(".dialogMessageClass").html(errMsgRango);
+											dialogMensaje.show();
+											return false;
+										}
+					
+										PrimeFaces.ab({
+											source : idfaces+':btnBuscar',
+											update : idfaces+':reportes'
+										});
+										return false;
+										
+									});
+
+				});

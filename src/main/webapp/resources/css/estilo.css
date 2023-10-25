@@ -1,0 +1,6476 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,form
+	{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border: 0;
+	outline: 0;
+	/*font-size: 100%;*/
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+.ui-saju-toolbar {
+	border: none;
+}
+body {
+	padding: 0 0.5% 0.5% 0.5%;
+	font-family: arial;
+	font-size: 11px;
+	color: #000000;
+	font-weight: bold;
+	background-color: #dde5eb;
+}
+
+.error,.error:before {
+	z-index: 5;
+}
+
+form {
+	padding: 0;
+	margin: 0;
+}
+
+/********PARA DAR FORMATO A LOS TEXTOS DE LOS CAMPOS********/
+input,textArea,select,option {
+	font: normal 12px Arial, Helvetica, sans-serif;
+	color: #545454;
+	font-weight: bold;
+}
+
+.informacion1 {
+	color: #403100;
+	font-size: 11pt;
+}
+
+.informacion2 {
+	font-size: 9pt;
+	color: #806300;
+}
+
+.informacion3 {
+	font-size: 7pt;
+	color: #bf9400;
+}
+
+.informacion4 {
+	color: #168039;
+	font-size: 11pt;
+}
+
+.informacion5 {
+	color: #45BF56;
+	font-size: 9pt;
+}
+
+.informacion6 {
+	color: #044D29;
+	font-size: 24pt;
+}
+
+.ui-datatable .ui-column-filter {
+	width: 70px;
+}
+/*******ESTILO PLANTILLA*****/
+#contenidoPrincipal_Contenedor {
+	width: 814px;
+	margin: 0px auto 0 auto;
+}
+
+.contenidoPrincipal_Cabecera {
+	width: 814px;
+	height: 96px;
+	background-image: url("../images/paginaMaestra/cabecera.png");
+}
+
+.contenidoPrincipal_IconoUltCon {
+	float: left;
+	margin-left: 400px;
+	margin-top: 50px;
+	width: 18px;
+	height: 18px;
+	background-image:
+		url("../images/paginaMaestra/iconoCabeceraUltimaConexion.png");
+}
+
+.contenidoPrincipal_perfil {
+	float: left;
+	margin-left: 5px;
+	margin-top: 50px;
+	width: 145px;
+	height: 30px;
+}
+
+.contenidoPrincipal_hora {
+	float: left;
+	margin-left: 5px;
+	margin-top: 50px;
+	width: 120px;
+	height: 30px;
+}
+
+.contenidoPrincipal_lineaCabecera {
+	float: left;
+	margin-left: 10px;
+	margin-top: 65px;
+	width: 1px;
+	height: 17px;
+	background-image: url("../images/paginaMaestra/cabeceraLinea.png");
+}
+
+.contenidoPrincipal_IconoModificarPerfil {
+	float: left;
+	margin-left: 10px;
+	margin-top: 50px;
+}
+
+.contenidoPrincipal_FondoPrincipal { /*blanco*/
+	float: left;
+	width: 814px;
+	height: auto;
+	background-color: #fff;
+}
+
+.contenidoPrincipal_Barramenus {
+	float: left;
+	width: 814px;
+	height: auto;
+	/* 	background-color: #fff; */
+}
+
+.contenidoPrincipal_gadget {
+	float: left;
+	margin-top: 3px;
+	margin-right: 2px;
+	width: 31px;
+	height: 30px;
+	background-image: url(../images/man_tipoCambio/super_inc_menu.png);
+	background-repeat: no-repeat;
+}
+
+.contenidoPrincipal_menus {
+	float: left;
+	width: auto;
+	height: auto;
+	margin-top: 3px;
+}
+
+.contenidoPrincipal_menuSalir {
+	float: right;
+	width: auto;
+	height: auto;
+	margin-top: 3px;
+}
+
+.contenidoPrincipal_btnMenu {
+	background: transparent url('../images/contenedor/menu.png') no-repeat
+		center;
+	background-color: #fde871;
+	margin-top: 3px;
+	margin-right: 2px;
+	float: left;
+	width: 31px;
+	height: 30px;
+	border: none;
+}
+
+.contenidoPrincipal_btnAdministracion {
+	background: transparent url('../images/contenedor/administracion.png')
+		no-repeat center;
+	background-color: #fde871;
+	margin-top: 2px;
+	margin-right: 2px;
+	float: left;
+	width: 125px;
+	height: 30px;
+	border: none;
+}
+
+.contenidoPrincipal_btnMantenimiento {
+	background: transparent url('../images/contenedor/mantenimiento.png')
+		no-repeat center;
+	background-color: #fde871;
+	margin-top: 2px;
+	float: left;
+	width: 125px;
+	height: 30px;
+	border: none;
+}
+
+.contenidoPrincipal_btnSalir {
+	background: transparent url('../images/contenedor/salir.png') no-repeat
+		center;
+	background-color: #484847;
+	width: 61px;
+	height: 30px;
+	border: none;
+	float: left;
+}
+
+.contenidoPrincipal_fondoIdentificador {
+	float: left;
+	margin-top: 40px;
+	margin-left: 15px;
+	margin-bottom: 5px;
+	width: 783px;
+	height: 74px;
+	background-color: #c2c2c2;
+}
+
+.contenidoPrincipal_SubFondo { /*tamanho de contenido*/
+	float: left;
+	margin-left: 15px;
+	padding-bottom: 30px;
+	width: 783px;
+	height: auto;
+	background-color: #dbdbdb;
+	margin-bottom: 30px;
+}
+
+.contenidoPrincipal_lblTituloSubContenido {
+	font-family: Arial;
+	color: #fff;
+	font-size: 20px;
+	padding: 0;
+	margin: 0;
+}
+
+.contenidoPrincipal_lblSubTituloSubContenido {
+	font-size: 12px;
+	font-family: Arial;
+	color: #000;
+	padding: 0;
+	margin: 0;
+}
+
+.contenidoPrincipal_SubContenido {
+	float: left;
+	margin-left: 0px;
+	margin-top: 18px;
+}
+
+.contenidoPrincipal_subFondo_Icono {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	width: 25px;
+	height: 23px;
+	background-image: url(../images/dgaiMonitoreo/iconSubTituloDgai.png);
+	background-repeat: no-repeat;
+}
+
+.contenidoPrincipal_subFondo_lblTitulox {
+	float: left;
+	margin-top: 63px;
+	margin-left: 5px;
+	font-size: 12px;
+	font-family: Arial;
+	width: 120px;
+	color: #000;
+}
+
+.contenidoPrincipal_Subtitulo_lblSubtitulos{
+	font-size: 12px;
+	font-family: Arial;
+	padding: 57px 0px 0px 0px;
+}
+.contenidoPrincipal_fondo_formulario {
+	float: left;
+	margin-left: 31px;
+	width: 724px;
+	height: auto;
+	background-color: #fdd738;
+	font-family: arial, normal;
+	color: white;
+}
+/**fin contenedor general**/
+
+/*********estilos para pagina login*********/
+#contenedor {
+	width: 337px;
+	margin: 38px auto 0 auto;
+}
+
+.contenidoLogin {
+	width: 337px;
+	height: 350px;
+	background-image: url(../images/usuario/fondoLogin.png);
+	margin-left: 0px;
+	margin-top: 0px;
+}
+
+.login01 {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	width: 337px;
+	height: 117px;
+	background-image: url(../images/principal/parte01.png);
+}
+
+.login02 {
+	float: left;
+	height: 51px;
+	width: 337px;
+	font-size:20px;
+	
+	background-image: url(../images/principal/parte02.png);
+}
+
+.login03 {
+	float: left;
+	height: 26px;
+	width: 337px;
+	background-image: url(../images/principal/parte03.png);
+}
+
+.login04 {
+	float: left;
+	height: 52px;
+	width: 337px;
+	font-size:20px;
+	background-image: url(../images/principal/parte04.png);
+}
+
+.login05 {
+	float: left;
+	height: 22px;
+	width: 337px;
+	background-image: url(../images/principal/parte05.png);
+}
+
+.login06_1 {
+	float: left;
+	width: 33px;
+	height: 50px;
+	margin-left: 50px;
+}
+
+.ui-icon.entrar {
+	margin-left: -26px;
+	margin-top: -22px;
+	height: 50px;
+	width: 124px;
+	background-image: url(../images/principal/parte06_2.png);
+}
+
+.login06_4 {
+	float: left;
+	margin-left: 180px;
+	margin-top: -30px;
+}
+
+.login06_4 a {
+	color: white;
+	padding-top: 30px;
+	text-decoration: none;
+}
+
+.login07 {
+	float: left;
+	width: 337px;
+	height: 64px;
+	background-image: url(../images/principal/parte08.png);
+}
+
+#botonEnviar {
+	float: left;
+	height: 16px;
+	width: 124px;
+	xmargin-left: 120px;
+	background-image: url(../images/principal/parte06_2.png);
+}
+
+/**imgen fondo recuperar pass**/
+.ui-icon.recuperaPass { /* 	margin-left:-17px; */
+	/* 	margin-top:-22px; */
+	height: 50px;
+	width: 124px;
+	background-image: url(../images/principal/parte06_4.png);
+}
+
+/***************Estilo de Tipo de Cambio*******************/
+.administrador_tipocambioIcono {
+	float: left;
+	background-image: url("../images/tipoCambio/iconTipocambio.png");
+	background-repeat: no-repeat;
+	margin-left: 33px;
+	margin-top: 24px;
+	width: 34px;
+	height: 34px;
+}
+
+.administrador_tipocambioIconoInterior {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	width: 25px;
+	height: 23px;
+	background-image: url(../images/tipoCambio/iconInteriorTipocambio.png);
+	background-repeat: no-repeat;
+}
+
+/* .mant_menu_tipoCambioP { */
+/* 	position: absolute; */
+/* 	margin-top: 3px; */
+/* 	width: 31px; */
+/* 	height: 30px; */
+/* 	background-image: url(../images/man_tipoCambio/super_inc_menu.png); */
+/* 	background-repeat: no-repeat; */
+/* 	position: absolute; */
+/* 	z-index: 2; */
+/* } */
+
+/* .mant_menu_tipoCambio { */
+/* 	position: absolute; */
+/* 	margin-top: 3px; */
+/* 	margin-left: 34px; */
+/* 	width: 121px; */
+/* 	height: 30px; */
+/* 	background-image: */
+/* 		url(../images/man_tipoCambio/super_inco_adminstracion.png); */
+/* 	background-repeat: no-repeat; */
+/* 	position: absolute; */
+/* 	z-index: 2; */
+/* } */
+
+/* .mant_menu_tipoCambio2 { */
+/* 	position: absolute; */
+/* 	margin-top: 3px; */
+/* 	margin-left: 158px; */
+/* 	width: 121px; */
+/* 	height: 30px; */
+/* 	background-image: */
+/* 		url(../images/man_tipoCambio/super_inco_mantenimiento.png); */
+/* 	background-repeat: no-repeat; */
+/* 	position: absolute; */
+/* 	z-index: 2; */
+/* } */
+
+/* .mant_salir { */
+/* 	position: absolute; */
+/* 	margin-top: 3px; */
+/* 	margin-left: 753px; */
+/* 	width: 61px; */
+/* 	height: 30px; */
+/* 	background-image: url(../images/man_tipoCambio/super_inco_salir.png); */
+/* 	background-repeat: no-repeat; */
+/* 	position: absolute; */
+/* 	z-index: 2; */
+/* } */
+
+/* .mant_menu_identificador { */
+/* 	position: absolute; */
+/* 	margin-top: 70px; */
+/* 	margin-left: 15px; */
+/* 	width: 783px; */
+/* 	height: 74px; */
+/* 	background-color: #ffc600; */
+/* 	position: absolute; */
+/* 	z-index: 2; */
+/* } */
+
+/* .mant_iden_icono { */
+/* 	position: absolute; */
+/* 	margin-top: 24px; */
+/* 	margin-left: 31px; */
+/* 	width: 153px; */
+/* 	height: 45px; */
+/* 	background-image: url(../images/man_tipoCambio/tipo_cambio.png); */
+/* 	background-repeat: no-repeat; */
+/* 	position: absolute; */
+/* 	z-index: 3; */
+/* } */
+.mant_subFondo {
+	float: left;
+	margin-top: 0px;
+	margin-left: 0px;
+	width: 750px;
+	height: auto;
+	background-color: #dbdbdb;
+}
+
+/* .mant_subFondo_icoRegla { */
+/* 	position: absolute; */
+/* 	margin-top: 61px; */
+/* 	margin-left: 31px; */
+/* 	width: 75px; */
+/* 	height: 27px; */
+/* 	background-image: url(../images/man_tipoCambio/reglas.png); */
+/* 	background-repeat: no-repeat; */
+/* 	position: absolute; */
+/* 	z-index: 3; */
+/* } */
+.mant_subFondo_formulario {
+	float: left;
+	width: 504px;
+	height: auto;
+	background-color: #c2c2c2;
+}
+
+.mant_subFondo_formulario2 {
+	float: left;
+	margin-top: 0px;
+	margin-left: 5px;
+	width: 213px;
+	height: 111px;
+	background-color: #fdd738;
+}
+
+.mant_subFondo_icoInfo {
+	float: left;
+	margin-top: 10px;
+	margin-left: 85px;
+	width: 110px;
+	height: 35px;
+	background-image: url(../images/man_tipoCambio/perfil_informacion.png);
+	background-repeat: no-repeat;
+}
+
+.mant_tipoCambioTitulo {
+	position: absolute;
+	margin-top: 68px;
+	margin-left: 20px;
+	width: 90px;
+	height: 35px;
+	color: #32CD32;
+	font-family: arial, normal, sans-serif, Georgia, arial;
+	font-size: 12px;
+	font: bold;
+	z-index: 4;
+	text-align: right;
+}
+
+.mant_tipoCambioValor {
+	position: absolute;
+	margin-top: 68px;
+	margin-left: 120px;
+	width: 80px;
+	height: 35px;
+	font-size: 20px;
+	font-family: arial, Georgia, fantasy;
+	font: bold;
+	color: #006400;
+	z-index: 8;
+}
+
+.mant_subFondo_btnguardar {
+	float: left;
+	margin-top: 5px;
+	margin-left: 0px;
+	width: 722px;
+	height: 50px;
+	background-color: #ffc600;
+}
+
+.mant_tbTipoCambio {
+	float: left;
+	width: 435px;
+	height: auto;
+	margin-top: 12px;
+	margin-left: 35px;
+	margin-bottom: 35px;
+	font-size: 12px;
+	font-family: arial;
+}
+
+.fila_tipocambio {
+	font-family: arial, normal;
+	float: left;
+	margin-top: 60px;
+	margin-left: 40px;
+	width: 400px;
+	height: 26px;
+	border-style: none;
+	border-width: 0;
+}
+.fila_tipointeres {
+	font-family: arial, normal;
+	float: left;
+	margin-top: 60px;
+	margin-left: 40px;
+	width: 440px;
+	height: 26px;
+	border-style: none;
+	border-width: 0;
+}
+
+.tipo_cambio {
+	float: left;
+	width: 100px;
+	height: 26px;
+	border-style: none;
+	border-width: 0;
+	padding-top: 5px;
+}
+
+.estilo_textbox1 {
+	float: left;
+	width: 130px;
+	height: 26px;
+	box-shadow: 0px 1px 1px #c2c2c2;
+	border-style: none;
+	color: white;
+	border-width: 0;
+	border: 0px;
+}
+
+.mant_btnguardar {
+	float: left;
+	margin-top: 10px;
+	margin-left: 40px;
+	width: 73px;
+	height: 34px;
+}
+
+.btnguardarTipoCambio {
+	float: left;
+	width: 73px;
+	height: 34px;
+	margin: 0px;
+	font-size: 11px;
+}
+
+.valorTipoCambio {
+	float: left;
+	color: #044D29;
+	font-size: 17pt;
+	height: 35px;
+	margin-left: 5px;
+	margin-top: 10px;
+	width: auto;
+}
+
+.descripcionTipoCambio {
+	float: left;
+	margin-left: 20px;
+	margin-top: 10px;
+	text-align: right;
+	font-size: 10pt;
+}
+
+/******************/
+#menuAbierto_contenedor {
+	width: 814px;
+	margin: 38px auto 0 auto;
+}
+
+.menuAbierto_cabecera {
+	width: 814px;
+	height: 96px;
+	background-image: url("../images/man_tipoCambio/super_01.png");
+}
+
+.menuAbierto_fondo { /*blanco*/
+	width: 814px;
+	height: 904px;
+	background-color: #fff;
+	position: absolute;
+	z-index: 1;
+}
+
+.menuOpen_btnSalir {
+	background: transparent url('../images/contenedor/icoSalir.png')
+		no-repeat center left;
+	margin-top: 2px;
+	float: right;
+	width: 61px;
+	height: 29px;
+	border: none;
+	float: right;
+}
+
+.menuOpen_btnMenu {
+	background: transparent url('../images/contenedor/menu.png') no-repeat
+		center;
+	background-color: #c2c2c2;
+	margin-top: 3px;
+	margin-left: 260px;
+	float: left;
+	width: 31px;
+	height: 30px;
+	border: none;
+}
+
+.menuOpen_subfondo {
+	background-color: #c2c2c2;
+	margin-left: 0px;
+	margin-top: 3px;
+	width: 260px;
+	height: 480px;
+}
+
+.cuadradoBlanco {
+	margin-left: 20px;
+	margin-top: 10px;
+	width: 30px;
+	height: 25px;
+	background-color: white;
+	position: absolute;
+}
+
+.cuadradoTransparente {
+	margin-left: 20px;
+	margin-top: 10px;
+	width: 30px;
+	height: 25px;
+	position: absolute;
+}
+
+.menuOpen_subfondMes { /* 	background-color: green; */
+	margin-left: 0px;
+	margin-top: -350px;
+	width: 250px;
+	height: 40px;
+	position: absolute;
+}
+
+.menuOpen_subfondoRevisado { /* 	background-color: blue; */
+	margin-left: 0px;
+	margin-top: -290px;
+	width: 250px;
+	height: 40px;
+	position: absolute;
+}
+
+.menuOpen_subfondoCancelado { /* 	background-color: red; */
+	margin-left: 0px;
+	margin-top: -250px;
+	width: 250px;
+	height: 40px;
+	position: absolute;
+}
+
+.menuOpen_subfondoPendiente { /* 	background-color: black; */
+	margin-left: 0px;
+	margin-top: -210px;
+	width: 250px;
+	height: 40px;
+	position: absolute;
+}
+
+.menuOpen_subfcrema {
+	background-color: #c1c5c5;
+	margin-top: -385px;
+	margin-left: 0px;
+	width: 260px;
+	height: 28px;
+	position: absolute;
+}
+
+.fondoDetalleNotificacion { /* 	background-color: black; */
+	margin-top: -249px;
+	margin-left: 0px;
+	width: 260px;
+	height: 28px
+}
+
+.menuOpen_subfcrema2 {
+	background-color: #c1c5c5;
+	margin-top: -160px;
+	margin-left: 0px;
+	width: 260px;
+	height: 50px;
+	position: absolute;
+}
+
+.foto_user {
+	float: left;
+	margin-left: 20px;
+	margin-top: -15px;
+	width: 53px;
+	height: 56px;
+}
+
+.detalle_user {
+	float: left;
+	margin-left: 15px;
+	margin-top: -15px;
+	font-stretch: condensed;
+	height: 56px;
+}
+
+.lblNombre {
+	float: left;
+	margin-left: 0px;
+	margin-top: 0px;
+	font-size: 16px;
+	width: 170px;
+	color: #000000;
+}
+
+.lblArea {
+	float: left;
+	margin-left: 0px;
+	margin-top: 0px;
+	font-size: 13px;
+	width: 170px;
+	color: #B30E00;
+}
+
+.lblId {
+	float: left;
+	margin-left: 0px;
+	margin-top: 0px;
+	font-size: 12px;
+	width: 170px;
+	color: #126E00;
+}
+
+.fondonotif {
+	margin-left: 215px;
+	margin-top: -18px;
+	width: 30px;
+	height: 20px;
+	background-color: #616877;
+	position: absolute;
+}
+
+.lblnotif {
+	font-size: 12px;
+	font-family: arial;
+	margin-top: 3px;
+}
+
+.menuOpen_tipoCambio {
+	background-image: url("../images/contenedor/tipo_cambio.png");
+	background-repeat: no-repeat;
+	height: 30px;
+	margin-left: 20px;
+	position: absolute;
+	width: 80px;
+}
+
+.menuOpen_Texto_tipoCambio {
+	color: #636A78;
+	height: 25px;
+	margin-left: 39px;
+	margin-top: 4px;
+	position: absolute;
+	width: 60px;
+}
+
+.menuOpen_lblTipoCambio {
+	float: left;
+	margin-left: 160px;
+	font-size: 25px;
+	font-family: arial, bold;
+	color: #2da100;
+	position: absolute;
+}
+
+.menuOpen_ultimo {
+	background-image: url("../images/contenedor/banderaGadget.png");
+	background-repeat: no-repeat;
+	height: 26px;
+	margin-left: 18px;
+	margin-top: -35px;
+	position: absolute;
+	width: 109px;
+}
+
+.menuOpen_ultimoTexto {
+	height: 26px;
+	margin-left: 41px;
+	margin-top: 4px;
+	position: absolute;
+	width: 90px;
+}
+
+.demo {
+	width: 300px;
+	height: 485px;
+	position: absolute;
+	z-index: 5;
+}
+
+/* .ui-widget-header ui-corner-all{ */
+
+/* } */
+
+/***************Estilo Perfiles*******************/
+#perfil_Contenedor {
+	width: 814px;
+	margin: 36px auto 0 auto;
+}
+
+.perfil_Cabecera {
+	width: 814px;
+	height: 96px;
+	background-image: url("../images/man_tipoCambio/super_01.png");
+}
+
+.perfil_FondoPrincipal { /*blanco*/
+	width: 814px;
+	height: auto;
+	background-color: #fff;
+	position: absolute;
+	z-index: 1;
+}
+
+.perfil_btnMenu {
+	background: transparent url('../images/contenedor/menu.png') no-repeat
+		center;
+	background-color: #fde871;
+	margin-top: 3px;
+	margin-right: 2px;
+	float: left;
+	width: 31px;
+	height: 30px;
+	border: none;
+}
+
+.perfil_btnAdministracion {
+	background: transparent url('../images/contenedor/administracion.png')
+		no-repeat center;
+	background-color: #fde871;
+	margin-top: 2px;
+	margin-right: 2px;
+	float: left;
+	width: 125px;
+	height: 30px;
+	border: none;
+}
+
+.perfil_btnMantenimiento {
+	background: transparent url('../images/contenedor/mantenimiento.png')
+		no-repeat center;
+	background-color: #fde871;
+	margin-top: 2px;
+	float: left;
+	width: 125px;
+	height: 30px;
+	border: none;
+}
+
+.perfil_btnSalir {
+	background: transparent url('../images/contenedor/salir.png') no-repeat
+		center;
+	background-color: #484847;
+	margin-top: 2px;
+	margin-left: 462px;
+	float: left;
+	width: 61px;
+	height: 30px;
+	border: none;
+	float: left;
+}
+
+.perfil_fondoIdentificador {
+	position: absolute;
+	margin-top: 40px;
+	margin-left: 15px;
+	width: 783px;
+	height: 74px;
+	background-color: #ffc600;
+	position: absolute;
+	z-index: 2;
+}
+
+.perfilModulo_IconoIdentificador {
+	float: left;
+	margin-left: 33px;
+	margin-top: 24px;
+	width: 30px;
+	height: 34px;
+	background-image: url("../images/perfil/iconoPerfil.png");
+	background-repeat: no-repeat;
+}
+
+.contenidoPrincipal_subFondo_IconoPerfil {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	width: 25px;
+	height: 23px;
+	background-image: url(../images/perfil/iconoInteriorPerfil.png);
+	background-repeat: no-repeat;
+}
+
+.perfil_lblIdentificador {
+	float: left;
+	margin-left: 80px;
+	margin-top: -40px;
+	font-size: 20px;
+	font-family: Arial;
+	font-stretch: condensed;
+	color: #ffffff;
+	font-size: 25px;
+}
+
+.perfil_SubFondo { /*Falta definir con el tamaÃ±o de la tabla*/
+	float: left;
+	margin-top: 80px;
+	margin-left: 15px;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+	width: 783px;
+	height: auto;
+	background-color: #fde871;
+}
+
+.perfil_subFondo_Icono {
+	position: absolute;
+	margin-top: 61px;
+	margin-left: 31px;
+	width: 75px;
+	height: 27px;
+	background-image: url(../images/perfil/perfil_icono.png);
+	background-repeat: no-repeat;
+	position: absolute;
+	z-index: 3;
+}
+
+.perfil_fondo_formulario1 {
+	width: 504px;
+	height: auto;
+	background-color: #c2c2c2;
+	float: left;
+	font-family: arial, normal;
+	color: white;
+}
+
+.perfil_icono_step1 {
+	margin-top: 33px;
+	margin-left: 31px;
+	width: 103px;
+	height: 22px;
+	background-image: url(../images/perfil/PrimerPaso.png);
+	background-repeat: no-repeat;
+	position: absolute;
+	z-index: 4;
+}
+
+.btnNuevoRegistro {
+	margin-top: 30px;
+	margin-left: 410px;
+	width: 58px;
+	height: 19px;
+	background-repeat: no-repeat;
+	position: absolute;
+	z-index: 1;
+}
+
+.btnMas {
+	margin-top: 20px;
+	margin-left: 190px;
+	width: 18px;
+	height: 19px;
+	position: absolute;
+	z-index: 10;
+}
+
+.filaPerfil {
+	width: 400px;
+	height: 26px;
+	margin-top: 80px;
+	padding-left: 35px;
+	font-size: 12px;
+	font-family: arial;
+}
+
+.lblPerfil {
+	float: left;
+	width: 80px;
+	height: 26px;
+	text-align: left;
+}
+
+.txtPerfil {
+	float: left;
+	width: 184px;
+	height: 16px;
+	font-size: 13px;
+	font-family: arial;
+}
+
+.filaDescripcion {
+	padding-left: 35px;
+	width: 350px;
+	height: 26px;
+	margin-top: 10px;
+	font-size: 12px;
+	font-family: arial;
+}
+
+.lblDescripcion {
+	float: left;
+	width: 80px;
+	height: 26px;
+	text-align: left;
+}
+
+.txtDescripcion {
+	float: left;
+	width: 184px;
+	height: 16px;
+	font-size: 13px;
+	font-family: arial;
+}
+
+.filaEstadoPerfil {
+	padding-left: 35px;
+	width: 350px;
+	height: 36px;
+	margin-top: 10px;
+	font-size: 11px;
+	font-family: arial;
+}
+
+.lblEstadoPerfil {
+	float: left;
+	width: 80px;
+	height: 26px;
+	text-align: left;
+}
+
+.cboEstadoPerfil {
+	float: left;
+	width: 184px;
+	height: 36px;
+}
+
+.perfil_icono_step2 {
+	margin-top: 10px;
+	margin-left: 31px;
+	width: 174px;
+	height: 22px;
+	background-image: url(../images/perfil/SegundoPaso.png);
+	background-repeat: no-repeat;
+	z-index: 6;
+}
+
+.cboModulo {
+	margin-top: 50px;
+	font-size: 14px;
+	float: left;
+	border: 1px;
+}
+
+.rdEstado td,tr,tbody {
+	border-style: none;
+	border-color: white;
+}
+
+.perfil_fondo_formulario2 {
+	float: left;
+	margin-left: 5px;
+	width: 210px;
+	height: 200px;
+	background-color: #fdd738;
+	z-index: 3;
+}
+
+.tablaPerfil {
+	float: left;
+	font-size: 11px;
+	margin-top: 12px;
+	margin-left: 35px;
+	width: 460px;
+}
+
+.cbxPerfilModulo {
+	float: left;
+	font-size: 11px;
+	margin-top: 12px;
+	margin-left: 0px;
+	width: 140px;
+}
+
+.cbxPerfilEstado {
+	float: left;
+	font-size: 11px;
+	margin-top: 12px;
+	margin-left: 5px;
+	width: 120px;
+}
+
+.cbxPerfilPermiso {
+	float: left;
+	font-size: 11px;
+	margin-top: 12px;
+	margin-left: 5px;
+	width: 120px;
+}
+
+.tablaPerfilActualizar {
+	float: left;
+	font-size: 11px;
+	margin-top: 12px;
+	margin-left: 35px;
+	width: 430px;
+}
+
+.tablaPerfil2 {
+	float: left;
+	xxwidth: 435px;
+	height: auto;
+	padding-left: 35px;
+	padding-bottom: 30px;
+}
+
+.perfilLeyenda {
+	float: right;
+	width: 190px;
+	margin-bottom: 30px;
+	margin-right: 35px;
+	font-size: 9px;
+	background-color: #E0E6E2;
+}
+
+.perfilLeyendaTitulo {
+	float: left;
+	width: 190px;
+	margin-bottom: 0px;
+	font-size: 11px;
+	color: #000;
+	text-align: left;
+	background-color: #c2c2c2;
+	float: left;
+	width: 400px;
+	margin-bottom: 0px;
+	font-size: 13px;
+	color: #000;
+	text-align: left;
+	background-color: #f5f4ed;
+}
+.perfilLeyendaTituloLiquidacion {
+	float: left;
+	width: 400px;
+	margin-bottom: 0px;
+	font-size: 13px;
+	color: #000;
+	text-align: left;
+	background-color: #f5f4ed;
+}
+.perfilLeyendaLiquidacion {
+	float: right;
+	width: 400px;
+	margin-bottom: 30px;
+	margin-right: 35px;
+	font-size: 9px;
+	background-color: #d8fbdc;
+}
+.perfilLeyendaDetalle {
+	float: left;
+	width: 400px;
+	margin: 2px 0 0 20px;
+}
+.perfilLeyendaActivo {
+	float: left;
+	width: 70px;
+	margin: 2px 0 0 20px;
+}
+
+.perfilLeyendaInactivo {
+	float: left;
+	width: 70px;
+	margin: 2px 0 2px 20px;
+}
+
+.perfilLeyendaActivoIcon {
+	float: left;
+}
+
+.perfilLeyendaInactivoDesIcon {
+	float: left;
+}
+
+.perfilLeyendaActivoDes {
+	float: left;
+	margin-left: 5px;
+	margin-top: 2px;
+	background-color: #E0E6E2;
+}
+
+.perfilLeyendaInactivoDes {
+	float: left;
+	margin-left: 5px;
+	margin-top: 2px;
+	background-color: #E0E6E2;
+}
+
+.perfil_icono_informacion {
+	float: left;
+	margin-top: 10px;
+	margin-left: 85px;
+	width: 110px;
+	height: 35px;
+	background-image: url(../images/perfil/perfil_informacion.png);
+	background-repeat: no-repeat;
+}
+
+.icono_informacionx {
+	float: left;
+	margin-top: 10px;
+	margin-left: 85px;
+	width: 110px;
+	height: 35px;
+	background-image: url(../images/perfil/perfil_informacion.png);
+	background-repeat: no-repeat;
+}
+
+.filaNumerox {
+	float: left;
+	margin-top: 5px;
+	margin-left: 5px;
+	width: 200px;
+	height: 50px;
+	background-color: #fff;
+}
+
+.lblNumerox {
+	float: right;
+	margin-top: 5px;
+	margin-right: 5px;
+	text-align: right;
+	color: #991f22;
+	width: 60px;
+	height: 35px;
+	margin-left: 50px;
+	font-size: 11pt;
+}
+
+.lblCantidadx {
+	float: right;
+	margin-top: 5px;
+	margin-right: 20px;
+	color: #734934;
+	width: auto;
+	height: 35px;
+	font-size: 34px;
+}
+
+.filaUltimox {
+	float: left;
+	margin-top: 20px;
+	font-weight: bold;
+	width: 210px;
+	height: 50px;
+	background-color: #fff;
+}
+
+.lblUltimoDescripcionx {
+	color: #403100;
+	font-size: 11pt;
+	text-align: right;
+	float: right;
+	margin-top: 8px;
+	margin-right: 20px;
+	width: 160px;
+}
+
+.lblUltimoDetallex {
+	float: right;
+	margin-top: 2px;
+	margin-right: 20px;
+	text-align: right;
+	font-size: 9pt;
+	color: #806300;
+}
+
+.filaNumeroz {
+	float: left;
+	margin-top: 10px;
+	margin-left: 5px;
+	width: 200px;
+	height: 74px;
+	background-color: white;
+}
+
+.perfilDetaTotal {
+	float: left;
+	margin-top: 10px;
+	margin-left: 5px;
+	width: 120px;
+	height: 65px;
+}
+
+.lblcreado {
+	color: #029c05;
+	font-family: arial;
+	font-style: normal;
+	font-size: 12px;
+	float: right;
+	margin-top: 0px;
+	margin-right: 5px;
+}
+
+.lblIdentificar {
+	font-size: 12px;
+	color: #029c05;
+	font-family: arial;
+	font-size: 12px;
+	color: #029c05;
+	font-family: arial;
+	float: right;
+	margin-top: 0px;
+	margin-right: 5px;
+	text-align: right;
+}
+
+.lblFechaCreacion {
+	font-size: 10px;
+	color: #029c05;
+	font-family: arial;
+	float: right;
+	margin-top: 0px;
+	margin-right: 5px;
+}
+
+.imagen_informacion {
+	float: left;
+	width: 40px;
+	height: 39px;
+	margin-left: 5px;
+}
+
+.perfil_fondoGuardar {
+	float: left;
+	margin-left: 0px;
+	text-align: left;
+	padding-top: 10px;
+	padding-left: 35px;
+	width: auto;
+	height: 55px;
+	background-color: #c2c2c2;
+	z-index: 3;
+}
+
+.perfil_btnGuardar {
+	background-image: url("../images/perfil/btn_guardar.png");
+	background-repeat: no-repeat;
+	width: 71px;
+	height: 34px;
+	border: 0px;
+	margin-top: 10px;
+	float: left;
+	margin-left: 40px;
+}
+
+.tablePerfil {
+	width: 71px;
+	height: 34px;
+}
+
+/***************** Estilo Modulo***********************/
+.paginaModulo_IconoIdentificador {
+	float: left;
+	background-image: url("../images/modulo/icono_paginaModulo.png");
+	background-repeat: no-repeat;
+	margin-left: 33px;
+	margin-top: 20px;
+	width: 39px;
+	height: 34px;
+}
+
+.contenidoPrincipal_subFondo_IconoModulo {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	width: 25px;
+	height: 23px;
+	background-image: url(../images/modulo/icono_moduloInterior.png);
+	background-repeat: no-repeat;
+}
+
+.modulo_sub {
+	float: left;
+	width: 504px;
+	height: auto;
+	background-color: #c2c2c2;
+}
+
+.perfil_fondo_formularioModulo {
+	margin-top: 91px;
+	margin-left: 31px;
+	width: 504px;
+	height: 350px;
+	background-color: #fss;
+	position: absolute;
+	z-index: 3;
+	font-family: arial, normal;
+	color: white;
+}
+
+.filaModulo {
+	padding-left: 40px;
+	width: 350px;
+	height: 26px;
+	margin-top: 60px;
+	font-size: 12px;
+	font-family: arial;
+}
+
+.lblModulo {
+	float: left;
+	width: 70px;
+	height: 26px;
+	text-align: left;
+}
+
+.txtModulo {
+	float: left;
+	width: 184px;
+	height: 16px;
+	font-size: 13px;
+	font-family: arial;
+}
+
+.filaEstadoModulo {
+	padding-left: 40px;
+	width: 350px;
+	height: 36px;
+	margin-top: 10px;
+	font-size: 12px;
+	font-family: arial;
+}
+
+.lblEstadoModulo {
+	float: left;
+	width: 70px;
+	height: 26px;
+	text-align: left;
+}
+
+.lblmoduloperfil {
+	float: left;
+	width: 70px;
+	height: 26px;
+	text-align: left;
+}
+
+.filamoduloperfiles {
+	padding-left: 40px;
+	width: 350px;
+	height: 36px;
+	margin-top: 10px;
+	font-size: 12px;
+	font-family: arial;
+}
+
+.cboEstadoModulo {
+	float: left;
+}
+
+.filaBotonModulo {
+	float: left;
+	padding-left: 40px;
+	width: 350px;
+	height: 36px;
+	margin-top: 12px;
+	font-size: 12px;
+	font-family: arial;
+}
+
+.paginaTabla {
+	float: left;
+	cwidth: 200px;
+	height: auto;
+	margin-top: 12px;
+	margin-left: 35px;
+	margin-bottom: 35px;
+	font-size: 12px;
+	font-family: arial;
+}
+
+.subcontenedorInformacion {
+	float: left;
+	margin-left: 5px;
+	width: 210px;
+	height: 170px;
+	background-color: #FED738;
+}
+
+.lblNumeroModulos {
+	float: left;
+	margin-top: 10px;
+	margin-left: 100px;
+	color: #029c05;
+	width: 50px;
+	height: 35px;
+}
+
+.lblCantidadModulos {
+	float: left;
+	margin-top: 6px;
+	margin-left: 5px;
+	color: #029c05;
+	width: 15px;
+	height: 35px;
+	font-size: 34px;
+}
+
+.lblUltimoModulo {
+	float: left;
+	margin-top: 10px;
+	margin-left: 48px;
+	color: #00c305;
+	width: 150px;
+	font-size: 12px;
+}
+
+.lblUltimoModuloDetalle {
+	float: left;
+	margin-top: 0px;
+	margin-left: 48px;
+	color: #00c305;
+	width: 123px;
+	height: 35px;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: right;
+}
+
+.tablaModulo {
+	float: left;
+	font-size: 11px;
+	margin-top: 12px;
+	margin-left: 35px;
+	margin-bottom: 35px;
+	width: 435px;
+}
+
+.modulo_fondo_btnGuardar {
+	position: absolute;
+	margin-top: 238px;
+	width: 504px;
+	height: 50px;
+	background-color: #ffc600;
+	position: absolute;
+	z-index: 4;
+}
+
+.modulo_btnGuardar {
+	position: absolute;
+	margin-top: 6px;
+	margin-left: 10px;
+	width: 83px;
+	height: 43px;
+	background-image: url("../images/man_tipoCambio/btn_guardar.png");
+	background-repeat: no-repeat;
+	position: absolute;
+	z-index: 4;
+}
+
+.ui-state-default .icon-delete {
+	background-image: url(../icons/user_delete.png);
+}
+
+.ui-state-default .icon-add {
+	background-image: url(../icons/user_add.png);
+}
+
+.ui-state-default .icon-edit {
+	background-image: url(../icons/user_edit.png);
+}
+
+.ui-state-default .icon-ver {
+	background-image: url(../icons/user_edit.png);
+}
+
+.ui-state-default .icon-save {
+	background-image: url(../icons/disk.png);
+}
+
+.ui-state-default .icon-cancel {
+	background-image: url(../icons/cancel.png);
+}
+.ui-state-default .icon-trash {
+	background-image: url(../icons/trash.png);
+}
+.ui-icon.iconoGadget {
+	background-image: url(../images/man_tipoCambio/super_inc_menu.png);
+	xmargin-right: 4px;
+}
+
+/***************ESTILO PAGINAS***************/
+.administrador_paginasContenedor {
+	float: left;
+	width: 724px;
+	height: auto;
+	background-color: #dbdbdb;
+	font-family: arial, normal;
+	color: #000;
+}
+
+.administrador_paginasIcono {
+	float: left;
+	background-image: url("../images/paginaModulo/icono_paginaModulo.png");
+	background-repeat: no-repeat;
+	margin-left: 33px;
+	margin-top: 20px;
+	width: 39px;
+	height: 34px;
+}
+
+.administrador_paginasIconoSubcont {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	width: 25px;
+	height: 23px;
+	background-image: url(../images/paginaModulo/iconoPaginaInte.png);
+	background-repeat: no-repeat;
+}
+
+.paginaInterior1 {
+	float: left;
+	background-color: #c2c2c2;
+	width: 505px;
+	height: auto;
+}
+
+.filaPagina {
+	float: left;
+	width: 300px;
+	margin-top: 25px;
+	margin-top: 15px;
+	padding-left: 35px;
+}
+
+.lblPagina {
+	float: left;
+	width: 80px;
+	height: 26px;
+	text-align: left;
+}
+
+.txtPagina {
+	float: left;
+	width: 184px;
+	height: 16px;
+	font-size: 13px;
+	font-family: arial;
+}
+
+.filaDescripcionPagina {
+	float: left;
+	width: 300px;
+	margin-top: 25px;
+	margin-top: 60px;
+	padding-left: 35px;
+}
+
+.lblDescripcion {
+	float: left;
+	width: 80px;
+	height: 26px;
+	text-align: left;
+}
+
+.txtDescripcion {
+	float: left;
+	width: 184px;
+	height: 16px;
+	font-size: 13px;
+	font-family: arial;
+}
+
+.filaEstadoPagina {
+	float: left;
+	width: 300px;
+	margin-top: 25px;
+	margin-top: 15px;
+	padding-left: 35px;
+}
+
+.lblEstadoPagina {
+	float: left;
+	width: 80px;
+	height: 26px;
+	text-align: left;
+}
+
+.filaModuloPagina {
+	float: left;
+	width: 300px;
+	margin-top: 15px;
+	padding-left: 35px;
+}
+
+.msgModulopagina {
+	float: left;
+	width: 150px;
+	margin-top: 15px;
+}
+
+.lblModuloPagina {
+	float: left;
+	width: 80px;
+	height: 26px;
+	text-align: left;
+}
+
+.paginaInterior2 {
+	float: left;
+	background-color: #E0E6E2;
+	margin-left: 5px;
+	width: 210px;
+	height: auto;
+	font-size: 12px;
+}
+
+.administrador_paginasIconoInformacion {
+	float: left;
+	background-image: url("../icons/iconoInformacion.png");
+	background-repeat: no-repeat;
+	margin-left: 90px;
+	margin-top: 22px;
+	width: 18px;
+	height: 18px;
+}
+
+.lblInformacionPag {
+	margin-top: 22px;
+	margin-right: 30px;
+	float: right;
+}
+
+.lblUltimaPag {
+	float: left;
+	color: #00c305;
+	width: 130px;
+	height: 35px;
+	margin-top: 25px;
+	margin-left: 53px;
+	text-align: right;
+}
+
+.lblCreadorPag {
+	float: left;
+	color: #029c05;
+	width: 100px;
+	height: 50px;
+	margin-top: 15px;
+	margin-left: 40px;
+	text-align: right;
+	font-size: 11px;
+}
+
+.lblFotoCreadorPag {
+	float: left;
+	width: 35px;
+	height: 30px;
+	margin-top: 15px;
+	margin-left: 5px;
+	/* 	background-color: #00f; */
+}
+
+.lblDescripcionPagina {
+	float: left;
+	margin-left: 150px;
+	text-align: right;
+	margin-bottom: 20px;
+}
+
+/********************ESTILO DGAI**************************/
+.dgaiMonitoreo_IconoIdentificador {
+	float: left;
+	background-image: url("../images/dgaiMonitoreo/iconTituloDgai.png");
+	background-repeat: no-repeat;
+	margin-left: 33px;
+	margin-top: 20px;
+	width: 39px;
+	height: 34px;
+}
+
+.btnDerivacion {
+	float: left;
+	margin-left: 307px;
+	margin-top: 60px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #ffc600;
+	text-align: center;
+}
+
+.btnDespacho {
+	float: left;
+	margin-left: 5px;
+	margin-top: 60px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #fed02e;
+	text-align: center;
+	padding: 0 auto 0 auto;
+}
+
+.btnConsultas {
+	float: left;
+	margin-left: 5px;
+	margin-top: 60px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #fed02e;
+	text-align: center;
+}
+
+.btncentrado {
+	margin-top: 7px;
+}
+
+.dgaiMonitoreo_Contenido {
+	float: left;
+	width: 724px;
+	height: auto;
+	background-color: #fff;
+	font-family: arial, normal;
+	color: #000;
+}
+
+.dgaiMonitoreo_descripDespacho {
+	float: left;
+	width: 665px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: auto;
+	color: #000;
+}
+
+.ui-datatable td,.ui-datatable th {
+	white-space: normal;
+}
+
+/***PANEL DESPACHO***/
+.dgaiMonitoreo_iconDespacho {
+	float: left;
+	width: 52px;
+	height: 49px;
+	margin-left: 15px;
+	background-image: url("../images/dgaiMonitoreo/iconUser.png");
+}
+
+.dgaiMonitoreo_descDespacho_detalle {
+	float: left;
+	margin-left: 15px;
+	width: 250px;
+}
+
+.dgaiMonitoreo_InfoFecha {
+	float: right;
+	margin-right: 10px;
+}
+
+.dgaiMonitoreo_fechaDespacho {
+	float: right;
+}
+
+.dgaiMonitoreo_fechaIcono {
+	float: right;
+	xmargin-top: 3px;
+}
+
+.dgaiMonitoreo_totalDespacho {
+	float: left;
+	margin-left: 15px;
+	text-align: right;
+}
+
+/***PANEL DERIVACION***/
+.dgaiMonitoreo_descripDerivacion {
+	float: left;
+	width: 667px;
+	margin-top: 20px;
+	height: 80px;
+	color: #000;
+}
+
+.DgaipanelContenedor {
+	float: left;
+	margin-left: 16px;
+}
+
+.dgaiMonitoreo_iconContDerivacion {
+	float: left;
+	width: 80px;
+	height: 60px;
+	text-align: center;
+}
+
+.dgaiMonitoreo_iconDerivacion {
+	float: left;
+	width: 52px;
+	height: 49px;
+	margin-left: 15px;
+	background-image: url("../images/dgaiMonitoreo/iconDerivacion.png");
+	background-repeat: no-repeat;
+}
+
+.dgaiMonitoreo_descDerivacion_detalle {
+	float: left;
+	margin-left: 15px;
+	width: 350px;
+	height: 80px;
+}
+
+.dgaiMonitoreo_totalExpDerivacion {
+	margin-left: 10px;
+	float: left;
+	text-align: right;
+}
+
+.dgaiMonitoreo_ExpPendientes {
+	float: left;
+	width: 50px;
+	margin-left: 15px;
+}
+
+.dgaiMonitoreo_botones {
+	float: left;
+	margin-left: 518px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.btnDespachar {
+	float: left;
+	margin-left: 0px;
+}
+
+.btnRechazar {
+	float: left;
+	margin-left: 8px;
+}
+
+.dgaiMonitoreo_botonesDer {
+	float: right;
+	margin-right: 15px;
+	margin-bottom: 15px;
+}
+
+.btnRecepciona {
+	float: left;
+	margin-left: 0px;
+}
+
+.btnDeriva {
+	float: left;
+	margin-left: 8px;
+}
+/***PANEL CONSULTAS***/
+.dgaiMonitoreo_Consultas {
+	float: left;
+	width: 650px;
+	margin-top: 40px;
+	height: 60px;
+	color: #000;
+}
+
+.dgaiMonitoreo_iconConsultas {
+	float: left;
+	width: 22px;
+	height: 22px;
+	margin-left: 15px;
+	background-image: url("../images/dgaiMonitoreo/iconConsultas.png");
+}
+
+.dgaiMonitoreo_rangoFechas {
+	float: left;
+	margin-left: 300px;
+}
+
+.dgaiMonitoreo_lblRangoFechas {
+	float: left;
+	margin-left: 15px;
+}
+
+/**DIALOGO DERIVACION**/
+.dgaiMonitoreo_dlgTitulo {
+	background-color: ffc600;
+}
+
+.dgaiMonitoreo_iconDlgDerivacion {
+	float: left;
+	width: 26px;
+	height: 26px;
+	margin-left: 15px;
+	background-image: url("../images/dgaiMonitoreo/iconDlgDerivar.png");
+	background-repeat: no-repeat;
+}
+
+.dgaiMonitoreo_TituloContador {
+	float: left;
+	margin-top: 10px;
+	width: 320px;
+	margin-left: 10px;
+}
+
+.dgaiMonitoreo_detalleDlg {
+	margin-top: 10px;
+	margin-left: 50px;
+	float: left;
+	height: 110px;
+}
+
+.dgaiMonitoreo_btnNotifica {
+	margin-top: 15px;
+	margin-right: 15px;
+	float: right;
+}
+
+.dgaiMonitoreo_detalle {
+	float: left;
+	margin-left: 16px;
+	overflow: auto;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.dgai_DlgDetalle {
+	margin: 30px;
+	font-size: 11px;
+	float: left;
+	height: 110px;
+}
+
+.dgaiMonitoreo_DlgTablaDer {
+	margin-top: 10px;
+	margin-left: 50px;
+	float: left;
+	height: auto;
+}
+
+.dgaiMonitoreo_botonEnviarDlgDer {
+	margin-top: 10px;
+	margin-left: 315px;
+	float: left;
+}
+
+.dgaiMonitoreo_notificacionDlg {
+	margin-top: 5px;
+	width: 260px;
+	float: left;
+	margin-left: 50px;
+}
+
+.ui-menubar {
+	background: #fde871;
+}
+
+.ui-icon.iconoAdministracion {
+	background-image: url(../icons/iconoAdministracion.png);
+	margin-right: 4px;
+}
+
+.ui-icon.iconoMantenimiento {
+	background-image: url(../icons/iconoMantenimiento.png);
+	margin-right: 4px;
+}
+
+.ui-icon.iconoMesaPartes {
+	background-image: url(../icons/iconoMesaPartes.png);
+	margin-right: 4px;
+}
+/**DIALOGO RECEPCIONA**/
+.dgaiMonitoreo_iconDlgRecepcion {
+	float: left;
+	width: 26px;
+	height: 26px;
+	margin-left: 15px;
+	background-image: url("../images/dgaiMonitoreo/iconDlgRecepciona.png");
+	background-repeat: no-repeat;
+}
+/**DIALOGO DESPACHAR**/
+.dgaiMonitoreo_iconDlgDespachar {
+	float: left;
+	width: 26px;
+	height: 26px;
+	margin-left: 15px;
+	background-image: url("../images/dgaiMonitoreo/iconDlgDespachar.png");
+	background-repeat: no-repeat;
+}
+/**DIALOGO DESPACHAR**/
+.dgaiMonitoreo_iconDlgRechazar {
+	float: left;
+	width: 26px;
+	height: 26px;
+	margin-left: 15px;
+	background-image: url("../images/dgaiMonitoreo/iconDlgRechazar.png");
+	background-repeat: no-repeat;
+}
+
+/*********ESTILO MENSAJE ACCESO RESTRINGIDO********/
+.contenidoPrincipal {
+	float: left;
+	width: 337px;
+	height: 372px;
+}
+
+.cuadroMensaje_superiortotal {
+	float: left;
+	width: 337px;
+	height: 5px;
+	background-image: url(../images/usuario/fondoSupLogin.png);
+	margin-left: 0px;
+}
+
+.cuadroMensaje_total {
+	width: 337px;
+	height: 400px;
+	background-image: url(../images/usuario/fondoLogin.png);
+	margin-left: 0px;
+	margin-top: 0px;
+}
+
+.loginSBLM {
+	float: left;
+	width: 277px;
+	height: 58px;
+	background-image: url(../images/usuario/loginSBLM.png);
+	background-repeat: no-repeat;
+	margin-left: 29px;
+	margin-top: 24px;
+}
+
+.simboloRestringido {
+	float: left;
+	width: 88px;
+	height: 88px;
+	background-image: url(../images/usuario/simboloRestringido.png);
+	background-repeat: no-repeat;
+	margin-left: 127px;
+	margin-top: 20px;
+}
+
+.btnVolverRestringido {
+	float: left;
+	width: 125px;
+	height: 51px;
+	background-image: url(../images/usuario/btnVolverRestringido.png);
+	background-repeat: no-repeat;
+	margin-top: 28px;
+	margin-left: 104px;
+}
+
+.lblAccesoRestringido {
+	float: left;
+	xwidth: 130px;
+	height: 30px;
+	color: #ffc600;
+	font-size: 26px;
+	margin-top: 17px;
+	margin-left: 54px;
+}
+
+.lblNuevoLogueo {
+	float: left;
+	xwidth: 180px;
+	height: 20px;
+	color: #fff;
+	font-size: 20px;
+	margin-top: 17px;
+	margin-left: 84px;
+}
+
+.pieLogin {
+	float: left;
+	background-image: url(../images/usuario/pieLogin.png);
+	background-repeat: no-repeat;
+}
+
+/******ESTILOS FRANCO******/
+
+/************************************************************************ESTILOS FRANCO********************************************************************/
+
+/************************************************************************ESTILOS FRANCO********************************************************************/
+
+/*******estilo para admin_auditoria****/
+#contenedor2 {
+	width: 814px;
+	margin: 38px auto 0 auto;
+}
+
+.admin_audi_01 {
+	width: 814px;
+	height: 96px;
+	background-image: url(../images/admin_auditoria/super_01.png);
+}
+
+.admin_audi_02 { /*FONDO BLANCO*/
+	width: 814px;
+	height: 596px;
+	background-color: #fff;
+	position: absolute;
+	z-index: 1;
+}
+
+.admin_audi_03 {
+	position: absolute;
+	margin-top: 3px;
+	width: 31px;
+	height: 30px;
+	background-image: url(../images/admin_auditoria/auditoria_ico01.png);
+	background-repeat: no-repeat;
+	position: absolute;
+	z-index: 2;
+}
+
+.admin_audi_contenedor_superior {
+	position: absolute;
+	margin-top: 0px;
+	margin-left: 0px;
+	padding-left: 0px;
+	width: 700px;
+	height: 190px;
+	/* 	background-color:white; */
+	z-index: 3;
+}
+
+.admin_audi_filtro0 {
+	margin-top: 15px;
+	margin-left: 470px;
+	width: 20px;
+	height: 25px;
+}
+
+.admin_audi_filtro1 {
+	margin-top: -26px;
+	margin-left: 35px;
+	width: 420px;
+	height: 25px;
+}
+
+.clsBotonUsuario .ui-inputfield {
+	width: 310px;
+}
+
+.mensajeDefectoAuditoria {
+	margin-top: 50px;
+	margin-left: 85px;
+	position: absolute;
+}
+
+.admin_audi_filtro1_ {
+	margin-top: 0px;
+	margin-left: 35px;
+	width: 250px;
+	height: 25px;
+}
+
+.admin_audi_filtro2 {
+	margin-top: 6px;
+	margin-left: 35px;
+	width: 450px;
+	height: 100px;
+}
+
+.admin_audi_tabla {
+	float: left;
+	margin-top: 70px;
+	margin-left: 23px;
+	margin-bottom: 30px;
+	width: 720px;
+	height: auto;
+}
+
+.fondoBlancoAuditoria { /*FONDO BLANCO*/
+	width: 814px;
+	height: 815px;
+	background-color: #fff;
+	position: absolute;
+	z-index: 2;
+}
+
+.filtroAuditoriaIzquierda {
+	margin-top: 0px;
+	margin-left: 0px;
+	width: 505px;
+	height: 190px;
+	position: absolute;
+	/* 	z-index: 3;	 */
+	background-color: #fed738;
+}
+
+.filtroAuditoriaDerecha {
+	margin-top: 0px;
+	margin-left: 510px;
+	width: 210px;
+	height: 190px;
+	position: absolute;
+	background-color: #E0E6E2;
+}
+
+.informacionfiltroDerecha {
+	background-color: #fed738;
+	margin-top: 0px;
+	float: left;
+	width: 210px;
+}
+
+.imgInformacion {
+	float: right;
+}
+
+.conectadosfiltroDerecha {
+	margin-top: 0px;
+	margin-left: 95px;
+	width: 105px;
+	height: 50px;
+}
+
+.textoconectadosfiltroDerecha {
+	float: left;
+	width: 80px;
+	height: 50px;
+}
+
+.numeroconectadosfiltroDerecha {
+	float: left;
+	width: 25px;
+	height: 50px;
+}
+
+.usuarioTopfiltroDerecha {
+	margin-top: 0px;
+	margin-left: 25px;
+	width: 175px;
+	height: 70px;
+}
+
+.detalleTopfiltroDerecha {
+	float: right;
+	width: 110px;
+	height: 80px;
+	margin-right: 5px;
+	margin-top: 5px;
+	text-align: right;
+}
+
+.fotoTopfiltroDerecha {
+	float: right;
+	margin-right: 20px;
+	width: 60px;
+	height: 60px;
+	margin-top: 7px;
+	width: 60px;
+}
+
+.contenedorNotificaciones { /*FONDO naranja*/
+	width: 814px;
+	margin: 38px auto 0 auto;
+	background-color: black;
+}
+
+.fondoBlancoNotificacion { /*FONDO BLANCO*/
+	width: 814px;
+	height: 777px;
+	background-color: #fff;
+	position: absolute;
+	z-index: 1;
+}
+
+.cabecerasuarioNotificaciones {
+	margin-top: 50px;
+	margin-left: 0px;
+	padding-left: 0px;
+	width: 785px;
+	height: 110px;
+}
+
+.imagenCabecera {
+	margin-top: 0px;
+	margin-left: 18px;
+	width: 105px;
+	height: 110px;
+	position: absolute;
+	z-index: 3;
+	background-color: white;
+}
+
+.nombreCabecera {
+	margin-top: 0px;
+	margin-left: 120px;
+	width: 440px;
+	height: 110px;
+	position: absolute;
+	z-index: 3;
+	background-color: #c2c2c2;
+}
+
+.separacionCabecera {
+	margin-top: 0px;
+	margin-left: 560px;
+	width: 115px;
+	height: 110px;
+	position: absolute;
+	z-index: 3;
+	background-color: #c2c2c2;
+}
+
+.nroCabeceraPendiente {
+	margin-top: 0px;
+	margin-left: 620px;
+	width: 176px;
+	height: 110px;
+	position: absolute;
+	z-index: 3;
+	background-color: #c2c2c2;
+}
+
+.nroCabeceraRevisado {
+	margin-top: 0px;
+	margin-left: 620px;
+	width: 176px;
+	height: 110px;
+	position: absolute;
+	z-index: 3;
+	background-color: #c2c2c2;
+}
+
+.nroCabeceraCancelado {
+	margin-top: 0px;
+	margin-left: 620px;
+	width: 176px;
+	height: 110px;
+	position: absolute;
+	z-index: 3;
+	background-color: #c2c2c2;
+}
+
+.detalleNroCabecera {
+	margin-top: 30px;
+	margin-left: 0px;
+	width: 90px;
+	height: 40px;
+	position: absolute;
+	z-index: 3;
+	/* 	background-color: black; */
+}
+
+.imagenNroCabecera {
+	margin-top: 35px;
+	margin-left: 100px;
+	width: 40px;
+	height: 27px;
+	position: absolute;
+	padding-top: 3px;
+	z-index: 3;
+	text-align: center;
+	font-size: 18px;
+	background-color: #5E6473;
+}
+
+.comboxNotificaciones {
+	margin-top: 10px;
+	margin-left: 760px;
+	/* 	width: 500px; */
+	/* 	height: 20px; */
+	/* 	text-align: center; */
+}
+
+.checkNotificaciones {
+	margin-top: 10px;
+	margin-left: 700px;
+	/* 	width: 500px; */
+	/* 	height: 20px; */
+	/* 	text-align: center; */
+}
+
+
+.xxx {
+	z-index: 113;
+}
+
+.cabeceraTablaUsuarioNotificaciones {
+	margin-top: 10px;
+	margin-left: 18px;
+	padding-left: 0px;
+	width: 800px;
+	height: 69px;
+
+	/* 	background-color: black; */
+}
+
+.imagenCabeceraTablaUsuario {
+	margin-top: 0px;
+	margin-left: 0px;
+	width: 85px;
+	height: 69px;
+	position: absolute;
+	z-index: 3;
+	/* 	background-color: green; */
+}
+
+.contenidoCabeceraTablaUsuario {
+	margin-top: 0px;
+	margin-left: 93px;
+	width: 690px;
+	height: 69px;
+	position: absolute;
+	z-index: 3;
+	background-color: #c2c2c2;
+}
+
+.tablaNotificacion {
+	margin-top: 0px;
+	margin-left: -2px;
+	width: 808px;
+	margin-bottom: 35px;
+}
+
+.imagenRowTabla {
+	background-color: white;
+	height: 50px;
+}
+
+.rowNotificaciones {
+	float: left;
+	margin-left: 0px;
+	padding-left: 0px;
+	height: 39px;
+	width: auto;
+	/* 	background-color: green; */
+}
+
+.rowNotificaciones1 {
+	margin-top: -58px;
+	margin-left: 0px;
+	padding-left: 5px;
+	height: 39px;
+	padding-top: 50px;
+}
+
+.column1Notificaciones {
+	float: left;
+	margin-top: 17px;
+	margin-left: 12px;
+	width: 600px;
+
+	/* 	background-color: white;  */
+}
+
+.column2Notificaciones { /*FONDO naranja*/
+	float: left;
+	margin-top: 5px;
+/* 	margin-left: 200px; */
+	width: 30px;
+	height: 50px;
+	background-color: #c2c2c2;
+	/* 	background-color: black;  */
+}
+
+.ui-datatable.borderless .ui-datatable-data tr,.ui-datatable.borderless .ui-datatable-data-empty tr,.ui-datatable.borderless .ui-datatable-data td,.ui-datatable.borderless .ui-datatable-data-empty td
+	{
+	border-style: none;
+}
+
+.noheader.ui-datatable table thead {
+	display: none;
+}
+
+.cellSpacingTableClass table {
+	border-collapse: separate;
+	border-spacing: 5px;
+	border-collapse: expression('separate', cellSpacing =           '5px');
+}
+
+.mystyle.ui-datatable .ui-datatable-header {
+/* 	background-color: #003946 !important; */
+}
+
+.ui-datatable-header {
+/* 	background-color: #003946 !important; */
+}
+
+/*Monitoreo Mesa partes*/
+.fondoBlancoMesaPartes { /*FONDO BLANCO*/
+	width: 814px;
+	height: auto;
+	background-color: #fff;
+}
+
+.cabeceraMesaPartes {
+	position: absolute;
+	margin-top: 67px;
+	margin-left: 15px;
+	padding-left: 0px;
+	width: 783px;
+	height: 75px;
+	background-color: #c2c2c2;
+	z-index: 1;
+}
+
+.iconoMesaPartesCabecera {
+	margin-top: 20px;
+	margin-left: 33px;
+	float: left;
+	width: 39px;
+	height: 34px;
+	background-image: url(../images/monitoreoMesaPartes/iconoMesaPartes.png);
+	background-repeat: no-repeat;
+	/* 	background-color: white;  */
+}
+
+.descripcionMesaPartesCabecera {
+	margin-top: -5px;
+	margin-left: 85px;
+	width: 250px;
+	height: 20px;
+	position: absolute;
+	z-index: 3;
+	/* 	background-color: white;  */
+}
+
+.cuerpoMesaPartes { /*FONDO naranja*/
+	margin-top: 144px;
+	margin-left: 16px;
+	width: 783px;
+	height: auto;
+	background-color: #fde871;
+	z-index: 2;
+}
+
+.imagenAtendidosMesaPartes {
+	margin-top: 60px;
+	margin-left: 31px;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	z-index: 2;
+	background-image: url(../images/monitoreoMesaPartes/iconoAtendidos.png);
+	background-repeat: no-repeat;
+	/* 	background-color: white;  */
+}
+
+.botonAtendido {
+	text-align: center;
+	margin-top: 60px;
+	margin-left: 655px;
+	width: 100px;
+	height: 30px;
+	position: absolute;
+	text-decoration: none;
+	color: #000;
+	z-index: 3;
+}
+
+.botonPendiente {
+	text-align: center;
+	margin-top: 60px;
+	margin-left: 545px;
+	width: 100px;
+	height: 30px;
+	position: absolute;
+	text-decoration: none;
+	color: #000;
+	z-index: 3;
+}
+
+.fondoBlancoCuerpoMesaPartes2 { /*FONDO BLANCO*/
+	float: left;
+	margin-left: 30px;
+	margin-top: 0px;
+	width: 725px;
+	height: auto;
+	background-color: #fff;
+}
+
+.ui-menubar {
+	background: #fde871;
+}
+
+.ui-icon.iconoAdministracion {
+	background-image: url(../images/menuBar/iconoAdministracionMenuMar.png);
+	margin-right: 4px;
+}
+
+.ui-icon.iconoMantenimiento {
+	background-image: url(../images/menuBar/iconoMantenimientoMenuBar.png);
+	margin-right: 4px;
+}
+
+.ui-icon.iconoMesaPartes {
+	background-image: url(../images/menuBar/iconoMesaPartesMenuBar.png);
+	margin-right: 4px;
+}
+
+/*Monitoreo Mesa partes*/
+.fondoBlancoMesaPartes { /*FONDO BLANCO*/
+	width: 814px;
+	height: auto;
+	background-color: #fff;
+}
+
+.cabeceraMesaPartes {
+	position: absolute;
+	margin-top: 67px;
+	margin-left: 15px;
+	padding-left: 0px;
+	width: 783px;
+	height: 75px;
+	background-color: #ffc600;
+	z-index: 1;
+}
+
+.descripcionMesaPartesCabecera {
+	margin-top: -5px;
+	margin-left: 85px;
+	width: 250px;
+	height: 20px;
+	position: absolute;
+	z-index: 3;
+	/* 	background-color: white;  */
+}
+
+.cuerpoMesaPartes { /*FONDO naranja*/
+	margin-top: 144px;
+	margin-left: 16px;
+	width: 783px;
+	height: auto;
+	background-color: #fde871;
+	z-index: 2;
+}
+
+.imagenAtendidosMesaPartes {
+	margin-top: 60px;
+	margin-left: 31px;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	z-index: 2;
+	background-image: url(../images/monitoreoMesaPartes/iconoAtendidos.png);
+	background-repeat: no-repeat;
+	/* 	background-color: white;  */
+}
+
+.fondoBlancoCuerpoMesaPartes { /*FONDO BLANCO*/
+	margin-left: 30px;
+	margin-top: 90px;
+	width: 725px;
+	height: auto;
+	background-color: #fff;
+}
+
+.ui-menubar {
+	background: #fde871;
+}
+
+.ui-icon.iconoAdministracion {
+	background-image: url(../images/menuBar/iconoAdministracionMenuMar.png);
+	margin-right: 4px;
+}
+
+.ui-icon.iconoMantenimiento {
+	background-image: url(../images/menuBar/iconoMantenimientoMenuBar.png);
+	margin-right: 4px;
+}
+
+.ui-icon.iconoMesaPartes {
+	background-image: url(../images/menuBar/iconoMesaPartesMenuBar.png);
+	margin-right: 4px;
+}
+/***************Estilo Usuario*******************/
+.u_icono_identificador {
+	margin-top: 24px;
+	margin-left: 31px;
+	float: left;
+	width: 36px;
+	height: 29px;
+	background-image: url(../images/usuario/iconoCabeceraUsuario.png);
+	background-repeat: no-repeat;
+}
+
+.u_imagenUsuario {
+	margin-top: 50px;
+	margin-left: 35px;
+	width: 120px;
+	height: 140px;
+	/* 	background-color: white; */
+	float: left;
+}
+
+.u_nuevoUsuario {
+	float: left;
+	margin-top: 25px;
+	margin-left: 65px;
+	width: 60px;
+	height: 30px;
+}
+
+.u_imagenPrevia {
+	width: 120px;
+	height: 120px;
+	margin-left: 0px;
+	margin-top: 72px;
+	float: left;
+}
+
+.u_imagenPrevia2 {
+	width: 120px;
+	height: 120px;
+	margin-left: 0px;
+	margin-top: 18px;
+	float: left;
+}
+
+.u_inferiorImagenPrevia {
+	width: 20px;
+	height: 20px;
+	margin-left: 30px;
+	margin-top: 50px;
+	float: left;
+}
+
+.u_buttonUpload {
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	transform: rotate(180deg);
+	width: 50px;
+	height: 50px;
+	z-index: 0;
+	position: absolute;
+	margin-left: 500px;
+	margin-top: 180px;
+}
+
+.u_panelGrid1 {
+	margin-top: 40px;
+	margin-left: 0px;
+	padding-top: 0px;
+	width: 400px;
+	height: w00px;
+	/* 	background-color: blue; */
+	float: left;
+}
+
+.u_panelGrid2 {
+	margin-top: 0px;
+	margin-left: 0px;
+	padding-top: 20px;
+	width: 440px;
+	height: 120px;
+	/* 	background-color: green; */
+	float: left;
+}
+
+.u_panelGrid3 {
+	float: left;
+	margin-top: 40px;
+	margin-left: 0px;
+	width: 440px;
+	height: 120px;
+	/* 	background-color: red; */
+}
+
+.u_iconoLapizUsuario {
+	margin-top: 0px;
+	margin-left: 35px;
+	width: 16px;
+	height: 16px;
+	background-image: url("../images/usuario/lapizEditarUsuario.png");
+}
+
+.contenidoPrincipal_SubFondoUsuario {
+	margin-left: 15px;
+	padding-bottom: 25px;
+	width: 783px;
+	height: auto;
+	background-color: white;
+}
+
+.u_fondo_interno { /*Falta definir con el tama�o de la tabla*/
+	margin-left: 0px;
+	margin-top: 0px;
+	float: left;
+	width: 567px;
+	height: 450px;
+	background-color: #fde871;
+	z-index: 0;
+}
+
+.u_fondo_interno2 { /*Falta definir con el tama�o de la tabla*/
+	margin-left: 0px;
+	margin-top: 0px;
+	float: left;
+	width: 567px;
+	height: 500px;
+	background-color: #c2c2c2;
+	z-index: 0;
+}
+
+.u_fondo_interno2Edicion { /*Falta definir con el tama�o de la tabla*/
+	float: left;
+	background-color: #E0E6E2;
+	margin-left: 630px;
+	margin-top: 0px;
+	width: 210px;
+	height: auto;
+	margin-left: 5px;
+}
+
+.u_fondo_btnGuardar {
+	float: left;
+	margin-top: -10px;
+	width: 625px;
+	height: 50px;
+}
+
+.u_fondo_btnGuardar2 {
+	float: left;
+	margin-top: 30px;
+	width: 625px;
+	height: 50px;
+}
+
+.dialogMonitoreo {
+	width: 510px;
+	height: 50px;
+	/* 	background-color: white; */
+}
+
+.tablaDialogoEnvioNoti {
+	float: left;
+	width: 400px;
+	height: 50px;
+	/* 	background-color: white; */
+}
+
+/******************/
+/******************/
+
+/* .ui-button{ */
+/*       background: none; */
+/*  } */
+
+/* .ui-button.ui-state-hover, .ui-button.ui-state-active{ */
+/*      border: none; */
+/* } */
+
+/* .customStyleButton { */
+/* 	background: transparent #fff */
+/* 		no-repeat center; */
+/* 	background-color: #fff; */
+/* /* 	background-color: #fff; */
+/* } */
+.ui-datatable td,.ui-datatable th {
+	white-space: normal;
+}
+
+}
+.process_msg .ui-dialog .ui-dialog-titlebar {
+	display: none !important;
+}
+
+/********ESTILO SUBCONTENIDO INFORMATIVO*******/
+/**ESTILO 1**/
+.subcontenidoInformativo {
+	float: left;
+	background-color: #fed738;
+	margin-left: 5px;
+	width: 210px;
+	height: auto;
+	font-size: 12px;
+}
+
+.subcontenidoInfo_Cabecera {
+	background-color: #FFC600;
+	margin-top: 0px;
+	float: left;
+	width: 210px;
+	height: 50px;
+}
+
+.subcontenidoInfo_logoTitulo {
+	float: left;
+	background-image: url("../icons/iconoInformacion.png");
+	background-repeat: no-repeat;
+	margin-left: 20px;
+	margin-top: 16px;
+	width: 18px;
+	height: 18px;
+}
+
+.subcontenidoInfo_descripcionTitulo {
+	float: left;
+	margin-left: 5px;
+	margin-top: 18px;
+	color: #FFF;
+}
+
+.subcontenidoInfo_detContenidoFondo {
+	background-color: #FFFFFF;
+	float: left;
+	height: 50px;
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 200px;
+}
+
+.subcontenidoInfo_detContenidoDesc {
+	float: right;
+	font-size: 10pt;
+	height: 50px;
+	margin-right: 5px;
+	margin-top: 6px;
+	text-align: right;
+	width: 120px;
+}
+
+.subcontenidoInfo_Numero {
+	float: right;
+	color: #044D29;
+	font-size: 24pt;
+	height: 35px;
+	margin-right: 20px;
+	margin-top: 8px;
+	width: auto;
+}
+
+.subcontenidoInfo_textoconectadosfiltroDerecha {
+	float: right;
+	margin-right: 5px;
+	margin-top: 8px;
+	width: 120px;
+	height: 50px;
+	text-align: right;
+	font-size: 10pt;
+	width: 155px;
+}
+
+.subcontenidoInfo_fila1Estilo {
+	color: #168039;
+	font-size: 10pt;
+}
+
+.subcontenidoInfo_fila2Estilo {
+	color: #45BF56;
+	font-size: 8pt;
+	margin-right: 5px;
+}
+
+.subcontenidoInfo_detUsuario {
+	background-color: white;
+	float: left;
+	height: 74px;
+	margin-left: 5px;
+	width: 200px;
+	margin-bottom: 5px;
+}
+
+.subcontenidoInfo_detUsuarioDesc {
+	float: right;
+	height: 80px;
+	margin-right: 5px;
+	margin-top: 5px;
+	text-align: right;
+	width: 110px;
+}
+
+.subcontenidoInfo_detUsuarioFila1 {
+	color: #403100;
+	font-size: 11pt;
+}
+
+.subcontenidoInfo_detUsuarioFila2 {
+	color: #806300;
+	font-size: 8pt;
+}
+
+.subcontenidoInfo_detUsuarioFila3 {
+	color: #BF9400;
+	font-size: 7pt;
+}
+
+.subcontenidoInfo_detUsuarioFoto {
+	float: right;
+	height: 60px;
+	margin-right: 20px;
+	margin-top: 7px;
+	width: 60px;
+}
+/**ESTILO 2**/
+.subcontenidoInfo_textoconectadosfiltroDerecha2 {
+	float: left;
+	margin-left: 5px;
+	margin-top: 10px;
+	text-align: left;
+	font-size: 10pt;
+	width: 120px;
+}
+
+.detalleTopfiltroDerecha2 {
+	float: left;
+	width: 170px;
+	margin-left: 20px;
+	margin-top: 10px;
+	text-align: left;
+}
+
+.subcontenidoInfo_Numero2 {
+	float: left;
+	color: #044D29;
+	font-size: 24pt;
+	height: 35px;
+	margin-left: 20px;
+	margin-top: 6px;
+	width: auto;
+}
+
+/*****ESTILOS RECAUDACION Y AUTOVALUO*****/
+.recaudacion_iconoTitulo {
+	float: left;
+	background-image: url("../images/recaudacion/menuAzul_iconoTitulo.png");
+	background-repeat: no-repeat;
+	margin-left: 33px;
+	margin-top: 20px;
+	width: 39px;
+	height: 34px;
+}
+
+.recaudacion_iconoSubTitulo {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	margin-bottom: 10px;
+	width: 38px;
+	height: 39px;
+	background-image:
+		url(../images/recaudacion/autovaluo/recAutovaluo_iconoSubTitulo.png);
+	background-repeat: no-repeat;
+}
+
+.arrendamiento_iconoSubTitulo {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	margin-bottom: 10px;
+	width: 38px;
+	height: 39px;
+	background-image:
+		url(../images/cobranza/icon_cobranzas.png);
+	background-repeat: no-repeat;
+}
+
+.menuAzul_fondoOpciones {
+	float: left;
+	margin-top: 0px;
+	margin-left: 15px;
+	margin-bottom: 5px;
+	width: 783px;
+	height: 47px;
+	background-image: url("../images/recaudacion/menuAzul_fondoSubmenu.png");
+}
+
+.menuAzul_submenuOpciones {
+	float: left;
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+.menuAzul_submenOpc1 {
+	float: left;
+	margin-left: 0px;
+}
+
+.menuAzul_submenOpc2,.menuAzul_submenOpc3,.menuAzul_submenOpc4 {
+	float: left;
+	margin-left: 10px;
+}
+
+.menuAzul_submenuItems {
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.menuAzul_bandejaSubmenu {
+	float: right;
+	width: 90px;
+	margin-top: 5px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.menuAzul_arbitriosSubmenu {
+	float: right;
+	width: 90px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.menuAzul_imgsubmenarbitrios {
+	margin-top: 3px;
+	float: left;
+}
+
+.menuAzul_imgsubmencartas {
+	margin-top: 3px;
+	float: left;
+}
+
+.menuAzul_imgsubmenbandeja {
+	float: left;
+	margin-top: 3px;
+}
+
+.arren_btnAtendidos {
+	float: right;
+	margin-right: 28px;
+	margin-top: 79px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #fed02e;
+	text-align: center;
+	padding: 0 auto 0 auto;
+}
+
+.arren_btnPendientes {
+	float: right;
+	margin-right: 5px;
+	margin-top: 79px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #ffc600;
+	text-align: center;
+}
+
+.recau_panelPendientes {
+	margin-top:10px;
+	float: left;
+}
+
+.recau_descripPendientes {
+	float: left;
+	width: 665px;
+	height: auto;
+	margin: 10px 0 0 16px;
+}
+
+.recau_descripAtendidos,arren_descripPendientes {
+	float: left;
+	width: 665px;
+	height: auto;
+	margin: 10px 0 0 16px;
+}
+
+.contenidoPrincipal_ContenedorBlano {
+	float: left;
+	width: 724px;
+	height: auto;
+	background-color: #fff;
+	font-family: arial, normal;
+	color: #000;
+}
+.contenidoPrincipal_ContenedorBlanco {
+	float: left;
+	width: 724px;
+	height: auto;
+	background-color: #fff;
+	font-family: arial, normal;
+	color: #000;
+}
+/*********estilo color de campos de  tablas********/
+.red {
+	color: #8C524B;
+	background-color: #ff0000;
+	background-image: none;
+}
+
+.blue {
+	background-color: #fff;
+	background-image: none;
+	color: #000000;
+}
+
+.orange {
+	color: #804000;
+	background-color: #ff8000;
+	background-image: none;
+}
+.colorRechazado {
+	xbackground-color: red;
+	background-image: none;
+	color: #5a0000;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.colorEnProceso {
+	xbackground-color: green;
+	background-image: none;
+	color: #e3b411;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.colorAprobado {
+	xbackground-color: blue;
+	background-image: none;
+	color: #017514;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.ui-datatable-hor-scroll .ui-datatable-tablewrapper,.scrolling-div .ui-datatable-tablewrapper
+	{
+	overflow: scroll;
+	width:100%;
+	/*height: 210px!important;*/
+	padding-bottom: 5px;
+}
+.ui-datatable-hor-scroll-horizontal .ui-datatable-tablewrapper,.scrolling-div .ui-datatable-tablewrapper
+	{
+    overflow: scroll;
+	width:100%;
+	height: 160px!important;
+	padding-bottom: 5px;
+}
+.ui-datatable-hor-scroll-horizontal2 
+	{
+    overflow: scroll;
+	width:100%;
+	height: 270px!important;
+	padding-bottom: 5px;
+}
+.ui-datatable-hor-scroll-horizontal3 
+	{
+    overflow: scroll;
+	width:100%;
+	height: 400px!important;
+	padding-bottom: 5px;
+}
+/*color fecha mes*/
+.ui-inplace-display {
+	color: #3399cc;
+}
+/* ancho de calendar */
+.calendarClass input {
+width: 55px !important
+}
+/************ESTILO IMMUEBLES*************/
+/**GENERALES**/
+
+.inmueble_IconoIdentificador {
+	float: left;
+	background-image: url("../images/inmueble/iconManteTitulo.png");
+	background-repeat: no-repeat;
+	margin-left: 33px;
+	margin-top: 20px;
+	width: 39px;
+	height: 34px;
+}
+
+.inmueble_subFondo_Icono {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	width: 25px;
+	height: 23px;
+	background-image: url(../images/inmueble/iconManteSubTitulo.png);
+	background-repeat: no-repeat;
+}
+
+.mante_gene_descrip0x1 {
+	float: left;
+	width: 665px;
+	height: auto;
+	margin: 15px 0 0 16px;
+}
+
+.mante_gene_ContDescrip01 {
+	float: left;
+	width: 667px;
+	margin: 0px 0 20px 35px;
+	xheight: 80px;
+	color: #4C4C4C;
+}
+
+.filaBtnNuevo {
+	text-align: right;
+	margin-top: 0px;
+	padding-left: 20px;
+}
+
+.filaencabezado {
+	width: 800px;
+	height: 100px;
+	margin: 0px;
+	padding: 0px;
+	margin-top: 5px;
+}
+
+.col01 {
+	float: left;
+	width: 320px;
+	height: auto;
+	margin-top: 0px;
+}
+
+.col02 {
+	float: left;
+	width: 200px;
+	height: auto;
+	margin-top: 0px;
+	margin-left: 50px;
+}
+
+.columCarrusel {
+	float: left;
+	width: 200px;
+	height: 70px;
+	margin-top: 0px;
+}
+.cuerpoCarrusel {
+	float: left;
+	width: 52px;
+	height: 40px;
+	
+}
+.cuerpoCarruselOculto {
+	float: left;
+	width: 0px;
+	height: 0px;
+	
+}
+.detalleImg {
+	font-size:8px;
+	width: 15px;
+	max-width: 15px;
+	
+}
+
+
+.columFile {
+	float: left;
+	width: 200px;
+	height: 20px;
+	margin-top: 0px;
+}
+
+.columFile .fileupload-content {
+	height: 0px;
+	padding: 0px;
+	height: 0px;
+	border: 0px;
+}
+
+.columFile .ui-widget-header {
+	background: none;
+	border: none;
+}
+
+.columFile .fileupload-buttonbar {
+	padding: 0px;
+}
+
+.filaRegSbn {
+	width: 300px;
+	height: 26px;
+	margin-top: 20px;
+	padding-left: 20px;
+}
+
+.lblRegSbn {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtRegSbn {
+	float: left;
+	width: 180px;
+	height: 16px;
+}
+
+.filaDenominacion {
+	width: 300px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 25px;
+}
+
+.lblDenominacion {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtDenominacion {
+	float: left;
+	width: 180px;
+	height: 16px;
+}
+
+.filaCabecera {
+	width: 400px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 0px;
+}
+
+.lblCabecera {
+	float: left;
+	width: 300px;
+	height: 26px;
+	text-align: left;
+	color: #000;
+}
+
+.fila01 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columTipoVia {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblTipoVia {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtTipoVia {
+	float: left;
+	height: 16px;
+}
+
+.columLote {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblLote {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtLote {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.fila02 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columDistrito {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblDistrito {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtDistrito {
+	float: left;
+	height: 16px;
+}
+
+.columSubLote {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblSubLote {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtSubLote {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.fila03 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columDireccion {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblDireccion {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtDireccion {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.columTipoInterior {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblTipoInterior {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtTipoInterior {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.fila04 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columNroPrincipal {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblNroPrincipal {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtNroPrincipal {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.columNroInterior {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblNroInterior {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtNroInterior {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.fila05 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columNroGrupal {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblNroGrupal {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtNroGrupal {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.columZona {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblZona {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtZona {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.fila06 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columUbicPiso {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblUbicPiso {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtUbicPiso {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.columSector {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblSector {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtSector {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.fila07 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columManzana {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblManzana {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtManzana {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+
+
+.columLatitud {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblLatitud {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtLatitud{
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.columLongitud{
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblLongitud {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtLongitud{
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+
+
+
+.columEtapa {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblEtapa {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtEtapa {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.fila08 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 25px;
+}
+
+.columReferencia {
+	width: 650px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblReferencia {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtReferencia {
+	float: left;
+	width: 505px;
+	height: 16px;
+}
+
+.fila09 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columHabUrbana {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblHabUrbana {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtHabUrbana {
+	float: left;
+	height: 16px;
+}
+
+.columNombreHabUrbana {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblNombreHabUrbana {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtNombreHabUrbana {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.fila10 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 25px;
+}
+
+.columUbigeo {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblUbigeo {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtUbigeo {
+	float: left;
+	height: 16px;
+}
+
+.columDetaUbigeo {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblDetaUbigeo {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtDetaUbigeo {
+	float: left;
+	width: 175px;
+	height: 16px;
+}
+
+.mante_general_botonguardar {
+	margin-top: 10px;
+	margin-left: 20px;
+	float: left;
+}
+
+
+/**REGISTRALES**/
+.filaReg01 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columTitularidad {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblTitularidad {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtTitularidad {
+	float: left;
+
+	height: 16px;
+}
+
+.columTipoTitularidad {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblTipoTitularidad {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtTipoTitularidad {
+	float: left;
+	
+	height: 16px;
+}
+
+.filaReg02 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columNombreTitular {
+	width: 650px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblNombreTitular {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtNombreTitular {
+	float: left;
+	width: 310px;
+	height: 16px;
+}
+
+.filaReg03 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columTipoMonumento {
+	width: 650px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblTipoMonumento {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtTipoMonumento {
+	float: left;
+	width: 310px;
+	height: 16px;
+}
+
+.filaReg04 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.columResolucion {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblResolucion {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtResolucion {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.columFechaResolucion {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblFechaResolucion {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtFechaResolucion {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.filaReg05 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columAsiento {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblAsiento {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtAsiento {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.columPartida {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblPartida {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtPartida {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.filaReg06 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columFojas {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblFojas {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtFojas {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.columCodPredio {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblCodPredio {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtCodPredio {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.filaReg07 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columTomo {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblTomo {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtTomo {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.columFechaInscrip {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblFechaInscrip {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtFechaInscrip {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.filaReg08 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.columFicha {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblFicha {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtFicha {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.filaReg09 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.columSaneamientoFL {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblSaneamientoFL {
+	float: left;
+	width: 170px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtSaneamientoFL {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.columSituacion {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblSituacion {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtSituacion {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+/*TECNICOS*/
+
+.columF5Fecha .ui-inputfield{
+	width: 100px;
+}
+
+.filaTec01 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columMatPredominante {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblMatPredominante {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtMatPredominante {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.filaTec02 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columAnhoConstru {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblAnhoConstru {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtAnhoConstru {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.columNumPisos {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblNumPisos {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtNumPisos {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.filaTec03 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.columAreaTerreno {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblAreaTerreno {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtAreaTerreno {
+	float: left;
+	width: 176px;
+	height: 16px;
+}
+
+.columAreaConstru {
+	width: 320px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblAreaConstru {
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtAreaConstru {
+	float: left;
+	width: 184px;
+	height: 16px;
+}
+
+.filaTec04 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columF4PartidaReg {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF4PartidaReg {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.chkF4PartidaReg {
+	float: left;
+	width: 20px;
+	height: 16px;
+}
+
+.columF4PlanoPer {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF4PlanoPer {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.chkF4PlanoPer {
+	float: left;
+	width: 20px;
+	height: 16px;
+}
+
+.columF4PlanoUbi {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF4PlanoUbi {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.chkF4PlanoUbi {
+	float: left;
+	width: 20px;
+	height: 16px;
+}
+
+.filaTec05 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.columF5MemoDescrip {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF5MemoDescrip {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.chkF5MemoDescrip {
+	float: left;
+	width: 20px;
+	height: 16px;
+}
+
+.columF5Fotografias {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF5Fotografias {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.chkF5Fotografias {
+	float: left;
+	width: 20px;
+	height: 16px;
+}
+
+.columF5Tasacion {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF5Tasacion {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.chkF5Tasacion {
+	float: left;
+	width: 20px;
+	height: 16px;
+}
+
+.columF5Fecha {
+	width: 200px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF5Fecha {
+	float: left;
+	width: 60px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.txtF5Fecha {
+	float: left;
+	width: 30px;
+	height: 16px;
+}
+
+.filaTec06 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+}
+
+.columF6TerrenoVal {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	margin-left: 60px;
+	float: left;
+}
+
+.lblF6TerrenoVal {
+	float: left;
+	width: 150px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.columF6EdificacionesVal {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF6EdificacionesVal {
+	float: left;
+	width: 150px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.columF6ObrasCompVal {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF6ObrasCompVal {
+	float: left;
+	width: 150px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.columF6ComercialVal {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF6ComercialVal {
+	float: left;
+	width: 150px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.filaTec07 {
+	width: 700px;
+	height: 26px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.columF7Valor {
+	width: 50px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF7Valor {
+	float: left;
+	width: 50px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.columF7Terrenova {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.columF7Edificacionesva {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.columF7ObrasCompleva {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.txtF7ObrasCompleva {
+	float: left;
+	width: 130px;
+	height: 16px;
+}
+
+.columF7Comercialva {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.txtF7Comercialva {
+	float: left;
+	width: 130px;
+	height: 16px;
+}
+
+.filaTec08 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.columF8Moneda {
+	width: 50px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF8Moneda {
+	float: left;
+	width: 50px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.columF8Terrenomo {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.columF8Terrenomo {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.columF8Edificacionesmo {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.columF8ObrasComplemo {
+	float: left;
+	width: 150px;
+	height: 16px;
+	margin-top: 5px;
+}
+
+.columF8Comercialmo {
+	float: left;
+	width: 150px;
+	height: 16px;
+	margin-top: 5px;
+}
+
+.filaTec09 {
+	width: 700px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.columF9Depurado {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF9Depurado {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.chkF9Depurado {
+	float: left;
+	width: 20px;
+	height: 16px;
+}
+
+.columF9Habilitado {
+	width: 150px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF9Habilitado {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.chkF9Habilitado {
+	float: left;
+	width: 20px;
+	height: 16px;
+}
+
+/**********ESTILOS UPA***********/
+.col01Upa {
+	float: left;
+	width: 340px;
+	height: auto;
+	margin-top: 20px;
+	padding-left: 20px;
+}
+.col02Upa {
+	float: left;
+	width: 340px;
+	height: auto;
+	margin-top: 20px;
+	padding-left: 20px;
+}
+.columF4upa00 {
+	width: 80px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.columF4upa01,.columF4upa02,.columF4upa03,.columF4upa04, ,.columF4upa05
+	{
+	width: 100px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblF4upa00 {
+	float: left;
+	width: 70px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.lblF4upa01,.lblF4upa02,.lblF4upa03,.lblF4upa04,.lblF4upa05 {
+	float: left;
+	width: 100px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+.columF5upa01 {
+	width: 70px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.columF5upa02,.columF5upa03,.columF5upa04,.columF5upa05,.columF5upa06 {
+	width: 100px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.txtF5upa01,.txtF5upa02,.txtF5upa03,.txtF5upa04,.txtF5upa05 {
+	float: left;
+	width: 80px;
+	height: 16px;
+}
+
+.columObsUpa {
+	width: 500px;
+	height: 5px;
+	margin-top: 5px;
+	float: left;
+}
+
+.txtObsUpa {
+	float: left;
+	width: 350px;
+}
+
+.columParteInmu {
+	width: 250px;
+	height: 26px;
+	margin-top: 5px;
+	float: left;
+}
+
+.lblParteInmu,.lbldisponibleAlqui {
+	float: left;
+	width: 180px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+
+/******ESTILOS INQUILINO********/
+.inqui_contenidoDatos{
+	width: auto;
+	height: 330px;
+	margin-top: 0px;
+}
+.inqui_ColumDatos {
+	float: left;
+	width: 350px;
+	height: auto;
+	margin-top: 10px;
+
+}
+.inqui_ColumInfo {
+	float: left;
+	width: 310px;
+	height: 250px;
+	margin-top: 0px;
+	
+}
+
+.filaDatoLargosCorto {
+	float:left;
+	width: 310px;
+	height: 26px;
+	margin: 0 0 10px 0;
+	padding-left: 20px;
+}
+.lblDatos {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+.cbxDatos{
+	float: left;
+	width: 190px;
+	height: 20px;
+}
+.txtDatos{
+	float: left;
+	width: 180px;
+	height: 16px;
+}
+.filaDatoLargo {
+	width: 700px;
+	height: 26px;
+	margin-top: 10px;
+	
+}
+.columLargo {
+	width: 650px;
+	height: 26px;
+	margin-top: 5px;
+	padding-left: 20px;
+	float: left;
+}
+.txtDatosLargo{
+	float: left;
+	width: 505px;
+	height: 16px;
+}
+
+.chkHabilitado{
+	float: right;
+}
+ .lblHabilitado{
+ text-align:right;
+ width:70px;
+	float: right;
+}
+
+
+/***formato de validacion con prime***/
+
+.ui-messages-error, .ui-message-error{
+	position:absolute;
+	margin-left:300px;
+	color: #D22525;
+}
+
+/********************ESTILO CONTRATO**************************/
+
+.btnContratoPropiedades {
+	float: left;
+	margin-left: 37px;
+	margin-top: 60px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #ffc600;
+	text-align: center;
+}
+
+.btnSinContratoPropiedades {
+	float: left;
+	margin-left: 397px;
+	margin-top: 60px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #ffc600;
+	text-align: center;
+}
+
+.contrato_IconoIdentificador {
+	float: left;
+	background-image: url("../images/contrato/iconContrato.png");
+	background-repeat: no-repeat;
+	margin-left: 33px;
+	margin-top: 20px;
+	width: 39px;
+	height: 34px;
+}
+.contrato_contenidoDatos{
+	width: auto;
+	height: 130px;
+	margin-top: 0px;
+	
+}
+.contrato_ColumDatos {
+	float: left;
+	width: 350px;
+	height: auto;
+	margin-top: 10px;
+
+}
+.contrato_ColumInfo {
+	float: left;
+	width: 310px;
+	height: auto;
+	margin-top: 0px;
+	
+}
+
+.contrato_cabecera_seccion {
+	margin-left:20px; 
+	font-size:20px
+}
+.contrato_cabecera_seccion_2 {
+	margin-left:20px; 
+	font-size:10px
+}
+.customStyleClassName .ui-state-default {
+  color: red !important;
+}
+/*sdsds*/
+
+.registroArbitrioCabeceraSubPestania{
+	float: left;
+	width: 708px;
+	height: 30px;
+	margin: 10px 0 0 16px;
+/* 	background-color: red; */
+}
+
+.registroArbitrioSubPestaniaIzquierdo{
+	float: left;
+	width: 490px;
+	height: 260px;
+	margin: 10px 0 0 -10px;
+	background-color: white;
+}
+
+.registroArbitrioSubPestaniaDerecho{
+	float: left;
+	width: 140px;
+	height: 300px;
+	margin: 10px 0 0 16px;
+}
+
+.registroArbitrioSubPestaniaInferior{
+	float: left;
+	width: 690px;
+	height: auto;
+	margin: 10px 0 0 -25px;
+	margin-top: 50px;
+}
+
+.paginaInteriorArbitrios {
+	float: left;
+	background-color: #E3F0F8;
+	margin-left: 45px;
+	width: 150px;
+	height: auto;
+	font-size: 12px;
+}
+.subcontenidoCreador_Cabecera	 {
+	background-color: #37A6DE;
+	margin-top: 0px;
+	float: left;
+	width: 150px;
+	height: 35px;
+}
+
+.subcontenidoInfo_detContenidoNombre {
+	float: left;
+	height: 100px;
+	margin-left: -10px;
+	width: 150px;
+	margin-bottom: 5px;
+}
+
+.btnRegistroCarta {
+	float: right;
+	margin-right: 5px;
+	text-decoration: none;
+	width: 85px;
+	height: 30px;
+	background-color: #328CCB;
+	text-align: center;
+}
+.btnRegistroArbitrio {
+	float: right;
+	margin-right: 5px;
+	text-decoration: none;
+	width: 85px;
+	height: 30px;
+	background-color: #328CCB;
+	text-align: center;
+}
+
+.btnRegistro {
+	float: right;
+	margin-right: 0px;
+	text-decoration: none;
+	width: 85px;
+	height: 30px;
+	background-color: #328CCB;
+	text-align: center;
+}
+.btnRegistro2 {
+	float: right;
+	margin-right: 5px;
+	text-decoration: none;
+	width: 85px;
+	height: 30px;
+	background-color: #328CCB;
+	text-align: center;
+}
+.yourCarouselSelector .ui-carousel{
+     border : 0px;
+     width:300px!important;
+     height:100px!important;
+}
+
+.yourCarouselSelectorArbitrio .ui-carousel{
+     border : 0px;
+     width:106px!important;
+     height:80px!important;
+}
+
+/* .cuerpoCarrusel{ */
+/* 	width:300px; */
+/* 	height:100px; */
+/* } */
+
+.cuerpoCarruselArbitrio {
+	float: left;
+	width: 32px;
+	height: 40px;
+	
+}
+/****ESTILO COBRANZA****/
+.cobranza_iconoSubTitulo {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	margin-bottom: 10px;
+	width: 38px;
+	height: 39px;
+	background-image:
+		url(../images/cobranza/icon_cobranzas.png);
+	background-repeat: no-repeat;
+}
+
+.cartera_ColumDatos {
+	float: left;
+	width: 495px;
+	height: auto;
+	margin-top: 10px;
+
+}
+.cartera_ColumInfo {
+	float: left;
+	width: 195px;
+	height: 250px;
+	margin-top: 0px;
+	
+}
+.paginaInteriorCartera {
+	float: right;
+	background-color: #E3F0F8;
+	margin-left: 0px;
+	width: 172px;
+	height: auto;
+	font-size: 12px;
+}
+.cartera_panelPendientes {
+	margin-top:10px;
+	float: left;
+}
+.carterasubpestanas{
+	float: right;
+	width: 708px;
+	height: 30px;
+	marginx: 10px 0 0 16px;
+}
+.filaBtnNuevoCartera {
+	text-align: left;
+	margin-top: -25px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+.cobranza_cartera_contenidoDatos{
+	width: 800px;
+	height: auto;
+	margin-top: 0px;
+}
+/****estilo registro cuota****/
+.cargadoArchivo {
+	position: absolute;
+	width: 200px;
+	
+	margin-top: 0px;
+	margin-left: 400px;
+}
+
+.columCarruselx .ui-carousel .ui-carousel-viewport ul{
+	width: 300px;
+}
+.cuota_botonenviar {
+	margin-top: 10px;
+	margin-left: 490px;
+	float: left;
+}
+
+.iconoUserCreador {
+	float: right;
+	width: 52px;
+	height: 49px;
+	margin-right: 10px;
+	margin-top:10px;
+	background-image: url("../images/dgaiMonitoreo/iconUser.png");
+}
+
+/*******reporte*******/
+
+.tablaReporteCobranza {
+	float: left;
+	margin-left: 16px;
+	overflow: auto;
+	width: 100%;
+	height:auto;
+	margin-bottom: 20px;
+}
+/*****agregar fraco*****/
+.autovaluo_iconoSubTitulo {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	margin-bottom: 10px;
+	width: 38px;
+	height: 39px;
+	background-image:
+		url(../images/recaudacion/autovaluo/icon_autovaluo.png);
+	background-repeat: no-repeat;
+}
+
+.process_msg .ui-dialog .ui-dialog-titlebar {
+   display:none !important;
+}
+
+.subcontenidoInfo_Arbitrio_nombres {
+	
+	float: left;
+	height: 45px;
+	margin-left: 25px;
+	margin-top: 25px;
+	margin-bottom: 5px;
+	width: 85px;
+	text-align: right;
+}
+
+.subcontenidoInfo_Arbitrio_foto {
+	
+	float: left;
+	height: 45px;
+	margin-left: 5px;
+	margin-top: 25px;
+	margin-bottom: 5px;
+	width: 35px;
+}
+
+
+.registroArbitrioSubPestaniaDerechoCarta{
+	float: left;
+	width: 140px;
+	height: 200px;
+	margin: 10px 0 0 15px;
+}
+
+.botonRegistrarCarta{
+	position:absolute;
+	width: 140px;
+	height: 200px;
+	margin-top: 450px;
+	margin-left:20px;
+}
+
+.formRegistrarCarta{
+	margin-left:20px;
+	margin-top: 310px;
+	position:absolute;
+	
+}
+
+
+/*Garantias*/
+.divInicioGarantia{
+	margin-left:12px;
+	width:700px;
+	height:100px
+	
+/* 	background-color:red; */
+	
+}
+
+.divInicioIzquierdaGarantia{
+	float:left;
+	
+	width:350px;
+	height:auto;
+	
+	
+}
+
+.divInicioDerechaGarantia{
+	float:left;
+	width:350px;
+	height:auto;
+	
+}
+
+.divIntermedioGarantia{
+	width:700px;
+	height:100px;
+	margin-left: 12px;
+}
+
+.divIntermedioIzquierdaGarantia{
+	
+	width:350px;
+	height:auto;
+	float:left;
+	
+}
+
+.divIntermedioDerechoGarantia{
+	
+	width:350px;
+	height:auto;
+	float:left;
+	
+}
+
+.divFinalGarantia{
+	
+	width:700px;
+	height:auto;
+	
+}
+
+.divFinalIzquierdaGarantia{
+	
+	width:350px;
+	height:auto;
+	float:left;
+	
+}
+
+.divFinalDerechoGarantia{
+	
+	width:350px;
+	height:auto;
+	float:left;
+	
+}
+/*Periodos*/
+
+.div1Periodo{
+	margin-left:12px;
+	width:700px;
+	height:100px
+	
+/* 	background-color:red; */
+	
+}
+
+.div1IzquierdaPeriodo{
+	float:left;
+	
+	width:350px;
+	height:auto;
+	
+	
+}
+
+.div1DerechaPeriodo{
+	float:left;
+	width:350px;
+	height:auto;
+	
+}
+
+
+.div2Periodo{
+	margin-left:20px;
+	width:700px;
+	height:100px
+	
+/* 	background-color:red; */
+	
+}
+
+.div2IzquierdaPeriodo{
+	float:left;
+	
+	width:350px;
+	height:auto;
+	
+	
+}
+
+.div2DerechaPeriodo{
+	float:left;
+	width:350px;
+	height:auto;
+	
+}
+
+/**modificado primefaces**/
+#idcalendario .ui-inputfield{
+	width: 135px;
+}
+
+.ui-corner-all{
+	border-radius:1;
+}
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+box-shadow:0 0px 0px #44629C inset;
+}
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus{
+	box-shadow:0 0 5px #74B2E2, 0 2px 2px #74B2E2 inset;
+}
+
+/*****/
+/****registro cobranza****/
+.cobranza_detalleReg {
+	float: left;
+	margin-left: 16px;
+	overflow: auto;
+	width: 400px;
+	margin-bottom: 20px;
+}
+
+/***franco**/
+.supervisorMonitoreo_botones {
+	float: left;
+	margin-left: 513px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.styleWidthCalendar {
+	width: 50px;
+}
+
+.exportarArbitrio {
+	width: 100px;
+	height: 20px;
+	margin-left: 635px;
+	margin-bottom:15px;
+}
+
+.registroArbitrioSubPestaniaInferiorCarta{
+	float: left;
+	width: 690px;
+	height: auto;
+	margin: 10px 0 0 -10px;
+	margin-top: 200px;
+}
+
+
+
+.botonActivadoArbitrio {
+	float: right;
+	margin-right: 28px;
+	margin-top: 79px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #ffc600;
+	text-align: center;
+	padding: 0 auto 0 auto;
+}
+
+.botonDesactivadoArbitrio {
+	float: right;
+	margin-right: 5px;
+	margin-top: 79px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #fed02e;
+	text-align: center;
+}
+
+
+
+.botonDesactivadoCarta {
+	float: right;
+	margin-right: 5px;
+	margin-top: 79px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #fed02e;
+	text-align: center;
+}
+.colorButton {
+	/*float: right;
+	margin-right: 5px;
+	margin-top: 79px;
+	text-decoration: none;*/
+	color: #c21315 !important;
+	/*width: 85px;
+	height: 30px;
+	background-color: #fed02e;
+	text-align: center;*/
+}
+.button-example{
+ 
+    border-radius: 8px;
+    background:rgb(102, 181, 255);
+    /*añadimos sombras inferiores*/
+    -moz-box-shadow: 0px 5px 0px 0px rgb(0, 105, 202);
+    -webkit-box-shadow: 0px 5px 0px 0px rgb(0, 105, 202);
+    box-shadow: 0px 5px 0px 0px rgb(0, 105, 202);
+ 
+    display:inline-block;
+    margin:0px 10px 10px 0px;
+    padding:10px;
+    text-decoration:none;/*anulamos subrayado del texto dentro del enlace*/
+    /*añadimos un efecto de transición para que el efecto sea progresivo*/
+    transition: all 0.10s ease-in-out;
+    -webkit-transition: all 0.10s ease-in-out;
+    /*IMPORTANTE, si no posicionamos de manera relativa el elemento, al hacer click se moverá entero, sin realizar el engaño que buscamos*/
+    position:relative;
+ 
+}
+
+/*Estilo*/
+.FilaBusquedaInmuebleContrato {
+/* 	float: right; */
+/* 	margin-right: 5px; */
+/* 	margin-top: 79px; */
+/* 	text-decoration: none; */
+/* 	color: #000; */
+	width: 650px;
+	height: 72px;
+	margin-left: 18px;
+	
+}
+
+.columna0FilaBusquedaInmuebleContrato {
+	float:left;
+	width:900px;
+	height: 26px;
+	margin-left: 18px;
+}
+
+.columna1FilaBusquedaInmuebleContrato {
+	width:160px;
+	height: 36px;
+	color: #4C4C4C;
+	background-color: red;
+}
+
+.columna2FilaBusquedaInmuebleContrato {
+	width: 320px;
+	height: 36px;
+	color: #4C4C4C;
+	background-color: green;
+}
+
+
+.lblDatosXXX {
+	float: left;
+	width: 120px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+	margin-top: 25px;
+}
+
+.fondoBlancoDialogoCancelarContrato {
+	width: 625px;
+	height: 300px;
+/* 	background-color:white; */
+}
+
+.seccionAdialogoCancelarContrato {
+	width: 600x;
+	height: 50px;
+/* 	background-color:black; */
+	margin: 10px;
+}
+.seccionBdialogoCancelarContrato {
+	width: 600px;
+	height:50px;
+/* 	background-color:green; */
+	margin: 10px;
+}
+.seccionCdialogoCancelarContrato {
+	width: 600px;
+	height: 70px;
+/* 	background-color:red; */
+	margin: 10px;
+}
+.seccionDdialogoCancelarContrato {
+	width: 600px;
+	height: 130px;
+/* 	background-color:blue; */
+	margin: 10px;
+}
+
+.seccionEdialogoCancelarContrato {
+	width: 80px;
+	height: 20px;
+/* 	background-color:blue; */
+	margin-left: 570px;
+	margin-top: 50px;
+}
+
+
+.lblDatosContra {
+	float: left;
+	width: 50px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+	margin-top: 15px;
+	margin-left:20px;
+}
+
+.lblDatosContra2 {
+	float: left;
+	width: 60px;
+	height: 10px;
+	text-align: left;
+	color: #4C4C4C;
+	margin-top: 25px;
+	margin-left:22px;
+}
+
+
+.anchoCalendar input {
+width: 70px;
+}
+
+.anchoCalendarCobranzaRegistroPago input {
+width: 120px;
+}
+
+.widthcalendarToolLetra input {
+width: 80px;
+}
+
+.nombrePestaniaContrato {
+width: 200px;
+height: 20px;
+}
+
+.nombrePestaniaContrato1 {
+width: 200px;
+height: 20px;
+}
+
+/**ver opcion cerrar en dialog**/
+#frmGeneral .ui-dialog-titlebar{
+width: 565px;
+}
+#dialogCuota .ui-dialog-titlebar{
+width: 635px;
+}
+
+/*******SEGUIMIENTO********/
+.btnSeguimiento {
+	float: left;
+	margin-left: 217px;
+	margin-top: 60px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #ffc600;
+	text-align: center;
+}
+
+.btnDespacho {
+	float: left;
+	margin-left: 5px;
+	margin-top: 60px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #fed02e;
+	text-align: center;
+	padding: 0 auto 0 auto;
+}
+/***/
+.fila3columnas {
+	float: left;
+	margin-left: 15px;
+	margin-top: 0px;
+	color: #000;
+	width: 700px;
+	height: auto;
+	text-align: center;
+	padding: 0 auto 0 auto;
+}
+
+.columna1_3 {
+	float: left;
+	margin-left: 5px;
+	margin-top: 0px;
+	color: #000;
+	width: 227px;
+	height: 30px;
+	text-align: center;
+	padding: 0 auto 0 auto;
+}
+.textoCabecera {
+	float: left;
+	margin-left:10px;
+	width: 300px;
+	height: 26px;
+	text-align: left;
+	color: #3385BF;
+}
+.textoidenti {
+	float: left;
+	margin-left:10px;
+	width: 300px;
+	height: 26px;
+	text-align: left;
+	color: #4C4C4C;
+}
+.campoIngreso {
+	float:left;
+	margin-left:10px;
+	width: 180px;
+}
+.fila3columnaAcordeon {
+	float: left;
+	margin-left: 0px;
+	margin-top: 0px;
+	color: #000;
+	width: 660px;
+	height: auto;
+	
+}
+
+.columnaAcordeon{
+	float: left;
+	margin-left: 0px;
+	margin-top: 0px;
+	color: #000;
+	width: 220px;
+	height: 30px;
+	
+}
+.ui-accordion .ui-accordion-content{
+	padding-left: 0px;
+}
+.chekSegui{
+	margin-left: 20px;
+
+	}
+	
+.tab1-contenedor{
+width: 650px;;
+height: 105px;
+margin: 10px;
+}
+.tab1-cabecera{
+ width: 650px;;
+ height: 20px;
+ margin-left: 0px;
+}
+
+.tab1-cuerpo{
+ margin-top:20px;
+ width: 650px;;
+ height: 85px;
+ font-size: 11px;
+}
+
+
+	
+.tab5-contenedor{
+width: 650px;;
+height: 80px;
+margin: 10px;
+}
+
+.tab5-cabecera{
+ width: 650px;;
+ height: 20px;
+ text-align: left;
+}
+
+.tab5-cuerpo-izquiedo{
+	float:left;
+ width: 325px;
+ height: 80px;
+}
+
+.tab5-cuerpo-derecho{
+ float:right;
+ width: 325px;
+ height: 80px;
+}
+
+.tab5-cuerpo-derecho1{
+ float:left;
+ width: 200px;
+ height: 30px;
+ margin-left: 64px;
+}
+
+
+
+.leyenda-GrabacionPaso{
+ margin-left:400px;
+ margin-top : 20px;
+ width: 175px;
+ height: 45px;
+}
+
+.leyenda-GrabacionPaso-izq{
+ float:left;
+ width: 140px;
+ height: 45px;
+}
+
+.leyenda-GrabacionPaso-Nombre{
+ 
+ width: 140px;
+ height: 20px;
+}
+
+.leyenda-GrabacionPaso-Fecha{
+ width: 140px;
+ height: 25px;
+ font-size: 10px;
+}
+
+.leyenda-GrabacionPaso-der{
+ float:right;
+ width: 35px;
+ height: 40px;
+}
+
+#frmDl gNotificacionPersonalizable .ui-dialog-titlebar{
+width: 513px;
+}
+
+#idconfirmacionSeguimiento .ui-dialog-titlebar{
+width: 200px;;
+}
+
+
+.contenidoPrincipal_IconoNotificar {
+	
+	float: left;
+	margin-left: 5px;
+	margin-top: 40px;
+	width: 18px;
+	width: 75px;
+	height: 30px;
+
+}
+
+
+.lblDescripcionAsignarCobrador {
+	float: left;
+	width: 80px;
+	height: 20px;
+	text-align: left;
+}
+
+.btnRepGerContrato {
+	float: left;
+	margin-left: 217px;
+	margin-top: 60px;
+	text-decoration: none;
+	color: #000;
+	width: 85px;
+	height: 30px;
+	background-color: #ffc600;
+	text-align: center;
+}
+
+
+.alertaBody {
+	margin-bottom:15px;
+	margin-top:15px;
+	margin-left:10px;
+	margin-right:5px;
+	width: 760px;
+	height: 320px;
+}
+
+
+.alertaLeft  {
+	float:left;
+	width: 470px;
+	height: 320px;
+/* 	background-color: red; */
+}
+
+
+.alertaRight{
+	float:right;
+	width: 285px;
+	height: 320px;
+}
+
+.RegistroCobranzaContenedor{
+	float:right;
+	width: 500px;
+	height: 50px;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+.RegistroCobranzaContenedorSeleccionarCartera{
+	float:left;
+	width: 250px;
+	height: 50px;
+}
+
+.RegistroCobranzaContenedorAgregarPago{
+	float:left;
+	width: 250px;
+	height: 50px;
+	text-align: right;
+}
+
+.RegistroCobranzaContenedorAgregarPagoContrato{
+	width: 250px;
+	height: 25px;
+}
+.RegistroCobranzaContenedorAgregarPagoSinContrato{
+	width: 250px;
+	height: 25px;
+}
+
+.RegistroCuotaSinContrato{
+	width: 565px;
+	height: 575px;
+	margin: 5px;
+}
+
+.RegistroCuotaSinContratoIzq{
+	float:left;
+	width: 410px;
+	height: 575px;
+	background-color: white;
+}
+
+.RegistroCuotaSinContratoDer{
+	float:left;
+	width: 155px;
+	height: 575px;
+}
+
+.infoDialogoCobranza {
+	float: left;
+	background-color: #E0E6E2;
+	margin-left: 5px;
+	width: 151px;
+	height: auto;
+	font-size: 12px;
+}
+
+
+.infoDialogoCobranzaIGV_header {
+	float: left;
+	color: #403100;
+	font-size: 24pt;
+	height: 35px;
+	margin-left: 20px;
+	margin-top: 6px;
+	width: auto;
+}
+
+.infoDialogoCobranzaIGV_content_color {
+	color: #806300;
+	font-size: 24pt;
+}
+
+
+.infoDialogoCobranzaIGV_content_format {
+	color: #403100;
+	font-size: 8pt;
+	margin-right: 5px;
+}
+
+
+.infoDialogoCobranza_detalle {
+	float: left;
+	margin-left: 5px;
+	margin-top: 10px;
+	text-align: left;
+	font-size: 10pt;
+	width: 60px;
+}
+
+
+.infoDialogoCobranza_content {
+	background-color: #FFFFFF;
+	float: left;
+	height: 50px;
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 141px;
+}
+
+.infoDialogoCobranza_header {
+	background-color: #c2c2c2;
+	margin-top: 0px;
+	float: left;
+	width: 151px;
+	height: 50px;
+}
+
+.dialogCobranzaSinContrato {
+	width: 510px;
+}
+
+#formRegistroCuotaSinContrato .ui-dialog-titlebar{
+width: 785px;
+}
+
+.over .ui-dialog .ui-dialog-titlebar {
+   display: none !important;
+}
+
+.RegistroCuotaContrato{
+	width: 765px;
+	height: 575px;
+	margin: 5px;
+}
+.AgregarUpaActiva{
+	width: 765px;
+	height: 575px;
+	margin: 5px;
+}
+.RegistroCuotaContratoIzq{
+	float:left;
+	width: 610px;
+	height: 575px;
+/* 	background-color: white; */
+}
+.AgregarUpaActivaIzq{
+	float:left;
+	width: 610px;
+	height: 575px;
+/* 	background-color: white; */
+}
+
+.RegistroCuotaContratoDer{
+	float:left;
+	width: 155px;
+	height: 575px;
+}
+
+.contenidoConsultaRegistroComprobante{
+	margin-left:20px;
+	width: 680px;
+	height: auto;
+}
+.contenidoConsultaRecaudacionReportes{
+	margin-left:31px;
+	width: 724px;
+	height: auto;
+}
+.contenidoAutovaluoConsultaRegistroComprobante{
+	margin-left:20px;
+	width: 680px;
+	height: auto;
+}
+
+/*Estilo de Consulta Arrendamiento*/
+
+/****ESTILO COBRANZA****/
+.consultaArrendamiento_iconoSubTitulo {
+	float: left;
+	margin-top: 60px;
+	margin-left: 33px;
+	margin-bottom: 10px;
+	width: 38px;
+	height: 39px;
+	background-image:
+		url(../images/varios/lupa.png);
+	background-repeat: no-repeat;
+}
+
+.botonContratoSubTabUpa {
+	float: right;
+	margin-right: 0px;
+	text-decoration: none;
+	width: 85px;
+	height: 20px;
+	text-align: center;
+}
+.botonContratoSubTabInquilino {
+	float: right;
+	margin-right: 5px;
+	text-decoration: none;
+	width: 85px;
+	height: 20px;
+	text-align: center;
+}
+
+.botonContratoSubTabContrato {
+	float: right;
+	margin-right: 5px;
+	text-decoration: none;
+	width: 85px;
+	height: 20px;
+	text-align: center;
+}
+
+
+//iconos para botones
+.ui-state-default .icon-pdf {
+	background-image: url(../icons/tipoArchivo/pdfI.png);
+}
+
+.ui-state-default .icon-excel {
+	background-image: url(../icons/tipoArchivo/xlsI.png);
+}
+
+.myTable td:nth-child(1),.myTable th:nth-child(1) {
+   width: 20px;
+}
+
+/** GRID **/
+.panelGridSgi{
+    margin: 3px !important;
+    font-size: 13px !important;
+}
+
+
+.fieldset-formulario {
+  padding: 5px 20px 10px;
+  margin: 0 0 5px ;
+  border: 1px solid #C0C0C0;
+  background:#FBF8F3;
+  border-radius: 7px;
+}
+
+.panelGrid{
+    margin: 3px !important;
+    font-size: 13px !important;
+}
+.panelGrid td {
+    border-style: none !important;
+    padding: 1px 5px;
+}
+.panelGrid .ui-widget-content{
+	background: none !important;
+	border: none !important;
+}
+
+
+
+.watermarker{
+	
+	
+}
+.ui-selectBooleanCheckbox{
+	background: red;
+}
+
+body {
+    background-color: #def; 
+}
+
+.principal-header {
+    background-color: #d3e9fa;
+    padding: 8px;
+    color: #ffffdd;
+    border-bottom: 1px solid #b3c9da;
+}
+
+
+

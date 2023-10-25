@@ -1,0 +1,242 @@
+function validaFormatoFecha(field) {
+	var allowBlank = false;
+	var minYear = 1902;
+	var maxYear = (new Date()).getFullYear() + 1;
+	var errorMsg = "";
+	// regular expression to match required date format
+	re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+	if (field.value != '') {
+		if (regs = field.match(re)) {
+			if (regs[1] < 1 || regs[1] > 31) {
+				errorMsg = "Día inválido: " + regs[1];
+			} else if (regs[2] < 1 || regs[2] > 12) {
+				errorMsg = "Mes inválido: " + regs[2];
+			} else if (regs[3] < minYear || regs[3] > maxYear) {
+				errorMsg = "Año inválido: " + regs[3];
+			}
+		} else {
+			errorMsg = "Formato de Fecha invalido: " + field.value;
+		}
+	}
+	return errorMsg;
+}
+
+function validaRangoFecha(fecDesde, fecHasta) {
+	// regular expression to match required date format
+	re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+	var msg = "";
+
+	var reg1 = fecDesde.match(re);
+	var reg2 = fecHasta.match(re);
+	var mes1 = parseInt(reg1[2], 10) - 1;
+	var mes2 = parseInt(reg2[2], 10) - 1;
+	var miFecha1 = new Date(parseInt(reg1[3]), mes1, parseInt(reg1[1], 10));
+	var miFecha2 = new Date(parseInt(reg2[3]), mes2, parseInt(reg2[1], 10));
+	if (miFecha2.getTime() < miFecha1.getTime()) {
+		msg = "La fecha de  fin no puede ser menor que la fecha de inicio";
+	}
+	return msg;
+}
+
+// funciones de solo numeros 
+function numericEvent(event) {
+	var evt=event;
+	var charCode = ( evt.which ) ? evt.which : evt.keyCode; 
+	// bloque de la tecla shift
+	if (event.shiftKey==1){
+		 event.preventDefault();
+	}
+	if (charCode== 46 || charCode == 8 || charCode == 9 || charCode == 27 || (charCode == 65 && event.ctrlKey === true) || (charCode >= 35 && charCode <= 39)) {
+        return;
+    }else {
+
+        if ((charCode < 48 || charCode > 57) && (charCode < 96 || charCode > 105)  ) {
+            event.preventDefault();
+        }
+    }
+}
+function numericMask($num){
+    var minusFilter = /^[0-9]*[-][0-9]*$/;
+    var numberFilter = /^[0-9][0-9]*$/;
+    if( ! numberFilter.test($num.val()) ){
+        $num.val("");
+    } else if (minusFilter.test($num.val())){
+        $num.val("");
+    }
+}
+
+
+// funciones alphanumeric
+function AlpahnumericEvent(event) {
+	var evt=event;
+	var charCode = ( evt.which ) ? evt.which : evt.keyCode; 
+	// bloque de la tecla shift
+	if (event.shiftKey==1){
+		 event.preventDefault();
+	}
+    if (charCode== 46 || charCode == 8 || charCode == 9 || charCode == 27 || (charCode == 65 && event.ctrlKey === true) || (charCode >= 35 && charCode <= 39)) {
+        return;
+    }else {
+
+        if ((charCode < 48 || charCode > 57) && (charCode < 96 || charCode > 105) && (charCode<64  || charCode> 90)) {
+            event.preventDefault();
+        }
+    }
+}
+
+function AlpahnumericMask($obj) {
+	var value = /^[A-Za-z0-9]*$/;
+	if(!value.test($obj.val())){
+		$obj.val("");
+	}
+}
+
+
+$.fn.generalFunction = function(handler,numericMask) {     
+    $(this)
+    .keyup(function(event){
+    	handler(event);
+    })
+    .keypress(function(event){
+    	handler(event);
+    })
+    .keydown(function(event){
+    	handler(event);
+    })
+	.blur(function (event) {
+		numericMask($(this));
+		$(this).keyup();
+    })
+    .mouseover(function (event){
+		numericMask($(this));
+		$(this).keyup();
+    })
+    .change(function (event){
+		numericMask($(this));
+		$(this).keyup();
+    });
+};
+
+/*function cargarRegAtencion(){
+	window.opener.close();
+}*/
+
+
+function confirmarAccion(opcion, texto) {
+	if (opcion == 1) {
+		if (confirm("Estas seguro de guardar los cambios realizados?")) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		if (confirm("Estas seguro de " + texto + " al consultor?")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+
+function confirmarCierre(url) {
+	if (confirm("Estas seguro de cerrar la ventana actual?")) {
+		window.close();
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function cantDig(obj){
+	//var v = $("select[name*='cmbTelefono']").val();
+	var v = obj.value;
+	//var v1 = $("input[name*='numTelf']");
+	var valor = document.getElementById("frmGeneral:tabView:j_idt60:1:numTelf").value;
+	alert(valor);
+	v1.attr("readonly", false);
+	v1.attr("value", "");
+
+	if (v =='1'){
+		v1.attr("readonly", true);
+	}
+	if (v =='2'){
+		v1.attr("maxlength", "7");
+	}
+	if(v =='3'){
+		v1.attr("maxlength", "9");
+	}
+	return false;
+}
+
+function changeCmbDatoConsulta(combo){
+	var cmb = combo.value;
+	var txt = $("input[name*='txtDatoConsulta']");
+	if (cmb == '0'){alert("seleccion");
+		txt.attr("value", "");
+		txt.attr("readonly", true);
+	}else{alert("eligio");
+		txt.attr("readonly", false);
+	}
+
+	return false;
+}
+
+function handleRequest(xhr, status, args) {
+    if (args.ok) {
+    	widgetDlgInfo.show();
+        return false;
+    } else {
+    	opener.location.reload();
+    	window.close();
+	}
+}
+
+function pausa(xhr, status, args){
+	opener.location.reload();
+	window.close();
+	return true;
+}
+
+////en cosntruccion
+/*$.fn.myAlphaNumeric = function() {    
+	
+	function handler(event) {
+		var evt=event;
+		var charCode = ( evt.which ) ? evt.which : evt.keyCode; 
+		if (event.shiftKey==1){
+			 event.preventDefault();
+		}
+	    if (charCode== 46 || charCode == 8 || charCode == 9 || charCode == 27 || (charCode == 65 && event.ctrlKey === true) || (charCode >= 35 && charCode <= 39)) {
+	        return;
+	    }else {
+	    	var caracter= String.fromCharCode(charCode);
+	    	var value = /^[A-Za-z0-9]*$/;
+	    	if(!value.test(caracter)){
+	    		event.preventDefault();
+	    	}
+	    }
+	}
+	
+    $(this)
+    .keyup(function(event){
+    	handler(event);
+    })
+    .keypress(function(event){
+    	handler(event);
+    })
+    .keydown(function(event){
+    	handler(event);
+    })
+	.blur(function (event) {
+		numericMask($(this));
+		$(this).keyup();
+    })
+    .mouseover(function (event){
+		numericMask($(this));
+		$(this).keyup();
+    })
+    .change(function (event){
+		numericMask($(this));
+		$(this).keyup();
+    });
+};*/

@@ -1,0 +1,92 @@
+
+var CronoEjecutandose;
+
+function DetenerCrono(){
+	CronoEjecutandose = false;
+}
+
+function MostrarCrono (valor,segundos,minutos,CronoID) {
+	if(CronoEjecutandose){
+			 //incrementa el crono  
+		    segundos=segundos+1;  
+		    if ( segundos > 59 ) {
+		        segundos = 0;  
+		        minutos++;  
+		        /*if ( minutos > 99 ) {
+		            alert('Fin de la cuenta');  
+		            return true;  
+		        }*/
+		    }
+		
+		//configura la salida
+		var ValorCrono = "";
+		ValorCrono = (minutos < 10) ? "0" + minutos : minutos;
+		ValorCrono += (segundos < 10) ? ":0" + segundos : ":" + segundos;
+		
+		valor.html(ValorCrono);
+		CronoID = setTimeout(function(){MostrarCrono(valor,segundos,minutos,CronoID);}, 1000);
+	}
+    return true;
+}
+  
+function IniciarCronoReal (valor,bool) {
+	CronoEjecutandose = true;
+	var CronoID = null;
+    //inicializa contadores globales   
+    var segundos = 0;  
+    var minutos = 0;  
+    //pone a cero los marcadores  
+    valor.html('00:00'); 
+    MostrarCrono(valor,segundos,minutos,CronoID,bool);  
+}
+
+function IniciarCrono (valor,tiempoIni) {
+	CronoEjecutandose = true;
+	var CronoID = null;
+    var fecha= new Date();
+    var minutos = fecha.getMinutes();
+    var segundos = fecha.getSeconds();
+    var minIni = parseInt(tiempoIni.substring(0,tiempoIni.indexOf(":")));
+    var segIni = parseInt(tiempoIni.substring(tiempoIni.indexOf(":")+1));
+    
+    //alert("actual ="+minutos+":"+segundos+" inicio="+minIni+":"+segIni);
+    
+    var minrest;
+    var segrest;
+    
+    var segTotActual = (minutos*60)+segundos;
+    var segTotInicio = (minIni*60)+segIni;
+    var segTotal = 0;
+    
+    if(segTotInicio>segTotActual){
+    	segTotActual = segTotActual+3600;
+    	segTotal = segTotActual-segTotInicio;
+    }
+    else{
+    	segTotal = segTotActual-segTotInicio;
+    }
+    /*
+    if(segIni>segundos){
+    	segundos=segundos+60;
+    }
+    if(minIni>minutos){
+    	minutos=minutos+60;
+    }*/
+    
+    //minrest = minutos-minIni;
+    //segrest = segundos-segIni;
+    
+    minrest = Math.floor(((segTotal/60)*100)/100);
+    segrest = segTotal%60;
+    
+    MostrarCrono(valor,segrest,minrest,CronoID,true);  
+}
+
+function IniciarCronoActual (valor,tiempoIni) {
+	CronoEjecutandose = true;
+	var CronoID = null;
+    var minIni = parseInt(tiempoIni.substring(0,tiempoIni.indexOf(":")));
+    var segIni = parseInt(tiempoIni.substring(tiempoIni.indexOf(":")+1));
+    MostrarCrono(valor,segIni,minIni,CronoID,true);  
+}
+

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cobranza_Registro" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f414ecdd-ea37-4f23-9c8c-1624afe62bff">
+	<property name="ireport.zoom" value="5.05447028499299"/>
+	<property name="ireport.x" value="740"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="null">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nrocontrato}==null]]></conditionExpression>
+			<style mode="Transparent" isUnderline="true"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<queryString language="hql">
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="detalleCuotaBean" class="java.util.List">
+		<fieldDescription><![CDATA[detalleCuotaBean]]></fieldDescription>
+	</field>
+	<field name="anio" class="java.lang.String">
+		<fieldDescription><![CDATA[anio]]></fieldDescription>
+	</field>
+	<field name="sicancelado" class="java.lang.String">
+		<fieldDescription><![CDATA[sicancelado]]></fieldDescription>
+	</field>
+	<field name="contraprestacion" class="java.lang.Double">
+		<fieldDescription><![CDATA[contraprestacion]]></fieldDescription>
+	</field>
+	<field name="mes" class="java.lang.String">
+		<fieldDescription><![CDATA[mes]]></fieldDescription>
+	</field>
+	<field name="renta" class="java.lang.Double">
+		<fieldDescription><![CDATA[renta]]></fieldDescription>
+	</field>
+	<field name="rentaTemp" class="java.lang.Double">
+		<fieldDescription><![CDATA[rentaTemp]]></fieldDescription>
+	</field>
+	<field name="montopagar" class="java.lang.Double">
+		<fieldDescription><![CDATA[montopagar]]></fieldDescription>
+	</field>
+	<field name="montopagado" class="java.lang.Double">
+		<fieldDescription><![CDATA[montopagado]]></fieldDescription>
+	</field>
+	<field name="tipomoneda" class="java.lang.String">
+		<fieldDescription><![CDATA[tipomoneda]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement uuid="a8bebcaa-45e2-40e8-9e29-5d99143ba6e8" x="25" y="1" width="69" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="7bde5471-a445-4f70-ba40-9f5576d63c6a" x="505" y="1" width="70" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montopagar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="93dd4bc7-69e7-412f-a186-3a061993c016" x="429" y="1" width="63" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sicancelado}.equals("1")? "SI":"NO"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="4e1a12cb-811a-4bae-8425-72a3424cc93a" x="253" y="1" width="70" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{renta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="5492e14c-c61f-4c08-96b2-b0bee899ab49" x="167" y="1" width="70" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contraprestacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4c03a9e8-9b0e-4ecc-b9e1-6702f092d4b4" x="5" y="1" width="21" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3127c6b7-7bc9-44af-aeeb-21103a513682" x="101" y="1" width="47" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a8bebcaa-45e2-40e8-9e29-5d99143ba6e8" x="156" y="1" width="12" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipomoneda}.equals("S")? "S/.":"$"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a8bebcaa-45e2-40e8-9e29-5d99143ba6e8" x="241" y="1" width="12" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipomoneda}.equals("S")? "S/.":"$"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a8bebcaa-45e2-40e8-9e29-5d99143ba6e8" x="494" y="1" width="12" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipomoneda}.equals("S")? "S/.":"$"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="4e1a12cb-811a-4bae-8425-72a3424cc93a" x="348" y="1" width="70" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montopagado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a8bebcaa-45e2-40e8-9e29-5d99143ba6e8" x="336" y="1" width="12" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipomoneda}.equals("S")? "S/.":"$"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="3">
+			<line>
+				<reportElement uuid="bca893fd-6af9-4787-9dc4-131223e3b74a" x="5" y="0" width="572" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportePagoCuota_subreport1" pageWidth="222" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="222" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0b52d151-d037-47ae-8175-1f6dba26d209">
+	<property name="ireport.zoom" value="1.9965000000000042"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="datos" uuid="afb8b277-86c5-4ec4-9f37-e41b760ddce4"/>
+	<subDataset name="datos cuotas" uuid="400f3073-aa7e-47ef-85b8-532c958d1328"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="mes" class="java.lang.String">
+		<fieldDescription><![CDATA[mes]]></fieldDescription>
+	</field>
+	<field name="anio" class="java.lang.String">
+		<fieldDescription><![CDATA[anio]]></fieldDescription>
+	</field>
+	<field name="montosoles" class="java.lang.Double">
+		<fieldDescription><![CDATA[montosoles]]></fieldDescription>
+	</field>
+	<field name="montodolar" class="java.lang.Double">
+		<fieldDescription><![CDATA[montodolar]]></fieldDescription>
+	</field>
+	<field name="nroseriecomprobante" class="java.lang.String">
+		<fieldDescription><![CDATA[nroseriecomprobante]]></fieldDescription>
+	</field>
+	<field name="nroseriecomprobanteref" class="java.lang.String">
+		<fieldDescription><![CDATA[nroseriecomprobanteref]]></fieldDescription>
+	</field>
+	<field name="nombretipodocu" class="java.lang.String">
+		<fieldDescription><![CDATA[nombretipodocu]]></fieldDescription>
+	</field>
+	<field name="tipomoneda" class="java.lang.String">
+		<fieldDescription><![CDATA[tipomoneda]]></fieldDescription>
+	</field>
+	<field name="fecCancelacion" class="java.util.Date">
+		<fieldDescription><![CDATA[fecCancelacion]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement uuid="4e1a12cb-811a-4bae-8425-72a3424cc93a" x="155" y="2" width="66" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nroseriecomprobanteref}== null ? (""):("Ref. "+ $F{nroseriecomprobanteref})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3127c6b7-7bc9-44af-aeeb-21103a513682" x="13" y="2" width="58" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nroseriecomprobante}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="5492e14c-c61f-4c08-96b2-b0bee899ab49" x="82" y="2" width="39" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipomoneda}.equals("D")? $F{montodolar} :$F{montosoles}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a8bebcaa-45e2-40e8-9e29-5d99143ba6e8" x="0" y="2" width="15" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombretipodocu}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="4e1a12cb-811a-4bae-8425-72a3424cc93a" x="70" y="2" width="12" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipomoneda}.equals("S")? "S/." :"$"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="4e1a12cb-811a-4bae-8425-72a3424cc93a" x="121" y="2" width="35" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecCancelacion}== null ? (""):( $F{fecCancelacion})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<style type="text/css">
+@import "../resources/css/estilo.css";
+</style>
+	<title>SBLM</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="dgaiMonitoreo_IconoIdentificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Administración</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Auditor&iacute;a</label>
+					</div>
+				</div>
+
+				<div class="contenidoPrincipal_SubFondo">
+
+					<div class="administrador_paginasIconoSubcont"></div>
+					<div id="lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">Filtros</div>
+					<div class="contenidoPrincipal_fondo_formulario">
+						<!-- CONTENIDO MODIFICABLE -->
+						<div class="administrador_paginasContenedor">
+							<h:form id="formAuditoria">
+								<div class="paginaInterior1">
+									<div class="admin_audi_filtro0">
+										<p:commandLink id="filtro">
+											<p:graphicImage width="20" height="20"
+												url="../resources/images/admin_auditoria/iconofiltro.png" />
+										</p:commandLink>
+									</div>
+
+									<p:overlayPanel id="chartPanel" for="filtro" hideEffect="fade"
+										my="right bottom">
+
+
+										<p:selectOneMenu id="idTipo"
+											value="#{cauditoria.tipoBusqueda}">
+											<f:selectItem itemLabel="Seleccionar Filtro" itemValue="0" />
+											<f:selectItem itemLabel="Usuario" itemValue="1" />
+											<f:selectItem itemLabel="Perfil" itemValue="2" />
+
+											<p:ajax event="change" oncomplete="seleccionarTipo()"
+												process="@this" />
+										</p:selectOneMenu>
+
+									</p:overlayPanel>
+
+									<div class="admin_audi_filtro1_">
+										<div class="clsBotonPerfil" style="display: none">
+											<h:panelGrid columns="3">
+												<h:outputText value="Perfil : " />
+												<p:spacer width="59" height="0" />
+												<p:selectOneMenu id="idNombrePerfil"
+													value="#{cauditoria.nombrePerfil}" style="width:136px">
+													<f:selectItem itemLabel="Seleccionar" itemValue="" />
+													<f:selectItems value="#{cauditoria.listPerfiles}"
+														var="perfilItem" itemLabel="#{perfilItem.nombreperfil}"
+														itemValue="#{perfilItem.idperfil}" />
+												</p:selectOneMenu>
+											</h:panelGrid>
+										</div>
+									</div>
+
+
+									<div class="admin_audi_filtro1">
+
+
+										<div class="clsBotonUsuario" style="display: none">
+
+											<h:outputText value="Nombres: " style="margin-top:15px;" />
+											<p:spacer width="43" height="20" />
+											<p:autoComplete id="idCajaUsuario"
+												value="#{cauditoria.nombreUsuario}"  
+												completeMethod="#{cauditoria.autoCompleteUsuario}"
+												effect="fade">
+											</p:autoComplete>
+										</div>
+
+									</div>
+
+									<div class="mensajeDefectoAuditoria">
+
+										Click al icono
+										<p:graphicImage width="13" height="13"
+											url="../resources/images/admin_auditoria/iconofiltro.png" />
+										para buscar usando filtros de auditoria
+
+									</div>
+
+									<div class="admin_audi_filtro2">
+										<div class="clsRestoUsuario" style="display: none;">
+											<h:panelGrid cellpadding="2">
+												<p:row>
+													<p:column>
+														<h:outputText value="Módulo : " />
+														<p:spacer width="49" height="0" />
+														<p:selectOneMenu id="idNombreModulo"
+															value="#{cauditoria.moduloBusqueda}" style="width:135px">
+															<f:selectItem itemLabel="Seleccionar" itemValue="" />
+															<f:selectItems value="#{cauditoria.listModulo}"
+																var="moduloItem" itemLabel="#{moduloItem.nombremodulo}"
+																itemValue="#{moduloItem.idmodulo}" />
+
+														</p:selectOneMenu>
+													</p:column>
+												</p:row>
+
+												<p:row>
+													<p:column>
+														<h:outputText value="Recurso : " />
+														<p:spacer width="44" height="0" />
+														<p:selectOneMenu id="idNombrePantalla"
+															value="#{cauditoria.recursoBusqueda}" style="width:135px">
+															<f:selectItem itemLabel="Seleccionar" itemValue="" />
+															<f:selectItems value="#{cauditoria.listRecurso}"
+																var="recursoItem"
+																itemLabel="#{recursoItem.nombrepagina}"
+																itemValue="#{recursoItem.nombrepagina}" />
+														</p:selectOneMenu>
+													</p:column>
+
+												</p:row>
+
+												<p:row>
+													<p:column>
+
+														<h:outputLabel value="Fecha evento:" />
+														<p:spacer width="24" height="0" />
+														<p:calendar value="#{cauditoria.fechaInicio}"
+															id="popupButtonCalIni" style="width:100px;"
+															validatorMessage="Ingresar una fecha correcta"
+															converterMessage="Formato adecuado:dd-mm-yyyy"
+															showOn="button" pattern="dd/MM/yyyy" effect="slide">
+
+														</p:calendar>
+
+
+														<p:calendar value="#{cauditoria.fechaFin}"
+															id="popupButtonCalIni2" style="width:100px;"
+															validatorMessage="Ingresar una fecha correcta"
+															converterMessage="Formato adecuado:dd-mm-yyyy"
+															showOn="button" pattern="dd/MM/yyyy" effect="slide">
+														</p:calendar>
+													</p:column>
+												</p:row>
+											</h:panelGrid>
+											<div style="margin-left: 0px; margin-top: 20px;">
+												<p:commandButton value="Enviar" disabled="false"
+													icon="ui-icon-search"
+													actionListener="#{cauditoria.listAuditoria}"
+													update=":formAuditoria:idListAuditoria" />
+											</div>
+										</div>
+
+
+									</div>
+
+
+
+
+									<div class="admin_audi_tabla">
+
+										<p:dataTable id="idListAuditoria" var="audito"
+											rowkey="#{audito.idauditoria+''}" selectionMode="single"
+											selection="#{cauditoria.selectRegistroAudi}"
+											style="width:460px; text-align: center;font-size: 10px;"
+											value="#{cauditoria.compDataModel}" resizableColumns="true"
+											paginatorPosition="bottom"
+											paginator="true" rows="15"  
+				                 			paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+				                 			rowsPerPageTemplate="15,30,45" >
+
+											<p:ajax event="rowSelect" update=":formAuditoria:display"
+												oncomplete="dialogDetalleAuditoria.show()" />
+
+											<p:column id="idFecha" style="width:15%;" headerText="Fecha">
+												<h:outputText value="#{audito.fecentrada}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</p:column>
+
+											<p:column id="idmensaje" style="width:30%;"
+												headerText="Alerta">
+												<h:outputText value="#{audito.eventoauditoria.tipoevento}" />
+
+											</p:column>
+
+
+											<p:column id="idusuario" headerText="Usuario"
+												style="width:30%;">
+												<h:outputText
+													value="#{audito.usuario.nombres} #{audito.usuario.apellidopat} #{audito.usuario.apellidomat}" />
+											</p:column>
+
+
+											<p:column id="idModulo" headerText="Modulo"
+												style="width:20%;">
+												<h:outputText value="#{audito.modulo.nombremodulo}" />
+											</p:column>
+
+											<p:column id="idaudito" headerText="Recurso"
+												style="width:20%;">
+												<h:outputText value="#{audito.url}" />
+											</p:column>
+
+										</p:dataTable>
+									</div>
+									<p:dialog header="Detalle de alerta" id="display" modal="true"
+										widgetVar="dialogDetalleAuditoria" resizable="false"
+										width="250" showEffect="slideDown" hideEffect="slide"
+										style="color: #15184f;font-size: 7pt;">
+
+
+										<f:facet name="header">
+											<div style="margin-left: 55px; margin-top: 15px;">
+												<p:graphicImage width="120" height="120"
+													url="../resources/images/usuarios/#{cauditoria.selectRegistroAudi.usuario.rutaimgusr}" />
+											</div>
+										</f:facet>
+
+										<h:panelGrid columns="2" cellpadding="4" style="margin:10px">
+
+											<h:outputText style="color:#5a0000;" value="Nombre usuario:" />
+											<h:outputText
+												value="#{cauditoria.selectRegistroAudi.usuario.nombreusr}"
+												id="nombreusr" style="font-size: 10pt; font-weight: bold" />
+
+
+											<h:outputText style="color:#5a0000;" value="Fecha de Acceso:" />
+											<h:outputText style="color:#017514;"
+												value="#{cauditoria.selectRegistroAudi.fecentrada}"
+												id="fecentrada">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+
+											<h:outputText style="color:#5a0000;" value="Hora de Acesso:" />
+											<h:outputText style="color:#017514;"
+												value="#{cauditoria.selectRegistroAudi.fecentrada}"
+												id="horaentrada">
+												<f:convertDateTime pattern="hh:mm a" />
+											</h:outputText>
+
+											<h:outputText style="color:#5a0000;" value="Modulo:" />
+											<h:outputText style="color:#017514;"
+												value="#{cauditoria.selectRegistroAudi.modulo.nombremodulo}"
+												id="nommodulo" />
+
+											<h:outputText style="color:#5a0000;"
+												value="Descripcion Evento:" />
+											<h:outputText style="color:#017514;"
+												value="#{cauditoria.selectRegistroAudi.eventoauditoria.tipoevento}"
+												id="mensajeauditoria" />
+											<h:outputText style="color:#5a0000;"
+												value="Dirección Remoto: " />
+											<h:outputText style="color:#017514;"
+												value="#{cauditoria.selectRegistroAudi.ip}" id="ipauditoria" />
+											<h:outputText style="color:#5a0000;" value="Recurso: " />
+											<h:outputText style="color:#017514;"
+												value="#{cauditoria.selectRegistroAudi.url}"
+												id="urlauditoria" />
+
+
+										</h:panelGrid>
+									</p:dialog>
+
+								</div>
+								<div class="paginaInterior2">
+
+									<div class="subcontenidoInfo_Cabecera">
+										<div class="subcontenidoInfo_logoTitulo" />
+										<div class="subcontenidoInfo_descripcionTitulo">
+											Informaci&oacute;n</div>
+									</div>
+
+
+									<div class="subcontenidoInfo_detContenidoFondo">
+
+										<div class="subcontenidoInfo_Numero">
+											<h:outputText value="#{cauditoria.nroConectadosHoy}" />
+										</div>
+										<div class="subcontenidoInfo_textoconectadosfiltroDerecha">
+											<h:outputText styleClass="subcontenidoInfo_fila1Estilo"
+												value="Conectados al sistema" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Hoy" />
+										</div>
+									</div>
+
+									<div class="subcontenidoInfo_detUsuario">
+										<div class="subcontenidoInfo_detUsuarioFoto">
+											<p:graphicImage width="60px" height="60px"
+												value="../resources/images/usuarios/#{cauditoria.rutaimgusrTop}" />
+										</div>
+										<div class="detalleTopfiltroDerecha">
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value=" Top #{cauditoria.mesActual}" />
+											<br />
+
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila2"
+												value="#{cauditoria.txtnombreUsuario}" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila3"
+												value="#{cauditoria.txtcargoUsuario}" />
+										</div>
+
+
+
+									</div>
+								</div>
+							</h:form>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</ui:define>
+	</ui:composition>
+
+
+
+
+
+</h:body>
+</html>

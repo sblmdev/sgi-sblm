@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportePagoCuota_subreport1" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0b52d151-d037-47ae-8175-1f6dba26d209">
+	<property name="ireport.zoom" value="4.400000000000004"/>
+	<property name="ireport.x" value="1246"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="anio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[anio]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="condicion" class="java.lang.String">
+		<fieldDescription><![CDATA[condicion]]></fieldDescription>
+	</field>
+	<field name="deudaacuenta" class="java.lang.Double">
+		<fieldDescription><![CDATA[deudaacuenta]]></fieldDescription>
+	</field>
+	<field name="idcuota" class="java.lang.Integer">
+		<fieldDescription><![CDATA[idcuota]]></fieldDescription>
+	</field>
+	<field name="ischange" class="java.lang.Double">
+		<fieldDescription><![CDATA[ischange]]></fieldDescription>
+	</field>
+	<field name="mes" class="java.lang.String">
+		<fieldDescription><![CDATA[mes]]></fieldDescription>
+	</field>
+	<field name="monto" class="java.lang.Double">
+		<fieldDescription><![CDATA[monto]]></fieldDescription>
+	</field>
+	<field name="mora" class="java.lang.Double">
+		<fieldDescription><![CDATA[mora]]></fieldDescription>
+	</field>
+	<field name="moraacumulada" class="java.lang.Double">
+		<fieldDescription><![CDATA[moraacumulada]]></fieldDescription>
+	</field>
+	<field name="nrocuota" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nrocuota]]></fieldDescription>
+	</field>
+	<field name="nropagos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nropagos]]></fieldDescription>
+	</field>
+	<field name="siacuenta" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[siacuenta]]></fieldDescription>
+	</field>
+	<field name="sipagado" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[sipagado]]></fieldDescription>
+	</field>
+	<field name="renta" class="java.lang.Double">
+		<fieldDescription><![CDATA[renta]]></fieldDescription>
+	</field>
+	<field name="ratiomora" class="java.lang.Double">
+		<fieldDescription><![CDATA[ratiomora]]></fieldDescription>
+	</field>
+	<field name="mc" class="java.lang.Double">
+		<fieldDescription><![CDATA[mc]]></fieldDescription>
+	</field>
+	<field name="nuevamc" class="java.lang.Double">
+		<fieldDescription><![CDATA[nuevamc]]></fieldDescription>
+	</field>
+	<field name="nuevarenta" class="java.lang.Double">
+		<fieldDescription><![CDATA[nuevarenta]]></fieldDescription>
+	</field>
+	<field name="igv" class="java.lang.Double">
+		<fieldDescription><![CDATA[igv]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="345c78d6-9a0f-49ed-9e56-60849351d026" x="1" y="1" width="573" height="13" backcolor="#0066FF"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="57d64eca-90ce-4ace-8349-730e9c03ae79" x="156" y="1" width="88" height="13" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[M.C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e110caf1-e033-4a8d-82dd-fad0826a05b4" x="303" y="0" width="92" height="13" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[M.C Actual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6ac71e14-d185-4a23-8a9c-193048e4bd0c" x="473" y="0" width="100" height="13" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="19" y="1" width="79" height="13" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="521766d5-4910-4ea6-ac5b-aea047045c04" x="98" y="0" width="58" height="15" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Año]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ec25bccf-dd1a-4c72-8574-07371436eeec" x="395" y="1" width="78" height="13" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[IGV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="48e23c8c-877a-4d78-b54f-22e04a554945" x="244" y="1" width="59" height="13" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Mora]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3127c6b7-7bc9-44af-aeeb-21103a513682" x="98" y="0" width="58" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a8bebcaa-45e2-40e8-9e29-5d99143ba6e8" x="19" y="0" width="79" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4c03a9e8-9b0e-4ecc-b9e1-6702f092d4b4" x="0" y="0" width="21" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="4e1a12cb-811a-4bae-8425-72a3424cc93a" x="244" y="0" width="59" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mora}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="5492e14c-c61f-4c08-96b2-b0bee899ab49" x="156" y="0" width="88" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="93dd4bc7-69e7-412f-a186-3a061993c016" x="303" y="0" width="92" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nuevamc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="7bde5471-a445-4f70-ba40-9f5576d63c6a" x="474" y="0" width="99" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nuevarenta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="1800e658-3d8d-46ab-977f-ad415e0bafcb" x="395" y="0" width="78" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{igv}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="bca893fd-6af9-4787-9dc4-131223e3b74a" x="1" y="12" width="572" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,7 @@
+function handleMessage(data) {  
+	//alert("mi mensaje data :"+data);
+	$.get("panelConsultor.jsf",function(responseText, status, xmlHttpRequest){
+		//alert($("#comunicacionesDiv",responseText).html());
+		//$("#comunicacionesDiv").html($("#comunicacionesDiv",responseText).html());
+	});
+}  

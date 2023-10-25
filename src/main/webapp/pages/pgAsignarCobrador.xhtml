@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript">
+		// 		function limpiarForm() {
+		// 			document.getElementById("frmasignarcobrador").reset();
+		// 		}
+	</script>
+
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="administrador_paginasIcono"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Mantenimiento</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Cobrador</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+
+					<div class="administrador_paginasIconoSubcont"></div>
+					<div id="lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">Actualizar</div>
+					<div class="contenidoPrincipal_fondo_formulario">
+						<!-- CONTENIDO MODIFICABLE -->
+						<div class="administrador_paginasContenedor">
+
+
+							<div class="paginaInterior1">
+								
+								<h:form id="frmasignarcobrador">
+									<p:growl id="growlRegitrar" showDetail="true" sticky="false"
+										life="3000" />
+										
+									<h:panelGrid columns="2" styleClass="filaDescripcionPagina">
+									<h:outputLabel class="lblDescripcionAsignarCobrador" style="width:100px; " value="Nombres:" />
+										<p:selectOneMenu  value="#{asignarcobradorMB.idusarioselecionado}" effect="fade" style="margin-left:19px;">
+											<f:selectItem itemLabel="Seleccione Nombres" itemValue="0" />
+											<f:selectItems value="#{asignarcobradorMB.listausuarios}"
+												var="usu" itemLabel="#{usu.nombrescompletos}"
+												itemValue="#{usu.idusuario}" />
+											<p:ajax listener="#{asignarcobradorMB.setear}" update=":frmasignarcobrador"
+												 />
+										</p:selectOneMenu>
+										
+										
+										
+										
+										<h:outputLabel class="lblDescripcionAsignarCobrador" style="width:100px; " value="Cargo:" />
+										<h:outputText id="idnombre" styleClass="txtDescripcion" style="font-size:11px;margin-left:19px;"
+											value="#{asignarcobradorMB.usuario.cargo}" />
+											
+										<h:outputLabel class="lblDescripcionAsignarCobrador" style="width:100px; " value="Área:" />
+										<h:outputText id="idemailcontacto" styleClass="txtDescripcion" style="font-size:11px;margin-left:19px;"
+											value="#{asignarcobradorMB.usuario.area.desare}" />
+										
+										<p:spacer height="15"/>
+										<p:spacer height="15"/>
+										
+										<h:outputLabel class="lblDescripcionAsignarCobrador" style="width:100px; " value="Activo:" />
+										<h:outputText id="idtelefono" styleClass="txtDescripcion" style="font-size:11px;margin-left:19px;"
+											value="#{(asignarcobradorMB.usuario.estado) ? 'Sí': (asignarcobradorMB.usuario.estado==false ? 'No':'') }" />
+											
+										<h:outputLabel class="lblDescripcionAsignarCobrador" style="margin-top:15px;" value="Es cobrador" />
+										<p:selectBooleanCheckbox value="#{asignarcobradorMB.usuario.escobrador}"
+												style="margin-left:20px;margin-left:20px;">
+												<p:ajax update=":frmasignarcobrador"
+													listener="#{asignarcobradorMB.ActivarDesactivarSiCobrador}" />
+										</p:selectBooleanCheckbox>
+										
+											<p:spacer height="10"/>
+										<p:spacer height="10"/>
+										
+										
+											<h:outputLabel id="labelcod" class="lblDescripcionAsignarCobrador" style="width:100px; margin-top:5px;" value="Código" rendered="#{asignarcobradorMB.sicobrador}"/>
+											<p:inputText  id="cod" style="width:40px;margin-left:19px;" styleClass="txtDescripcion" 	value="#{asignarcobradorMB.codigoCobrador}"  rendered="#{asignarcobradorMB.sicobrador}"/>
+
+									</h:panelGrid>
+									
+								
+									
+									<div class="filaBotonModulo" style="margin-left:-8px;"> 
+										<p:commandButton value="Guardar" onclick="dlgAsignarCobrador.show();"
+											/>
+									</div>
+								</h:form>
+								<h:form id="frmdlgGuardarPagina">
+
+									<p:confirmDialog message="¿Desea asignar usuario como cobrador"
+										header="Asignación de usuario" severity="alert"
+										widgetVar="dlgAsignarCobrador">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTablaPaginas:tbPagina , :frmasignarcobrador,:frmMaestra,:frmPaginaInformacion"
+											actionListener="#{asignarcobradorMB.asignarCobrador}"
+											oncomplete="dlgAsignarCobrador.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmasignarcobrador "
+											oncomplete="dlgAsignarCobrador.hide()" icon="icon-cancel" />
+									</p:confirmDialog>
+								</h:form>
+
+								<h:form id="frmTablaPaginas">
+									<div class="paginaTabla">
+										<p:dataTable id="tbPagina" var="usr"
+											value="#{asignarcobradorMB.listacobradores}"
+											rowKey="#{usr.idusuario}"
+											selection="#{asignarcobradorMB.usuario}" selectionMode="single"
+											paginator="true" stickyHeader="true"
+											style="width:435px; font-size: 10px;  text-align:center;"
+											paginatorTemplate="Reg. por p&aacute;gina: {RowsPerPageDropdown}  &nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp;   {CurrentPageReport}"
+											currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+											rowsPerPageTemplate="10,15,20" rows="10"
+											paginatorPosition="top" scrollable="true" 
+											scrollWidth="435" emptyMessage="No existen registros"   >
+											<p:ajax event="rowSelect" listener="#{asignarcobradorMB.verificarsicobrador}"
+												update=":frmasignarcobrador" />
+																						
+											<p:column id="idmensaje" style="width:40%;" headerText="Nombres">
+												<h:outputText value="#{usr.nombrescompletos} " />
+											</p:column>
+					
+											<p:column id="idcargo" headerText="Cargo" style="width:30%;">
+												<h:outputText value="#{usr.cargo}" />
+											</p:column>
+					
+											<p:column id="idemail" headerText="Area" style="width:30%;">
+												<h:outputText value="#{usr.area.desare}" />
+											</p:column>
+					
+											<p:column id="idModulo" headerText="Estado" style="width:30%;">
+					
+												<h:outputText value="#{(usr.estado) ? 'activo': 'inactivo'}" />
+					
+											</p:column>
+										</p:dataTable>
+									</div>
+									
+								</h:form>
+								
+							</div>
+							<h:form id="frmPaginaInformacion">
+								<div class="paginaInterior2">
+
+									<div class="subcontenidoInfo_Cabecera">
+										<div class="subcontenidoInfo_logoTitulo" />
+										<div class="subcontenidoInfo_descripcionTitulo">
+											Informaci&oacute;n</div>
+									</div>
+
+
+									<div class="subcontenidoInfo_detContenidoFondo">
+
+										<div class="subcontenidoInfo_Numero2">
+											<h:outputText styleClass="informacion6"
+												value="#{asignarcobradorMB.nroCobradores}" />
+										</div>
+										<div class="subcontenidoInfo_textoconectadosfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Cobradores" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Activos" />
+										</div>
+									</div>
+
+									
+								</div>
+
+							</h:form>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

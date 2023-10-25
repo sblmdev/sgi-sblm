@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<title> SBLM-SOCIEDAD DE BENEFICIENCIA DE LIMA METROPOLITANA </title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml" >
+		<ui:define name="content">
+		<script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC5xhDgDeyPDOUXruKCPaWd6kbWAJv3vbw'></script>
+		<div class="contenidoPrincipal_FondoPrincipal">
+			<div class="contenidoPrincipal_fondoIdentificador">
+			<!-- TITULO SUBCONTENIDO -->
+			<div class="recaudacion_iconoTitulo"></div>
+				<div class="contenidoPrincipal_SubContenido">
+					<label class="contenidoPrincipal_lblTituloSubContenido">U.P.A.</label><br />
+					<label class="contenidoPrincipal_lblSubTituloSubContenido">Mantenimiento</label>
+				</div>
+			</div>
+			<div class="contenidoPrincipal_SubFondo" style="background-color: white;">
+			  <h:form id="frmUpa">
+			  	 <p:toolbar styleClass="ui-saju-toolbar">
+			  		<p:toolbarGroup align="left">
+			  			<p:commandButton icon="ui-icon-disk" ajax="true" value="Grabar U.P.A" rendered="#{upaMB.upa.idupa==0? true:false}"
+			  			    actionListener="#{upaMB.validarGrabarUpa}"
+			  			    update=":frmMaestra:listaMensajes"/>
+			  			<p:commandButton icon="ui-icon-disk" ajax="true" value="Actualizar U.P.A" rendered="#{upaMB.upa.idupa==0? false:true}"
+			  			    actionListener="#{upaMB.validarUpdateUpa}"
+			  			    update=":frmConsulta,:frmMaestra:listaMensajes"/>
+			  			<p:commandButton value="Nueva U.P.A." icon="ui-icon-plus"
+			  				actionListener="#{upaMB.limpiarformulario}" update=":frmUpa,:frmConsulta,:frmMaestra:listaMensajes"/>
+			  			<p:spacer width="1" height="22" style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+			  			<p:commandButton id="adjunto" title="adjuntar documento"  icon="ui-icon-pin-w"/>
+										<p:menu overlay="true" trigger="adjunto" my="left top" at="left bottom">
+									            <p:menuitem value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjunto('Upa',upaMB.upaBean.idupa)}"  update=":frmMaestra:listaMensajes,:frmAdjuntarDocumento:listaArchivoAdjunto" icon="ui-icon-arrowthickstop-1-w" />
+									            <p:menuitem value="Ver" actionListener="#{archivoMB.abrirDialogoVerAdjunto('Upa',upaMB.upaBean.idupa)}"  update=":frmMaestra:listaMensajes,:frmVerDocumento:listaArchivosReferencia" icon="ui-icon-arrowthickstop-1-e"/>
+								   		</p:menu>
+			  		</p:toolbarGroup>
+			  		<p:toolbarGroup align="right">
+			  				<p:commandButton icon="ui-icon-search" oncomplete="dlgListaUpas.show();" title="Buscar U.P.A."/>
+			  		</p:toolbarGroup>
+			  	 </p:toolbar>
+			  	  <p:confirmDialog message="¿Desea Guardar la clave U.P.A. ?"
+			  	  				header="#{upaMB.upa.idupa==0? 'Registro U.P.A.' :'Actualizar U.P.A.' }" severity="alert" 
+			  	  				widgetVar="dlgRegistrarUpa" >
+			  	  				<center>
+			  	  				<p:commandButton value="&nbsp;Aceptar"
+			  	  					update=":frmMaestra:listaMensajes,:frmUpa,:frmConsulta"
+			  	  					actionListener="#{upaMB.grabarUpa}"
+			  	  					oncomplete="dlgRegistrarUpa.hide();"
+			  	  					icon="icon-save" >
+			  	  				</p:commandButton>
+			  	  				<p:commandButton value="&nbsp;Cancelar"
+			  	  					oncomplete="dlgRegistrarUpa.hide();"
+			  	  					icon="icon-cancel" />
+			  	  				</center>		  	  
+			  	  </p:confirmDialog>
+			  	  <p:tabView id="tabUpa">
+			  	  	<p:tab id="tabGenerales" title="Generales">
+			  	  				<center style="color: #403100;font-size: 24pt;">
+			  	  				      <h:panelGrid columns="3">
+										<h:outputText value="Clave:" />
+										<p:remoteCommand name="test2"
+											actionListener="#{upaMB.validarGrabarUpa}"
+											update=":frmMaestra:listaMensajes,:frmUpa:tabUpa:DetalleUpa,:frmUpa:tabUpa:infoInmueble,:frmUpa:tabUpa:idConstruccionyAreas,:frmUpa:tabUpa:idDocumentacionExistente,:frmUpa:tabUpa:idLocalizacion"
+											/>
+										<p:inputMask id="clave" mask="**-****-***" value="#{upaMB.codigoupa}"
+											onkeypress="if (event.keyCode == 13) { test2(); return false; }"
+											style="width:100px;text-align:center;font-size:15px;" disabled="#{upaMB.upa.idupa==0? false:true}" >
+										</p:inputMask>
+									</h:panelGrid>
+			  	  				</center>
+			  	  				<br />
+								<br />
+								<p:panel id="DetalleUpa" header="Informaci&oacute;n de UPA" toggleable="true">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+										<tr>
+											<td width="20%"><h:outputText value="Dirección:" /></td>
+											<td width="25%"><h:inputText
+													value="#{upaMB.upa.direccion}" style="width:180px;height:18px" /></td>
+
+
+											<td width="20%"><h:outputText value="Nro. principal:" />
+											</td>
+											<td colspan="2">
+											<h:inputText
+													value="#{upaMB.upa.numprincipal}" style="width:182px;height:18px"/></td>
+
+										</tr>
+										<tr>
+													
+													<td width="20%">
+														<h:outputText  value="Tipo de interior:" />
+													</td>
+													<td width="25%">
+														<p:selectOneMenu style="width: 184px;  font-size: 11px;"  value="#{upaMB.upa.tipointerior}">
+															<f:selectItem itemLabel="Seleccione" itemValue="" />
+															<f:selectItem itemLabel="no seleccionado" itemValue="no seleccionado" />
+															<f:selectItems value="#{upaMB.listaTipoInterior}" var="tipointerior" itemLabel="#{tipointerior.descripcion}" itemValue="#{tipointerior.descripcion}"/>
+														</p:selectOneMenu>
+													</td>	
+												    
+													 <td width="20%">
+													 	<h:outputText value="Nro. Interior:" />
+													 </td>
+													 <td width="20%">
+													  	<p:inputText value="#{upaMB.upa.nombrenuminterior}" style="width:179px;height:15px" />
+													  	
+													 </td>
+									     </tr>
+									     <tr>
+											   <td width="20%">
+														<h:outputText  value="Estado:" />
+													</td>
+													<td width="25%">
+														<p:selectOneMenu style="width: 184px;  font-size: 11px;" id="Estado" value="#{upaMB.upa.tugurizadoruinoso}">
+															<f:selectItem itemLabel="Seleccione" itemValue="" />
+															<f:selectItem itemLabel="no seleccionado" itemValue="no seleccionado" />
+															<f:selectItem itemLabel="Tugurizado" itemValue="Tugurizado" />
+															<f:selectItem itemLabel="Ruinoso" itemValue="Ruinoso" />
+															<f:selectItem itemLabel="Habitable" itemValue="Habitable" />
+															<f:selectItem itemLabel="Inhabitable" itemValue="InHabitable" />
+														</p:selectOneMenu>
+													</td>	
+													<td width="20%">
+													 	<h:outputText value="Uso:" />
+													 </td>
+													 <td width="20%">
+													  	<p:selectOneMenu value="#{upaMB.upa.uso}"
+															style="width: 188px;  font-size: 11px;">
+																<f:selectItem itemLabel="Seleccione" itemValue="" />
+																<f:selectItems value="#{upaMB.listaTipoUso}" var="uso" itemLabel="#{uso.descripcion}" itemValue="#{uso.descripcion}"/>
+														</p:selectOneMenu>
+													 </td>
+											   
+											</tr>
+									
+									</table>
+								
+								</p:panel>
+								<br/>
+								<p:panel id="Copropiedad" header="REGISTRAR INFORMACIÓN" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+												
+												
+												<tr>
+													<td>
+														<h:outputText  value="¿Es copropiedad?:" />
+													</td>
+													<td>
+														 <p:selectBooleanCheckbox value="#{upaMB.upa.sicopropiedad}" label="S&iacute;">Si
+														 <p:ajax update="observacioncopropiedad"></p:ajax>
+														 </p:selectBooleanCheckbox>
+													</td>
+													
+												</tr>
+												
+      									 </table>
+									<p:outputPanel id="observacioncopropiedad">
+										<h:panelGrid columns="2"
+											rendered="#{upaMB.upa.sicopropiedad}"
+											cellspacing="10">
+											<h:panelGrid columns="1">
+												<h:outputText value="Observaci&oacute;n: " />
+												<p:inputTextarea style="width:300px;" value="#{upaMB.upa.observacioncopropiedad}"  rows="3" maxlength="200" />
+											</h:panelGrid>
+											
+										</h:panelGrid>
+										<table width="600" style="margin: 15px;" cellspacing="10">
+												
+												
+												
+												<tr>
+													<td>
+														<h:outputText  value="¿Actualiza Clave ?:" />
+													</td>
+													<td>
+														 <p:selectBooleanCheckbox value="#{upaMB.upa.siactualizaclave}" label="S&iacute;">Si
+														 <p:ajax update="actualizarClave"></p:ajax>
+														 </p:selectBooleanCheckbox>
+													</td>													
+												</tr>
+      									 </table>
+									</p:outputPanel>
+									<p:outputPanel id="actualizarClave">
+										<h:panelGrid columns="2"
+											rendered="#{upaMB.upa.siactualizaclave}"
+											cellspacing="10">
+											<div style="margin-top:10px;">						
+													
+													<p:dataTable id="tblistaUpasActualizacion" var="up"
+													value="#{upaMB.listaCondicionUpa}"
+													emptyMessage="No se ha encontrado ningún registro"
+													paginator="true"
+													style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;"
+													paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+													currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+													rowsPerPageTemplate="10,15,20" rows="5" scrollWidth="680"
+													styleClass="ui-datatable-hor-scroll" editable="true"
+													>
+													<f:facet name="header">
+														<p:commandLink
+														    oncomplete="dlgAgregarUpasManual.show();">
+															<p:graphicImage width="25" height="25"
+																value="../resources/images/varios/agregar2.png" alt="Ver"
+																title="Agregar UPA" />
+														</p:commandLink>
+														<p:commandLink
+															actionListener="#{upaMB.limpiarTablaUpa}" 
+														    update=":frmUpa,:frmActualizarClaveUpa">
+															<p:graphicImage width="25" height="25"
+																value="../resources/images/varios/limpiar.png" alt="Ver"
+																title="Limpiar UPA" />
+														</p:commandLink>
+													</f:facet>
+													<p:column headerText="Clave" style="width:32px" >
+													<h:outputText value="#{up.clave}" />
+													</p:column>
+													<p:column headerText="Direccion" style="width:32px" >
+													<h:outputText value="#{up.direccion}" />
+													</p:column>
+													<p:column headerText="Num. Interior" style="width:32px" >
+													<h:outputText value="#{up.numerointerior}" />
+													</p:column>
+													<p:column headerText="Uso" style="width:32px" >
+													<h:outputText value="#{up.tipouso}" />
+													</p:column>
+													</p:dataTable>
+											
+											</div>					
+											
+										</h:panelGrid>
+									
+										
+									</p:outputPanel>
+
+								</p:panel>
+								<br/>
+			  	  				<p:panel id="infoInmueble" header="Informaci&oacute;n de Inmueble Principal">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+									
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Departamento(*):" />
+																</td>
+																<td width="25%">
+																	<h:outputText value="#{upaMB.depa}"/>
+																</td>
+																
+																
+																<td width="20%">
+																	<h:outputText  value="Provincia(*):" />
+																</td>
+																<td width="25%">
+																	<h:outputText value="#{upaMB.prov}"/>
+																</td>
+											 </tr>
+											 <tr>
+																<td width="20%">
+																		<h:outputText  value="Distrito(*):" />
+																</td>
+																<td width="25%">
+																		<h:outputText value="#{upaMB.dist}"/>
+																</td>	
+											 </tr>
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Tipo Vía:" />
+																</td>
+																<td width="25%">
+
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Nombre de vía:" />
+																</td>
+																<td width="25%">
+																	<h:outputText value="#{upaMB.inmuebleBean.nombretipovia}" />
+																 </td>
+											 </tr>
+											 
+											 					 <tr>
+																<td width="20%">
+																	<h:outputText  value="Tipo Zona:" />
+																</td>
+																<td width="25%">
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Nombre de zona:" />
+																</td>
+																<td width="25%">
+																	<h:outputText   value="#{upaMB.inmuebleBean.nombretipozona}" />
+																 </td>
+											 </tr>
+											 
+											  <tr>
+											  		<td>
+											  				<h:outputText  value="Direcci&oacute;n" />
+											  		</td>
+											  		
+											  		<td colspan="2">
+											  				<h:outputText id="direccion" value="#{upaMB.inmuebleBean.direccionprincipal}" />
+											  		
+											  		</td>
+											 			
+											  </tr>
+											 
+											 <tr>
+																 <td>
+																 <h:outputText  value="Referencia:" />
+																 </td>
+																<td colspan="3">
+																	<h:outputText value="#{upaMB.inmuebleBean.referenciadireccion}" />
+																 </td>
+											 </tr>
+											 
+											  <tr>
+																<td width="20%">
+																	<h:outputText  value="Habilitacion Urbana:" />
+																</td>
+																<td width="25%">
+<!-- 																	<p:selectBooleanCheckbox id="checkHU" -->
+<!-- 																		value="#{upaMB.inmuebleBean.sihabilitacionurbana}"> -->
+<!-- 																	</p:selectBooleanCheckbox> -->
+																	 <h:outputText value="#{upaMB.inmuebleBean.sihabilitacionurbana==null ? 'No Registrado':upaMB.inmuebleBean.sihabilitacionurbana=='1' ? 'Si':'No'}"/>
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Ubigeo(*):" />
+																 </td>
+																  <td width="20%">
+																	<h:outputText id="ubigeo" value="#{upaMB.inmuebleBean.ubigeo}" />
+																 </td>
+
+											 </tr>										 												 										 
+									</table>
+									</p:panel>
+			  	  	</p:tab>
+			  	  	<p:tab id="tabTecnicos" title="Tecnicos">
+								<br/>
+									<p:panel id="idConstruccionyAreas" header="Construcciones y Areas (En metros cuadrados)" toggleable="true">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+										<tr>
+											<td width="20%"><h:outputText value="Mat. Predominante:" />
+											</td>
+											<td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.materialpredominante}" /></td>
+
+											<td width="20%"><h:outputText value="Año Construccion" />
+											</td>
+											<td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.anioconstruccion}" /></td>
+										</tr>
+										<tr>
+											<td width="20%"><h:outputText value="Numero Pisos:" />
+											</td>
+											<td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.nropisos}" /></td>
+											<td width="20%"><h:outputText value="Area Terreno (m2):" />
+											</td>
+											<td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.areaterreno}" /></td>
+
+										</tr>
+										<tr>											
+													 <td width="20%">
+													 	<h:outputText value="Area Construida (m2):" />
+													 </td>
+													 <td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.areaconstruida}" /></td>
+											</tr>	
+									</table>
+									</p:panel>
+									<br/>
+								<p:panel id="idDocumentacionExistente" header="Documentaci&oacute;n Existente" toggleable="true">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+										<tr>
+											<td width="20%"><h:outputText value="Partida Registral:" />
+											</td>
+											<td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.sipartidaregistral==null ? 'No Registrado':upaMB.inmuebleBean.sipartidaregistral=='true' ? 'Si':'No'}"/></td>
+											<td width="20%">
+													 	<h:outputText value="Plano Ubicacion" />
+											 </td>
+											 <td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.siplanoubicacion==null ? 'No Registrado':upaMB.inmuebleBean.siplanoubicacion=='true' ? 'Si':'No'}" /></td>
+
+										</tr>
+										<tr>
+													<td width="20%">
+														<h:outputText  value="Memoria Descriptiva:" />
+													</td>
+													<td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.simemoriadescriptiva==null ? 'No Registrado':upaMB.inmuebleBean.simemoriadescriptiva=='true' ? 'Si':'No'}" /></td>	
+													<td width="20%">
+														<h:outputText  value="Fotografias:" />
+													</td>
+													<td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.sifotografias==null ? 'No Registrado':upaMB.inmuebleBean.sifotografias=='true' ? 'Si':'No'}" /></td>												
+											</tr>		
+											<tr>
+													 <td width="20%">
+													 	<h:outputText value="Tasacion:" />
+													 </td>
+													 <td colspan="3"><h:outputText
+													value="#{upaMB.inmuebleBean.sitasacion==null ? 'No Registrado':upaMB.inmuebleBean.sitasacion=='true' ? 'Si':'No'}" /></td>
+													 
+											</tr>					
+
+									</table>
+
+								</p:panel>
+
+
+							</p:tab>
+							<p:tab id="tabOtro" title="Otro">
+								<p:panel id="idLocalizacion" header="Localización" toggleable="true">
+											<table width="600" style="margin: 15px;" cellspacing="10">
+												<tr>
+												<td width="20%">
+																		<h:outputText  value="Latitud(*):" />
+																		
+																	</td>
+																	 <td colspan="3"><h:outputText
+																								value="#{upaMB.inmuebleBean.latitudlocalizacion}" /></td>
+																	<td width="20%">
+																		<h:outputText  value="Longitud(*):" />
+																		
+																	</td>
+																	 <td colspan="3"><h:outputText value="#{upaMB.inmuebleBean.longitudlocalizacion}" /></td>	
+												
+												</tr>
+											</table>
+											 <p:commandButton value="Ver Mapa" update="center-map" icon="ui-icon-image" actionListener="#{upaMB.obtenerUbicacionGmap}"/>
+											 <h:panelGroup id="center-map" layout="block" styleClass="form-row">
+											 <p:gmap  center="#{upaMB.inmuebleBean.latitudlocalizacion},#{upaMB.inmuebleBean.longitudlocalizacion}"  zoom="15" type="HYBRID" style="width:100%;height:400px" model="#{inmuebleMB.simpleModel}" >
+											 </p:gmap>
+											 </h:panelGroup>
+								</p:panel>
+											 
+								</p:tab>
+			  	  </p:tabView>
+			  </h:form>
+			  	<h:form id="frmActualizarClaveUpa">
+										
+										<p:dialog header="AGREGAR U.P.A" closable="true"
+										  showEffect="slide" hideEffect="slide" closeOnEscape="true"
+										  resizable="false" widgetVar="dlgAgregarUpasManual"
+										  width="auto" height="auto"
+										  style="border-width:9px;border-style:solid; border-color:#ffc600:">
+										  <div class="AgregarUpaActiva" style="width: auto; height: auto;">
+										  	<div class="AgregarUpaActivaIzq" style="width: auto; height: auto;">
+										  	<br></br>
+										  	<p:panel>
+										  		<p:panelGrid columns="3" cellspacing="10" cellpadding="10">
+										  		   <h:panelGrid columns="1">
+										  			<h:outputText value="UPAS ACTIVAS"/>
+													<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith" panelStyle="width:160px"
+														style="width:160px; float:left;" value="#{upaMB.upaSeleccionada}" converter="converterUpa">
+														<f:selectItem itemLabel="Seleccionar" itemValue="" />
+														<f:selectItems value="#{upaMB.listaUpasActivas}" var="up" itemLabel="#{up.clave}"
+															itemValue="#{up}" />
+														<p:ajax event="change" listener="#{upaMB.cargarUpa}" 
+														update="tblUpaActiva,:frmUpa" />
+													</p:selectOneMenu>
+													</h:panelGrid>										  				
+										  				</p:panelGrid>
+										  			</p:panel>
+										  			<br /> <br />
+										  			<p:dataTable id="tblUpaActiva" var="upa"
+										  		     rowKey="#{upa.idupa}"
+										  			 value="#{upaMB.listaCondicionUpa}"
+										  			 style="text-align:center;font-size:11px;"
+													 selectionMode="single"
+										  			 emptyMessage="No ha agregado ninguna cuota para pagar"
+												     editable="true" editMode="cell">
+										  			 <p:column headerText="clave">
+													<h:outputText value="#{upa.clave}" />
+													</p:column>
+
+													<p:column headerText="Direccion principal">
+														<h:outputText value="#{upa.direccion}" />
+													</p:column>
+													<p:column headerText="Num Interior">
+														<h:outputText value="#{upa.numeroprincipal}" />
+													</p:column>
+													<p:column headerText="Uso">
+														<h:outputText value="#{upa.tipouso}" />
+													</p:column>
+										  			</p:dataTable>
+										  		</div>
+										  	</div>
+										  </p:dialog>
+										</h:form>
+			  <h:form id="frmConsulta">
+			  			<p:dialog header="Consulta U.P.A."
+			  					width="auto" height="auto" closable="true" closeOnEscape="true" showEffect="slide" hideEffect="slide"
+			  					rezible="false" widgetVar="dlgListaUpass"
+			  					style="border-width:9px;border-style:solid; border-color:#c2c2c2;">
+			  			<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+							  <p:outputLabel for="upa" value="Consulta:" />
+		
+										        <p:selectOneListbox id="upa" value="#{upaMB.tipoBusquedaUpa}">
+										            <f:selectItem itemLabel="Clave:" 			 itemValue="clave"/>
+										            <f:selectItem itemLabel="Direcci&oacute;n:"  itemValue="direccion"/>
+										    
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="consultaInmueble" actionListener="#{inmuebleMB.buscarInmueble}" update="tblInmuebles"/>
+										        <p:inputText id="patron"  value="#{inmuebleMB.valorbusqueda}" onkeypress="if (event.keyCode == 13) { consultaInmueble(); return false; }" >
+										        	<p:watermark for="patron" value="Ingrese campo"/>
+										        </p:inputText>
+										        
+			  			</h:panelGrid>
+			  			<p:dataTable id="tblInmuebles" var="inmueble" value="#{upaMB.listaInmuebleBean}" 
+										emptyMessage="0 registros encontrados" filteredValue="#{upaMB.listaInmuebleBeanFilter}"
+										style="font-size: 10px;  margin-left: 15px;text-aling:center;"
+										styleClass="ui-datatable-hor-scroll"
+										rowKey="#{inmueble.idinmueble}" rowIndexVar="row"
+										selection="#{upaMB.inmuebleBean}" selectionMode="single"
+										paginator="true" rows="10"
+										paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="10">
+										<p:column headerText="Direccion"
+											filterBy="#{inmueble.direccion}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.direccion}" />
+										</p:column>
+
+										<p:column headerText="Distrito"
+											filterBy="#{inmueble.distrito}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.distrito}" />
+										</p:column>
+
+										<p:column headerText="Provincia"
+											filterBy="#{inmueble.provincia}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.provincia}" />
+										</p:column>
+
+										<p:column headerText="Departamento"
+											filterBy="#{inmueble.departamento}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.departamento}" />
+										</p:column>
+										
+										<p:column headerText="U. Creador"
+											filterBy="#{inmueble.usrcre}" filterMatchMode="contains">
+											<h:outputText value="#{inmueble.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											filterBy="#{inmueble.feccre}" filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											filterBy="#{inmueble.usrmod}" filterMatchMode="contains">
+											<h:outputText value="#{inmueble.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											filterBy="#{inmueble.fecmod}" filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+						</p:dataTable>
+			  			</p:dialog>
+			  			
+			  			
+			  			<p:dialog header="Búsqueda Upa" id="iddlgListaUpa"
+										width="auto" height="auto" closable="true" closeOnEscape="true"
+										resizable="false" widgetVar="dlgListaUpas" modal="true"
+										style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+										
+										<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="tipobusquedaUpa" value="Consulta:" />
+										        <p:selectOneListbox id="tipobusquedaUpa" value="#{upaMB.tipoBusquedaUpa}">
+										            <f:selectItem itemLabel="Clave" 			itemValue="clave" />
+										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="direccion" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="testUpa" actionListener="#{upaMB.buscarUpa}" update="tblUpa"/>
+										        <p:inputText id="patronUpa"  value="#{upaMB.valorbusquedaUpa}" onkeypress="if (event.keyCode == 13) { testUpa(); return false; }" >
+										        	<p:watermark for="patronUpa" value="Ingrese campo"></p:watermark>
+										        </p:inputText>
+			 							</h:panelGrid>
+
+										<p:dataTable id="tblUpa" var="upa" value="#{upaMB.listaUpaBean}"
+											emptyMessage="0 registros encontrados"
+											style="width:625px; font-size: 10px;  margin-right:0px;text-aling:center;" 
+											styleClass="ui-datatable-hor-scroll" rowKey="#{upa.idupa}"
+											rowIndexVar="row" selection="#{upaMB.upaBean}" 
+											selectionMode="single" paginator="true"
+											filteredValue="#{upaMB.listaUpaBeanFilter}" rows="10"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											rowsPerPageTemplate="5,10,15">
+											<p:ajax event="rowSelect"  listener="#{upaMB.seleccionarUpa}"
+												update=":frmUpa,:frmMaestra:listaMensajes" oncomplete="dlgListaUpas.hide();"/>
+											<p:column headerText="Clave" filterBy="#{upa.clave}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{upa.clave}" />
+											</p:column>
+
+											<p:column headerText="Direcci&oacute;n"
+												filterBy="#{upa.direccion}" filterMatchMode="startsWith">
+												<h:outputText value="#{upa.direccion}" />
+											</p:column>
+
+
+
+											<p:column headerText="Nombre Num. Interior"
+												filterBy="#{upa.numerointerior}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{upa.numerointerior}" />
+											</p:column>
+
+											<p:column headerText="Uso"
+												filterBy="#{upa.tipouso}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{upa.tipouso}" />
+											</p:column>
+
+
+										</p:dataTable>
+									</p:dialog>
+			  </h:form>
+			</div>
+		</div>
+		<ui:include src="archivo/pgUpload.xhtml" />
+		<ui:include src="archivo/pgDownload.xhtml"/>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

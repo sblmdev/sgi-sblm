@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportePagoCuota_subreport1" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0b52d151-d037-47ae-8175-1f6dba26d209">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="mes" class="java.lang.String">
+		<fieldDescription><![CDATA[mes]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[subtotal]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<fieldDescription><![CDATA[total]]></fieldDescription>
+	</field>
+	<field name="mora" class="java.lang.Double">
+		<fieldDescription><![CDATA[mora]]></fieldDescription>
+	</field>
+	<field name="penalidad" class="java.lang.Double">
+		<fieldDescription><![CDATA[penalidad]]></fieldDescription>
+	</field>
+	<field name="iddetallecomprobante" class="java.lang.Integer">
+		<fieldDescription><![CDATA[iddetallecomprobante]]></fieldDescription>
+	</field>
+	<field name="anio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[anio]]></fieldDescription>
+	</field>
+	<field name="indicador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[indicador]]></fieldDescription>
+	</field>
+	<field name="id_maedcondiciondetalle" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id_maedcondiciondetalle]]></fieldDescription>
+	</field>
+	<field name="idtipoconcepto" class="java.lang.String">
+		<fieldDescription><![CDATA[idtipoconcepto]]></fieldDescription>
+	</field>
+	<field name="numerocuotas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numerocuotas]]></fieldDescription>
+	</field>
+	<variable name="TotalSoles" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="TotalDolares" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement uuid="1944e297-bdc9-4535-81d5-4cd5dfd3ec29" x="696" y="0" width="43" height="15" forecolor="#0066FF"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_maedcondiciondetalle}== null ? ($F{indicador}==0? (Math.round(($F{total}+($F{mora}))*100.0)/100.0) : ($F{indicador}==1? $F{penalidad}:$F{total})) :""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="19baa924-c700-491a-9c54-c0aead82cef8" x="418" y="0" width="87" height="15" forecolor="#0066FF"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idtipoconcepto}.equals("18") ?  ($F{id_maedcondiciondetalle}== null ? ("Cuota "+$F{mes}):("Ref. "+ $F{mes}+"/"+$F{anio}) )   :$F{mes}+"/"+$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="e3a42b43-7398-4203-96f1-f2a2690c4ab0" x="513" y="0" width="53" height="15" forecolor="#0066FF"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_maedcondiciondetalle}== null ? ($F{indicador}==0? ($F{total}/1.18):0) :""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="213265d4-a4b3-47ed-9e15-3ec8395ecee7" x="570" y="0" width="43" height="15" forecolor="#0066FF"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_maedcondiciondetalle}== null ? ($F{indicador}==0?(($F{total}*0.18)/1.18):0) :""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="7d8713e1-414d-44f1-9803-a4f66c898d72" x="612" y="0" width="45" height="15" forecolor="#0066FF"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_maedcondiciondetalle}== null ? ($F{mora}==null? "0.0":$F{mora}):""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="7d8713e1-414d-44f1-9803-a4f66c898d72" x="655" y="0" width="39" height="15" forecolor="#0066FF"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_maedcondiciondetalle}== null ? ($F{penalidad}==null? "0.0":$F{penalidad}):""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

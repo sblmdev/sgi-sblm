@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition>
+	
+		<h:form id="frmVerDocumento" enctype="multipart/form-data">
+
+							
+							<p:dialog header="Información del documento" widgetVar="dlgInformacionDocumento" showEffect="fade" hideEffect="fade" resizable="false" width="800" height="auto" >
+								        <p:outputPanel id="informacionDocumento">
+
+											<p:panel >
+												<h:panelGrid  columns="2" cellspacing="10">
+													<h:outputText value="Nombre archivo: " style="align-text:left;"/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.nombre}" style="text-align:center"/>
+													<h:outputText value="T&iacute;tulo: " style="align-text:left;"/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.titulo}" style="text-align:center"/>
+													<h:outputText value="Descripci&oacute;n: " style="align-text:left;"/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.descripcion}"/>
+													<h:outputText value="Observaci&oacute;n: "/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.observacion}"/>
+													<h:outputText value="Tipo archivo: "/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.tipo}"/>
+													<h:outputText value="Peso (KB): "/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.peso/1024}">
+														<f:convertNumber pattern="#0.00" />
+													</h:outputText>
+													<h:outputText value="Usuario creador: "/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.usrcre}"/>
+													<h:outputText value="Fecha creaci&oacute;n: "/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.feccre}"/>
+													<h:outputText value="Usuario modificador: "/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.usrmod}"/>
+													<h:outputText value="Fecha modificaci&oacute;n: "/>
+													<h:outputText value="#{archivoMB.archivoAdjuntoBean.fecmod}"/>
+													
+												</h:panelGrid>
+											
+								        	</p:panel>
+								        		
+								        </p:outputPanel>	
+							 </p:dialog>
+							 
+							<p:dialog widgetVar="dglVerArchivo" header="" width="auto" height="auto">
+								<p:dataTable id="listaArchivosReferencia" var="archivo"  value="#{archivoMB.listaArchivosReferencia}"
+												emptyMessage="No ha se ha encontrado documentos." style="font-size: 10px;  margin: 0px 0px 0px 0px;text-aling:center;"
+												paginator="true" rows="10" paginatorPosition="top"
+						                        currentPageReportTemplate="Registros: {totalRecords} - [ Página : {currentPage}/{totalPages} ]"
+						                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						                        rowsPerPageTemplate="10,15"
+						                        rowIndexVar="rowIndex" filteredValue="#{archivoMB.listaArchivosReferenciaFilter}">
+						                        
+											   <p:column headerText="#" style="width:15px;text-align: center">
+										            <h:outputText value="#{rowIndex+1}" />
+										        </p:column>
+										        
+
+											    <p:column headerText="T&iacute;tulo" filterBy="#{archivo.titulo}"  filterMatchMode="contains" style="width:120px;">
+											        <h:outputText value="#{archivo.titulo}"  />
+											    </p:column>
+											    <p:column headerText="Nombre archivo" filterBy="#{archivo.titulo}"  filterMatchMode="contains" style="width:120px;">
+											        <h:outputText value="#{archivo.nombre}"  />
+											    </p:column>
+												<p:column headerText="Tipo" filterBy="#{archivo.tipo}"  filterMatchMode="contains" style="width:32px;text-align: center">
+											        <p:graphicImage width="30" height="30" 		value="../resources/icons/tipoArchivo/#{archivo.tipo}.png"/>
+											    </p:column>
+											 
+											    <p:column headerText="Usuario Creador" filterBy="#{archivo.usrcre}"  filterMatchMode="contains" style="width:100px;text-align: center">
+											        <h:outputText value="#{archivo.usrcre}" />
+											    </p:column>
+											 
+											    <p:column headerText="Fecha Creaci&oacute;n"  style="width:75px;text-align: center">
+											        <h:outputText value="#{archivo.feccre}" >
+											        <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+											        </h:outputText>
+											    </p:column>
+											    
+											    
+											   <p:column style="width:32px;text-align: center">
+										             <p:commandButton title="Ver Información"  oncomplete="dlgInformacionDocumento.show();" icon="ui-icon-info"  update=":frmVerDocumento:informacionDocumento">
+										                <f:setPropertyActionListener value="#{archivo}" target="#{archivoMB.archivoAdjuntoBean}" />
+										            </p:commandButton>
+										       </p:column>
+										       
+										        <p:column style="width:32px;text-align: center">
+										        <p:commandButton title="Descargar Documento"
+					                                 process="@this"
+					                                 ajax="false" 
+					                                 icon="ui-icon-arrowthick-1-s">
+					                                 <p:fileDownload value="#{archivoMB.descargarAdjunto(archivo)}"/>
+					                			</p:commandButton>
+					                			</p:column>
+
+										        <p:column  style="width:32px;text-align: center">
+										             <p:commandButton title="Abrir Documento"  actionListener="#{archivoMB.openAlfrescoShare(archivo.uuidAlfresco)}" icon="ui-icon-search"  />
+										       </p:column>
+			    
+								</p:dataTable>
+								
+							</p:dialog>		 
+							
+							<p:dialog id="test" header="Clic para ir a documento" widgetVar="dlgVistaPrevia" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="auto" height="auto">
+								<p:graphicImage value="#{archivoMB.vistaPrevia}" />
+							</p:dialog>
+							
+
+
+	</h:form>
+</ui:composition>
+</html>

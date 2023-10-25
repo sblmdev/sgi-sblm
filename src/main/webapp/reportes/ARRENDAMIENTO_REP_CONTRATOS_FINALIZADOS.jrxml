@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cobranza_Registro" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="821" leftMargin="11" rightMargin="10" topMargin="20" bottomMargin="20" uuid="f414ecdd-ea37-4f23-9c8c-1624afe62bff">
+	<property name="ireport.zoom" value="2.0490403660952117"/>
+	<property name="ireport.x" value="451"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="USUARIOCREADOR" class="java.lang.String"/>
+	<parameter name="CONDICION" class="java.lang.String"/>
+	<parameter name="SICUOTASCANCELADAS" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LOGO_DIR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="condicion" class="java.lang.String">
+		<fieldDescription><![CDATA[condicion]]></fieldDescription>
+	</field>
+	<field name="claveUpa" class="java.lang.String">
+		<fieldDescription><![CDATA[claveUpa]]></fieldDescription>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<fieldDescription><![CDATA[estado]]></fieldDescription>
+	</field>
+	<field name="fincontrato" class="java.util.Date">
+		<fieldDescription><![CDATA[fincontrato]]></fieldDescription>
+	</field>
+	<field name="nrocontrato" class="java.lang.String">
+		<fieldDescription><![CDATA[nrocontrato]]></fieldDescription>
+	</field>
+	<field name="moneda" class="java.lang.String">
+		<fieldDescription><![CDATA[moneda]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[direccion]]></fieldDescription>
+	</field>
+	<field name="distrito" class="java.lang.String">
+		<fieldDescription><![CDATA[distrito]]></fieldDescription>
+	</field>
+	<field name="nombreocupante" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreocupante]]></fieldDescription>
+	</field>
+	<field name="cuota1" class="java.lang.Double">
+		<fieldDescription><![CDATA[cuota1]]></fieldDescription>
+	</field>
+	<field name="iniciocontrato" class="java.util.Date">
+		<fieldDescription><![CDATA[iniciocontrato]]></fieldDescription>
+	</field>
+	<field name="nombresInquilino" class="java.lang.String">
+		<fieldDescription><![CDATA[nombresInquilino]]></fieldDescription>
+	</field>
+	<variable name="SUMAR_IGV" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="SUMAR_MORA" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="SUMAR_TOTAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="SUMAR_MC" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="115" splitType="Stretch">
+			<image>
+				<reportElement uuid="0701cc03-ae35-4609-af4b-f31211fb6671" x="0" y="0" width="393" height="64"/>
+				<imageExpression><![CDATA[$P{LOGO_DIR}+"logo-sblm-negro.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="06b4a39d-6f41-46ed-a58e-48999de20bd8" x="652" y="12" width="37" height="13" forecolor="#0099CC"/>
+				<textElement>
+					<font size="8" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Emitido:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f1f2e28-d3c3-4a84-b465-79825f3d3e7c" x="652" y="25" width="37" height="13" forecolor="#0099CC"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fc542cb3-9a39-4ede-b748-ffa4623e718d" x="689" y="12" width="103" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f907c81f-2a37-4d61-bf28-332dd36e00f8" x="689" y="25" width="103" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{USUARIOCREADOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a1e3c4ff-4932-4139-9af0-b7abb530be24" x="0" y="77" width="821" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONDICION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="13">
+			<staticText>
+				<reportElement uuid="054e69e2-e81e-4da2-abab-d36b66f9d0fe" x="0" y="1" width="23" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a26e10c5-6678-46bb-bc4a-182c6df36107" x="23" y="1" width="51" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLAVE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72a3d4a1-4fce-4ae5-bd9b-dfe543385ee2" x="74" y="1" width="135" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72a3d4a1-4fce-4ae5-bd9b-dfe543385ee2" x="210" y="1" width="100" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Distrito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e5836d28-d8ed-422d-8d15-c0b2f07bca61" x="314" y="1" width="188" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres/Razón Social]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="224828fc-f2d6-4920-9789-20d7423bef43" x="569" y="1" width="56" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inicio contrato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b62a345b-106c-4d8f-bdd1-18426cf1a00b" x="630" y="1" width="65" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fin contrato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="813c000b-599e-4d70-aab7-7989bf4b55f6" x="701" y="1" width="35" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Moneda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="40da47c4-dec7-4bc8-b24c-5475ad05f020" x="733" y="1" width="32" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Renta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a095451f-e630-49ed-9258-a9b1f665aa45" x="508" y="1" width="53" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro Contrato]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0695e093-fc69-46cf-b685-0aa34cb5e30f" x="738" y="0" width="43" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuota1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="5d85be06-2f03-4f62-baa1-5f33b62ee833" x="570" y="0" width="55" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{iniciocontrato}!=null? $F{iniciocontrato}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="c18163a4-0139-49b0-95a7-c01e7c1e82a9" x="630" y="0" width="65" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fincontrato}!=null? $F{fincontrato}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f49469d0-ad4a-4f7e-86b5-a165bbecb80b" x="74" y="0" width="135" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f49469d0-ad4a-4f7e-86b5-a165bbecb80b" x="209" y="0" width="100" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{distrito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fa3b5f25-f42d-4f02-b1d4-1f884e6603e3" x="23" y="0" width="51" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{claveUpa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="86c8ca60-84e1-4ba4-b8b9-27ad610cdb6b" x="314" y="0" width="188" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombresInquilino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="66dcbf1f-ef21-4e4c-bf80-bb04b4badac7" x="508" y="0" width="53" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nrocontrato}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a78443de-885c-4460-bcc8-4d210ead8e21" x="714" y="0" width="35" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{moneda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fe7fb184-b0bd-4ec1-b780-034aa48b54f5" x="0" y="0" width="23" height="11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="50"/>
+	</summary>
+</jasperReport>

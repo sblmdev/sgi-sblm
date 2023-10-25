@@ -1,0 +1,32 @@
+horas = 0;
+minutos = 0;
+segundos = 0;
+function tiempoPermanencia(){ 
+    segundos++;
+    if (segundos == 60) {
+        segundos = 0;
+        minutos++;
+    }
+            
+    if (minutos == 60) {
+        minutos = 0;
+        horas++;
+    }
+            
+    if (segundos.toString().length == 1 ) {
+        segundos = 0 + '' + segundos;
+    }
+            
+    if (minutos.toString().length == 1 ) {
+        minutos = 0 + '' + minutos;
+    }
+            
+    if (horas.toString().length == 1 ) {
+        horas = 0 + '' + horas;
+    }
+            
+    chronos = horas + ':' +minutos + ':' + segundos;
+    document.getElementById("frmGeneral:time").value = chronos;
+
+} 
+setInterval("tiempoPermanencia()", 1000); 

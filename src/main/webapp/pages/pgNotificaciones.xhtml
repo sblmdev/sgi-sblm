@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head onblur="self.focus()">
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<title>SBLM</title>
+</h:head>
+<h:body onblur="self.focus()"  onload="EstadoNotificacion();">
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+			
+			<div class="contenidoPrincipal_FondoPrincipal">
+				<h:form id="formNotificaciones">
+					<div class="cabecerasuarioNotificaciones">
+						<div class="imagenCabecera">
+							<p:graphicImage width="104" height="110"
+								value="../../../../../../#{msg['imagenesUsuarioPath']}#{usuarioMB.usuariologueado.rutaimgusr}" />
+
+						</div>
+
+						<div class="nombreCabecera">
+							<br />
+							<p:spacer width="40" height="40" />
+							<h:outputText
+								value="#{usuarioMB.usuariologueado.nombres} #{usuarioMB.usuariologueado.apellidopat}"
+								style="font-size: 18pt;color:white"/>
+							<div style="margin-left: 43px; margin-top: 0px;">
+								<h:outputText value="#{usuarioMB.usuariologueado.cargo}"
+									style="font-size: 10pt;"/>
+
+							</div>
+
+						</div>
+						<div class="separacionCabecera">
+							<br />
+							<p:graphicImage
+								value="../resources/images/notificacion/lineaSeparacion.png" />
+
+						</div>
+						<div class="nroCabeceraPendiente" style="display: visible">
+							
+						<p:outputPanel id="idNroNotificaciones">
+							<div class="detalleNroCabecera">
+								<h:outputText value="Notificaciones Pendientes" rendered="#{!bandejaMB.estadoNotificacion}" style="font-size: 10pt;color:white"/>
+								<h:outputText value="Notificaciones Leídas" rendered="#{bandejaMB.estadoNotificacion}" style="font-size: 10pt;color:white"/>
+							</div>
+							<div class="imagenNroCabecera">
+								<h:outputText value="#{bandejaMB.nroPendiente}" rendered="#{!bandejaMB.estadoNotificacion}" style="color:#a8c2d8; margin-top:10px;" />
+								<h:outputText value="#{bandejaMB.nroLeido}" rendered="#{bandejaMB.estadoNotificacion}" style="color:#a8c2d8; margin-top:10px;" />
+							</div>
+						</p:outputPanel>
+						
+						
+
+						</div>
+						
+					</div>
+					<div class="checkNotificaciones">
+						Marcar Todo
+						<p:commandLink style="margin-right:20px;" oncomplete="dglFiltro.show();">
+									<p:graphicImage width="25" height="25" value="../resources/images/notificacion/checkTodo.png" />
+						</p:commandLink>
+					</div>
+					<div class="comboxNotificaciones">
+						Filtros 
+						<p:commandLink id="chartBtn" style="margin-right:20px;" oncomplete="dglFiltro.show();">
+							<p:graphicImage width="25" height="25" value="../resources/images/notificacion/iconoLupa.png" />
+						</p:commandLink>
+					</div>
+					
+					
+						<p:dialog id="idFiltro" widgetVar="dglFiltro" width="auto" height="auto" closeOnEscape="true" showHeader="false" resizable="false">
+								<h:panelGrid columns="3" cellspacing="10">
+								<h:outputText value="Estado"/>
+								<h:outputText value="Mes"/>
+								<h:outputText value="Año"/>
+																<p:selectOneMenu id="idTipo" style="width: 150px;"
+									value="#{bandejaMB.estadoNotificacion}" var="estado">
+									<f:selectItem itemLabel="Pendiente" itemValue="false" />
+									<f:selectItem itemLabel="Leído" itemValue="true" />
+		
+								</p:selectOneMenu>
+								<p:selectOneMenu id="idMes" style="width: 150px;"
+									value="#{bandejaMB.mesSeleccionado}">
+									<f:selectItem itemLabel="Seleccionar" itemValue="" />
+									<f:selectItems value="#{inicioMB.listaMes}" var="mes"
+										itemLabel="#{mes}" itemValue="#{mes}" />
+<!-- 									<p:ajax event="change" -->
+<!-- 										update=":formNotificaciones:idTablaAuditoria,:formNotificaciones:idNroTotalPendientes,:formNotificaciones:idNroTotalRevisados,:formNotificaciones:idNroTotalCancelados" -->
+<!-- 										listener="#{bandejaMB.listarNotificacionesInit}" -->
+<!-- 										process="@this" /> -->
+<!-- 										<p:focus/> -->
+		
+								</p:selectOneMenu>
+								<p:selectOneMenu id="idAnio" style="width: 150px;"
+									value="#{bandejaMB.anioSeleccionado}">
+									<f:selectItem itemLabel="Seleccionar" itemValue="" />
+									<f:selectItems value="#{inicioMB.listaAnio}" var="varAnio"
+										itemLabel="#{varAnio}" itemValue="#{varAnio}" />
+<!-- 									<p:ajax event="change" -->
+<!-- 										update=":formNotificaciones:idTablaAuditoria" -->
+<!-- 										listener="#{bandejaMB.listarNotificacionesInit}" -->
+<!-- 										process="@this" /> -->
+<!-- 										<p:focus/> -->
+		
+								</p:selectOneMenu>
+								
+								</h:panelGrid>
+								
+
+								<div style="margin-top:10px;">
+								<center>
+										<p:commandButton value="&nbsp;Aceptar" 
+											update="idTablaAuditoria,idNroNotificaciones"
+											actionListener="#{bandejaMB.obtenerInformacionNotificaciones()}"
+											oncomplete="dglFiltro.hide()" icon="icon-save">
+										</p:commandButton>
+										<p:spacer width="10	"/>
+										<p:commandButton value="&nbsp;Cancelar" onclick="dglFiltro.hide()" icon="icon-cancel" />
+								</center>
+								</div>
+					
+						</p:dialog>
+						
+
+					<div class="tablaNotificacion" style="">
+					<p:growl id="idNotiSimple" showDetail="true" sticky="false" life="3000" />
+
+						<p:dataTable id="idTablaAuditoria" var="notificacion"
+							value="#{bandejaMB.notificaciones}"  rowKey="#{notificacion.idNotificacion}"
+							styleClass="noheader borderless cellSpacingTableClass"
+							scrollHeight="140"
+							paginatorPosition="bottom"
+							paginator="true" rows="10"  
+                 			paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 			rowsPerPageTemplate="5,10,15"  
+							emptyMessage="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No tiene notificaciones">
+							
+							<p:column>
+								<div class="rowNotificaciones1">
+									<p:graphicImage width="78" height="78" style="" 
+										value="../resources/images/usuarios/default.jpg" />
+								</div>
+							</p:column>
+							<p:column
+								style="background-color: #c2c2c2; width:900px;height:60px;">
+
+								<div>
+									<div class="column1Notificaciones">
+										<h:outputText
+											value="S.G.I."
+											style="color:#957400;" />
+										&nbsp;
+										<h:outputText value="#{notificacion.mensaje}"/>
+										
+										<p:commandLink actionListener="#{bandejaMB.openAlfrescoShare(notificacion.uidAlfresco)}" rendered="#{notificacion.siNotificacionTipoReporte}">
+											<p:graphicImage value="../resources/icons/responderNotificacion.png" width="25" height="25" title="Ver reporte" style="position:absolute;margin-top:3px;margin-left:3px;" />
+										</p:commandLink>
+<br />
+
+										<h:outputText value="#{notificacion.fechaCreacion}"	
+											style="font-size: 8pt;color:#8a887f">
+											<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+
+									</div>
+
+									<div class="column2Notificaciones">
+										<div id="clsRevisado" class="clsRevisado"
+											style="display: visible; float: left; ">
+											<p:commandLink title="Marcar como leído"
+												oncomplete="dlgCambiarEstadoNotificacion.show();">
+												<p:graphicImage
+													value="../resources/images/notificacion/iconoRevisar.jpg" />
+												<f:setPropertyActionListener value="#{notificacion}"
+												target="#{bandejaMB.notificacion}" />
+											</p:commandLink>
+										</div>
+									</div>
+								</div>
+							</p:column>
+
+						</p:dataTable>
+					</div>
+
+				</h:form>
+					
+					<p:confirmDialog 	message="¿Desea marcar como leído notificación?"
+						header="Confirmación" severity="alert" widgetVar="dlgCambiarEstadoNotificacion">
+							<center>
+									<p:commandButton value="&nbsp;Aceptar" 
+										update=":formNotificaciones"
+										actionListener="#{bandejaMB.cambiarEstadoNotificacion}"
+										oncomplete="dlgCambiarEstadoNotificacion.hide()" icon="icon-save">
+									</p:commandButton>
+									<p:commandButton value="&nbsp;Cancelar" onclick="dlgCambiarEstadoNotificacion.hide()" icon="icon-cancel" />
+							</center>
+
+					</p:confirmDialog>
+
+				</div>
+				
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition >
+	
+		<h:form id="frmAdjuntarDocumento" enctype="multipart/form-data">
+			
+					<p:dialog widgetVar="dglAdjuntarArchivo" header="Adjuntar Documento" width="auto" height="auto" modal="true">
+									<p:outputPanel id="adjunto">
+												<table width="200" style="margin: 15px;" >
+													<tr>
+																		<td width="75%">
+																			<h:outputText  value="T&iacute;tulo: " />
+																		</td>
+																		<td width="75%">
+																			<p:inputText  value="#{archivoMB.archivoAdjuntoBean.titulo}" style="width:240px;" maxlength="60">
+																			 	<p:ajax event="blur" listener="#{archivoMB.activarUpload}" />
+																			 </p:inputText> 
+																		</td>
+		
+													 </tr>
+													
+													<tr>
+																		<td width="25%">
+																			<h:outputText  value="Descripci&oacute;n:" />
+																		</td>
+																		<td width="75%">
+																			<p:inputTextarea  value="#{archivoMB.archivoAdjuntoBean.descripcion}" style="width:240px;" maxlength="200" rows="3" >
+																			 	<p:ajax event="blur" listener="#{archivoMB.activarUpload}" />
+																			 </p:inputTextarea>
+																		</td>
+													 </tr>
+													 <tr>
+																		<td width="25%">
+																			<h:outputText  value="Observaci&oacute;n:" />
+																		</td>
+																		<td width="75%">
+																			<p:inputTextarea   value="#{archivoMB.archivoAdjuntoBean.observacion}" style="width:240px;" rows="3" maxlength="1000"> 
+																			<p:ajax event="blur" listener="#{archivoMB.activarUpload}" />
+																			</p:inputTextarea>
+																		</td>
+													 </tr>
+											</table>
+									
+										<p:outputPanel id="uploadFile">
+											<p:fileUpload  fileUploadListener="#{archivoMB.agregarAdjunto}" mode="advanced" auto="true"   label="Seleccione archivo" disabled="#{archivoMB.disabledUpload}" update="listaArchivoAdjunto,adjunto"/>
+										</p:outputPanel>
+									</p:outputPanel>
+									<br/>
+									<br/>
+
+								 <p:outputPanel id="listaArchivoAdjunto">
+										<p:dataTable id="datalist"
+											value="#{archivoMB.listaArchivoAdjunto}" var="adjunto"  style="text-align: center;"
+											emptyMessage="No se ha adjuntado ningún archivo a la vista previa"
+											paginator="true" rows="5" paginatorPosition="bottom"
+					                        currentPageReportTemplate="Registros: {totalRecords} - [ Página : {currentPage}/{totalPages} ]"
+					                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					                        rowIndexVar="rowIndex">
+					                        
+					                         <p:column headerText="Nro.">
+												<h:outputText value="#{rowIndex + 1}" />
+											</p:column>
+											<p:column headerText="T&iacute;tulo">
+												<h:outputText value="#{adjunto.titulo}" />
+											</p:column>
+	
+											<p:column headerText="Descripci&oacute;n">
+												<h:outputText value="#{adjunto.descripcion}" />
+											</p:column>
+											<p:column headerText="Tipo">
+												<p:graphicImage width="30" height="30" 		value="../resources/icons/tipoArchivo/#{adjunto.tipo}.png" />
+											</p:column>
+										</p:dataTable>
+	
+								</p:outputPanel>
+																		
+									<br/>	
+									<center>
+										<p:commandButton value="Grabar" actionListener="#{archivoMB.validarGrabarAdjunto}" icon="icon-save" update=":frmMaestra:listaMensajes"/>
+									</center>
+								
+							</p:dialog>
+							
+
+							
+							
+						<p:confirmDialog message="¿Desea adjuntar archivos?"
+										header="Registro Adjuntos" severity="alert"
+										widgetVar="dlgConfirmacionGrabarAdjunto">
+<center>
+										<p:commandButton value="&nbsp;Aceptar"
+											update="listaArchivoAdjunto,:frmMaestra:listaMensajes,:frmAdjuntarDocumento"
+											actionListener="#{archivoMB.grabarAdjunto}"
+											onclick="dlgConfirmacionGrabarAdjunto.hide(); PF('statusDialog').show();"  
+											oncomplete="dlgConfirmacionGrabarAdjunto.hide();PF('statusDialog').hide();" 
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar" 
+											oncomplete="dlgConfirmacionGrabarAdjunto.hide();"
+											icon="icon-cancel" />
+</center>
+							</p:confirmDialog>
+
+	</h:form>
+	<h:form id="frmAdjuntarArchivo" enctype="multipart/form-data">
+			
+					<p:dialog widgetVar="dglAdjuntarArchivoContrato" header="Adjuntar Documento" width="auto" height="auto" modal="true" position="center center">
+									<p:outputPanel id="adjuntoC">
+												<table width="800" style="margin: 15px;" >
+													<tr>
+																		<td width="75%">
+																			<h:outputText  value="T&iacute;tulo: " />
+																		</td>
+																		<td width="75%">
+																			<p:inputText  value="#{archivoMB.archivoAdjuntoBean.titulo}" style="width:800px;" maxlength="60">
+																			 	<p:ajax event="blur" listener="#{archivoMB.activarUploadContrato}" />
+																			 </p:inputText> 
+																		</td>
+		
+													 </tr>
+													
+													<tr>
+																		<td width="25%">
+																			<h:outputText  value="Descripci&oacute;n:" />
+																		</td>
+																		<td width="75%">
+																			<p:inputTextarea  value="#{archivoMB.archivoAdjuntoBean.descripcion}" style="width:800px;" maxlength="200" rows="3" >
+																			 	<p:ajax event="blur" listener="#{archivoMB.activarUploadContrato}" />
+																			 </p:inputTextarea>
+																		</td>
+													 </tr>
+													 <tr>
+																		<td width="25%">
+																			<h:outputText  value="Observaci&oacute;n:" />
+																		</td>
+																		<td width="75%">
+																			<p:inputTextarea   value="#{archivoMB.archivoAdjuntoBean.observacion}" style="width:800px;" rows="3" maxlength="1000">
+																			<p:ajax event="blur" listener="#{archivoMB.activarUploadContrato}" />
+																			</p:inputTextarea> 																			
+																		</td>
+													 </tr>
+											</table>
+									
+										<p:outputPanel id="uploadFileContrato">
+											<p:fileUpload  fileUploadListener="#{archivoMB.agregarAdjunto}" mode="advanced" auto="true"   label="Seleccione archivo" disabled="#{archivoMB.disabledUpload}" update="listaArchivoAdjunto,adjuntoC"/>
+										</p:outputPanel>
+									</p:outputPanel>
+									<br/>
+									<br/>
+
+								 <p:outputPanel id="listaArchivoAdjunto">
+										<p:dataTable id="datalist"
+											value="#{archivoMB.listaArchivoAdjunto}" var="adjunto"  style="text-align: center;"
+											emptyMessage="No se ha adjuntado ningún archivo a la vista previa"
+											paginator="true" rows="5" paginatorPosition="bottom"
+					                        currentPageReportTemplate="Registros: {totalRecords} - [ Página : {currentPage}/{totalPages} ]"
+					                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					                        rowIndexVar="rowIndex">
+					                        
+					                         <p:column headerText="Nro.">
+												<h:outputText value="#{rowIndex + 1}" />
+											</p:column>
+											<p:column headerText="T&iacute;tulo">
+												<h:outputText value="#{adjunto.titulo}" />
+											</p:column>
+	
+											<p:column headerText="Descripci&oacute;n">
+												<h:outputText value="#{adjunto.descripcion}" />
+											</p:column>
+											<p:column headerText="Nombre archivo: " style="align-text:left;">
+													<h:outputText value="#{adjunto.nombre}" style="text-align:center"/>
+											</p:column>
+											<p:column headerText="Tipo">
+												<p:graphicImage width="30" height="30" 		value="../resources/icons/tipoArchivo/#{adjunto.tipo}.png" />
+											</p:column>
+										</p:dataTable>
+	
+								</p:outputPanel>
+																		
+									<br/>	
+									<center>
+										<p:commandButton value="Cerrar" oncomplete="dglAdjuntarArchivoContrato.hide();" icon="icon-cancel" update=":frmMaestra:listaMensajes"/>
+									</center>
+								
+							</p:dialog>
+							
+
+							
+							
+						<p:confirmDialog message="¿Desea adjuntar archivos?"
+										header="Registro Adjuntos" severity="alert"
+										widgetVar="dlgConfirmacionGrabarAdjunto">
+<center>
+								<p:commandButton value="&nbsp;Aceptar"
+											update="listaArchivoAdjunto,:frmMaestra:listaMensajes"
+											actionListener="#{archivoMB.grabarAdjunto}"
+											onclick="dlgConfirmacionGrabarAdjunto.hide();PF('statusDialog').show();"  oncomplete="dglAdjuntarArchivo.hide();PF('statusDialog').hide();" 
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar" 
+											oncomplete="dlgConfirmacionGrabarAdjunto.hide();"
+											icon="icon-cancel" />
+<!-- 										<p:commandButton value="&nbsp;Aceptar" -->
+<!-- 											update="listaArchivoAdjunto,:frmMaestra:listaMensajes" -->
+<!-- 											actionListener="#{archivoMB.grabarAdjunto}" -->
+<!-- 											onclick="PF('statusDialog').show();"  -->
+<!-- 											oncomplete="dlgConfirmacionGrabarAdjunto;dglAdjuntarArchivo.hide();PF('statusDialog').hide();"  -->
+<!-- 											icon="icon-save"> -->
+
+<!-- 										</p:commandButton> -->
+<!-- 										<p:commandButton value="&nbsp;Cancelar"  -->
+<!-- 											oncomplete="dlgConfirmacionGrabarAdjunto.hide();" -->
+<!-- 											icon="icon-cancel" /> -->
+</center>
+							</p:confirmDialog>
+
+	</h:form>
+<!-- 			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" -->
+<!-- 			closable="false" resizable="false" showHeader="false" -->
+<!-- 			header="Cargando"> -->
+<!-- 			<center> -->
+<!-- 				<p:graphicImage name="images/icon/cargando.gif" /> -->
+<!-- 			</center> -->
+<!-- 		</p:dialog> -->
+</ui:composition>
+</html>

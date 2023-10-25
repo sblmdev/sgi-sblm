@@ -1,0 +1,2311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+
+	<title>SBLM-SOCIEDAD DE BENEFICENCIA DE LIMA METROPOLITANA</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="head">
+			<f:metadata>
+				<f:viewParam id="estado" name="estado" value="#{ccMB.estado}" required="false"/>
+			</f:metadata>
+		</ui:define>
+		<ui:define name="content">
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->	
+					<div class="contrato_IconoIdentificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">MANTENIMIENTO</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">#{ccMB.estado}</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo" style="background-color: white;">
+				
+				<h:form id="frmCondicion">	
+			   <p:toolbar styleClass="ui-saju-toolbar">
+					<p:toolbarGroup align="left">
+					
+											<p:commandButton  icon="ui-icon-disk" ajax="true" value="Grabar #{ccMB.estado}" rendered="#{ccMB.contratoBean.idcontrato==0?true:false}"
+												actionListener="#{ccMB.validarGrabarCabeceraContrato}"
+												update=":frmMaestra:listaMensajes,:frmCondicion"/>
+											
+<!-- 											<p:inputText value="#{ccMB.contratoBean.sipenalidad}"/> -->
+											<p:commandButton id="actualizarContrato"  icon="ui-icon-refresh" value="Finalizar #{ccMB.contratoBean.condicion}" rendered="#{ccMB.contratoBean.idcontrato==0? false:true}"/>
+											<p:menu  overlay="true" trigger="actualizarContrato"   my="left top" at="left bottom">
+
+									            <p:menuitem  icon="ui-icon-key" ajax="true" value="Devolución Inmueble" 
+												oncomplete="dglDevolucionInmueble.show();"
+												update=":frmMaestra:listaMensajes,:frmCondicion" rendered="#{ccMB.contratoBean.siactadevolucion.equals(false)}"/>
+												<p:menuitem  icon="ui-icon-circle-close" ajax="true" value="Quitar Penalidad"
+												oncomplete="dglQuitarPenalidad.show();"
+												update=":frmMaestra:listaMensajes,:frmCondicion" rendered="#{ccMB.contratoBean.sipenalidad.equals(true)? true : false}"/>
+												<p:menuitem  icon="ui-icon-key" ajax="true" value="Finalizar #{ccMB.contratoBean.condicion}"
+												 actionListener="#{ccMB.validarCondicionContrato}"											
+												 update=":frmMaestra:listaMensajes,:frmCondicion" />
+									   		 </p:menu >
+									   		<p:commandButton value="Anular #{ccMB.estado}" icon="ui-icon-closethick" rendered="#{ccMB.contratoBean.condicion=='Precontrato'?true:false}"
+												actionListener="#{ccMB.validarAnularContrato}" update=":frmMaestra:listaMensajes" />																								
+											<p:commandButton value="Resolver Contrato" icon="ui-icon-closethick" rendered="#{ccMB.contratoBean.condicion=='Contrato'?true:false}"
+												actionListener="#{ccMB.validarCancelacionContrato}" update=":frmMaestra:listaMensajes" />
+											<p:commandButton value="Incluir Adenda" icon="ui-icon-plus"  rendered="#{ccMB.contratoBean.condicion=='Contrato'?true:false}"
+												actionListener="#{ccMB.validarInclusionAdenda}" update=":frmMaestra:listaMensajes" />
+											<p:commandButton value="Incluir Clausulas" icon="ui-icon-plus"  rendered="#{ccMB.contratoBean.condicion=='Contrato'?true:false}"
+												actionListener="#{ccMB.validarEstadoClausulasContrato}" update=":frmEstadoClausulas, :frmMaestra:listaMensajes" />
+											<p:commandButton value="Actualizar a Contrato" label="Cambiar estado a contrato" icon="ui-icon-transferthick-e-w"  rendered="#{ccMB.contratoBean.condicion=='Precontrato'?true:false}"
+												oncomplete="dglCambiarEstadoCondicion.show();" update=":frmMaestra:listaMensajes" />
+											<p:spacer width="1" height="22" style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+											<p:commandButton value="UPA(*)" oncomplete="iddlgListaUpa.show();"/>
+											<p:commandButton value="Inquilino(*)" disabled="#{ccMB.sicontratofuturo}" oncomplete="iddlgListaInquilino.show();"/>
+											
+											<p:spacer width="1" height="22" style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+											<p:commandButton value="Documento" id="adjunto" title="adjuntar documento"  icon="ui-icon-pin-w"/>
+											<p:menu  overlay="true" trigger="adjunto" my="left top" at="left bottom">
+										            <p:menuitem value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjunto('Contrato',ccMB.contratoBean.idcontrato)}"  update=":frmMaestra:listaMensajes,:frmAdjuntarDocumento:listaArchivoAdjunto" icon="ui-icon-arrowthickstop-1-w" />
+										            <p:menuitem value="Ver" actionListener="#{archivoMB.abrirDialogoVerAdjunto('Condicion',ccMB.contratoBean.idcontrato)}"  update=":frmMaestra:listaMensajes,:frmVerDocumento:listaArchivosReferencia" icon="ui-icon-arrowthickstop-1-e"/>
+									   		</p:menu>
+					
+							
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right" >
+							<p:commandButton  icon="ui-icon-search" oncomplete="dlgListaCondiciones.show();" title="Buscar contrato"/>
+					</p:toolbarGroup>
+				</p:toolbar>
+				
+					<p:dialog header="Devolución de Inmueble"  width="auto" height="auto" closable="true" closeOnEscape="true"
+												  resizable="false" widgetVar="dglDevolucionInmueble">
+												
+												<h:panelGrid columns="2" cellspacing="10">
+														
+														<h:outputText value="Nº Acta"  style="color: #4C4C4C;margin-left:15px;" />
+														<p:inputText  value="#{ccMB.contratoBean.numeroactadevolucion}"  maxlength="10"/>
+														
+														<h:outputText  value="Fec. Acta"  style="color: #4C4C4C;margin-left:15px;" />
+														<p:calendar pattern="dd/MM/yyyy"  locale="es"
+																styleClass="anchoCalendar"  navigator="true"  value="#{ccMB.contratoBean.fechaactadevolucion}" showOn="button"  />
+												</h:panelGrid>
+												<br/>
+												
+												<center>
+												<p:commandButton value="Aceptar" actionListener="#{ccMB.validarDevolucionInmueble}" update=":frmMaestra:listaMensajes" />
+												<p:spacer width="10"/>
+												<p:commandButton value="Cancelar" onclick="dglDevolucionInmueble.hide();" />
+												</center>
+					</p:dialog>
+					
+				<p:confirmDialog message="¿Desea confirmar cambios?"
+											header="Confirmación" severity="alert"
+											widgetVar="dlgConfirmDevolucionInmueble">
+											<center>
+											<p:commandButton value="&nbsp;Aceptar" actionListener="#{ccMB.grabarDevolucionInmueble}" icon="icon-save"  update=":frmMaestra:listaMensajes,:frmCondicion" oncomplete="dlgConfirmDevolucionInmueble.hide();dglDevolucionInmueble.hide()" />
+											<p:commandButton value="&nbsp;Cancelar" onclick="dlgConfirmDevolucionInmueble.hide()" icon="icon-cancel" />
+											</center>
+										
+				</p:confirmDialog>
+					<p:dialog header="Quitar penalidad"  width="auto" height="auto" closable="true" closeOnEscape="true"
+												  resizable="false" widgetVar="dglQuitarPenalidad">
+												<h:outputLabel value="¿Está seguro de quitar la penalidad a contrato?" />
+												<h:panelGrid columns="2" cellspacing="10">
+														<h:outputText value="Observación"  style="color: #4C4C4C;margin-left:15px;" />
+														<p:inputText  value="#{ccMB.contratoBean.observacionpenalidad}"   maxlength="200"/>
+												</h:panelGrid>
+												<br/>
+												
+												<center>
+												<p:commandButton value="Aceptar" actionListener="#{ccMB.validarQuitarPenalidad}" onclick="dglDevolucionInmueble.hide();" update=":frmMaestra:listaMensajes" />
+												<p:spacer width="10"/>
+												<p:commandButton value="Cancelar" onclick="dglDevolucionInmueble.hide();" />
+												</center>
+					</p:dialog>
+					
+					<p:confirmDialog message="¿Desea confirmar cambios?"
+											header="Confirmación" severity="alert"
+											widgetVar="dlgConfirmQuitarPenalidad">
+											<center>
+											<p:commandButton value="&nbsp;Aceptar" actionListener="#{ccMB.grabarQuitarPenalidad}" icon="icon-save"  update=":frmMaestra:listaMensajes,:frmCondicion" oncomplete="dlgConfirmQuitarPenalidad.hide();dglQuitarPenalidad.hide()" />
+											<p:commandButton value="&nbsp;Cancelar" onclick="dlgConfirmDevolucionInmueble.hide()" icon="icon-cancel" />
+											</center>
+										
+					</p:confirmDialog>
+					<p:dialog header="Actualizar Condicion de Precontrato"  width="auto" height="auto" closable="true" closeOnEscape="true"
+												  resizable="false" widgetVar="dglCambiarEstadoCondicion">
+												
+												
+												
+												<h:panelGrid id="datosCambiarEstadoCondicion" columns="2" cellspacing="10">
+														<h:outputText value="Estado Actual: "/>
+														<h:outputText value="Precontrato "/>
+														<h:outputText value="Nuevo Estado: "/>
+														<h:outputText value="Contrato: "/>
+														<h:outputText value="N&uacute;mero de contrato(*): "/>
+														<p:inputText style="font-size:18px;width:100px;font-weight: bold;margin-left:88px;"
+																	value="#{ccMB.numContratoCambiarEstadoCondicion}" maxlength="10">
+														</p:inputText>
+
+												</h:panelGrid>
+												<br/>
+												<p:commandButton value="Aceptar" actionListener="#{ccMB.validarCambiarEstadoCondicion}" update=":frmMaestra:listaMensajes" />
+												<p:commandButton value="Cancelar" actionListener="#{ccMB.limpiarCambiarEstadoCondicion}" update="datosCambiarEstadoCondicion" onclick="dglCambiarEstadoCondicion.hide();"/>
+									
+				</p:dialog>
+				
+				<p:confirmDialog message="¿Desea cambiar de estado Precontrato a Contrato?"
+											header="Confirmación" severity="alert"
+											widgetVar="dlgConfirmCambiarEstadoCondicion">
+											<center>
+											<p:commandButton value="&nbsp;Aceptar" actionListener="#{ccMB.grabarCambiarEstadoCondicion}" icon="icon-save"  update=":frmMaestra:listaMensajes,:frmCondicion" oncomplete="dglCambiarEstadoCondicion.hide();dlgConfirmCambiarEstadoCondicion.hide()" />
+											<p:commandButton value="&nbsp;Cancelar" onclick="dlgConfirmCambiarEstadoCondicion.hide()" icon="icon-cancel" />
+											</center>
+										
+				</p:confirmDialog>
+					
+					<p:tabView activeIndex="#{ccMB.activeIndexTabView}">
+					
+						<p:tab id="tabPropiedades" title="Propiedades">
+<!-- 						TIPO DE CONTRATO -->
+							<table width="600px" cellspacing="10">
+															<tr>
+																<td width="50%"><h:outputText  value="Tipo de contrato(*):" /></td>
+																<td width="50%">
+																	<p:selectOneMenu  id="tipocontrato"
+																		value="#{ccMB.contratoBean.tipocontrato}" >
+																		<f:selectItem itemLabel="Seleccione " itemValue="" />
+																		<f:selectItem itemLabel="Alquiler" itemValue="Alquiler" />																		
+																		<f:selectItem itemLabel="Usufructo" itemValue="Usufructo" />
+																		<f:selectItem itemLabel="Superficie" itemValue="Superficie" />
+<!-- 																		<f:selectItem itemLabel="Convenio" itemValue="Convenio" /> -->
+																		<f:selectItem itemLabel="Concesi&oacute;n" itemValue="Concesi&oacute;n" />
+																		 <p:ajax event="change" listener="#{ccMB.activarTipoAlquiler}" update="tipo"/>
+																	</p:selectOneMenu>
+																</td>	
+															</tr>
+							</table>
+							<p:outputPanel id="tipo">
+							<table width="600px" cellspacing="10">							
+
+															<tr>
+															
+																<td width="50%"><h:outputText   value="Tipo de alquiler(*):"/></td>
+																<td width="50%">
+																
+																
+																<p:selectOneMenu  
+																	value="#{ccMB.contratoBean.tipo}" disabled="#{ccMB.sicontratofuturo}" >
+																	<f:selectItem itemLabel="Seleccione Tipo " itemValue="" />
+																	<f:selectItem itemLabel="Convocatoria Publica" itemValue="Convocatoria Publica" itemDisabled="true"/>
+																	<f:selectItem itemLabel="Alquiler Directo" itemValue="Alquiler Directo" itemDisabled="true"/>
+																	<f:selectItem itemLabel="Ning&uacute;no" itemValue="Ninguno" itemDisabled="true"/>
+																    <f:selectItem itemLabel="Nuevo Arrendatario" itemValue="Nuevo Arrendatario" />
+																    <f:selectItem itemLabel="Renovaci&oacute;n" itemValue="Renovaci&oacute;n" />
+																</p:selectOneMenu>
+																
+																</td>	
+															
+															</tr>
+							</table>
+							</p:outputPanel>	
+							<table cellspacing="10">
+							  								<!-- RECONOCIMIENTO DE DEUDA FLAG -->
+<!-- 										<hr width="100%" size="1" style="color: #B8B8B8; float: left;" /> -->
+										<h:panelGrid  id="reconocimiento" columns="6" style="margin-left:10px;">
+										<h:outputText  value="Escritura Publica:"  />
+													
+										<p:selectBooleanCheckbox style="margin-top:20px;margin-left:188px;" value="#{ccMB.contratoBean.siescriturapublica}" >
+												<p:ajax update="reconocimiento" />
+										</p:selectBooleanCheckbox>
+										<h:outputText value="S&iacute;" style="color: #4C4C4C;margin-left:15px;" />
+										<br />
+<!-- 										<p:selectBooleanCheckbox style="margin-top:20px;margin-left:188px;" value="#{!ccMB.contratoBean.siescriturapublica}" > -->
+<!-- 												<p:ajax update="reconocimiento" /> -->
+<!-- 										</p:selectBooleanCheckbox> -->
+<!-- 										<h:outputText value="No" style="color: #4C4C4C;margin-left:15px;" /> -->
+<!-- 										<br /> -->
+										</h:panelGrid>
+							
+										<!-- FIN DE RECONOCIMIENTO DE DEUDA  -->
+							</table>
+							<table cellspacing="10">								
+															<tr>
+															<td width="50%"><h:outputText value="N&uacute;mero de contrato(*):"  /></td>
+															<td width="50%"><p:inputText id="idContratoNumero" style="font-size:18px;width:100px;font-weight: bold;margin-left:88px;"
+																	value="#{ccMB.contratoBean.nrocontrato}" disabled="#{ccMB.sicontratofuturo}" maxlength="10">
+																</p:inputText></td>
+															</tr>
+						  	</table>
+						  	<br />
+						  
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+							
+							<br />
+
+								<p:outputPanel id="upa" >
+										<table width="600" style="margin: 15px;" cellspacing="10">
+												<tr>
+													<td width="25%"><h:outputText  value="Clave:" /></td>
+													<td width="25%"><h:outputText  id="idContratoCodigoUpa2"  value="#{ccMB.contratoBean.claveUpa}"  maxlength="9"  /></td>	
+													<td width="25%"><h:outputText value="Direcci&oacute;n:"  /></td>
+													<td width="25%"><h:outputText id="idContratoInmueble" 
+													value="#{ccMB.contratoBean.direccion} #{ccMB.contratoBean.numeroprincipal} #{ccMB.contratoBean.numerointerior} #{ccMB.contratoBean.distrito}"/>
+													</td>
+												</tr>
+												<tr>
+													<td><h:outputText  value="Uso:" /></td>
+													<td><h:outputText id="idComboUso" value="#{ccMB.contratoBean.uso}" /></td>
+													<td><h:outputText value="Uso espec&iacute;fico:" /></td>
+													<td><h:inputText  id="idContratoUsoEspecifico" value="#{ccMB.contratoBean.usoespecifico}"/></td>
+												</tr>													
+										</table>
+								</p:outputPanel>
+
+							<br />
+
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<br />
+												<table width="600" style="margin: 15px;" cellspacing="10">
+															<tr>
+																<td width="25%"><h:outputText  value="Nombres:" rendered="#{ccMB.contratoBean.tipopersona=='Natural'}" /></td>
+																<td width="25%"><h:outputText  value="#{ccMB.contratoBean.nombresInquilino}" rendered="#{ccMB.contratoBean.tipopersona=='Natural'}"/></td>	
+																<td width="25%"><h:outputText value="DNI:"  rendered="#{ccMB.contratoBean.tipopersona=='Natural'}" /></td>
+																<td width="25%"><h:outputText value="#{ccMB.contratoBean.dni}" rendered="#{ccMB.contratoBean.tipopersona=='Natural'}"/>
+																</td>
+															</tr>
+															<tr>
+																<td><h:outputText value="RUC:" rendered="#{ccMB.contratoBean.tipopersona!='Natural'}"/></td>
+																<td><h:outputText value="#{ccMB.contratoBean.ruc}" rendered="#{ccMB.contratoBean.tipopersona!='Natural'}"/></td>
+																<td><h:outputText value="Razón Social:" rendered="#{ccMB.contratoBean.tipopersona!='Natural'}"/></td>
+																<td><h:outputText  value="#{ccMB.contratoBean.nombresInquilino}" rendered="#{ccMB.contratoBean.tipopersona!='Natural'}"/></td>
+															</tr>												
+												</table>
+										
+												<h:panelGrid columns="4">		
+		
+													<p:selectBooleanCheckbox value="#{ccMB.contratoBean.siocupante}" style="margin-left:20px;margin-left:20px;">
+														<p:ajax update="idInputTextOcupante" listener="#{ccMB.ActivarDesactivarSiOcupante}" />
+													</p:selectBooleanCheckbox>
+		
+													<p:outputPanel id="idInputTextOcupante">
+														<h:outputText value="Ocupante" style="margin-left:20px;color:#4C4C4C;" />
+		
+														<p:inputText id="sinombreocupante" value="#{ccMB.contratoBean.nombreocupante}"  maxlength="50"
+															style="margin-left:20px; width:300px;" rendered="#{!ccMB.contratoBean.siocupante}" >
+															<p:watermark value="APELLIDOS Y NOMBRES" for="sinombreocupante"/>
+															</p:inputText>
+														<p:inputText id="sidniocupante" value="#{ccMB.contratoBean.dniocupante}" maxlength="8"
+															style="margin-left:20px; width:70px;" rendered="#{!ccMB.contratoBean.siocupante}" >
+															<p:watermark value="D.N.I." for="sidniocupante"/>
+														</p:inputText>
+													</p:outputPanel>
+		
+												</h:panelGrid>
+
+										<br />
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<h:outputText  value="Suscripci&oacute;n:"  styleClass="contrato_cabecera_seccion"/>			
+										<br />
+										
+										<h:panelGrid  id="sucripcion" columns="6" style="margin-left:10px;">
+												
+											<p:selectBooleanCheckbox style="margin-top:20px;margin-left:15px;" value="#{ccMB.contratoBean.sisuscrito}" >
+												<p:ajax update="sucripcion" />
+											</p:selectBooleanCheckbox>
+											<h:outputText value="S&iacute;" style="color: #4C4C4C;margin-left:15px;" />
+											
+											<h:outputText rendered="#{ccMB.contratoBean.sisuscrito}" value="Fec. Suscripci&oacute;n:"  style="color: #4C4C4C;margin-left:100px;" />
+											<p:calendar pattern="dd/MM/yyyy"  locale="es"
+													styleClass="anchoCalendar"  navigator="true"  value="#{ccMB.contratoBean.fechasuscrito}" showOn="button" rendered="#{ccMB.contratoBean.sisuscrito}" />
+										</h:panelGrid>
+										
+
+										
+										
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										
+										<h:outputText  value="Resoluci&oacute;n:"  styleClass="contrato_cabecera_seccion"/>
+										<br/>
+										
+										<h:panelGrid  id="resolucion" columns="6" style="margin-left:10px;">
+												
+											<p:selectBooleanCheckbox style="margin-top:20px;margin-left:15px;" value="#{ccMB.contratoBean.siresolucion}" >
+												<p:ajax update="resolucion" />
+											</p:selectBooleanCheckbox>
+											<h:outputText value="S&iacute;" style="color: #4C4C4C;margin-left:15px;" />
+											<h:outputText rendered="#{ccMB.contratoBean.siresolucion}" value="Nº Resoluci&oacute;n"  style="color: #4C4C4C;margin-left:100px;" />
+											<p:inputText rendered="#{ccMB.contratoBean.siresolucion}" value="#{ccMB.contratoBean.numeroresolucion}" style="width:200px;" />
+											
+											<h:outputText rendered="#{ccMB.contratoBean.siresolucion}" value="Fec. Resoluci&oacute;n"  style="color: #4C4C4C;margin-left:15px;" />
+											<p:calendar pattern="dd/MM/yyyy"  locale="es" styleClass="anchoCalendar"  navigator="true"
+													    value="#{ccMB.contratoBean.fecharesolucion}" showOn="button" rendered="#{ccMB.contratoBean.siresolucion}" />
+										</h:panelGrid>
+										
+										<br />
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+
+										
+										<h:outputText  value="Acta de Entrega:"  styleClass="contrato_cabecera_seccion"/>
+										<br/>
+										
+										<h:panelGrid  id="actaentrega" columns="6" style="margin-left:10px;">
+												
+											<p:selectBooleanCheckbox style="margin-top:20px;margin-left:15px;" value="#{ccMB.contratoBean.siactaentrega}" >
+												<p:ajax update="actaentrega" />
+											</p:selectBooleanCheckbox>
+											<h:outputText value="S&iacute;" style="color: #4C4C4C;margin-left:15px;" />
+											<h:outputText rendered="#{ccMB.contratoBean.siactaentrega}" value="Nº Acta"  style="color: #4C4C4C;margin-left:100px;" />
+											<h:inputText rendered="#{ccMB.contratoBean.siactaentrega}" value="#{ccMB.contratoBean.numeroactaentrega}" />
+											
+											<h:outputText rendered="#{ccMB.contratoBean.siactaentrega}" value="Fec. Acta"  style="color: #4C4C4C;margin-left:15px;" />
+											<p:calendar pattern="dd/MM/yyyy"  locale="es"
+													styleClass="anchoCalendar"  navigator="true"  value="#{ccMB.contratoBean.fechaactaentrega}" showOn="button" rendered="#{ccMB.contratoBean.siactaentrega}" />
+										</h:panelGrid>
+										
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+
+										
+										<h:outputText  value="Acta de Devolución"  styleClass="contrato_cabecera_seccion"/>
+										<br/>
+										
+										<h:panelGrid  id="actadevolucion" columns="6" style="margin-left:10px;">
+												
+											<p:selectBooleanCheckbox style="margin-top:20px;margin-left:15px;" value="#{ccMB.contratoBean.siactadevolucion}" disabled="true"/>
+											<h:outputText value="S&iacute;" style="color: #4C4C4C;margin-left:15px;" />
+											<h:outputText rendered="#{ccMB.contratoBean.siactadevolucion}" value="Nº Acta"  style="color: #4C4C4C;margin-left:100px;" />
+											<h:inputText rendered="#{ccMB.contratoBean.siactadevolucion}" value="#{ccMB.contratoBean.numeroactadevolucion}" readonly="true"/>
+											
+											<h:outputText rendered="#{ccMB.contratoBean.siactadevolucion}" value="Fec. Acta"  style="color: #4C4C4C;margin-left:15px;" />
+											<p:calendar pattern="dd/MM/yyyy"  locale="es"
+													styleClass="anchoCalendar"  navigator="true"  value="#{ccMB.contratoBean.fechaactadevolucion}" showOn="button" rendered="#{ccMB.contratoBean.siactadevolucion}" readonly="true"/>
+										</h:panelGrid>
+										
+										<br />
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<br />
+										<h:outputText value="Informaci&oacute;n de Contrato: " styleClass="contrato_cabecera_seccion"/>
+										<br />
+											<h:panelGrid columns="8">
+												<h:outputText styleClass="lblDatosContra" value="Nº Años:"/>
+												<p:inputText   style="width:25px;" value="#{ccMB.numAniosContrato}">
+													<p:ajax event="change" listener="#{ccMB.limpiarFinContrato}" update="idContratoFechainicio,idContratoFechaFinContrato"/>
+												</p:inputText>
+												
+												<h:outputText styleClass="lblDatosContra" value="Nº Meses"/>
+												<p:inputText style="width:25px;" value="#{ccMB.numMesesContrato}">
+													<p:ajax event="change" listener="#{ccMB.limpiarFinContrato}" update="idContratoFechainicio,idContratoFechaFinContrato"/>
+												</p:inputText>
+												
+												<h:outputText  value="Inicio:"  style="margin-left:90px;"/>
+												<p:calendar id="idContratoFechainicio" navigator="true" pattern="dd/MM/yyyy" locale="es"
+													styleClass="anchoCalendar" disabled="#{ccMB.sicontratofuturo}"
+													value="#{ccMB.contratoBean.iniciocontrato}" showOn="button">
+													<p:ajax event="dateSelect" listener="#{ccMB.calcularFinContrato}" update="idContratoFechaFinContrato,mesInicioCobro,anioInicioCobro,anioFinCobro,mesFinCobro" process="@form"/>
+												</p:calendar>
+
+												<h:outputText value="T&eacute;rmino:" style="margin-left:90px;" />
+												<h:outputText id="idContratoFechaFinContrato" value="#{ccMB.contratoBean.fincontrato}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</h:panelGrid>
+											
+
+										<br />
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<br />
+										<p:inputText value="#{ccMB.contratoBean.siadenda}" id="hiddenfielAdenda" type="hidden" />
+										<p:inputText value="#{ccMB.contratoBean.sidocumento}" id="hiddenfielDocumento" type="hidden" />
+										<h:outputText  value="Documentos:"  styleClass="contrato_cabecera_seccion"  rendered="#{ccMB.listContrato.size()>0 ? false:true}"/>
+
+											<div style="height: 40%;width: 100%; padding: 1% 0% 0% 2%">										
+											<p:commandButton value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjuntoContrato()}"  update=":frmMaestra:listaMensajes,:frmAdjuntarArchivo:listaArchivoAdjunto" icon="ui-icon-wrench" rendered="#{ccMB.listContrato.size()>0 ? false:true}"/>
+										    </div>
+										<br />
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<h:outputText  value="Información de Renta:"  styleClass="contrato_cabecera_seccion"/>
+										
+										<br />
+										<h:panelGrid columns="2" style="margin-left:15px;" cellspacing="10">
+										
+											<h:outputText  value="Intervalo de cobro:"  style="margin-top:15px;color:black;"/>
+											
+											<h:panelGrid columns="8" cellspacing="10">
+												<h:outputText value="Del" />
+												
+												<p:selectOneMenu id="mesInicioCobro" value="#{ccMB.mesInicioCobro}" >
+											            <f:selectItem itemLabel="Mes" itemValue="" />
+											            <f:selectItems value="#{inicioMB.listaMes}" />
+											          <p:ajax event="change" listener="#{ccMB.calcularFinCobro}" update="anioFinCobro,mesFinCobro" process="@form"/>
+									      	  	</p:selectOneMenu>
+									        
+												<p:selectOneMenu id="anioInicioCobro"  value="#{ccMB.anioInicioCobro}" >
+											            <f:selectItem itemLabel="Año" itemValue="" />
+											            <f:selectItems value="#{inicioMB.listaAnio}" />
+											           <p:ajax event="change" listener="#{ccMB.calcularFinCobro}" update="anioFinCobro,mesFinCobro" process="@form"/>
+											     </p:selectOneMenu>
+											     <h:outputText value="hasta"/>
+												
+												<h:outputText id="mesFinCobro" value="#{ccMB.mesFinCobro}" style="font-size:15px;"/>
+									        	<p:spacer width="10"/>
+									        	<h:outputText id="anioFinCobro" value="#{ccMB.anioFinCobro}" style="font-size:15px;"/>
+										     </h:panelGrid>
+									
+											
+												<h:outputText value="Moneda: " />
+												<h:panelGrid columns="2">
+												<p:selectBooleanCheckbox id="idSoles" value="#{ccMB.sisoles}"
+													 itemLabel="Soles">
+													<p:ajax update="idDolar"
+														listener="#{ccMB.cambiarDolarSoles}" />
+												</p:selectBooleanCheckbox>
+												<p:selectBooleanCheckbox id="idDolar" value="#{ccMB.sidolar}"
+													 itemLabel="Dolar"
+													style="margin-left:20px;">
+													<p:ajax update="idSoles"
+														listener="#{ccMB.cambiarSolesDolar}" />
+												</p:selectBooleanCheckbox>
+												</h:panelGrid>
+										
+											<h:outputText value="Contraprestación mensual: " />
+											<p:inputText value="#{ccMB.contratoBean.contraprestacion}" style="text-align:right;"/>
+											
+											<h:outputText value="¿Contraprestación adicional?: " />
+											<p:selectBooleanCheckbox value="#{ccMB.contratoBean.sicontraprestacionadicional}"  itemLabel="Sí">
+												<p:ajax update="contraprestacionadicionalLabel,contraprestacionadicionalDescripcion,aniocontraprestacionadicionalLabel,aniocontraprestacionadicionalDescripcion" />
+											</p:selectBooleanCheckbox>
+											
+											<h:panelGrid id="contraprestacionadicionalLabel">
+											<h:outputText value="Contraprestación adicional: " rendered="#{ccMB.contratoBean.sicontraprestacionadicional}"/>
+											</h:panelGrid>
+											
+											<h:panelGrid id="contraprestacionadicionalDescripcion">
+											<p:inputText value="#{ccMB.contratoBean.contraprestacionadicional}" style="text-align:right;" rendered="#{ccMB.contratoBean.sicontraprestacionadicional}"/>
+											</h:panelGrid>
+											
+											<h:panelGrid id="aniocontraprestacionadicionalLabel">
+											<h:outputText value="Aplica desde el año: " rendered="#{ccMB.contratoBean.sicontraprestacionadicional}"/>
+											</h:panelGrid>
+											
+											<h:panelGrid id="aniocontraprestacionadicionalDescripcion">
+											<p:inputText value="#{ccMB.contratoBean.aniocontraprestacionadicional}" style="text-align:right;width:20px;" rendered="#{ccMB.contratoBean.sicontraprestacionadicional}"/>
+											</h:panelGrid>
+										
+											
+											<h:outputText value="Clausula de Per&iacute;odo de Gracia: " />
+											<p:selectBooleanCheckbox value="#{ccMB.contratoBean.siclausulaperiodogracia}"  itemLabel="Sí"/>
+											
+											<h:outputText value="Clausula de Reconocimiento de Renta: " />
+											<p:selectBooleanCheckbox value="#{ccMB.contratoBean.siclausulareconocimientorenta}"  itemLabel="Sí"/>
+
+
+											<h:outputText value="Clausula de Reconocimiento de Inversi&oacute;n: " />
+											<p:selectBooleanCheckbox  value="#{ccMB.contratoBean.siclausulareconocimientoinversion}" itemLabel="Sí"/>
+											
+											<h:outputText value="Clausula de Suspensión de Temporal de Renta: " />
+											<p:selectBooleanCheckbox  value="#{ccMB.contratoBean.siclausulasuspensiontemporalrenta}" itemLabel="Sí"/>
+											
+											<h:outputText value="Clausula de Pago de Posterior: " />
+											<p:selectBooleanCheckbox  value="#{ccMB.contratoBean.siclausulapagoposterior}" itemLabel="Sí"/>
+											
+<!-- 											<h:outputText value="Pago Fracci&oacute;n Renta: " /> -->
+<!-- 											<p:selectBooleanCheckbox  value="#{ccMB.contratoBean.sipagofraccionrenta}" itemLabel="Sí"/> -->
+											
+											<h:outputText value="Tipo de incremento anual: " />
+											<p:selectOneMenu   value="#{ccMB.contratoBean.tiporeajusteanual}">
+																	<f:selectItem itemLabel="Seleccione Tipo " itemValue="" />
+																	<f:selectItem itemLabel="1. Incremento anual (%)" itemValue="0" />
+																	<f:selectItem itemLabel="2. Incremento IPC" itemValue="1"/>
+																	<f:selectItem itemLabel="3. Mayor entre 1 y 2" itemValue="2" />
+																	<f:selectItem itemLabel="4. Incremento variable" itemValue="3" />
+															<p:ajax update="reajusteLabel,reajusteDesc,reajusteIncrementoVariable,tblListaPeriodos"/>
+											</p:selectOneMenu>
+											
+											<h:panelGrid id="reajusteLabel">
+												<h:outputText value="Valor incremento anual (%): " rendered="#{ccMB.contratoBean.tiporeajusteanual.equals('1')?false:(ccMB.contratoBean.tiporeajusteanual.equals('3')?false:true)}"/>
+											</h:panelGrid>
+											
+											<h:panelGrid id="reajusteDesc">
+												<p:inputText value="#{ccMB.contratoBean.reajusteanual}"  rendered="#{ccMB.contratoBean.tiporeajusteanual.equals('1')?false:(ccMB.contratoBean.tiporeajusteanual.equals('3')?false:true)}"/>
+											</h:panelGrid>
+											
+											
+											
+											
+									</h:panelGrid>
+									<h:panelGrid id = "reajusteIncrementoVariable" columns="3" style ="padding: 0px 0px 0px 0px;margin-inline: auto; width: 38%;">
+											 <center>
+											  <p:selectBooleanCheckbox  id="selectedPorcentajeVariable" value ="#{ccMB.contratoBean.siincrementoporcentajevariable}" itemLabel="Porcentaje Variable"  rendered="#{ccMB.contratoBean.tiporeajusteanual.equals('3')?true:false}"><p:ajax update =" selectedPorcentajeVariable,selectedMontoVariable" listener="#{ccMB.cambiarIncrementoxPorcentaje}"></p:ajax>   </p:selectBooleanCheckbox>
+											  <p:selectBooleanCheckbox id="selectedMontoVariable" value ="#{ccMB.contratoBean.siincrementomontovariable}" itemLabel="Monto Variable"  rendered="#{ccMB.contratoBean.tiporeajusteanual.equals('3')?true:false}"><p:ajax update =" selectedPorcentajeVariable,selectedMontoVariable" listener="#{ccMB.cambiarIncrementoxMonto}"></p:ajax> </p:selectBooleanCheckbox>
+											  </center>
+									</h:panelGrid>
+
+                                    <p:outputPanel id="tblListaPeriodos">
+											<h:panelGrid   rendered="#{ccMB.contratoBean.tiporeajusteanual.equals('3')?true:false}">
+											<p:dataTable id="tblListaPeriodoss" value="#{ccMB.listaperiodos}" selectionMode="single" var="per"
+												emptyMessage="No existe  ning&uacute;n registro "
+												rowKey="#{per.idperiodocontrato}"
+												style="width:743px; font-size: 12px;  margin-right:0px;text-align:center;"
+											
+												styleClass="ui-datatable-hor-scroll" 											
+												rowIndexVar="row" paginator="true" rows="10" 
+												rowsPerPageTemplate="5,10,15">
+												<f:facet name="header">
+													<p:commandButton value="&nbsp;Añadir"  icon="ui-icon-wrench"  actionListener="#{ccMB.validarAgregarNumeroPeriodos}" update="tblListaPeriodoss,:frmMaestra:listaMensajes"  rendered="#{ccMB.contratoBean.tiporeajusteanual.equals('3')?true:false}"  disabled="#{ccMB.disabledButtonAgregarPeriodo}"/>
+												</f:facet>
+												<f:facet name="header">
+													<p:commandButton value="&nbsp;Limpiar"  icon="ui-icon-wrench"  actionListener="#{ccMB.cancelarDatosIncrementoVariable}"   rendered="#{ccMB.contratoBean.tiporeajusteanual.equals('3')?true:false}" update="tblListaPeriodoss,:frmMaestra:listaMensajes"></p:commandButton>
+												</f:facet>
+											   	<p:column headerText="# Periodo" >
+													<h:outputText value="#{per.periodo}" />
+												</p:column>
+<!-- 												<p:column headerText="Tipo de Incremento" > -->
+<!-- 													<h:outputText value="#{per.tipoincremento}" /> -->
+<!-- 												</p:column> -->
+												<p:column headerText="Nombre de Incremento"  >
+													<h:outputText value="#{per.nombretipoincremento}" />
+												</p:column>
+												<p:column headerText="Valor Incremento (%)" rendered="#{ccMB.contratoBean.siincrementoporcentajevariable}" >
+													<h:outputText value="#{per.valorincremento}" rendered="#{ccMB.contratoBean.siincrementoporcentajevariable}"/>
+												</p:column>
+												<p:column headerText="N° de Cuotas" >
+													<h:outputText value="#{per.numerocuotas}" />
+												</p:column>
+												<p:column headerText="Monto">
+												    <h:outputText value="#{per.monto}" />
+												</p:column>
+												<p:column headerText="Fecha Inicio">
+												    <h:outputText value="#{per.fechainicioperiodo}" ><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+												</p:column>
+												<p:column headerText="Fecha Fin">
+												    <h:outputText value="#{per.fechafinperiodo}" ><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+												</p:column>												
+<!-- 												<p:column headerText="Usu. Creador" > -->
+<!-- 													<h:outputText value="#{per.usuariocreador}" /> -->
+<!-- 												</p:column> -->
+<!-- 												<p:column headerText="Fec. Creación" > -->
+<!-- 													<h:outputText value="#{per.fechacreacion}" /> -->
+<!-- 												</p:column> -->
+<!-- 												<p:column headerText="Estado" > -->
+<!-- 													<h:outputText value="#{per.estado}" /> -->
+<!-- 												</p:column> -->
+											
+											  </p:dataTable>
+                                            </h:panelGrid>
+                                            </p:outputPanel>
+
+									<p:confirmDialog id="ingresoNumeroPeriodo" width="300"
+										message="Ingrese Numero de Periodos: " header=" Numero de Periodos"
+										severity="alert" widgetVar="dlgIngresarNumeroPeriodos">
+										<h:inputText value="#{ccMB.nroPeriodosxInteres}"
+											style="margin-left:94px;align-text:right;font-size:15px;width: 24%;" />
+										<center>
+<!-- 											<p:commandButton value="Aceptar" -->
+<!-- 												actionListener="#{carteraMB.cargarInformacionDolares}" -->
+<!-- 												update=":frmRegistroDocumentoAdministrativo" -->
+<!-- 												oncomplete="dlgIngresarTipoCambioDA.hide();" -->
+<!-- 												icon="icon-save"> -->
+<!-- 											</p:commandButton> -->
+											<p:commandButton  value ="Aceptar"
+											   actionListener="#{ccMB.validarNumeroPeriodos}"
+											   update="iddlgGenerarPeriodo"
+											   oncomplete="dlgIngresarNumeroPeriodos.hide()"
+											   icon="icon-save"
+											   ><p:ajax ></p:ajax>
+											
+											</p:commandButton>
+
+											<p:spacer width="25" />
+											<p:commandButton value="&nbsp;Cancelar"
+												oncomplete="dlgIngresarNumeroPeriodos.hide()"
+												icon="icon-cancel" />
+										</center>
+									</p:confirmDialog>
+									<p:dialog header="#{ccMB.contratoBean.nombretipoincremento} - PERIODO N°#{ccMB.indicadorPeriodo}" id="iddlgGenerarPeriodo"
+									    	width="auto" height="auto" closable="true"
+										    closeOnEscape="true" resizable="false"
+										    widgetVar="iddlgGenerarPeriodo" modal="true"
+										    style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+										     <h:outputText  value="Valor de Monto: " style="text-align:right;"/>
+											 <p:inputText  value="#{ccMB.periodoContratoBean.monto}" style="text-align:right;"/>
+											 <p:fieldset legend="Periodo" style="text-align: left;width: 700px;height: 127px" >
+											    <br/>
+											    <h:panelGrid columns="8">
+												<h:outputText  value="Nº Años:"/>
+												<p:inputText   style="width:25px;" value="#{ccMB.numAniosPeriodo}">										
+													<p:ajax event="change"  listener="#{ccMB.limpiarFechaInicioFinPeriodo}"   update="idPeriodoFechainicio,idPeriodoFechaFinContrato"/>
+												</p:inputText>
+												
+												<h:outputText  value="Nº Meses"/>
+												<p:inputText style="width:25px;" value="#{ccMB.numMesesPeriodo}">
+													<p:ajax event="change"  listener="#{ccMB.limpiarFechaInicioFinPeriodo}"   update="idPeriodoFechainicio,idPeriodoFechaFinContrato"/>
+												</p:inputText>
+												
+												<h:outputText  value="Inicio:"  style="margin-left:90px;"/>
+												<p:calendar id="idPeriodoFechainicio" navigator="true" pattern="dd/MM/yyyy" locale="es"
+													styleClass="anchoCalendar" disabled="#{ccMB.siexistenumMesAnio}"
+													value="#{ccMB.periodoContratoBean.fechainicioperiodo}" showOn="button" mindate="#{ccMB.minFechaInicio}">
+													<p:ajax event="dateSelect" listener="#{ccMB.calcularFinPeriodo}" update="idPeriodoFechaFinContrato" process="@form"/>
+												</p:calendar>
+
+												<h:outputText value="T&eacute;rmino:" style="margin-left:90px;" />
+												<h:outputText id="idPeriodoFechaFinContrato" value="#{ccMB.periodoContratoBean.fechafinperiodo}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+												<br/>
+											   </h:panelGrid>
+											    <h:outputText value="Valor de Incremento (%):" rendered="#{ccMB.contratoBean.siincrementoporcentajevariable? (ccMB.disabledValorIncremento? false :true) :false }"/>
+											     <p:inputText value="#{ccMB.periodoContratoBean.valorincremento}" rendered="#{ccMB.contratoBean.siincrementoporcentajevariable? (ccMB.disabledValorIncremento? false :true) :false }" style="text-align:right;"/>
+											   
+											   
+											   
+											 </p:fieldset>
+
+
+										
+											  <center>
+												<p:commandButton value="Aceptar"
+												actionListener="#{ccMB.validarPeriodoIncremento}"
+												update="iddlgGenerarPeriodo,tblListaPeriodos,:frmMaestra:listaMensajes"
+												icon="icon-save">
+													<p:ajax></p:ajax>
+
+												</p:commandButton>
+
+												<p:spacer width="25" />
+												<p:commandButton value="&nbsp;Cancelar"
+												actionListener="#{ccMB.cancelarDatosIncrementoVariable}" update="iddlgGenerarPeriodo,tblListaPeriodos"
+												oncomplete="iddlgGenerarPeriodo.hide()" icon="icon-cancel" />
+											</center>
+										
+								</p:dialog>
+									 <h:panelGrid columns="2" style="margin-left:15px;" cellspacing="10">
+									  <h:outputText value="Penalidad: " />
+											
+											<p:selectBooleanCheckbox  value="#{ccMB.contratoBean.sipenalidad}" itemLabel="Sí" style="text-align:right;">
+													<p:ajax update="penalidadLabel,penalidadDesc" listener="#{ccMB.ActivarDesactivarSiOcupante}" />
+											</p:selectBooleanCheckbox>
+											
+											<h:panelGrid id="penalidadLabel">
+												<h:outputText value="Valor Penalidad (%): "  rendered="#{ccMB.contratoBean.sipenalidad}"/>
+											</h:panelGrid>
+											
+											<h:panelGrid id="penalidadDesc">
+												<p:inputText value="#{ccMB.contratoBean.porcentajepenalidad}"  rendered="#{ccMB.contratoBean.sipenalidad}" >
+												</p:inputText>
+											</h:panelGrid>
+											
+										</h:panelGrid>
+										<br/>
+										
+										<center>
+										<p:dataTable id="listaRentas" value="#{ccMB.listaRentas}" selection="#{ccMB.selectedRenta}" 
+										 var="renta" editable="true" selectionMode="single" rowKey="#{renta.secuencia}"
+										style="font-size: 12px; text-align: center;"
+										emptyMessage="No ha generado ninguna renta" rowIndexVar="index"
+										rows="12" paginator="true" paginatorPosition="bottom"
+				                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+										
+										<p:ajax event="rowEdit" listener="#{ccMB.validarPeriodo}" update="listaRentas,:frmMaestra:listaMensajes" />
+										
+										<f:facet name="header">
+											<p:commandButton value="Generar Periodos" actionListener="#{ccMB.validarGenerarPeriodos}" update="listaRentas,:frmMaestra:listaMensajes" icon="ui-icon-wrench"/>
+										</f:facet>
+										
+										
+										<p:columnGroup type="header">
+										  <p:row>
+							                <p:column rowspan="2" headerText="" style="width:32px"/>
+							                <p:column rowspan="2" headerText="#" style="vertical-align: middle;"/>
+							                <p:column rowspan="2" headerText="Año" style="vertical-align: middle;"/>
+							                <p:column rowspan="2" headerText="Mes" style="vertical-align: middle;"/>
+							                <p:column rowspan="2" headerText="Contraprestaci&oacute;n (C)" style="vertical-align: middle;"/>
+							                <p:column rowspan="2" headerText="C + Inc." style="vertical-align: middle;"/>
+							                <p:column rowspan="2" headerText="Período Gracia" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulaperiodogracia}"/>
+							                <p:column rowspan="2" headerText="Recono. de Inversi&oacute;n" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulareconocimientoinversion}"/>
+							                <p:column colspan="3" headerText="Recono. de Renta" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulareconocimientorenta}"/>
+							                <p:column colspan="3" headerText="Pago Posterior" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulapagoposterior}"/>
+							                <p:column rowspan="2" headerText="Suspen. Temp. Renta" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulasuspensiontemporalrenta}"/>
+							                
+							                <p:column colspan="3" headerText="Pago Fracci&oacute;n" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.sipagofraccionrenta}"/>
+							                
+											<p:column rowspan="2" headerText="MONTO A PAGAR" style="vertical-align: middle;"/>
+							              </p:row>
+							               <p:row>
+
+							                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulareconocimientorenta}"/>
+							                <p:column colspan="1" headerText="Valor" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulareconocimientorenta}"/>
+							                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulareconocimientorenta}"/>
+							                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulapagoposterior}"/>
+							                <p:column colspan="1" headerText="Valor" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulapagoposterior}"/>
+							                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulapagoposterior}"/>
+							                
+							                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.siclausulasuspensiontemporalrenta}"/>
+							                
+							                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.sipagofraccionrenta}"/>
+							                <p:column colspan="1" headerText="Valor Fracci&oacute;n" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.sipagofraccionrenta}"/>
+							                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{ccMB.contratoBean.sipagofraccionrenta}"/>
+							              </p:row>
+										 </p:columnGroup>
+										
+										<p:column style="width:32px">
+										           <p:rowEditor rendered="#{ccMB.contratoBean.idcontrato==0?true:false}"/>
+										</p:column>
+										<p:column>
+											<h:outputText value="#{index+1}" />
+										</p:column>
+										
+										<p:column>
+											<h:outputText value="#{renta.anio}" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{renta.mes}" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{renta.contraprestacion}" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{renta.renta}" />
+										</p:column>
+										<p:column  rendered="#{ccMB.contratoBean.siclausulaperiodogracia}">
+												   <p:cellEditor>
+										               <f:facet name="output"><h:outputText value="#{renta.siclausulaperiodogracia.equals(true)?'S&iacute;':'No'}" /></f:facet>
+										               <f:facet name="input">
+										              <h:selectOneMenu value="#{renta.siclausulaperiodogracia}" style="width:100%">
+									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" />
+									                  	   <f:selectItem itemLabel="No" itemValue="false" />
+									                  	   
+									                  </h:selectOneMenu>
+										               
+										               </f:facet>
+										           </p:cellEditor>
+										</p:column>
+										<p:column rendered="#{ccMB.contratoBean.siclausulareconocimientoinversion}">
+												    <p:cellEditor>
+										               <f:facet name="output">
+										               <h:outputText value="#{renta.siclausulareconocimientoinversion.equals(true)?'S&iacute;':'No'}" />
+										               </f:facet>
+										               <f:facet name="input">
+										              <h:selectOneMenu value="#{renta.siclausulareconocimientoinversion}" style="width:100%">
+									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" />
+									                  	   <f:selectItem itemLabel="No" itemValue="false" />
+									                  </h:selectOneMenu>
+										               
+										               </f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+
+										
+										<p:column rendered="#{ccMB.contratoBean.siclausulareconocimientorenta}">
+												   <p:cellEditor>
+										               <f:facet name="output"><h:outputText value="#{renta.siclausulareconocimientorenta.equals(true)?'S&iacute;':'No'}" /></f:facet>
+										               <f:facet name="input">
+										              <h:selectOneMenu value="#{renta.siclausulareconocimientorenta}" style="width:100%">
+									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" />
+									                  	   <f:selectItem itemLabel="No" itemValue="false" />
+									                  </h:selectOneMenu>
+										               
+										               </f:facet>
+										           </p:cellEditor>
+										</p:column>
+										<p:column rendered="#{ccMB.contratoBean.siclausulareconocimientorenta}">
+												   <p:cellEditor>
+										               <f:facet name="output"><h:outputText value="#{renta.descuentoreconocimientorenta}" /></f:facet>
+										               <f:facet name="input"><p:inputText  value="#{renta.descuentoreconocimientorenta}" style="text-align:center; "/></f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										<p:column rendered="#{ccMB.contratoBean.siclausulareconocimientorenta}">
+												<p:cellEditor>
+										               <f:facet name="output"><h:outputText value="#{renta.observacionreconocimientorenta}" /></f:facet>
+										               <f:facet name="input"><p:inputText  value="#{renta.observacionreconocimientorenta}" style="text-align:center; " /></f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										<p:column rendered="#{ccMB.contratoBean.siclausulapagoposterior}">
+												   <p:cellEditor>
+										               <f:facet name="output">
+										               <h:outputText value="#{renta.siclausulapagoposterior.equals(true)?'S&iacute;':'No'}"/>
+										               </f:facet>
+										               <f:facet name="input">
+										              <h:selectOneMenu value="#{renta.siclausulapagoposterior}" style="width:100%">
+									                       <f:selectItem itemLabel="No" itemValue="false" />
+									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" />
+									                       
+									                       <p:ajax listener="#{ccMB.configurarClausulaPagoPosterior(renta)}" update=":frmCondicion:j_idt162:configurarPagoRentaPosterior"/>
+									                  </h:selectOneMenu>
+										               
+										               </f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										<p:column rendered="#{ccMB.contratoBean.siclausulapagoposterior}">
+												   <p:cellEditor>
+										               <f:facet name="output"><h:outputText value="#{renta.montopagoposterior}" /></f:facet>
+										               <f:facet name="input"><p:inputText  value="#{renta.montopagoposterior}" style="text-align:center; "/></f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										<p:column rendered="#{ccMB.contratoBean.siclausulapagoposterior}">
+												<p:cellEditor>
+										               <f:facet name="output"><h:outputText value="#{renta.observacionpagoposterior}" /></f:facet>
+										               <f:facet name="input"><p:inputText  value="#{renta.observacionpagoposterior}" style="text-align:center; "/></f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										
+										<p:column rendered="#{ccMB.contratoBean.siclausulasuspensiontemporalrenta}">
+												   <p:cellEditor>
+										               <f:facet name="output">
+										               <h:outputText value="#{renta.siclausulasuspensiontemporalrenta.equals(true)?'S&iacute;':'No'}"/>
+										               </f:facet>
+										               <f:facet name="input">
+										              <h:selectOneMenu value="#{renta.siclausulasuspensiontemporalrenta}" style="width:100%">
+									                       <f:selectItem itemLabel="No" itemValue="false" />
+									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" />
+									                       
+									                       <p:ajax listener="#{ccMB.configurarClausulaSuspensionTemporalRenta(renta)}" update=":frmCondicion:j_idt162:configurarSuspensionTemporalRenta"/>
+									                  </h:selectOneMenu>
+										               
+										               </f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										
+										<p:column rendered="#{ccMB.contratoBean.sipagofraccionrenta}">
+												   <p:cellEditor>
+										               <f:facet name="output">
+										               <h:outputText value="#{renta.sipagofraccionrenta.equals(true)?'S&iacute;':'No'}"/>
+										               </f:facet>
+										               <f:facet name="input">
+										              <h:selectOneMenu value="#{renta.sipagofraccionrenta}" style="width:100%">
+									                       <f:selectItem itemLabel="No" itemValue="false" />
+									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" />
+									                  </h:selectOneMenu>
+										               
+										               </f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										<p:column rendered="#{ccMB.contratoBean.sipagofraccionrenta}">
+												   <p:cellEditor>
+										               <f:facet name="output"><h:outputText value="#{renta.montopagofraccionrenta}" /></f:facet>
+										               <f:facet name="input"><p:inputText  value="#{renta.montopagofraccionrenta}" style="text-align:center; "/></f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										<p:column rendered="#{ccMB.contratoBean.sipagofraccionrenta}">
+												<p:cellEditor>
+										               <f:facet name="output"><h:outputText value="#{renta.observacionpagofraccionrenta}" /></f:facet>
+										               <f:facet name="input"><p:inputText  value="#{renta.observacionpagofraccionrenta}" style="text-align:center; "/></f:facet>
+										           </p:cellEditor>
+										</p:column>
+										
+										
+										
+										<p:column>
+												 <h:outputText value="#{renta.montopagar}" />
+										</p:column>
+										</p:dataTable>
+										
+										<p:dialog header="Configurar pago posterior"  width="auto" height="auto" closable="true" closeOnEscape="true"
+												  resizable="false" widgetVar="configurarPagoRentaPosterior">
+												
+												
+												
+
+												<h:panelGrid columns="2">
+													<h:outputText value="¿Cuanto del período seleccionado se pagará posteriormente?"/>
+													<p:inputText value="#{ccMB.rentaPagoPosteriorSelected}"/>
+												</h:panelGrid>
+												<br/>
+													<h:outputText value="Seleccione el/los periodos posteriores e ingrese el monto a pagar."/>
+												<br/>
+												<h:panelGrid id="configurarPagoRentaPosterior" columns="3" cellspacing="10">
+														
+														<h:selectOneMenu  filterText="Filter" filter="true" filterMatchMode="startsWith" panelStyle="width:160px" 
+																style="width:160px; float:left;"  value="#{ccMB.secuenciaRentaPagoPosterior}">
+																<f:selectItem itemLabel="Seleccionar" itemValue="0"/>
+																<f:selectItems value="#{ccMB.listaRentas}" var="renta" itemLabel="#{renta.mes} #{renta.anio}" itemValue="#{renta.secuencia}" />
+														</h:selectOneMenu>
+														
+														<p:inputText value="#{ccMB.rentaPagoPosterior}"/>
+														
+														<p:commandButton value="Agregar" actionListener="#{ccMB.validarAgregarConfiguracionPagoRentaPosterior}" update="listaRentaPagoPosterior :frmMaestra:listaMensajes"/>
+												
+												</h:panelGrid>
+												
+												<p:dataList id="listaRentaPagoPosterior" value="#{ccMB.listaRentaPagoPosterior}" var="renta" type="ordered" style="margin-top:20px;" emptyMessage="No se agrego ningun registro">
+											         #{renta.mes} #{renta.anio}, #{renta.montopagoposterior}
+											    </p:dataList>
+											    
+												<br/>
+												<p:commandButton value="Aceptar" actionListener="#{ccMB.validarConfiguracionPagoRentaPosterior}" update=":frmMaestra:listaMensajes" />
+												<p:spacer width="10"/>
+												<p:commandButton value="Limpiar" actionListener="#{ccMB.limpiarConfiguracionPagoRentaPosterior}" update="listaRentaPagoPosterior"/>
+									
+										</p:dialog>
+										
+										<p:confirmDialog message="¿Está seguro de realizar la configuración?"
+											header="Confirmación de cambios" severity="alert"
+											widgetVar="dlgConfigurarPeriodosFuturos">
+											<center>
+											<p:commandButton value="&nbsp;Aceptar" actionListener="#{ccMB.grabarConfiguracionPagoRentaPosterior}" icon="icon-save"  update="listaRentas,:frmMaestra:listaMensajes" oncomplete="dlgConfigurarPeriodosFuturos.hide();configurarPagoRentaPosterior.hide()" />
+											<p:spacer width="10"/>
+											<p:commandButton value="&nbsp;Cancelar" onclick="dlgConfigurarPeriodosFuturos.hide()" icon="icon-cancel" />
+											</center>
+										
+										</p:confirmDialog>
+										
+										<p:dialog header="Configurar Suspensión Temporal de Renta"  width="auto" height="auto" closable="true" closeOnEscape="true"
+												  resizable="false" widgetVar="dglConfigurarSuspensionTemporalRenta">
+												  
+												<h:panelGrid id="configurarSuspensionTemporalRenta"  columns="2" cellspacing="10">
+												       
+												        <h:outputText value="Períodos con suspensión temporal renta: "/>
+												        <p:selectCheckboxMenu id="periodoSuspensionTemporalRenta" value="#{ccMB.listaOrigenSupensionTemporalRenta}" label="Seleccionar"
+												                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+												            <f:selectItems value="#{ccMB.listaRentas}" var="periodo" itemValue="#{periodo.secuencia}" itemLabel="#{periodo.mes} #{periodo.anio}"/>
+												        </p:selectCheckboxMenu>
+												</h:panelGrid>
+											    
+												<br/>
+												<p:commandButton value="Aceptar" actionListener="#{ccMB.validarConfigurarSuspensionTemporalRenta}" update=":frmMaestra:listaMensajes" />
+													<p:spacer width="10"/>
+												<p:commandButton value="Limpiar" actionListener="#{ccMB.limpiarConfigurarSuspensionTemporalRenta}" update="configurarSuspensionTemporalRenta"/>
+									
+										</p:dialog>
+										
+										<p:confirmDialog message="¿Está seguro de realizar la configuración?"
+											header="Confirmación de cambios" severity="alert"
+											widgetVar="dlgConfirmConfigurarSuspensionTemporalRenta">
+											<center>
+											<p:commandButton value="&nbsp;Aceptar" actionListener="#{ccMB.grabarConfigurarSuspensionTemporalRenta}" icon="icon-save"  update="listaRentas,:frmMaestra:listaMensajes" oncomplete="dlgConfirmConfigurarSuspensionTemporalRenta.hide();dglConfigurarSuspensionTemporalRenta.hide()" />
+											<p:spacer width="10"/>
+											<p:commandButton value="&nbsp;Cancelar" onclick="dlgConfirmConfigurarSuspensionTemporalRenta.hide()" icon="icon-cancel" />
+											</center>
+										
+										</p:confirmDialog>
+										
+										</center>
+										
+<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+
+										
+										<h:outputText  value="Carta Fianza:"  style="margin-left:20px;margin-top:15px;color:black;"/>
+										<br/>
+										
+										<h:panelGrid  id="cartafianza" columns="6" style="margin-left:10px;">
+												
+											<p:selectBooleanCheckbox style="margin-top:20px;margin-left:15px;" value="#{ccMB.contratoBean.sicartafianza}" ></p:selectBooleanCheckbox>
+											<h:outputText value="S&iacute;" style="color: #4C4C4C;margin-left:15px;" />
+										</h:panelGrid>
+										
+										<br />										
+										<br />
+
+										<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<br />
+										<h:outputText value="Observación: " />
+										<p:inputTextarea style="width:100%;" value="#{ccMB.contratoBean.observacion}"  rows="4" maxlength="500" />
+										<br />
+										<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<br />
+										
+									
+									<p:dialog header="Seleccione Upa" id="iddlgListaUpa"
+										width="auto" height="auto" closable="true" closeOnEscape="true"
+										resizable="false" widgetVar="iddlgListaUpa" modal="true"
+										style="border-width:9px;border-style:solid;  border-color:#6741e3;">
+										
+										<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="tipobusquedaUpa" value="Consulta:" />
+										        <p:selectOneListbox id="tipobusquedaUpa" value="#{ccMB.tipobusquedaUpa}">
+										            <f:selectItem itemLabel="Clave" itemValue="1" />
+										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="2" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="testUpa" actionListener="#{ccMB.buscarUpa}" update="tblUpa"/>
+										        <p:inputText id="patronUpa"  value="#{ccMB.valorbusquedaUpa}" onkeypress="if (event.keyCode == 13) { testUpa(); return false; }" >
+										        	<p:watermark for="patronUpa" value="Ingrese campo"></p:watermark>
+										        </p:inputText>
+			 							</h:panelGrid>
+
+										<p:dataTable id="tblUpa" var="detall" value="#{ccMB.listUpa}"
+											emptyMessage="0 registros encontrados"
+											style="width:625px; font-size: 10px;  margin-right:0px;text-aling:center;" 
+											styleClass="ui-datatable-hor-scroll" rowKey="#{detall.idupa}"
+											rowIndexVar="row" selection="#{ccMB.upa}" 
+											selectionMode="single" paginator="true"
+											filteredValue="#{ccMB.listUpaFiltro}" rows="10"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											rowsPerPageTemplate="5,10,15">
+											<p:ajax event="rowSelect" listener="#{ccMB.seleccionarUpa}"
+												oncomplete="iddlgListaUpa.hide()"
+												update=":frmCondicion,:frmMaestra:listaMensajes" />
+											<p:column headerText="Clave" filterBy="#{detall.clave}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.clave}" />
+											</p:column>
+
+											<p:column headerText="Ubigeo"
+												filterBy="#{detall.inmueble.ubigeo.ubigeo}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.ubigeo}" />
+											</p:column>
+
+											<p:column headerText="Departamento"
+												filterBy="#{detall.inmueble.ubigeo.depa}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.depa}" />
+											</p:column>
+
+											<p:column headerText="Provincia"
+												filterBy="#{detall.inmueble.ubigeo.prov}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.prov}" />
+											</p:column>
+
+											<p:column headerText="Distrito"
+												filterBy="#{detall.inmueble.ubigeo.dist}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.dist}" />
+											</p:column>
+
+											<p:column headerText="Direcci&oacute;n"
+												filterBy="#{detall.direccion}" filterMatchMode="startsWith">
+												<h:outputText value="#{detall.direccion}" />
+												<!-- <h:outputText value="#{detall.inmueble.direccion}" /> -->
+											</p:column>
+
+											<p:column headerText="N&uacute;mero Principal"
+												filterBy="#{detall.inmueble.numeroprincipal}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.numprincipal}" />
+												<!-- <h:outputText value="#{detall.inmueble.numeroprincipal}" /> -->
+											</p:column>
+
+											<p:column headerText="Nombre Num. Interior"
+												filterBy="#{detall.nombrenuminterior}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.nombrenuminterior}" />
+											</p:column>
+
+											<p:column headerText="Uso"
+												filterBy="#{detall.uso}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.uso}" />
+											</p:column>
+
+											<p:column headerText="Situacion">
+												<h:outputText value="#{detall.inmueble.situacion}" />
+											</p:column>
+
+										</p:dataTable>
+									</p:dialog>
+
+
+									<p:dialog header="Seleccione Inquilino"
+										id="iddlgListaInquilino" width="auto" height="auto"
+										closable="true" closeOnEscape="true" resizable="false"	
+										widgetVar="iddlgListaInquilino"
+										style="border-width:9px;border-style:solid;  border-color:#6741e3; ">
+										
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="tipobusquedaInq" value="Consulta:" />
+										        <p:selectOneListbox id="tipobusquedaInq" value="#{ccMB.tipobusquedaInquilino}">
+										            <f:selectItem itemLabel="Nombres/Raz&oacute;n Social:" itemValue="nombresRazonSocial" />
+										            <f:selectItem itemLabel="RUC:" itemValue="ruc" />
+										            <f:selectItem itemLabel="DNI:" itemValue="dni" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="testInquilino" actionListener="#{ccMB.buscarInquilino}" update="tblInquilino"/>
+										        <p:inputText id="patronInq"  value="#{ccMB.valorbusquedaInquilino}" onkeypress="if (event.keyCode == 13) { testInquilino(); return false; }" >
+										        	<p:watermark for="patronInq" value="Ingrese campo"></p:watermark>
+										        </p:inputText>
+			 						</h:panelGrid>
+										
+
+										<p:dataTable id="tblInquilino" var="detall" value="#{ccMB.listInquilino}"
+											emptyMessage="0 registros encontrados"
+											style="width:625px; font-size: 10px;  margin: 0px 0px 0px 0px;text-aling:center;"
+											styleClass="ui-datatable-hor-scroll"
+											filteredValue="#{ccMB.listInquilinoFiltro}"
+											rowKey="#{detall.idinquilino}" rowIndexVar="row"	
+											selection="#{ccMB.inquilino}" selectionMode="single"
+											paginator="true" rows="10"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											rowsPerPageTemplate="5,10,15">
+
+											<p:ajax event="rowSelect" listener="#{ccMB.seleccionarInquilino}"
+												oncomplete="iddlgListaInquilino.hide();"
+												update=":frmCondicion" />
+
+											<p:column headerText="RUC" filterBy="#{detall.ruc}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.ruc}" />
+											</p:column>
+
+											<p:column headerText="Razón Social"
+												filterBy="#{detall.razonsocial}" filterMatchMode="startsWith">
+												<h:outputText value="#{detall.razonsocial}" />
+											</p:column>
+
+											<p:column headerText="DNI" filterBy="#{detall.dni}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.dni}" />
+											</p:column>
+
+											<p:column headerText="Nombres"
+												filterBy="#{detall.nombrescompletos}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.nombrescompletos}" />
+											</p:column>
+
+										</p:dataTable>
+									</p:dialog>
+									
+									
+									
+							<h:form id="formResolverContrato">
+									<p:growl id="growlResolverContrato" showDetail="true" sticky="false" life="3000" />
+									<p:confirmDialog
+									message="¿Desea Resolver el Contrato ?"
+									header="Resolver Contrato" severity="alert"
+									widgetVar="dlgConfirmarResolverContrato">
+									<center>
+										<p:commandButton value="&nbsp;Aceptar"
+											actionListener="#{ccMB.resolverContrato()}"
+											oncomplete="dlgConfirmarResolverContrato.hide();dlgResolverContrato.hide();"
+											update=":frmCondicion,:frmConsulta"
+											icon="icon-save">
+										</p:commandButton>
+										<p:spacer width="15" />
+										<p:commandButton value="&nbsp;Cancelar"
+											oncomplete="dlgConfirmarResolverContrato.hide()"
+											icon="icon-cancel" />
+									</center>
+								</p:confirmDialog>
+									<p:dialog header="Resolver Contrato" 
+									   id="dlgResolverContrato" width="auto"  height="auto"
+									   closable="true" closeOnEscape="true" resizable="false"
+									   modal="true" showEffect="slide" hideEffect="slide"
+									   widgetVar="dlgResolverContrato"
+									   style="border-width:9px;border-style:solid; border-color:#ffc600 ;" >
+									<h:outputText value="Usuario Responsable" style="color:#168039;" />
+												<br />
+												<p:graphicImage width="30" height="30"
+													value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.nombres}"
+													style="color:#806300;" />
+													<h:outputText value=" #{usuarioMB.usuariologueado.apellidopat}"
+													style="color:#806300;" />
+												
+												<br /><br />
+									          <h:panelGrid columns="2">
+									            <h:outputText value="Fec.  Resuelto: " />
+												<p:calendar  pattern="dd/MM/yyyy"  locale="es"
+													styleClass="anchoCalendar"  navigator="true"
+													value="#{ccMB.contratoBean.fincontratoresuelto}" showOn="button">
+													<p:ajax event="dateSelect" />
+												</p:calendar>
+												<h:outputText value="Observación: " />
+												<p:inputTextarea style="width:300px;" value="#{ccMB.contratoBean.observacionresuelto}"  rows="3" maxlength="200" />
+												</h:panelGrid>
+									            
+									          
+									          <h:panelGrid columns="3" style="margin-top:20px;">
+									             <h:outputText value="Fin de Cobro"/>
+												<h:selectOneMenu  value="#{ccMB.mesFinCobroResuelto}">
+										            <f:selectItem itemLabel="Mes" itemValue="" />
+										            <f:selectItems value="#{inicioMB.listaMes}" />
+									      	  	</h:selectOneMenu>
+									        
+												<h:selectOneMenu value="#{ccMB.anioFinCobroResuelto}" >
+											            <f:selectItem itemLabel="Año" itemValue="" />
+											            <f:selectItems value="#{inicioMB.listaAnio}" />
+											     </h:selectOneMenu>
+												 </h:panelGrid>
+												
+												<br/>
+												<center>
+												<p:commandButton value="&nbsp;Aceptar" 
+													update=":frmCondicion,growlResolverContrato"
+													actionListener="#{ccMB.validarDatosResolverContrato}" process="@form"
+													icon="icon-save"/>
+											    <p:commandButton  value="&nbsp;Cancelar" 
+											    oncomplete="dlgResolverContrato.hide()" icon="icon-cancel"/>
+												</center>
+									          
+									          
+									
+									</p:dialog>
+									</h:form>
+							<!-- ANULAR PRECONTRATO SEGUN CONDICIONES -->		
+							<h:form id="frmAnularCondicion">
+									<p:growl id="growlAnularContrato" showDetail="true" sticky="false" life="3000" />
+									<p:confirmDialog
+									message="¿Desea Anular el #{ccMB.estado} ?"
+									header="Anular el #{ccMB.estado}" severity="alert"
+									widgetVar="dlgConfirmarAnularCondicion">
+									<center>
+										<p:commandButton value="&nbsp;Aceptar" process="@form"
+											actionListener="#{ccMB.anularContrato()}"
+											onclick="PF('statusDialog').show();"
+											oncomplete="dlgConfirmarAnularCondicion.hide();dlgAnularContrato.hide();PF('statusDialog').hide();"
+											update=":frmCondicion,:frmConsulta"
+											icon="icon-save">
+										</p:commandButton>
+										<p:spacer width="15" />
+										<p:commandButton value="&nbsp;Cancelar"
+											oncomplete="dlgConfirmarAnularCondicion.hide()"
+											icon="icon-cancel" />
+									</center>
+								</p:confirmDialog>
+									<p:dialog header="Anular #{ccMB.estado}" 
+									   id="dlgAnularContrato" width="auto"  height="auto"
+									   closable="true" closeOnEscape="true" resizable="false"
+									   modal="true" showEffect="slide" hideEffect="slide"
+									   widgetVar="dlgAnularContrato"
+									   style="border-width:9px;border-style:solid; border-color:#6741e3 ;" >
+									<h:outputText value="Usuario Responsable" style="color:#168039;" />
+												<br />
+												<p:graphicImage width="30" height="30"
+													value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.nombres}"
+													style="color:#806300;" />
+													<h:outputText value=" #{usuarioMB.usuariologueado.apellidopat}"
+													style="color:#806300;" />
+												
+												<br /><br />
+									          <h:panelGrid columns="2">
+									            <h:outputText value="Fec.  Anulación: " />
+												<h:outputText value="#{ccMB.fechActual}">
+													<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+												</h:outputText>												
+												<h:outputText value="Motivo de Anulación " />
+												<p:inputTextarea style="width:300px;" value="#{ccMB.contratoBean.motivo_anula}"  rows="3" maxlength="300" />
+												</h:panelGrid>
+												<p:fieldset id="documentossustentariosAnularContrato">
+				         					<p:tabView id="tabDocumentosSustentatoriosAnularContrato">
+				         						<p:tab title="Añadir Documento" id="tabNuevoDoc" rendered="true">
+				         						<center>
+				         							<p:panelGrid id="panelCargarDocumento" columns="3">
+				         								<h:outputText value="Documentos"/>					
+														<p:spacer />								
+															<p:commandButton value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjuntoContrato()}"  update=":frmMaestra:listaMensajes,:frmAdjuntarArchivo:listaArchivoAdjunto" icon="ui-icon-wrench" rendered="#{rdMB.listContrato.size()>0 ? false:true}" process="@form"/>
+													</p:panelGrid>
+				         						</center>
+				         						</p:tab>
+				         					</p:tabView>
+				         				</p:fieldset>
+									            
+									          
+
+												
+												<br/>
+												<center>
+												<p:commandButton value="&nbsp;Aceptar" 
+													update=":frmMaestra:listaMensajes"
+													actionListener="#{ccMB.validarDatosAnularContrato}" process="@form"
+													icon="icon-save"/>
+											    <p:commandButton  value="&nbsp;Cancelar" 
+											    oncomplete="dlgAnularContrato.hide()" icon="icon-cancel"/>
+												</center>
+									          
+									          
+									
+									</p:dialog>
+									</h:form>
+									<p:growl id="growlCancelarContrato" showDetail="true" sticky="false" life="3000" />
+									<p:dialog header="Cancelacion de contrato"
+										id="dlgCancelarContrato" width="auto" height="auto"
+										closable="true" closeOnEscape="true" resizable="false"
+										modal="true" showEffect="slide" hideEffect="slide"
+										widgetVar="dlgCancelarContrato"
+										style="border-width:9px;border-style:solid;  border-color:#ffc600; ">
+
+												<h:outputText value="Usuario Responsable" style="color:#168039;" />
+												<br />
+												<p:graphicImage width="30" height="30"
+													value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.nombres}"
+													style="color:#806300;" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.apellidopat}"
+													style="color:#806300;" />
+												
+												<br /><br />
+												<h:panelGrid columns="2">
+												
+												<h:outputText value="Fec.  Resuelto: " />
+												<p:calendar  pattern="dd/MM/yyyy"  locale="es"
+													styleClass="anchoCalendar"  navigator="true"
+													value="#{ccMB.contratoBean.fincontratoresuelto}" showOn="button">
+													<p:ajax event="dateSelect" />
+												</p:calendar>
+	
+												<h:outputText value="Observación: " />
+												<p:inputTextarea style="width:300px;" value="#{ccMB.contratoBean.observacionresuelto}"  rows="3" maxlength="200" />
+												</h:panelGrid>
+												
+												<h:panelGrid columns="3" style="margin-top:20px;">
+												<h:outputText value="Fin de Cobro"/>
+												<h:selectOneMenu  value="#{ccMB.mesFinCobroResuelto}">
+										            <f:selectItem itemLabel="Mes" itemValue="" />
+										            <f:selectItems value="#{inicioMB.listaMes}" />
+									      	  	</h:selectOneMenu>
+									        
+												<h:selectOneMenu value="#{ccMB.anioFinCobroResuelto}" >
+											            <f:selectItem itemLabel="Años" itemValue="" />
+											            <f:selectItems value="#{inicioMB.listaAnio}" />
+											     </h:selectOneMenu>
+												 </h:panelGrid>
+												
+												<br/>
+												<center>
+												<p:commandButton value="&nbsp;Aceptar" rendered="#{!ccMB.contratoBean.siresuelto}"
+													update=":frmCondicion,growlCancelarContrato"
+													actionListener="#{ccMB.resolverContrato}" 
+													oncomplete="dlgCancelarContrato.hide()" icon="icon-save"/>
+											    <p:commandButton  value="&nbsp;Cancelar" 
+											    oncomplete="dlgCancelarContrato.hide()" icon="icon-cancel"/>
+												</center>
+									</p:dialog>
+									<p:confirmDialog
+									message="¿Desea Finalizar el #{ccMB.estado} ?"
+									header="Finalizar #{ccMB.estado}" severity="alert"
+									widgetVar="dlgConfirmarFinalizarContrato">
+									<center>
+										<p:commandButton value="&nbsp;Aceptar"
+											actionListener="#{ccMB.finalizarContrato}"
+											oncomplete="dlgConfirmarFinalizarContrato.hide();dlgFinalizarContrato.hide();"
+											update=":frmCondicion,:frmConsulta"											
+											icon="icon-save">
+										</p:commandButton>
+										<p:spacer width="15" />
+										<p:commandButton value="&nbsp;Cancelar"
+											oncomplete="dlgConfirmarFinalizarContrato.hide()"
+											icon="icon-cancel" />
+									</center>
+									</p:confirmDialog>
+									<p:growl id="growlFinalizarContrato" showDetail="true" sticky="false" life="3000" />
+									<p:dialog header="Finalizar #{ccMB.estado}"
+										id="dlgFinalizarContrato" width="auto" height="auto"
+										closable="true" closeOnEscape="true" resizable="false"
+										modal="true" showEffect="slide" hideEffect="slide"
+										widgetVar="dlgFinalizarContrato"
+										style="border-width:5px;border-style:solid;  border-color:#6741e3; ">
+
+												<h:outputText value="Usuario Responsable" style="color:#168039;" />
+												<br />
+												<p:graphicImage width="30" height="30"
+													value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.nombres}"
+													style="color:#806300;" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.apellidopat}"
+													style="color:#806300;" />
+												
+												<br /><br />
+												<h:panelGrid columns="1">
+												
+<!-- 												<h:outputText value="Fec. Finaliza: " /> -->
+<!-- 												<p:calendar  pattern="dd/MM/yyyy"  locale="es" -->
+<!-- 													styleClass="anchoCalendar"  navigator="true" -->
+<!-- 													value="#{ccMB.contratoBean.fincontratoresuelto}" showOn="button"> -->
+<!-- 													<p:ajax event="dateSelect" /> -->
+<!-- 												</p:calendar> -->
+	
+												<h:outputText value="Motivo de Finalización : " />
+												<p:inputTextarea style="width:300px;"  value="#{ccMB.contratoBean.observacionfinalizado}"  rows="3"  
+													maxlength="200" counterTemplate="{0} caracteres." autoResize="false" onkeyup="convertir_a_mayuscula(this);"
+													/>
+												
+												
+												</h:panelGrid>
+												
+												<h:panelGrid columns="3" style="margin-top:20px;">
+												<h:outputText value="Fin de Cobro :"/>
+												<h:selectOneMenu  value="#{ccMB.mesFinCobroFinalizado}">
+										            <f:selectItem itemLabel="Mes" itemValue="" />
+										            <f:selectItems value="#{inicioMB.listaMes}" />
+									      	  	</h:selectOneMenu>
+									        
+												<h:selectOneMenu value="#{ccMB.anioFinCobroFinalizado}" >
+											            <f:selectItem itemLabel="Año" itemValue="" />
+											            <f:selectItems value="#{inicioMB.listaAnio}" />
+											     </h:selectOneMenu>											
+												 </h:panelGrid>
+												 <br/>
+<!-- 												 <h:panelGrid columns="2" style="margin-left: -93px;"> -->
+<!-- 												 <h:outputText  value="Fin de #{ccMB.estado} :"  style="margin-left:90px;"/> -->
+<!-- 													<p:calendar id="idContratoFechaFinContratoFinalizar" navigator="true" pattern="dd/MM/yyyy" locale="es" -->
+<!-- 														styleClass="anchoCalendar"  -->
+<!-- 														value="#{ccMB.contratoBean.fincontrato}" showOn="button"> -->
+<!-- 													</p:calendar> -->
+<!-- 												</h:panelGrid> -->
+<!-- 									<p:panel header="Rentas Pendientes de #{ccMB.estado}" rendered ="#{ccMB.contratoBean.condicion=='Contrato'?false:true}" > -->
+<!-- 									<p:dataTable var="cuota" -->
+<!-- 										value="#{ccMB.cuotasPendientes}" -->
+<!-- 										selection="#{ccMB.cuotaPendienteCondicion}" -->
+<!-- 										selectionMode="single" -->
+<!-- 										filteredValue="#{ccMB.cuotasPendientesFilter}" -->
+<!-- 										rowKey="#{cuota.mes}" -->
+<!-- 										emptyMessage="No se ha registrado ningún pago" -->
+<!-- 										style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;width:550px;" -->
+<!-- 										rowIndexVar="index" scrollable="true" scrollHeight="260"  -->
+<!-- 										paginator="true" rows="12" rowsPerPageTemplate="12,24,36" -->
+<!-- 										styleClass="ui-datatable-hor-scroll"  editable="true" editMode="cell" -->
+<!-- 										> -->
+
+<!-- 										<p:column width="8" headerText="#"> -->
+<!-- 											<h:outputText value="#{index+1}" /> -->
+<!-- 										</p:column> -->
+
+<!-- 										<p:column width="40" headerText="Mes" filterBy="#{cuota.mes}" -->
+<!-- 											filterMatchMode="contains" -->
+<!-- 											rendered="#{!ccMB.contratoBean.sireconocimientodeuda}"> -->
+<!-- 											<h:outputText value="#{cuota.mes}" /> -->
+<!-- 										</p:column> -->
+
+<!-- 										<p:column width="35" headerText="Período" -->
+<!-- 											filterBy="#{cuota.anio}" filterMatchMode="contains" -->
+<!-- 											rendered="#{!ccMB.contratoBean.sireconocimientodeuda}"> -->
+<!-- 											<h:outputText value="#{cuota.anio}" /> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column width="40" headerText="Nro Cuota" -->
+<!-- 											filterBy="#{cuota.numerocuota}" filterMatchMode="contains" -->
+<!-- 											rendered="#{ccMB.contratoBean.sireconocimientodeuda}"> -->
+<!-- 											<h:outputText value="#{cuota.numerocuota}" /> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column width="40" headerText="Fecha Vencimiento" -->
+<!-- 											filterBy="#{cuota.fechavencimiento}" -->
+<!-- 											filterMatchMode="contains" -->
+<!-- 											rendered="#{ccMB.contratoBean.sireconocimientodeuda}"> -->
+<!-- 											<h:outputText value="#{cuota.fechavencimiento}"> -->
+<!-- 												<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 											</h:outputText> -->
+<!-- 										</p:column> -->
+
+<!-- 										<p:column width="60" style="text-align: right;" -->
+<!-- 											headerText="Monto"> -->
+<!-- 											<h:outputText value="#{cuota.monto}"> -->
+<!-- 												<f:convertNumber pattern="#0.00" /> -->
+<!-- 											</h:outputText> -->
+<!-- 										</p:column> -->
+
+<!-- 										<p:column width="35" headerText="Estado"> -->
+<!-- 											<h:outputText value="#{cuota.condicion}" /> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column width="35" headerText="Acci&oacute;n"> -->
+<!-- 										<p:cellEditor> -->
+<!-- 											<f:facet name="output"> -->
+<!-- 												<h:outputText value="#{cuota.estado_maed==NULL? 'GENERADO':cuota.estado_maed}" /> -->
+<!-- 											</f:facet> -->
+<!-- 											<f:facet name="input"> -->
+<!-- 												<h:selectOneMenu value="#{cuota.estado_maed}"  style="width:100%" disabled="false"> -->
+<!-- 													<f:selectItem itemLabel="GENERADO" itemValue="GENERADO" /> -->
+<!-- 													<f:selectItem itemLabel="ANULADO" itemValue="ANULADO" /> -->
+<!-- 												</h:selectOneMenu> -->
+<!-- 											</f:facet> -->
+<!-- 										</p:cellEditor> -->
+<!-- 									   </p:column> -->
+
+<!-- 									</p:dataTable> -->
+<!-- 									</p:panel> -->
+
+									<br/>
+												<center>
+												<p:commandButton value="&nbsp;Aceptar" 
+													update=":frmMaestra:listaMensajes"
+													actionListener="#{ccMB.validarDatosFinalizarContrato}" 
+												    icon="icon-save"/>
+													<p:commandButton  value="&nbsp;Cancelar" 
+											    oncomplete="dlgFinalizarContrato.hide()" icon="icon-cancel"/>
+												</center>
+									</p:dialog>
+								<p:confirmDialog
+									message="¿Desea Registar la Adenda al Contrato ?"
+									header="Registro Adenda" severity="alert"
+									widgetVar="dlgConfirmarRegistroAdendaContrato">
+									<center>
+										<p:commandButton value="&nbsp;Aceptar"
+											actionListener="#{ccMB.incluirAdendaContrato}"
+											onclick="dlgIncluirAdenda.hide();dlgConfirmarRegistroAdendaContrato.hide();"
+											update=":frmCondicion,growlCancelarContrato"
+											icon="icon-save">
+										</p:commandButton>
+										<p:spacer width="15" />
+										<p:commandButton value="&nbsp;Cancelar"
+											oncomplete="dlgConfirmarRegistroAdendaContrato.hide()"
+											icon="icon-cancel" />
+									</center>
+								</p:confirmDialog>
+								<p:dialog header="Adenda de contrato"
+										id="dlgAdenda" width="688px" height="500px"
+										closable="true" closeOnEscape="true" resizable="false"
+										modal="true" showEffect="slide" hideEffect="slide"
+										widgetVar="dlgIncluirAdenda"
+										style="border-width:9px;border-style:solid;  border-color:#ffc600; " >
+
+												<h:outputText value="Usuario Responsable" style="color:#168039;" />
+												<br />
+												<p:graphicImage width="30" height="30"
+													value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.nombres}"
+													style="color:#806300;" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.apellidopat}"
+													style="color:#806300;" />
+												
+												<br /><br />
+												<h:panelGrid columns="2" style="margin-top:20px;">
+													<h:outputText value="Nro. de Adenda: " />
+												    <p:inputText style="width:40px;" value="#{ccMB.contratoBean.nroadenda}"  rows="3"  maxlength="3" onkeypress="return validarKey(event);" />
+												</h:panelGrid>
+<!-- 												<h:panelGrid columns="2"> -->
+												
+<!-- 												<h:outputText value="Motivo: " /> -->
+<!-- 												<p:inputTextarea style="width:300px;" value="#{ccMB.contratoBean.observacionadenda}"  rows="3"  maxlength="400"/> -->
+<!-- 												</h:panelGrid> -->
+									<h:panelGrid columns="1" >
+                                        <h3>Motivo de Adenda</h3>
+										<p:inputTextarea id="motivodocumento" rows="2" cols="80" style="width: 630px;height: 34px"
+											counter="display"
+											value="#{ccMB.contratoBean.observacionadenda}" maxlength="300"
+											counterTemplate="{0} caracteres." autoResize="false" />
+
+										<h:outputText id="display" />
+									</h:panelGrid>
+									<p:fieldset id="documentossustentarios">
+				         					<p:tabView id="tabDocumentosSustentatorios">
+				         						<p:tab title="Nuevo Documento" id="tabNuevoDoc" rendered="true">
+				         						<center>
+				         							<p:panelGrid id="panelCargarDocumento" columns="3">
+				         								<h:outputText value="Documentos"/>					
+														<p:spacer />
+<!-- 														<div style="height: 40%;width: 100%; padding: 1% 0% 0% 2%">										 -->
+															<p:commandButton value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjuntoContrato()}"  update=":frmMaestra:listaMensajes,:frmAdjuntarArchivo:listaArchivoAdjunto" icon="ui-icon-wrench" rendered="#{rdMB.listContrato.size()>0 ? false:true}"/>
+<!-- 										   				 </div> -->
+													</p:panelGrid>
+				         						</center>
+				         						</p:tab>
+<!-- 				         						<p:tab title="Documentos subidos" id="tabDocSubidos">	 -->
+<!-- 				         						</p:tab> -->
+				         					</p:tabView>
+				         				</p:fieldset>
+				         				<br/>
+									<h:outputText value="Tipo de modificación: " />
+											<p:selectOneMenu   value="#{ccMB.contratoBean.tipocondicionadenda}">
+																	<f:selectItem itemLabel="Seleccione Tipo " itemValue="" />
+																	<f:selectItem itemLabel="1. Ampliar Plazo" itemValue="1" itemDisabled="#{!ccMB.contratoBean.sinuevomantenimiento}"/>
+																	<f:selectItem itemLabel="2. Otra Condición" itemValue="2"/>
+															<p:ajax listener="#{ccMB.evaluarCondicionContrato}" update="panelAmpliarPlazo,panelOtraCondicion,:frmMaestra:listaMensajes" />
+											</p:selectOneMenu>
+											<br/>
+											<p:outputPanel id="panelAmpliarPlazo">
+											
+											<h:panelGrid columns="8"  rendered="#{ccMB.contratoBean.tipocondicionadenda.equals('1')?true:false}">
+												 <p:fieldset legend="Ampliar Plazo" style="text-align: left;width: 609px;height: 127px" >
+														<table width="300"  cellspacing="10">
+															<tr>
+															   <td  width="12%"> <h:outputText  value="NºAños:"/></td>
+															   <td width="12%"><p:inputText   style="width:60px;" value="#{ccMB.numAniosAdendaContrato}" onkeypress="return validarKey(event);">										
+															    <p:ajax event="change"  listener="#{ccMB.limpiarFechaInicioFinAdendaContrato}"   update="idFechaInicioAdendaContrato,idFechaFinAdendaContrato"/>
+														        </p:inputText> </td>
+														        <td width ="12%"><h:outputText  value="NºMeses"/></td>
+														        <td width="12%"><p:inputText style="width:60px;" value="#{ccMB.numMesesAdendaContrato}" onkeypress="return validarKey(event);">
+															    <p:ajax event="change"  listener="#{ccMB.limpiarFechaInicioFinAdendaContrato}"   update="idFechaInicioAdendaContrato,idFechaFinAdendaContrato"/>
+														        </p:inputText></td>
+														        <td width="12%"><h:outputText  value="Inicio:" /></td>
+														        <td width="12%"> <p:calendar id="idFechaInicioAdendaContrato" navigator="true" pattern="dd/MM/yyyy" locale="es"
+																styleClass="anchoCalendar" disabled="#{ccMB.siexistenumMesAnioAdenda}"
+																value="#{ccMB.contratoBean.inicioAdendaContrato}"  mindate="#{ccMB.minFechaInicio}">
+																<p:ajax event="dateSelect" listener="#{ccMB.calcularFinAdendaContrato}" update="idFechaFinAdendaContrato,idFinContratoAdenda,mesInicioCobroAdendaContrato,anioInicioCobroAdendaContrato,anioFinCobroAdendaContrato,mesFinCobroAdendaContrato" process="@form"/>
+																</p:calendar>  </td>
+																<td width="12%"><h:outputText value="T&eacute;rmino:"  /></td>
+															    <td width="12%"><h:outputText id="idFechaFinAdendaContrato" value="#{ccMB.contratoBean.finAdendaContrato}">
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText></td>
+															</tr>
+															 														 
+														</table>
+												<h:panelGrid columns="2" style="margin: 10px 0px 0px 137px;">
+													<h:outputText value="Nuevo Fin de Contrato:" />
+													<h:outputText id="idFinContratoAdenda" value="#{ccMB.contratoBean.finAdendaContrato}" style="margin: 0px 0px 0px 17px;">
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+												</h:panelGrid>
+
+											</p:fieldset>
+											
+											</h:panelGrid>
+											<h:panelGrid columns="6"  rendered="#{ccMB.contratoBean.tipocondicionadenda.equals('1')?true:false}">
+											         <p:fieldset legend="Meses de Cobro" style="text-align: left;width: 609px;height: 127px" >
+														<table width="300"  cellspacing="10">
+														
+														   <tr>
+															   
+															   <td>
+															      <h:outputText value="Del" />															   
+															   </td>	
+															   <td>
+															       <p:selectOneMenu id="mesInicioCobroAdendaContrato"
+																    value="#{ccMB.mesInicioCobroAdenda}">
+																    <f:selectItem itemLabel="Mes" itemValue="" />
+																    <f:selectItems value="#{inicioMB.listaMes}" />
+																    <p:ajax event="change"
+																			listener="#{ccMB.calcularFinCobroAdenda}"
+																			update="anioFinCobroAdendaContrato,mesFinCobroAdendaContrato" process="@form" />
+															    	</p:selectOneMenu>
+														       </td>
+																<td><p:selectOneMenu id="anioInicioCobroAdendaContrato"
+																	value="#{ccMB.anioInicioCobroAdenda}">
+																	<f:selectItem itemLabel="Año" itemValue="" />
+																	<f:selectItems value="#{inicioMB.listaAnio}" />
+																	<p:ajax event="change"
+																	listener="#{ccMB.calcularFinCobro}"
+																	update="anioFinCobro,mesFinCobro" process="@form" />
+																	</p:selectOneMenu></td>
+													   			<td>
+														            <h:outputText value="hasta"/>
+														       </td>
+														       <td>
+														            <h:outputText id="mesFinCobroAdendaContrato" value="#{ccMB.mesFinCobroAdenda}" style="font-size:15px;"/>
+														        </td>
+														        <td>
+									        						<h:outputText id="anioFinCobroAdendaContrato" value="#{ccMB.anioFinCobroAdenda}" style="font-size:15px;"/>
+														       </td>
+														       																								 
+															 </tr>
+														
+														</table>
+											    </p:fieldset>
+											   
+											
+											</h:panelGrid>
+											<h:panelGrid columns="6"  rendered="#{ccMB.contratoBean.tipocondicionadenda.equals('1')?true:false}">
+											           <p:fieldset legend="Renta de Adenda" style="text-align: left;width: 609px;height: 127px" >
+											                      <table  style="margin: 4px;" width="600" cellspacing="5">
+											                       <tr>
+											                          <td><h:outputText value="Monto de Contraprestacion: " style="text-align:right;"/> </td>
+											                          <td><h:outputText value="#{ccMB.contratoBean.contraprestacion}" style="text-align:right;"/></td>
+											                          <td><h:outputText value="#{ccMB.contratoBean.moneda=='S'? 'Soles' : 'D&oacute;lares'}" /></td>
+											                       </tr>
+											                       <tr>
+											                          <td><h:outputText value="Renta mensual de adenda: " /> </td>
+											                          <td><p:inputText value="#{ccMB.contratoBean.rentaMensualAdenda}" style="text-align:left;"/></td>
+											                          <td><h:outputText value="#{ccMB.contratoBean.moneda=='S'? 'Soles' : 'D&oacute;lares'}" /></td>
+											                       </tr>
+											                      </table>
+																  <br/>
+											                      
+																  
+											                      
+											           </p:fieldset>
+											
+											</h:panelGrid>
+											<h:panelGrid  rendered="#{ccMB.contratoBean.tipocondicionadenda.equals('1')?true:false}" style="padding: 0px 0px 0px 67px;">
+											<p:dataTable id="listaRentasAdendaContrato" value="#{ccMB.listaRentasAdenda}"
+												selection="#{ccMB.selectedRentaAdenda}" var="renta"
+												editable="true" selectionMode="single"
+												rowKey="#{renta.secuencia}"
+												style="font-size: 12px; text-align: center;"
+												emptyMessage="No ha generado ninguna renta"
+												rowIndexVar="index" rows="12" paginator="true"
+												paginatorPosition="bottom"
+												paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+												<p:ajax event="rowEdit" listener="#{ccMB.validarPeriodo}"
+													update="listaRentasAdendaContrato,:frmMaestra:listaMensajes" />
+
+												<f:facet name="header">
+													<p:commandButton value="Generar Rentas Mensuales" actionListener="#{ccMB.validarGenerarPeriodosAdenda}" update="listaRentasAdendaContrato,:frmMaestra:listaMensajes" icon="ui-icon-wrench" />
+												</f:facet>
+
+
+												<p:columnGroup type="header">
+													<p:row>
+														<p:column rowspan="2" headerText="" style="width:32px" />
+														<p:column rowspan="2" headerText="#"
+															style="vertical-align: middle;" />
+														<p:column rowspan="2" headerText="Año"
+															style="vertical-align: middle;" />
+														<p:column rowspan="2" headerText="Mes"
+															style="vertical-align: middle;" />
+														<p:column rowspan="2"
+															headerText="Contraprestaci&oacute;n (C)"
+															style="vertical-align: middle;" />
+														<p:column rowspan="2" headerText="C + Inc."
+															style="vertical-align: middle;" />
+
+
+														<p:column rowspan="2" headerText="MONTO A PAGAR"
+															style="vertical-align: middle;" />
+													</p:row>
+
+
+												</p:columnGroup>
+
+												<p:column style="width:32px">
+													<p:rowEditor
+														rendered="#{ccMB.contratoBean.idcontrato==0?true:false}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{index+1}" />
+												</p:column>
+
+												<p:column>
+													<h:outputText value="#{renta.anio}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{renta.mes}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{renta.contraprestacion}" />
+												</p:column>
+												<p:column>
+													<h:outputText value="#{renta.renta}" />
+												</p:column>
+
+
+												<p:column>
+													<h:outputText value="#{renta.montopagar}" />
+												</p:column>
+											</p:dataTable>
+
+
+										</h:panelGrid>
+										
+
+										</p:outputPanel>
+<!-- 										Otro tipo de Condicion de Adenda (renta , incremento , modificacion de clausula)-->
+									<p:outputPanel id="panelOtraCondicion">
+									    <br/>
+										<h:panelGrid columns="1" rendered="#{ccMB.contratoBean.tipocondicionadenda.equals('2')?true:false}">
+											<h3>Detalle la Condición </h3>
+											<p:inputTextarea id="detalleMotivoAdenda" rows="3" cols="80"
+												style="width: 630px;height: 34px" counter="displays"
+												value="#{ccMB.contratoBean.motivodetalleadenda}"
+												maxlength="1000" counterTemplate="{0} caracteres."
+												autoResize="false" ><p:ajax event="change"  listener="#{ccMB.validarDetalleCondicionAdenda}" ></p:ajax></p:inputTextarea>
+
+											<h:outputText id="displays" />
+										</h:panelGrid>
+									</p:outputPanel>
+									<br/>
+												<center>
+<!-- 												<p:commandButton value="&nbsp;Aceptar" rendered="#{!ccMB.contratoBean.siadenda}" -->
+												<p:commandButton value="&nbsp;Aceptar" 
+													update=":frmMaestra:listaMensajes"
+													actionListener="#{ccMB.validacionRegistrarAdenda}"
+													icon="icon-save"/>
+												<p:commandButton value="&nbsp;Cancelar"
+												    actionListener="#{ccMB.limpiarRegistroAdenda}"
+													oncomplete="dlgIncluirAdenda.hide()"
+													update="dlgAdenda"
+													icon="icon-cancel" />
+												</center>
+										
+<!-- 										</h:panelGrid> -->
+
+
+										
+									</p:dialog>
+								
+						</p:tab>
+						<p:tab title="Instituci&oacute;n">
+						</p:tab>
+						<p:tab title="Cliente y Aval">
+						</p:tab>
+						<p:tab title="Per&iacute;odos">
+						</p:tab>
+						<p:tab title="Garant&iacute;a">
+							
+											<h:panelGrid columns="6">
+												<h:outputText value="Valor de Carta Fianza:" rendered="true" />
+												<p:inputText  value="#{ccMB.contratoBean.valorcartafianza}" style="width:100px;"/>
+													
+												<h:outputText  value="Fecha de vencimiento:"  style="margin-left:90px;"/>
+												<p:calendar value="#{ccMB.contratoBean.fechavencimientocartafianza}" navigator="true" pattern="dd/MM/yyyy" locale="es"
+													styleClass="anchoCalendar"
+													 showOn="button">
+												</p:calendar>
+
+											</h:panelGrid>
+							
+						
+						</p:tab>
+						<p:tab title="Cuotas">
+									<div class="mante_gene_ContDescrip01">
+										<div class="cobranza_cartera_contenidoDatos">
+											<div class="cartera_ColumDatos">
+													<div class="columLargo">
+														<h:outputText class="lblDatos" value="Registro de Cuotas" />
+													</div>
+												<br /> <br /> <br />
+
+												<p:dataTable var="cuota" value="#{ccMB.listacuotas}"
+													selection="#{ccMB.cuota}" selectionMode="single"
+													rowKey="#{cuota.idcuota}"
+													emptyMessage="No registra cuotas pagadas" paginator="true"
+													style="width:680px; font-size: 10px;  margin: 10px 0px 0px 0px;text-align: center;"
+													paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+													currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+													rowsPerPageTemplate="24,48,72" rows="24" scrollWidth="680"
+													styleClass="ui-datatable-hor-scroll">
+
+													<p:ajax event="rowToggle" listener="#{ccMB.onRowToggle}" />
+
+													<p:column style="width:2%">
+														<p:rowToggler/>
+													</p:column>
+													<p:column style="width:49%" headerText="Mes">
+														<h:outputText value="#{cuota.mespagado}" />
+													</p:column>
+													
+													<p:column style="width:49%" headerText="A&ntilde;o">
+														<h:outputText value="#{cuota.aniocuotames}" />
+													</p:column>
+
+													<p:column style="width:49%;text-align: right" headerText="Monto">
+														<h:outputText value="#{cuota.montosoles}" >
+														<f:convertNumber pattern="#0.00"  />
+														</h:outputText>
+													</p:column>
+
+													<p:column style="width:49%" headerText="Mora Soles">
+														<h:outputText value="#{cuota.morasoles}">
+														<f:convertNumber pattern="#0.00"  />
+														</h:outputText>
+													</p:column>
+
+													<p:column style="width:49%" headerText="Cancelado">
+														<h:outputText value="#{cuota.cancelado=='TRUE' ? 'Sí':'No' }" />
+													</p:column>
+
+													<p:column style="width:49%" headerText="Nº de Pagos">
+														<h:outputText value="#{cuota.nropagos}" />
+													</p:column>
+
+													<p:column style="width:49%" headerText="Usu. Creador">
+														<h:outputText value="#{cuota.usrcre}" />
+													</p:column>
+
+													<p:column style="width:49%" headerText="F. Creación">
+														<h:outputText value="#{cuota.feccre}">
+															<f:convertDateTime pattern="dd/MM/yyyy" />
+														</h:outputText>
+													</p:column>
+
+													<p:rowExpansion>
+														<p:dataTable value="#{ccMB.listadetallecuota}" var="dc"
+															rowIndexVar="row">
+															<f:facet name="header">Sub Pagos</f:facet>
+
+															<p:column headerText="">
+																<h:outputText value="#{row + 1}" />
+															</p:column>
+															<p:column headerText="Monto">
+																<h:outputText value="#{dc.montosoles}" >
+																<f:convertNumber pattern="#0.00"  />
+																</h:outputText>
+															</p:column>
+															<p:column headerText="Mora">
+																<h:outputText value="#{dc.mora}" >
+																<f:convertNumber pattern="#0.00"  />
+																</h:outputText>
+															</p:column>
+															<p:column headerText="N° Comprobante">
+																<h:outputText value="#{dc.comprobantepago.nroseriecomprobante}" >
+																</h:outputText>
+															</p:column>
+															<p:column headerText="Fec. Emisión">
+																<h:outputText value="#{dc.comprobantepago.fechaemision}" >
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+																</h:outputText>
+															</p:column>
+															
+															<p:column headerText="Fec. Cancelación">
+																<h:outputText value="#{dc.comprobantepago.fechacancelacion}" >
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+																</h:outputText>
+															</p:column>
+															<p:column headerText="Cobrador">
+																<h:outputText value="#{dc.comprobantepago.nombrecobrador}" >
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+																</h:outputText>
+															</p:column>
+														</p:dataTable>
+
+													</p:rowExpansion>
+
+												</p:dataTable>
+											</div>
+										</div>
+									</div>
+								
+						</p:tab>
+
+								
+					</p:tabView>
+     
+					</h:form>
+					
+					
+								<p:confirmDialog message="¿Desea grabar #{ccMB.estado} ?"
+									header="Registro #{ccMB.estado}" severity="alert"
+									widgetVar="dlgRegistrarContrato">
+									<center>
+									<p:commandButton value="&nbsp;Aceptar" icon="icon-save"
+										update=":frmCondicion,:frmConsulta,:frmMaestra:listaMensajes"
+										actionListener="#{ccMB.grabarCabeceraContrato}" oncomplete="dlgRegistrarContrato.hide()" onstart="statusLoading.show();" onsuccess="statusLoading.hide();"
+										/>
+									<p:commandButton value="&nbsp;Cancelar" onclick="dlgRegistrarContrato.hide()" icon="icon-cancel" />
+									</center>
+								
+								</p:confirmDialog>
+				
+					
+					<h:form id="frmConsulta">
+								<p:dialog header="Consulta #{ccMB.estado}" 
+										width="auto" height="auto" closable="true" closeOnEscape="true" showEffect="slide" hideEffect="slide"
+										resizable="false" widgetVar="dlgListaCondiciones"   
+										style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+					
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="basic" value="Consulta:" />
+										        <p:selectOneListbox id="basic" value="#{ccMB.tipobusqueda}">
+										            <f:selectItem itemLabel="Clave Upa:" itemValue="1" />
+										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="2" />
+										            <f:selectItem itemLabel="Nombre de Inquilino:" itemValue="3" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="consultaContrato" actionListener="#{ccMB.buscarContrato}" update="tblcontratos"/>
+										        <p:inputText id="patron"  value="#{ccMB.valorbusqueda}" onkeypress="if (event.keyCode == 13) { consultaContrato(); return false; }" >
+										        	<p:watermark for="patron" value="Ingrese campo"/>
+										        </p:inputText>
+			 						</h:panelGrid>
+								
+									<p:dataTable id="tblcontratos" var="detall" value="#{ccMB.listContrato}" 
+										emptyMessage="0 registros encontrados" filteredValue="#{ccMB.listContratoFiltro}"
+										style="width:690px; font-size: 10px;  margin-left: 15px;text-aling:center;"
+										styleClass="ui-datatable-hor-scroll"
+										rowKey="#{detall.idcontrato}" rowIndexVar="row"
+										selection="#{ccMB.contratoBean}" selectionMode="single"
+										paginator="true" rows="10"
+										paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="15,30,45">
+										<p:ajax event="rowSelect"
+											listener="#{ccMB.setearContratoSeleccionado}" 
+											update=":frmCondicion,:frmEstadoClausulas" oncomplete="dlgListaCondiciones.hide();" />
+
+										<p:column headerText="Nro. Contrato"
+											filterBy="#{detall.nrocontrato}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.nrocontrato}" />
+										</p:column>
+
+										<p:column headerText="Clave upa"
+											filterBy="#{detall.claveUpa}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.claveUpa}" />
+										</p:column>
+
+										<p:column headerText="Direccion"
+											filterBy="#{detall.direccion}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.direccion}" />
+										</p:column>
+
+										<p:column headerText="Nº Principal"
+											filterBy="#{detall.numeroprincipal}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.numeroprincipal}" />
+										</p:column>
+
+										<p:column headerText="Nº Interior"
+											filterBy="#{detall.numerointerior}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.numerointerior}" />
+										</p:column>
+
+										<p:column headerText="Distrito"
+											filterBy="#{detall.distrito}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.distrito}" />
+										</p:column>
+
+										<p:column headerText="Provincia"
+											filterBy="#{detall.provincia}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.provincia}" />
+										</p:column>
+
+										<p:column headerText="Departamento"
+											filterBy="#{detall.departamento}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.departamento}" />
+										</p:column>
+
+										<p:column headerText="Estado Contrato"
+											filterBy="#{detall.estado}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.estado}" />
+										</p:column>
+										<p:column headerText="U. Creador"
+											filterBy="#{detall.usrcre}" filterMatchMode="contains">
+											<h:outputText value="#{detall.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											filterBy="#{detall.feccre}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											filterBy="#{detall.usrmod}" filterMatchMode="contains">
+											<h:outputText value="#{detall.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											filterBy="#{detall.fecmod}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+
+									</p:dataTable>
+							</p:dialog>
+							
+							
+							
+					</h:form>
+					<h:form id="frmEstadoClausulas">
+								<p:confirmDialog message="¿Desea grabar las clausulas del #{ccMB.estado} ?"
+									header="Registro de clausulas del #{ccMB.estado}" severity="alert"
+									widgetVar="dlgRegistrarClausulaContrato">
+									<center>
+									<p:commandButton value="&nbsp;Aceptar" icon="icon-save"
+										update=":frmCondicion,:frmEstadoClausulas,:frmMaestra:listaMensajes"
+										actionListener="#{ccMB.grabarClausulaContrato}" oncomplete="dlgRegistrarClausulaContrato.hide()" onstart="statusLoading.show();" onsuccess="statusLoading.hide();"
+										/>
+									<p:commandButton value="&nbsp;Cancelar" onclick="dlgRegistrarClausulaContrato.hide()" icon="icon-cancel" />
+									</center>
+								
+								</p:confirmDialog>
+					
+					
+									<!--  INCLUIR CLAUSULAS DEL CONTRATO -->
+									<p:dialog header="Incluir Clausulas"
+										id="dlgClausulasContrato" width="688px" height="500px"
+										closable="true" closeOnEscape="true" resizable="false"
+										modal="true" showEffect="slide" hideEffect="slide"
+										widgetVar="dlgEstadoClausulasContrato"
+										style="border-width:9px;border-style:solid;  border-color:#6043dd;" >
+										<h:outputText value="Usuario Responsable" style="color:#168039;" />
+												<br />
+												<p:graphicImage width="30" height="30"
+													value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.nombres}"
+													style="color:#806300;" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.apellidopat}"
+													style="color:#806300;" />
+												
+												<br /><br />
+												<p:panel>
+										  		
+										  		  	<h:panelGrid columns="2">
+													<h:outputText value="Dia de Pago :"/> 
+												  	<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith" panelStyle="width:160px"
+														style="width:160px; float:left;" value="#{ccMB.contratoBean.idfechapago}"  disabled="#{ccMB.contratoBean.sicondicionclausula}" >
+														<f:selectItem itemLabel="Seleccionar" itemValue="0" />
+												  		<f:selectItems value="#{ccMB.listaDiaPago}" var="dp" itemLabel="#{dp.d_fecha_pago}"
+												  		itemValue="#{dp.id_fechapago}"  />
+												  	</p:selectOneMenu> 
+												  	
+												  	
+												 </h:panelGrid>
+												 </p:panel>
+											    <h:panelGrid columns="1">
+											<p:selectBooleanCheckbox value="#{ccMB.contratoBean.siinteresmoratorio}" itemLabel="Interes Moratorio :" disabled="#{ccMB.contratoBean.sicondicionclausula}" >
+											<p:ajax listener = "#{ ccMB.limpiarListaCondicion}" update="pnlInteresMoratorio,tblCondicionIncumplimiento" ></p:ajax>
+											</p:selectBooleanCheckbox>
+											<p:outputPanel id="pnlInteresMoratorio">
+											 <h:panelGrid style="margin-left:50px;"  rendered="#{ccMB.contratoBean.siinteresmoratorio}">
+
+												<h:selectOneRadio value="#{ccMB.tipoInteresMoratorio}" disabled="#{ccMB.contratoBean.sicondicionclausula}" 
+													layout="pageDirection">
+													<f:selectItem itemLabel="Aplicar Tasa de Interes Activa	de la SBS " itemValue="01" />
+													<f:selectItem itemLabel="Aplicar Tasa de Interes Legal de la SBS " itemValue="02" />
+													<p:ajax listener="#{ccMB.agregarClausulaxCondicion('01',ccMB.tipoInteresMoratorio)}" update="tblCondicionIncumplimiento" />
+												</h:selectOneRadio>
+											</h:panelGrid>
+											</p:outputPanel>
+											
+											<p:selectBooleanCheckbox value="#{ccMB.contratoBean.sipenalidad}" itemLabel="Penalidades :" disabled="#{ccMB.contratoBean.sicondicionclausula}"  >
+											<p:ajax listener = "#{ ccMB.limpiarListaCondicion}" update="pnlPenalidades,listaDetalleclausulas,tblCondicionIncumplimiento" ></p:ajax>
+											</p:selectBooleanCheckbox>
+										   <p:outputPanel id="pnlPenalidades">
+											   <h:panelGrid style="margin-left:50px;"  rendered="#{ccMB.contratoBean.sipenalidad}">
+
+													
+									   <p:dataTable id="listaDetalleclausulas" var="pen"  
+													rowKey="#{pen.id_detalle}"
+													rowIndexVar="index" 
+													value ="#{ccMB.listaPenalidades}" 
+													selection="#{ccMB.detalleclausula}"
+													selectionMode="single" 
+													emptyMessage="No se ha encontrado ningún registro "
+													>
+<!-- 													   <f:facet name="header"> -->
+<!-- 													   		Elegir Penalidad  -->
+<!-- 													   </f:facet> -->
+                                                        <p:inputText value="#{pen.id_detalle}" id="hiddenfield" type="hidden" />
+													   <p:column headerText="N°" style="width:32px" >
+															<h:outputText value="#{index +1}" />
+													   </p:column>
+<!-- 													   <p:column headerText="ID"> -->
+<!-- 													       <h:outputText value="#{pen.id_detalle}" /> -->
+<!-- 													   </p:column> -->
+													   <p:column headerText="Tipo">
+													       <h:outputText value="#{pen.nombre}" />
+													   </p:column>
+													   <p:column headerText="Opcion">
+													       <p:commandButton value="Añadir" disabled="#{ccMB.contratoBean.sicondicionclausula}"
+													        actionListener="#{ccMB.agregarInformacionClausulaPenalidad(pen.id_detalle)}"
+													         process="@this"
+													         update=":frmEstadoClausulas:panel-detalle-penalidad,:frmMaestra:listaMensajes">
+													       </p:commandButton>
+													   </p:column>
+													
+													</p:dataTable>
+														
+												</h:panelGrid>
+											 </p:outputPanel>
+											 <br/><br/>
+											 <p:panel header="Tabla de Condiciones de Clausulas"  style="margin-top:5px;margin-left:6px;">
+											 <p:dataTable id="tblCondicionIncumplimiento" value="#{ccMB.listaCondicionIncumplimiento}" rowIndexVar="index" var="listcond"
+											 emptyMessage="No se ha encontrado ningún registro "
+											 >
+											 
+											   <p:column headerText="Nº">
+											        <h:outputText value="#{index + 1}" />										   
+											   </p:column>
+											   <p:column headerText="Clausula" >
+											   		<h:outputText value="#{listcond.detalleclausula.tipoclausula.nombre}" />
+											   </p:column>
+											   <p:column headerText="Tipo De Clausula" >
+											   		<h:outputText value="#{listcond.detalleclausula.nombre}" />
+											   </p:column>
+											   <p:column headerText="Valor Porcentaje" >
+											   		<h:outputText value="#{listcond.valor_porcentaje}" />
+											   </p:column>
+											   <p:column headerText="Ejecución" >
+											   		<h:outputText value="#{listcond.ejecucion_periodica}" />
+											   </p:column>
+											   <p:column headerText="Opciones" >
+											             <p:commandButton 
+													         disabled="#{ccMB.contratoBean.sicondicionclausula}"
+													         icon="ui-icon-trash"  actionListener="#{ccMB.eliminarItemClausulaxCondicion(listcond.detalleclausula)}" update=":frmEstadoClausulas:pnlInteresMoratorio ,tblCondicionIncumplimiento" >
+													       </p:commandButton>
+											   </p:column>
+
+											 </p:dataTable>
+												</p:panel>
+												
+												</h:panelGrid>
+												<br/><br/>
+												<center>
+												<p:commandButton value="Grabar"  actionListener="#{ccMB.validarRegistroClausulas}" ajax="true" update=":frmMaestra:listaMensajes" icon="icon-save" disabled="#{ccMB.contratoBean.sicondicionclausula}"/>
+												<p:commandButton value="Cerrar" oncomplete="dlgEstadoClausulasContrato.hide()"  icon="icon-cancel"/>
+												</center>
+											  
+									</p:dialog>
+								
+									<p:dialog header=" Detalle Clausula " id="dlgAgregarDatosPenalidad"
+											width="auto" height="auto" closable="true"
+										    closeOnEscape="true" resizable="false"
+										    widgetVar="dlgAgregarDatosPenalidad" modal="true"
+										    style="border-width:9px;border-style:solid;  border-color:#c2c2c2;"
+										>
+										<p:outputPanel id="panel-detalle-penalidad">
+										<h:panelGrid columns="2">
+										
+										<h:outputText  value="Ingrese Valor (%): " style="text-align:right;"/>
+										<p:inputText value="#{ccMB.condicionCumplimiento.valor_porcentaje}"
+											style="margin-left:94px;align-text:right;font-size:15px;width: 24%;"     onkeypress="return isNumberKey(event) " onkeyup="limitDecimalPlaces(event, 2)" />
+										<h:outputText  value="Ejecucion Periodica " style="text-align:right;"/>
+											  <h:selectOneMenu value="#{ccMB.condicionCumplimiento.ejecucion_periodica}"
+													layout="pageDirection">
+													<f:selectItem itemLabel="Diaria " itemValue="Diaria" />
+													<f:selectItem itemLabel="Mensual " itemValue="Mensual" />
+													
+												</h:selectOneMenu>
+										
+									   </h:panelGrid>
+									</p:outputPanel>
+									   
+										  <center>
+												<p:commandButton value="Aceptar"
+													icon="icon-save" actionListener="#{ccMB.agregarClausulaxCondicion('02',ccMB.detalleclausula.id_detalle)}"  process="panel-detalle-penalidad @this" 
+													update="tblCondicionIncumplimiento,:frmMaestra:listaMensajes" oncomplete="dlgAgregarDatosPenalidad.hide()"/>
+													
+
+												
+
+												<p:spacer width="25" />
+												<p:commandButton value="&nbsp;Cancelar"
+												update="tblCondicionIncumplimiento"
+												oncomplete="dlgAgregarDatosPenalidad.hide()" icon="icon-cancel" />
+											</center>
+										
+									</p:dialog>
+								</h:form>
+				</div>
+			</div>
+				<script type="text/javascript">
+				  //<![CDATA[
+		     	function convertir_a_mayuscula(elemento) {
+					//alert("metodo");
+					elemento.value = elemento.value.toUpperCase();
+	 		   		//e.value = e.value.toUpperCase();
+				}
+		     	function validarKey(evt){
+		     	    
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57) { // is a number.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+		     	function limitDecimalPlaces(e, count) {
+		     		  if (e.target.value.indexOf(".") == -1) { return; }
+		     		  if ((e.target.value.length - e.target.value.indexOf(".")) > count) {
+		     		    e.target.value = parseFloat(e.target.value).toFixed(count);
+		     		  }
+		     		}
+
+		     	function isNumberKey(evt)
+		     		{
+		     		  var charCode = (evt.which) ? evt.which : evt.keyCode;
+		     		  if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+		     		    return false;
+
+		     		  return true;
+		     		}
+
+
+		  	   //]]>
+				
+
+
+			</script>
+			<ui:include src="archivo/pgUpload.xhtml" />
+			<ui:include src="archivo/pgDownload.xhtml"/>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+

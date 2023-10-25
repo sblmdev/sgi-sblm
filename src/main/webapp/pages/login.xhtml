@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+<!-- 	<link rel="shortcut icon" type="image/x-icon" -->
+<!-- 	 href="#{request.contextPath}/resources/icons/favicon.ico" /> -->
+<!-- 		href="#{request.contextPath}/resources/icons/favicon.png" /> -->
+	<link href="resources/css/estilo.css" rel="stylesheet" type="text/css" />
+	<!-- para aceso normal -->
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<!-- para aceso despues de entrar a la paina restringida -->
+	<script type="text/javascript">
+		function handleLoginRequest(xhr, status, args) {
+
+			if (args.validationFailed || !args.loggedIn) {
+
+			} else {  
+				window.location = "/sgi-sblm/pages/pgNotificaciones.jsf"
+			}
+		}
+	</script>
+
+<!-- 	<title>SBLM - SGI</title> -->
+	<title>SBLM</title>
+</h:head>
+<h:body>
+
+	<h:form id="formLogin">
+	<p:focus context="formLogin"/>  
+	<p:growl id="messages" showDetail="true" sticky="false" life="3000" />
+		<div id="contenedor">
+			<div class="contenidoLogin">
+				<div class="login01"></div>
+				<div class="login02">
+					<p:inputText id="idUser" value="#{usuarioMB.nombreusr}"
+						style="margin-left: 50px; width: 217px;font-size:20px;    height: 51px;box-shadow: 0px 1px 1px #ffffff; border-style: none;color:black; border-width: 0; background-color: #ffffff" />
+				</div>
+				<div class="login03"></div>
+				<div class="login04">
+					<p:password id="idPass" value="#{usuarioMB.contrasenausr}"
+						onblur="disable"
+							style="margin-left: 50px; width: 217px;font-size:20px; box-shadow: 0px 1px 1px #ffffff;margin-top:1px; border-color:#ffffff;  height: 50px; color:black;  background-color: #ffffff" />
+				</div>
+				<div class="login05"></div>
+
+				<div class="login06_1">
+					<p:commandButton id="registroUsuario" value="Entrar"
+						actionListener="#{usuarioMB.loguear}" icon="entrar"
+						oncomplete="handleLoginRequest(xhr, status, args)"
+						update="messages"
+						stylex="  margin-top:3px; box-shadow: 0px 1px 1px #ffc600; ">
+					
+					</p:commandButton>
+
+				</div>
+				<div class="login06_4">
+
+					<p:commandLink id="nonAjax" onclick="dlgRecuperar.show()" action="#{usuarioMB.limpiarNombreUsuario}"
+						style="margin-right:20px;color:black;" ajax="true" update=":frmRecPass:pgRecuperar">
+						<h:outputText value="¿Olvido su contraseña?" />
+					</p:commandLink>
+
+				</div>
+
+			</div>
+			<div class="login07"></div>
+		</div>
+	</h:form>
+
+
+	<!-- 	FORMULARIO RECUPERAR CONTRASENHA -->
+	<h:form id="frmRecPass">
+	<p:growl id="msjPass" showDetail="true" sticky="false" life="3000"  />
+		<p:dialog id="idDlgRecuperar" header="RECUPERAR CONTRASE&Ntilde;A"
+			widgetVar="dlgRecuperar" modal="true" fixedCenter="true"
+			resizable="false">
+
+			
+			<h:panelGrid id="pgRecuperar" cellpadding="4" style="margin:10px;">
+				
+
+				<p:row>
+					<p:column>
+						<h:outputText value="Nombre de usuario:" />
+					</p:column>
+					<p:spacer width="15"/>
+					<p:column>
+						<p:inputText value="#{usuarioMB.usuario.nombreusr}"
+							style="width: 130px" />
+					</p:column>
+				</p:row>
+				
+				<br/>
+				
+				<p:row>
+					<p:column>
+						<center>
+						<p:commandButton value="Enviar"
+							actionListener="#{usuarioMB.recuperarContrasenha}"
+							oncomplete="dlgRecuperar.hide()" update=":frmRecPass:msjPass"
+							icon="icon-guardar" title="guardar" />
+						
+						<p:spacer width="15"/>
+							
+						<p:commandButton value="Cancelar"
+							oncomplete="dlgRecuperar.hide()" icon="icon-cancelar"
+							title="cancelar" />
+						</center>
+					</p:column>
+				</p:row>
+
+
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+
+</h:body>
+</html>

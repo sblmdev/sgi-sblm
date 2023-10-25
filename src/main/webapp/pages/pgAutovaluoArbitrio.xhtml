@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador" style="background-color:#36A6DE;">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="recaudacion_iconoTitulo"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Autoval&uacute;o</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Consultas</label>
+					</div>
+				</div>
+				
+				<div class="contenidoPrincipal_SubFondo">
+					
+					<!-- contenido MODIFICABLE -->
+<!-- 					<div class="autovaluo_iconoSubTitulo"> -->
+<!-- 						<h:outputText id="arren_lblSubtituloDesc2" -->
+<!-- 							style="float:left;margin-left:48px; margin-top:18px;font-size:10px;" -->
+<!-- 							value="Arbitrios" /> -->
+<!-- 					</div> -->
+<!-- 					<div id="arren_lblSubtitulo" -->
+<!-- 						class="contenidoPrincipal_subFondo_lblTitulox"> -->
+<!-- 						<h:outputText style="float:left;margin-left:5px; margin-top:2px;" -->
+<!-- 							value="Autovalúo" /> -->
+<!-- 					</div> -->
+					<div class="consultaArrendamiento_iconoSubTitulo">
+					</div>
+                      <div id="arren_lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">
+						<h:outputText style="float:left;margin-left:5px; margin-top:10px;font-size:15px;"
+							value="Consulta" />
+					</div>
+
+					
+<!-- 					<p:commandLink id="idDivCartas" styleClass="arren_btnAtendidos" -->
+<!-- 						style="background-color: #fed02e;" -->
+<!-- 						onclick="window.location.href='/sgi-sblm/pages/pgRecaudacionAutovaluoRegistroReporte.jsf'"> -->
+<!-- 						<div class="btncentrado">Reporte</div> -->
+<!-- 					</p:commandLink> -->
+<!-- 					<p:commandLink id="idDivRegistro" styleClass="arren_btnPendientes" -->
+<!-- 						onclick="window.location.href='/sgi-sblm/pages/pgRecaudacionAutovaluoRegistroCarta.jsf'"> -->
+<!-- 						<div class="btncentrado">Cartas</div> -->
+<!-- 					</p:commandLink> -->
+<!-- 					<p:commandLink id="idDivReporte" style="background-color: #fed02e;" -->
+<!-- 						styleClass="botonDesactivadoCarta" -->
+<!-- 						onclick="window.location.href='/sgi-sblm/pages/pgRecaudacionAutovaluoRegistroArbitrio.jsf'"> -->
+<!-- 						<div class="btncentrado">Registro</div> -->
+<!-- 					</p:commandLink> -->
+						<!--  CONTENEDOR DE CONSULTA -->
+						<div class="contenidoPrincipal_fondo_formulario">
+							<div class="contenidoPrincipal_ContenedorBlano">
+							<!-- ################################ PANEL ############################## -->
+										<div id="contenidoAutovaluoArbitrio" class="recau_panelPendientes">
+										<h:form id="tabAutovaluo">
+											<h:panelGrid columns="4" style="text-align:center;margin-left:15px;margin-top:15px;">
+												<p:remoteCommand name="busquedaAutovaluoArbitrio" 
+															actionListener="#{autovaluoconsultaMB.buscarUpaArbitrio}"
+															update="listaAutovaluoArbitrio"/>
+												<h:outputText value="Ingrese Clave: " />
+												<p:inputMask id="clave" mask="**-****-***" value="#{autovaluoconsultaMB.claveUpaArbitrio}"
+												onkeypress="if (event.keyCode == 13){ busquedaAutovaluoArbitrio();return false;}"
+												style="width:90px;text-align:center;fond-size:12px;">
+												</p:inputMask>
+											
+											</h:panelGrid>
+											<p:dataTable id="listaAutovaluoArbitrio" var="arbitrio"
+											selectionMode="single" rowKey="#{arbitrio.idarbitrio}"
+											value="#{autovaluoconsultaMB.listaAutovaluoArbitrio}"
+											selection="#{autovaluoconsultaMB.arbitrioBean}"
+											emptyMessage="No se ha encontrado ning&uacute;n registro" rowIndexVar="index"
+											style="width:680px;max-heigth:200px; font-size:10px ;margin:10px 0px 0px 20px;text-align: center;"
+											styleClass="ui-datatable-hor-scroll-horizontal">
+											
+											<p:ajax event="rowSelect" update=":tabAutovaluo" listener="#{autovaluoconsultaMB.buscarArbitrioxCondicionSeleccionado}"/>
+											
+											<p:columnGroup type="header">
+												<p:row>
+													<p:column rowspan="2" headerText="N°" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Upa" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Estado" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Periodo" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="trimestre 1" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="trimestre 2" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="trimestre 3" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="trimestre 4" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Total" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Direccion" style="vertical-align:middle;"/>												
+													<p:column rowspan="2" headerText="Usu. Creador" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Fec. Creación" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Usu. Modificador" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Fec. Modificación" style="vertical-align:middle;"/>
+												
+												</p:row>
+											</p:columnGroup>
+											
+<!-- 											<p:column> -->
+<!-- 												<h:outputText value="#{arbitrio.idarbitrio}" /> -->
+<!-- 											</p:column> -->
+											<p:column>
+													<h:outputText value="#{index+1}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.clave}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.estado}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.periodo}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.trim1}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.trim2}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.trim3}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.trim4}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.total}" >
+												<f:convertNumber currencySymbol="S/. " groupingUsed="true" locale="en"
+														maxFractionDigits="2" type="currency"/>
+												</h:outputText>
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.direccion}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.usrcre}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy"/>
+												</h:outputText>	
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.usrmod}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy"/>
+												</h:outputText>	
+											</p:column>
+											</p:dataTable>
+											<p:panel id="tabInquilino" header="Informaci&oacute;n Inquilino" style="margin-left:6px;margin-top:20px;">
+													<table width="600" style="margin: 30px:" cellspacing="5">
+														<tr>
+															<td width="25%"><h:outputText value="Tipo de Persona :" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.tipopersona}" style="color: #4C4C4C;" /></td>
+														</tr>	
+														<tr>
+															<td width="25%"><h:outputText value="Nombres :" style="color: #4C4C4C;" rendered="#{autovaluoconsultaMB.sipersonanatural}" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.nombreinquilino}" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="DNI :" style="color: #4C4C4C;" rendered="#{autovaluoconsultaMB.sipersonanatural}" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.dni}" style="color: #4C4C4C;" /></td>
+														</tr>
+														<tr>
+															<td width="25%"><h:outputText value="Raz&oacute;n Social:" style="color: #4C4C4C;" rendered="#{!autovaluoconsultaMB.sipersonanatural}" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.nombreinquilino}" style="color: #4C4C4C;"  rendered="#{!autovaluoconsultaMB.sipersonanatural}"/></td>
+															<td width="25%"><h:outputText value="RUC :" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.ruc}" style="color: #4C4C4C;" /></td>
+														</tr>
+														<tr>
+															<td width="25%"><h:outputText value="Inquilino Haviende:" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.siocupante=='TRUE' ? 'Si':'No'}" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="Nombre ocupante :" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.nombreocupante}" style="color: #4C4C4C;" /></td>
+														</tr>
+<!-- 														<tr> -->
+<!-- 															<td width="25%"><h:outputText value="Direcci&oacute;n:" style="color: #4C4C4C;" /></td> -->
+<!-- 															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.nombreinquilino}" style="color: #4C4C4C;" /></td> -->
+<!-- 															<td width="25%"><h:outputText value="Referencia :" style="color: #4C4C4C;" /></td> -->
+<!-- 															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.ruc}" style="color: #4C4C4C;" /></td> -->
+<!-- 														</tr> -->
+														
+													</table>
+											</p:panel>
+											<p:panel id="tab2Autovaluo" header="Informaci&oacute;n Arbitrio" style="margin-left:6px;margin-top:20px;">
+													<table width="600" style="margin: 30px:" cellspacing="5">
+														<tr>
+															<td width="25%"><h:outputText value="Estado :" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.estado}" style="color:#4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="Frecuencia :" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.frecuencia}" style="color: #4C4C4C;" /></td>
+														</tr>
+														<tr>
+															<td width="25%"><h:outputText value="Direcci&oacute;n:" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.direccion}" style="color:#4C4C4C;" /></td>
+<!-- 															<td width="25%"><h:outputText value="Urbanizacion :" style="color: #4C4C4C;" /></td> -->
+<!-- 															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.urbanizacion}" style="color: #4C4C4C;" /></td> -->
+														</tr>
+														<tr>
+															<td width="25%"><h:outputText value="Periodo :" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.periodo}" style="color:#4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="Total :" style="color: #4C4C4C;" /></td>
+															<td width="25%"><h:outputText value="#{autovaluoconsultaMB.arbitrioBean.total}" style="color: #4C4C4C;" /></td>
+														</tr>
+													</table>
+											</p:panel>
+											<p:panel header="Cronograma de Pagos" style="margin-top:5px;margin-left:6px">
+												<p:dataTable id="listaArbitrios" value="#{autovaluoconsultaMB.listaPagos}" 
+													var="pagoArbitrio" rowkey="#{pagoArbitrio.secuencia}"
+													style="font-size:12px ; text-align:center;"
+													emptyMessage="No se ha generado ningun Pago" rowIndexVar="index"
+													rows="12" paginator="true" paginatorPosition="bottom"
+													paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+													<p:columnGroup type="header">
+														<p:row>
+															<p:column rowspan="2" headerText="#" style="vertical-align: middle;"/>
+															<p:column rowspan="2" headerText="Periodo" style="vertical-align: middle;"/>
+															<p:column rowspan="2" headerText="Trimestre" style="vertical-align: middle;"/>
+															<p:column rowspan="2" headerText="Mes" style="vertical-align: middle;"/>
+															<p:column rowspan="2" headerText="Monto a pagar" style="vertical-align: middle;"/>
+
+														</p:row>
+													</p:columnGroup>
+													<p:column>
+														<h:outputText value="#{index+1}" />
+													</p:column>
+													<p:column>
+														<h:outputText value="#{pagoArbitrio.periodo}" />
+													</p:column>
+													<p:column>
+														<h:outputText value="#{pagoArbitrio.trimestre}" />
+													</p:column>
+													<p:column>
+														<h:outputText value="#{pagoArbitrio.mes}" />
+													</p:column>
+													<p:column>
+														<h:outputText value="#{pagoArbitrio.monto}" />
+													</p:column>
+													
+												
+												</p:dataTable>
+											
+											
+											
+											</p:panel>
+											<!-- ######################################INFORMACIÓN DE ESTADO DE CUENTA####################################################### -->
+											<p:panel header="Informaci&oacute;n de Estado de Cuenta" style="margin-left:6px;margin-top:5px;align-text:center;">
+												<div style="margin-top:10px;">
+													<center>
+															<p:commandButton style="background: #36A6DE;color:white;padding:4px 0px;border-radius:7px; ;border: 0px;margin:0px;"
+															process="@this" actionListener="#{autovaluoconsultaMB.obtenerInformacionCuotasPagadasArbitrios}" 
+															oncomplete="dlgCuotasPagadas.show()"
+															icon="ui-icon-info"
+															update=":frmCuotasPagadas"
+															value="Pagados">
+															
+															</p:commandButton>	
+															<p:spacer width="20"/>
+															<p:commandButton style="background: #36A6DE;color:white;padding:4px 0px;border-radius:7px; ;border: 0px;margin:0px;" 
+															process="@this" actionListener="#{autovaluoconsultaMB.obtenerInformacionCuotasPendientesArbitrios}"
+															oncomplete="dlgCuotasPendientes.show()"
+															icon="ui-icon-info"
+															update=":frmCuotasPendientes"
+															value="Pendientes">
+															
+															</p:commandButton>													
+													</center>
+												</div>
+											
+											</p:panel>
+										
+										
+										</h:form>
+										
+										</div>
+							
+							</div>
+						
+						</div>
+						<!-- FIN DE CONTENEDOR  -->
+
+
+				</div>
+			</div>
+           <ui:include src="pgDetalleCuotasPagadasAutovaluoArbitrio.xhtml"/>
+           <ui:include src="pgDetalleCuotasPendientesAutovaluoArbitrio.xhtml"/>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

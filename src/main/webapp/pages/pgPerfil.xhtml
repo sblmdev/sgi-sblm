@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+
+
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+			<div class="contenidoPrincipal_FondoPrincipal">
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="perfilModulo_IconoIdentificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Administraci&oacute;n</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Perfiles</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+
+					<div class="contenidoPrincipal_subFondo_IconoPerfil"></div>
+					<div id="lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">Perfil</div>
+					<div class="contenidoPrincipal_fondo_formulario">
+
+
+						<!-- CONTENIDO -->
+						<div class="administrador_paginasContenedor">
+							<div class="perfil_fondo_formulario1">
+								<div class="perfil_icono_step1"></div>
+								<div class="btnNuevoRegistro">
+									<p:commandLink update=":frmRegPerfil,:frmRegPerfil2:dgvDatos"
+										actionListener="#{perfilmoduloMB.limpiarCampos}"
+										style="margin-right:20px;">
+										<p:graphicImage value="/resources/images/perfil/nuevo_mas.png"
+											alt="Limpiar formulario" title="limpiar" />
+									</p:commandLink>
+								</div>
+
+								<h:form id="frmRegPerfil">
+									<p:growl id="msjderivacion" showDetail="true" sticky="false"
+										life="4000" />
+									<div class="filaPerfil">
+										<h:outputText class="lblPerfil" value="Perfil:" />
+										<p:inputText id="txtPerfil" styleClass="txtPerfil"
+											value="#{perfilmoduloMB.perfil.nombreperfil}" />
+									</div>
+									<div class="filaDescripcion">
+										<h:outputText class="lblDescripcion" value="Descripcion:" />
+										<p:inputText id="txtDescripcion" styleClass="txtDescripcion"
+											value="#{perfilmoduloMB.perfil.descripcionperfil}" />
+									</div>
+									<div class="filaEstadoPerfil">
+										<h:outputText class="lblEstadoPerfil" value="Estado:" />
+										<div class="cboEstadoPerfil">
+											<p:selectOneMenu value="#{perfilmoduloMB.perfil.estado}"
+												id="cbxestadoPerfil" style="width: 190px;  font-size: 11px;">
+												<f:selectItem itemLabel="Seleccione estado" itemValue="0" />
+												<f:selectItem itemLabel="Activo" itemValue="true" />
+												<f:selectItem itemLabel="Inactivo" itemValue="false" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="perfil_icono_step2"></div>
+
+									<div class="tablaPerfil">
+										<div class="cbxPerfilModulo">
+											<p:selectOneMenu style="width: 130px;"
+												id="cbxModPerfilmodulo" value="#{perfilmoduloMB.idenmodulo}">
+												<f:selectItem itemLabel="Seleccione modulo" itemValue="0" />
+												<f:selectItems value="#{perfilmoduloMB.modulos}" var="modul"
+													itemLabel="#{modul.nombremodulo}"
+													itemValue="#{modul.idmodulo}">
+												</f:selectItems>
+											</p:selectOneMenu>
+										</div>
+										<div class="cbxPerfilEstado">
+											<p:selectOneMenu style="width: 115px;"
+												value="#{perfilmoduloMB.idenestado}">
+
+												<f:selectItem itemLabel="Activo" itemValue="true" />
+												<f:selectItem itemLabel="Inactivo" itemValue="false" />
+
+
+											</p:selectOneMenu>
+										</div>
+										<div class="cbxPerfilPermiso">
+											<p:selectOneMenu style="width:115px;"
+												value="#{perfilmoduloMB.idenpermiso}">
+
+												<f:selectItems value="#{permisoMB.permisos}" var="permi"
+													itemLabel="#{permi.valcrud}" itemValue="#{permi.idpermiso}" />
+											</p:selectOneMenu>
+										</div>
+
+										<p:commandLink rendered="#{!perfilmoduloMB.mostrarboton}"
+											id="btnAgregarModulo"
+											update=":frmRegPerfil:tablaMod,:frmRegPerfil, :frmRegPerfil:cbxModPerfilmodulo"
+											action="#{perfilmoduloMB.agregarRegistro}"
+											style="float:left; width:15px;margin-top:7px;"
+											onclick="validacionPerfilAgregarModulo();">
+											<p:graphicImage value="/resources/icons/mas.png"
+												alt="Agregar modulo" title="Agregar Modulo" />
+											<f:param name="id" value="123" />
+										</p:commandLink>
+
+										<p:commandLink rendered="#{perfilmoduloMB.mostrarboton}"
+											update=":frmRegPerfil:tablaMod,:frmRegPerfil"
+											action="#{perfilmoduloMB.actualizarRegistroSeleccionado}"
+											style="float:left; width:15px;margin-top:17px;margin-left:5px;">
+											<p:graphicImage value="/resources/icons/disk.png"
+												alt="Actualizar Registro" title="Actualizar Registro" />
+											<f:param name="id" value="123" />
+										</p:commandLink>
+
+										<div>
+											<p:dataTable id="tablaMod" var="modu"
+												rendered="#{perfilmoduloMB.estadoagregar}"
+												value="#{perfilmoduloMB.listaperfmodperm}"
+												rowKey="#{modu.idmodulo}"
+												selection="#{perfilmoduloMB.perfilmoduPermiso}"
+												selectionMode="single"
+												style="font-size: 10px;float:left;width:390px;margin-top:5px; text-align:center;">
+												<p:ajax event="rowSelect"
+													listener="#{perfilmoduloMB.activarActualizado}"
+													update=":frmRegPerfil" />
+												<p:column headerText="Modulo" style="width:50%">
+													<h:outputText value="#{modu.nombremodulo}" />
+												</p:column>
+												<p:column headerText="estado" style="width:25%;">
+													<p:graphicImage width="20" height="20"
+														value="/resources/icons/#{modu.estado}.png" alt="Activo"
+														title="Activo" />
+												</p:column>
+
+												<p:column headerText="Lectura/Escritura" style="width:25%;">
+													<h:outputText value="#{modu.nombrepermiso}" />
+												</p:column>
+												<p:column style="text-align: center;" width="20">
+													<p:commandButton icon="icon-delete" title="Eliminar"
+														update="tablaMod" action="#{perfilmoduloMB.quitarModulo}">
+														<f:setPropertyActionListener value="#{modu}"
+															target="#{perfilmoduloMB.moduloquitado}" />
+													</p:commandButton>
+												</p:column>
+											</p:dataTable>
+										</div>
+									</div>
+
+
+									<div class="perfil_fondoGuardar">
+										<p:commandButton id="btnRegPerfil"
+											oncomplete="validacionPerfil();" title="guardar"
+											value="Guardar" style="font-size: 11px;">
+
+										</p:commandButton>
+									</div>
+
+								</h:form>
+								<h:form>
+									<p:growl id="growlRegistrar" sticky="false" life="4000" />
+									<p:confirmDialog message="¿Desea Guardar Perfil?"
+										header="Registro Perfil" severity="alert"
+										widgetVar="dlgRegistrarPerfil">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmRegPerfil2:dgvDatos, :frmInfo,:frmRegPerfil"
+											actionListener="#{perfilmoduloMB.registrarPerfilModulo2}"
+											oncomplete="dlgRegistrarPerfil.hide();" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmRegPerfil "
+											oncomplete="dlgRegistrarPerfil.hide()" icon="icon-cancel" />
+									</p:confirmDialog>
+								</h:form>
+
+								<div class="tablaPerfil2">
+									<h:form id="frmRegPerfil2">
+										<p:dataTable id="dgvDatos" var="perfmod"
+											value="#{perfilmoduloMB.perfiles}"
+											rowKey="#{perfmod.idperfil}"
+											selection="#{perfilmoduloMB.perfil}" selectionMode="single"
+											paginator="true"
+											style="width:435px; font-size: 10px;  text-align:center;"
+											paginatorTemplate="Reg. por p&aacute;gina: {RowsPerPageDropdown}  &nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp;   {CurrentPageReport}"
+											currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+											rowsPerPageTemplate="10,15,20" rows="10"
+											paginatorPosition="top" scrollable="true" scrollWidth="435">
+											<p:ajax event="rowSelect"
+												listener="#{perfilmoduloMB.onRowSelect}"
+												update=":frmRegPerfil" />
+											<p:column headerText="Perfil" style="width: 100px;">
+												<h:outputText value="#{perfmod.nombreperfil}" />
+											</p:column>
+											<p:column headerText="Usuario Creador" style="width: 120px; ">
+												<h:outputText value="#{perfmod.usrcre}" />
+											</p:column>
+											<p:column headerText="Fecha creacion" style="width:100px;">
+												<h:outputText value="#{perfmod.feccre}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="Usuario Modificador"
+												style="width: 120px; ">
+												<h:outputText value="#{perfmod.usrmod}" />
+											</p:column>
+											<p:column headerText="Fecha modificaci&oacute;n"
+												style="width:100px;">
+												<h:outputText value="#{perfmod.fecmod}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+												</h:outputText>
+											</p:column>
+
+											<p:column headerText="Estado" style="width: 40px;">
+												<p:graphicImage width="20" height="20"
+													value="/resources/icons/#{perfmod.estado}.png" alt="Activo"
+													title="Activo" />
+											</p:column>
+											<p:column style="text-align: center;" width="20">
+												<p:commandButton oncomplete="dlgEliminar.show();"
+													icon="icon-delete" title="Eliminar">
+													<f:setPropertyActionListener value="#{perfmod}"
+														target="#{perfilmoduloMB.perfilmoduloeliminar}" />
+												</p:commandButton>
+											</p:column>
+										</p:dataTable>
+
+									</h:form>
+								</div>
+								<h:form id="frmEliminar">
+									<p:confirmDialog id="dlgEliminar"
+										message="¿Desea eliminar este Perfil?"
+										header="Eliminar Perfil" severity="alert"
+										widgetVar="dlgEliminar">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmRegPerfil, :frmRegPerfil2, :frmMaestra"
+											actionListener="#{perfilmoduloMB.eliminarPerfiModulo}"
+											oncomplete="dlgEliminar.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmRegPerfil, :frmRegPerfil2"
+											oncomplete="dlgEliminar.hide()" icon="icon-cancel" />
+
+									</p:confirmDialog>
+
+								</h:form>
+								<div class="perfilLeyenda">
+									<div class="perfilLeyendaTitulo">
+										<p:graphicImage width="15" height="15"
+											style="margin-top:3px;margin-left:20px;"
+											value="/resources/icons/leyendaBandera.png" alt="Activo"
+											title="Activo" />
+										<p:outputLabel style="margin-left:5px;" value="Leyenda" />
+									</div>
+									<div class="perfilLeyendaActivo">
+										<div class="perfilLeyendaActivoIcon">
+											<p:graphicImage width="20" height="20"
+												value="/resources/icons/true.png" alt="Activo"
+												title="Activo" />
+										</div>
+										<div class="perfilLeyendaActivoDes">Activo</div>
+									</div>
+
+									<div class="perfilLeyendaInactivo">
+										<div class="perfilLeyendaInactivoDesIcon">
+											<p:graphicImage width="20" height="20"
+												value="/resources/icons/false.png" alt="Inactivo"
+												title="Inactivo" />
+										</div>
+										<div class="perfilLeyendaInactivoDes">Inactivo</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="paginaInterior2">
+								<h:form id="frmInfo">
+									<div class="subcontenidoInfo_Cabecera">
+										<div class="subcontenidoInfo_logoTitulo" />
+										<div class="subcontenidoInfo_descripcionTitulo">
+											Informaci&oacute;n</div>
+									</div>
+
+
+									<div class="subcontenidoInfo_detContenidoFondo">
+
+										<div class="subcontenidoInfo_Numero2">
+											<h:outputText styleClass="informacion6"
+												value="#{perfilmoduloMB.numPerfiles}" />
+										</div>
+										<div class="subcontenidoInfo_textoconectadosfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Perfiles" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Creados" />
+										</div>
+									</div>
+
+									<div class="subcontenidoInfo_detUsuario">
+
+										<div class="detalleTopfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value="&Uacute;ltimo perfil creado" />
+											<br />
+
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila2"
+												value="#{perfilmoduloMB.ultimoPerfil}" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila3"
+												value="#{perfilmoduloMB.fechaultimoPerfil}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</div>
+
+
+
+									</div>
+								</h:form>
+							</div>
+
+
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,229 @@
+function levantarVentanaPrincipal(url, ancho, alto) {
+	day = new Date();
+	id = day.getTime();
+	eval("page" + id + " = window.open(url, '" + id
+			+ "', 'toolbar=No,location=0,scrollbars=No,status=No,"
+			+ "resizable=No,fullscreen=No,width=" + ancho + ",height= " + alto
+			+ ",top=0, left=0');");
+}
+
+function levantarVentana(url, ancho, alto) {
+	day = new Date();
+	id = day.getTime();
+	eval("page"
+			+ id
+			+ " = window.open(url, '"
+			+ id
+			+ "', 'toolbar=0, scrollbars=0, location=0, statusbar=0, menubar=0, resizable=NO, width="
+			+ ancho + ", height= " + alto + "');");
+}
+
+function levantarVentanachat(url, ancho, alto) {
+	id = document.getElementById('form:sesionAnexo').value;
+	eval("page"
+			+ id
+			+ " = window.open(url, '"
+			+ id
+			+ "', 'toolbar=0, scrollbars=0, location=0, statusbar=no, menubar=0, resizable=NO, width="
+			+ ancho + ", height= " + alto + "');");
+}
+
+function respuestaServer(xhr, status, args) {
+	if (args.entro == 1) {
+		levantarVentanaPrincipal('pages/panelAsesorServicio.jsf?cc='
+				+ document.getElementById('form:anexoClave').value, 1100, 170);
+	} else if (args.entro == 2) {
+		alert('Su direccion de ordenador no esta asociado a algun anexo asterisk');
+	} else if (args.entro == 3) {
+		alert('Ingrese el nombre de usuario y clave correcta');
+	} else if (args.entro == 4) {
+		levantarVentana('pages/panelConsultor.jsf', document.body.clientWidth,
+				650);
+	} else {
+		alert('Ingrese con su nombre de usuario y clave');
+	}
+}
+
+function handleNumReq(data) {
+	if (data.indexOf(document.getElementById("form:sesionAnexo").value) != -1) {
+		/*var opciones = "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, width=235, height=20, top=85, left="
+				+ ((document.body.clientWidth / 2) - 100);
+		window.open('alertaAtencion.jsf?c=' + data,
+				"nuevaVentana", opciones);
+		document.getElementById('form:channel').value = data;*/
+		var biNumReqAtencion = data.split(',')[0];
+		var channel = data.split(',')[1];
+		document.getElementById('form:biNumReqAtencion').value = biNumReqAtencion;
+		document.getElementById('form:channel').value = channel;
+		widgetDlgInfo.show();
+	}
+}
+
+function cortarNumReqChannel() {
+	var src = String(window.location.href).split('?c=')[1];
+	var biNumReqAtencion = src.split('!')[0];
+	var channel = src.split('!')[1];
+	document.getElementById('form:biNumReqAtencion').value = biNumReqAtencion;
+	document.getElementById('form:channel').value = channel;
+}
+
+function alertaChat(data) {
+	if (data != null) {
+		var opciones = "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, width=380, height=340, top=85, left="
+				+ ((document.body.clientWidth / 2) - 100);
+		window.open('chatConsultor.jsf?c=' + data, data, opciones);
+	}
+}
+
+function alertaChatConsultor(data) {
+	if (data != null) {
+		var opciones = "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, width=380, height=340, top=85, left="
+				+ ((document.body.clientWidth / 2) - 100);
+		window.open('chatConsultor.jsf', data, opciones);
+	}
+}
+
+function handleBridge(data) {
+	document.getElementById('frmGeneral:channel').value = data;
+}
+
+function handleDerivar(data) {
+	levantarVentana('alertaDerivar.jsf?c=' + data, 250, 20);
+}
+
+function handleMonitoreo(data) {
+	levantarVentana('alertaMonitoreo.jsf?c=' + data, 250, 20);
+}
+
+function handleHangUp(data) {
+	if (data.indexOf(document.getElementById("form:sesionAnexo").value) != -1) {
+		window.close();
+	}
+}
+
+function cortarUrl() {
+	var src = String(window.location.href).split('?c=')[1];
+	document.getElementById('form:channel').value = src;
+}
+
+function respuestaEstado(xhr, status, args) {
+	if (args.levantaPop == 1) {
+		levantarVentana('ponerEstadoPausa.jsf', 350, 260);
+	}
+}
+
+function confirmarCierre(url) {
+	if (confirm("Estas seguro de cerrar la ventana actual?")) {
+		window.close();
+		return true;
+	} else {
+		return false;
+	}
+}
+
+// ///////////////////////////////////////////
+
+function lettersOnly(evt) {
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode
+			: ((evt.which) ? evt.which : 0));
+	if (charCode > 31 && (charCode < 65 || charCode > 90)
+			&& (charCode < 97 || charCode > 122) && charCode != 32
+			&& charCode == 164 && charCode == 165) {
+		alert("Ingrese sólo letras");
+		return false;
+	}
+	return true;
+}
+
+function soloLetras(e) {
+	key = e.keyCode || e.which;
+	tecla = String.fromCharCode(key).toLowerCase();
+	letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+	especiales = [ 8, 39, 9, 127 ];
+
+	tecla_especial = false;
+	for ( var i in especiales) {
+		if (key == especiales[i]) {
+			tecla_especial = true;
+			break;
+		}
+	}
+	if (letras.indexOf(tecla) == -1 && !tecla_especial)
+		return false;
+}
+function soloLetrasCorreos(e) {
+	key = e.keyCode || e.which;
+	tecla = String.fromCharCode(key).toLowerCase();
+	letras = " abcdefghijklmnopqrstuvwxyz";
+	especiales = [ 8, 45, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 95 ];
+
+	tecla_especial = false;
+	for ( var i in especiales) {
+		if (key == especiales[i]) {
+			tecla_especial = true;
+			break;
+		}
+	}
+	if (letras.indexOf(tecla) == -1 && !tecla_especial)
+		return false;
+}
+
+function soloAlfanumerico(e) {
+	key = e.keyCode || e.which;
+	tecla = String.fromCharCode(key).toLowerCase();
+	letras = " abcdefghijklmnopqrstuvwxyz";
+	especiales = [ 8, 9, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 127 ];
+
+	tecla_especial = false;
+	for ( var i in especiales) {
+		if (key == especiales[i]) {
+			tecla_especial = true;
+			break;
+		}
+	}
+	if (letras.indexOf(tecla) == -1 && !tecla_especial)
+		return false;
+}
+
+function numeralsOnly(evt) {
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode
+			: ((evt.which) ? evt.which : 0));
+	if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+		alert("Ingrese sólo números en este campo");
+
+		return false;
+	}
+	return true;
+}
+
+function popupEnvioInformacion(url) {
+	day = new Date();
+	id = day.getTime();
+	eval("page"
+			+ id
+			+ " = window.open(url, '"
+			+ id
+			+ "', 'toolbar=0, scrollbars=0, location=0, statusbar=0, menubar=0, resizable=0, width=410, height=240');");
+}
+
+function popupHistoricoCiudadano(url) {
+	day = new Date();
+	id = day.getTime();
+	eval("page"
+			+ id
+			+ " = window.open(url, '"
+			+ id
+			+ "', 'toolbar=0, scrollbars=0, location=0, statusbar=0, menubar=0, resizable=0, width=850, height=310');");
+}
+
+function reportes(url) {
+	day = new Date();
+	id = day.getTime();
+	eval("page"
+			+ id
+			+ " = window.open(url, '"
+			+ id
+			+ "', 'toolbar=0, scrollbars=0, location=0, statusbar=0, menubar=0, resizable=0, width=820, height=310');");
+}

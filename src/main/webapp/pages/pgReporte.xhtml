@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript">
+	</script>
+
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="administrador_paginasIcono"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Reporte</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Resultado</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+					<br/><br/><br/>	
+
+					<div class="contenidoPrincipal_fondo_formulario">
+						<!-- CONTENIDO MODIFICABLE -->
+						<div class="administrador_paginasContenedor">
+							<h:form>
+							<div style="font-size:11px;">
+								<h:panelGrid columns="2">
+									<h:outputText style="color:#0000CC" value="Registros Al :"/>
+									<h:outputText style="color:#009900	" value="09/07/2014"/>
+								</h:panelGrid>
+								<h:panelGrid columns="2" cellspacing="10">
+								<h:outputText style="color:#CF3D0D	" value="Total Upas:"/>
+								<h:outputText  value="#{reporteMB.totalupas}"/>
+								
+								<h:outputText style="color:#CF3D0D	" value="Total Inmuebles/Sub-inmuebles:"/>
+								<h:outputText value="#{reporteMB.totalinmuebles}"/>
+								
+								<h:outputText style="color:#CF3D0D	" value="Nro de Contratos:"/>
+								<h:outputText value="#{reporteMB.nroContratos}"/>
+								
+								<h:outputText style="color:#CF3D0D	" value="Nro de Sin Contrato:"/>
+								<h:outputText value="#{reporteMB.nroPrecarios}"/>
+								
+								</h:panelGrid>
+								
+								<br/><br/><br/>
+								<h:panelGrid columns="2">
+									<h:outputText style="color:#0000CC" value="Ingresos Al :"/>
+									<h:outputText style="color:#009900	" value="09/07/2014"/>
+								</h:panelGrid>
+								
+								
+								<h:panelGrid columns="2" cellspacing="10">
+									<h:outputText style="color:#CF3D0D	" value="Total Recaudado: S/ "/>
+									<h:outputText value="#{reporteMB.totalrecaudado}">
+									<f:convertNumber pattern="###,###,###,##0.00" />
+									</h:outputText>
+									
+									<h:outputText style="color:#CF3D0D	" value="Total Recaudado con Contrato: S/ "/>
+									<h:outputText value="#{reporteMB.totalrecaudadoconcontrato}">
+									<f:convertNumber pattern="###,###,###,##0.00" />
+									</h:outputText>
+									
+									<h:outputText style="color:#CF3D0D	" value="Total Recaudado sin Contrato: S/ "/>
+									<h:outputText value="#{reporteMB.totalrecaudadosincontrato}">
+									<f:convertNumber pattern="###,###,###,##0.00" />
+									</h:outputText>
+									
+									<h:outputText style="color:#CF3D0D	" value="Por Cobrar : S/ "/>
+									<h:outputText value="#{reporteMB.totalfaltapagar}">
+									<f:convertNumber pattern="###,###,###,##0.00" />
+									</h:outputText>
+								</h:panelGrid>
+							</div>
+							
+							</h:form>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

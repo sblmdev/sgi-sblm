@@ -1,0 +1,29 @@
+$(function(){
+    var refreshTime = 0;
+    function refresh(){
+        var oldscrollHeight = $('#ventanaChat').attr('scrollHeight') - 20;
+        $.get('../chat/conversacionChat.jsp?c='+ 
+        		document.getElementById('formChat:emisor').value
+        		,{},function(callback){
+            $('#ventanaChat').html(callback);
+            refreshTime = setTimeout(refresh, 1000);
+            
+            //Auto-scroll
+            var newscrollHeight = $('#ventanaChat').attr('scrollHeight') - 20; 
+            if(newscrollHeight > oldscrollHeight){
+                $('#ventanaChat').animate({
+                    scrollTop: newscrollHeight
+                }, 'normal'); 
+            }
+        });
+    }
+    function cancelRefresh(){
+        clearTimeout(refreshTime);
+    }
+    refresh();
+});
+
+function limpaTexto(){
+    document.getElementById("formChat").reset();
+    document.getElementById('formChat:txtTexto').focus();
+}

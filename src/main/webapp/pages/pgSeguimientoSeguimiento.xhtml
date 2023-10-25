@@ -1,0 +1,1324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<title>SBLM</title>
+</h:head>
+<h:body>
+
+
+
+	<!-- PANEL REGISTRO -->
+	<div id="idDivCarteraRegistro" class="recau_panelPendientes">
+
+		<h:form id="frmSegContrato">
+
+			<div class="fila3columnas">
+				<div class="columna1_3">
+					<div style="float: left; margin-left: 0px;">
+						<div style="float: left; margin-left: 0px; width: 100px;">
+							<h:outputText value="Contratos" style="float: left; width:120px;" />
+							<h:outputText value="Seguimiento creaci&oacute;n"
+								style="float: left; width:120px;font-size: 9px;color:#747474;" />
+						</div>
+						<p:graphicImage width="20" height="20"
+							value="/resources/images/recaudacionarbitrios/impresora.png"
+							alt="icono" title="icono" style="margin-left:30px;" />
+					</div>
+				</div>
+				<div class="columna1_3"></div>
+
+			</div>
+			<br />
+
+			<p:separator
+				style="float:left; width:675px; margin-top:5px;margin-left:30px;" />
+			<br />
+			<div class="filaCabecera">
+				<h:outputText class="textoCabecera" value="Datos Generales" />
+			</div>
+			<div class="fila3columnas">
+				<div class="columna1_3">
+					<h:outputText class="textoidenti" value="Contrato:" />
+				</div>
+<!-- 				<div class="columna1_3"> -->
+<!-- 					<h:outputText class="textoidenti" value="Inquilino:" /> -->
+<!-- 				</div> -->
+<!-- 				<div class="columna1_3"> -->
+<!-- 					<h:outputText class="textoidenti" value="Inmueble:" /> -->
+<!-- 				</div> -->
+			</div>
+			<div class="fila3columnas">
+				<div class="columna1_3">
+					<h:inputText styleClass="campoIngreso" id="idcontratocap"
+						value="contrato" />
+					<p:commandLink oncomplete="iddlgContrato.show();"
+						style="float:left;margin-left:5px;" >
+						<p:graphicImage width="18" height="18"
+							value="/resources/images/cobranza/icon_consulta.png"
+							alt="Buscar contrato" title="Seleccionar contrato" />
+					</p:commandLink>
+
+				</div>
+<!-- 				<div class="columna1_3"> -->
+<!-- 					<h:inputText styleClass="campoIngreso" readonly="true" -->
+<!-- 						value="sdfsf" /> -->
+<!-- 				</div> -->
+<!-- 				<div class="columna1_3"> -->
+<!-- 					<h:inputText styleClass="campoIngreso" readonly="true" -->
+<!-- 						value="gdfd" /> -->
+<!-- 				</div> -->
+			</div>
+
+			<div>
+				<p:inputText id="idinputConsultado" value="#{segContratoMB.ultimoInputConsultado}" style="visibility:hidden"/>			
+				<p:inputText id="idinputTab1" value="#{segContratoMB.ultimoValorPermiso}" style="visibility:hidden"/>
+				<p:accordionPanel id="idmayor" style="float:left;width:670px;margin-left:30px;" cache="TRUE" activeIndex="-1" dynamic="true">
+				 <p:ajax event="tabChange" listener="#{segContratoMB.verficarAcceso}" update=":frmSegContrato:idinputTab1,:frmSegContrato:idinputConsultado" oncomplete="bloquearxPermiso();" />
+
+					<p:tab id="tab1" title="Paso (1): Evaluación (A.A.)"  disabled="#{segContratoMB.mapTabs['1']}" >
+						
+							<div class="tab1-contenedor">
+								<div class="tab1-cabecera">
+								<p:selectOneMenu style="width: 184px;  font-size: 11px;" value="#{segContratoMB.tiporequisito.idtiporequisito}"
+										id="txtTipoInterior" onchange="limpiarvalidacion()" >
+										<f:selectItem  itemLabel="Seleccione tipo requisito" itemValue="0" />
+										<f:selectItem  itemLabel="Arrendamiento Directo" itemValue="1"/>
+										<f:selectItem  itemLabel="Renovación" itemValue="2"/>
+										<f:selectItem  itemLabel="Persona Jurídica" itemValue="3"/>
+										<p:ajax event="change"
+											listener="#{segContratoMB.diplayRequisitos}" update="xxx" />
+									</p:selectOneMenu>
+								</div>
+								<div class="tab1-cuerpo">
+												<p:outputPanel id="xxx">
+												<p:selectManyCheckbox  id="grid" value="#{segContratoMB.listaRequisitosDisplaySeleccionado}" layout="grid" columns="4" >  
+										            <f:selectItems value="#{segContratoMB.listaRequisitosDisplay}" var="requisito" itemLabel="#{requisito.descripcion}" itemValue="#{requisito.idrequisito}"/>  
+										        </p:selectManyCheckbox > 
+												</p:outputPanel>
+								
+								</div>
+							</div>
+					
+					
+							<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['1']}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['1']}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['1']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['1']!=null}"/>
+										
+								</div>
+							</div>
+						
+						<p:commandButton value="Guardar" onclick="dlgRegistroPasoUno.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['2']}"/>
+	
+					</p:tab>
+					<p:tab id="tab2" title="Paso (2): Valorización (D.I.O.)" rendered="#{segContratoMB.mapTabs['2']}" >
+					
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+								<p:commandLink onclick="window.open('pgInmueble.jsf');">
+									<p:graphicImage width="30" height="30" value="../resources/icons/valorizacion.png" title="actualizar datos de valorización"  style="margin-left:50px;"/>
+								</p:commandLink>
+								
+								<br/>
+								<br/>
+										
+								<h:panelGrid columns="2">
+								<h:outputText style="color:#403100;" value="Terreno:" />
+								<h:outputText style="color:#168039;" value="#{segContratoMB.contratoSeleccionado.upa.inmueble.valorterreno==NULL ? 'No registrado':'segContratoMB.contratoSeleccionado.upa.inmueble.valorterreno'}"/>
+								
+								<h:outputText style="color:#403100;" value="Edificación: " />
+								<h:outputText style="color:#168039;" value="#{segContratoMB.contratoSeleccionado.upa.inmueble.valoredificacion==NULL ? 'No registrado':'segContratoMB.contratoSeleccionado.upa.inmueble.valoredificacion'}"/>
+								
+								<h:outputText style="color:#403100;" value="Obra complementaria: " />
+								<h:outputText style="color:#168039;" value="#{segContratoMB.contratoSeleccionado.upa.inmueble.valorobracomplementaria==NULL ? 'No registrado':'segContratoMB.contratoSeleccionado.upa.inmueble.valorobracomplementaria'}"/>
+								
+								<h:outputText style="color:#403100;" 	value="Comercial:" />
+								<h:outputText style="color:#168039;" value="#{segContratoMB.contratoSeleccionado.upa.inmueble.valorcomercial==NULL ? 'No registrado':'segContratoMB.contratoSeleccionado.upa.inmueble.valorcomercial'}"/>
+								</h:panelGrid>
+								
+								
+								
+								
+								
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['2']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['2']}"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['2']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['2']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['2']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['2']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['2']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['2']!=null}"/>
+								</div>
+						</div>
+		
+					</p:tab>
+					
+					<p:tab id="tab3" title="Paso (3): Notificación (A.A.)" rendered="#{segContratoMB.mapTabs['3']}">
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+								 <p:outputPanel style="margin-left:15px;" rendered="#{!segContratoMB.mapFinalizadoPaso['3']}">		
+									<p:graphicImage width="30" height="30" value="../resources/icons/notificacion.png" title="agregar notificación"  onclick="dlgNotificacion.show();"/>
+									<p:graphicImage style="margin-left:-10px;" width="15" height="15" value="../resources/icons/agregarNotificacion.png" title="agregar notificación"  onclick="dlgNotificacion.show();" />
+								</p:outputPanel>
+								
+								<br /><br/>
+								
+								<p:outputPanel>
+								<h:outputText style="color:#806300;margin-left:20px;" value="Destinatarios:"/> <br/>
+								<h:outputText style="color:#168039;font-size:10px;margin-left:20px;" value="#{segContratoMB.destinatarios}"/>
+								</p:outputPanel>	
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['3']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>	
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['3']}"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['3']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['3']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['3']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['3']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['3']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['3']!=null}"/>
+										
+								</div>
+						</div>
+
+					</p:tab>
+						
+					<p:tab id="tab4" title="Paso (4): Aceptación de Merced Conductiva (A.A.)" rendered="#{segContratoMB.mapTabs['4']}">
+
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+									<p:commandLink onclick="window.open('pgUpa.jsf');" >
+									<p:graphicImage width="30" height="30" value="../resources/icons/mercedconductiva.png" title="actualizar datos de merced conductiva"  style="margin-left:50px;"/>
+								</p:commandLink>
+							
+								<br/>
+								<br/>
+										
+								<h:panelGrid columns="2">
+								<h:outputText style="color:#403100;" value="Valor:" />
+								<h:outputText style="color:#168039;" value="#{segContratoMB.contratoSeleccionado.upa.mercedconductiva==NULL ? 'No registrado':'segContratoMB.contratoSeleccionado.upa.mercedconductiva' }"/>
+								</h:panelGrid>								
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['4']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['4']}"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['4']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['4']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['4']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['4']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['4']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['4']!=null}"/>
+										
+								</div>
+						</div>
+
+					</p:tab>
+					
+					<p:tab id="tab5" title="Paso (5): Proyección de Resolución (A.A.)" rendered="#{segContratoMB.mapTabs['5']}"> 
+												 
+					
+						<div class="tab5-contenedor">
+							<div class="tab5-cabecera">
+									<p:commandLink>
+												<p:graphicImage id="idImagenUsuario" width="106" height="18" value="../resources/images/inmueble/upload.png"
+													onclick="openUploadFileDialogue();" />
+									</p:commandLink>
+							</div>
+							<div class="tab5-cuerpo-izquiedo">
+									<p:dataGrid  id="smallCarousel"
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+															<p:commandLink title="Eliminar de lista"
+																action="#{segContratoMB.eliminarArchivodeLista}"
+																update="smallCarousel">
+																<p:graphicImage id="idNotificacioness" width="15"
+																	style="float:left; margin-bottom:15px;" height="15"
+																	value="../resources/icons/trash.png" />
+																<f:setPropertyActionListener value="#{varFile}"
+																	target="#{segContratoMB.archivoDelete}" />
+															</p:commandLink>
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												    	</p:dataGrid >
+								<p:fileUpload styleClass="ui-fileupload"
+																	update="smallCarousel"
+																	 style="visibility:hidden; width:0px;height:0px;"
+																	fileUploadListener="#{segContratoMB.subirDocumento}"
+																	mode="advanced" auto="true" sizeLimit="100000000"
+																	allowTypes="/(\.|\/)(gif|jpe?g|dwg|exe|7z|bpm|fla|html|swf|tgz|tif|png|xlsx|xls|doc|docx|txt|avi|mp3|mpeg|ppt|pptx|rar|zip|pdf|ppt|pptx)$/">
+								</p:fileUpload>
+							</div>
+							
+
+							<div class="tab5-cuerpo-derecho">
+									<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['5']}"/>
+												<h:outputText value="&nbsp;&nbsp;&nbsp;He Terminado"/>
+												<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['5']}"/>
+									</div>
+									
+							</div>
+
+							
+							</div>
+							<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['5']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['5']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['5']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['5']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['5']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['5']!=null}"/>
+										
+								</div>
+						</div>
+
+
+					</p:tab>
+					<p:tab id="tab6" title="Paso (6): Visto Bueno de Proyecto de Resolución (O.G.A.J.)" rendered="#{segContratoMB.mapTabs['6']}">
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+												<p:dataGrid  
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												</p:dataGrid >
+							
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['6']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['6']}"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['6']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['6']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['6']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['6']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['6']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['6']!=null}"/>
+										
+								</div>
+						</div>
+
+					</p:tab>
+					
+					<p:tab id="tab7" title="Paso (7): Aprobación de Proyecto de Resolución (G.G.)" rendered="#{segContratoMB.mapTabs['7']}">
+					<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+																				<p:dataGrid  
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												</p:dataGrid >
+							
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['7']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['7']}"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['7']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['7']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['7']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['7']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['7']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['7']!=null}"/>
+										
+								</div>
+						</div>
+
+					</p:tab>
+					
+					<p:tab id="tab8" title="Paso (8): Requerimiento de Pago Renta/Garantía (A.A.)" rendered="#{segContratoMB.mapTabs['8']}">
+					
+							 <div class="tab5-contenedor">
+								<div class="tab5-cuerpo-izquiedo">
+														<p:dataGrid  
+															value="#{segContratoMB.displayList}" var="varFile"
+															 emptyMessage="" 
+															columns="5">
+															<p:column>
+															<p:commandLink
+																	actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																	ajax="false" immediate="true">
+																	<p:graphicImage id="idNotificaciones"
+																	
+																		value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																	<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+																</p:commandLink>
+	
+															<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																	showEffect="slide" hideEffect="slide" />
+															</p:column>
+													</p:dataGrid >
+													
+													<br/>
+													<br/>
+															
+													<h:panelGrid columns="2">
+													<h:outputText style="color:#403100;" value="Renta: S/" />
+													<h:outputText style="color:#168039;" value="#{segContratoMB.contratoSeleccionado.montototalsoles==NULL ? 'No registrado':segContratoMB.contratoSeleccionado.montototalsoles}"/>
+													</h:panelGrid>								
+								
+								</div>
+								<div class="tab5-cuerpo-derecho">
+									<div class="tab5-cuerpo-derecho1">
+										<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['8']}"/>
+										<h:outputText value="He terminado"/>
+										<p:spacer width="20"/>
+										<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['8']}"/>
+									</div>
+								</div>
+							</div>
+					
+						
+						
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['8']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['8']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['8']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['8']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['8']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['8']!=null}"/>
+										
+								</div>
+						</div>
+						
+					</p:tab>
+					
+					<p:tab id="tab9" title="Paso (9): Emisión de Contrato y Letras (A.A.)" rendered="#{segContratoMB.mapTabs['9']}">
+						
+						<div class="tab5-contenedor">
+							<div class="tab5-cabecera">
+									<p:commandLink>
+												<p:graphicImage  width="106" height="18" value="../resources/images/inmueble/upload.png"
+													onclick="openUploadFileDialogue();" />
+									</p:commandLink>
+							</div>
+							<div class="tab5-cuerpo-izquiedo">
+									<p:dataGrid  id="smallCarousel2"
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+															<p:commandLink title="Eliminar de lista"
+																style=""
+																action="#{segContratoMB.eliminarArchivodeLista}"
+																update="smallCarousel2">
+																<p:graphicImage id="idNotificacioness" width="15"
+																	style="float:left; margin-bottom:15px;" height="15"
+																	value="../resources/icons/trash.png" />
+																<f:setPropertyActionListener value="#{varFile}"
+																	target="#{segContratoMB.archivoDelete}" />
+															</p:commandLink>
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												    	</p:dataGrid >
+								<p:fileUpload styleClass="ui-fileupload"
+																	update="smallCarousel2"
+																	 style="visibility:hidden; width:0px;height:0px;"
+																	fileUploadListener="#{segContratoMB.subirDocumento}"
+																	mode="advanced" auto="true" sizeLimit="100000000"
+																	allowTypes="/(\.|\/)(gif|jpe?g|dwg|exe|7z|bpm|fla|html|swf|tgz|tif|png|xlsx|xls|doc|docx|txt|avi|mp3|mpeg|ppt|pptx|rar|zip|pdf|ppt|pptx)$/">
+								</p:fileUpload>
+							</div>
+							
+							<div class="tab5-cuerpo-derecho">
+									<div class="tab5-cuerpo-derecho1">
+										<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['9']}"/>
+												<h:outputText value="&nbsp;&nbsp;&nbsp;He Terminado"/>
+												<p:spacer width="20"/>
+									<p:commandButton value="Guardar"  onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['9']}"/>
+									</div>
+									
+							</div>
+
+							
+							</div>
+							<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['9']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['9']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['9']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['9']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['9']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['9']!=null}"/>
+										
+								</div>
+						  </div>
+						
+					</p:tab>
+					
+					<p:tab id="tab10" title="Paso (10): Visto Bueno de Proyecto de Contrato (A.A.)" rendered="#{segContratoMB.mapTabs['10']}">
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+													<p:dataGrid  
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												</p:dataGrid >
+							
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['10']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['10']}"/>
+								</div>
+							</div>
+						</div>
+						
+							<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['10']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['10']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['10']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['10']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['10']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['10']!=null}"/>
+										
+								</div>
+						  </div>
+						
+					</p:tab>
+					
+					<p:tab id="tab11" title="Paso (11): Visto Bueno de Proyecto de Contrato (D.A.I.)" rendered="#{segContratoMB.mapTabs['11']}">
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+																				<p:dataGrid  
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												</p:dataGrid >
+							
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['11']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['11']}"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['11']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['11']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['11']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['11']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['11']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['11']!=null}"/>
+										
+								</div>
+						  </div>
+
+					</p:tab>
+					
+					<p:tab id="tab12" title="Paso (12): Visto Bueno de Proyecto de Contrato (D.G.A.I.)" rendered="#{segContratoMB.mapTabs['12']}">
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+																				<p:dataGrid  
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												</p:dataGrid >
+							
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['12']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['12']}"/>
+								</div>
+							</div>
+						</div>
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['12']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['12']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['12']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['12']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['12']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['12']!=null}"/>
+										
+								</div>
+						  </div>
+
+					</p:tab>
+					
+					<p:tab id="tab13" title="Paso (13): Visto Bueno de Proyecto de Contrato (O.G.A.J.)" rendered="#{segContratoMB.mapTabs['13']}">
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+																				<p:dataGrid  
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												</p:dataGrid >
+							
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['13']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();"  rendered="#{!segContratoMB.mapFinalizadoPaso['13']}"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['13']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['13']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['13']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['13']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['13']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['13']!=null}"/>
+										
+								</div>
+						  </div>
+						
+					</p:tab>
+					
+					<p:tab id="tab14" title="Paso (14): Visto Bueno de Proyecto de Contrato (G.G.)" rendered="#{segContratoMB.mapTabs['14']}">
+						<div class="tab5-contenedor">
+							<div class="tab5-cuerpo-izquiedo">
+													<p:dataGrid  
+														value="#{segContratoMB.displayList}" var="varFile"
+														 emptyMessage="" 
+														columns="5">
+														<p:column>
+														<p:commandLink
+																actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																ajax="false" immediate="true">
+																<p:graphicImage id="idNotificaciones"
+																
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+															</p:commandLink>
+
+														<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																showEffect="slide" hideEffect="slide" />
+														</p:column>
+												</p:dataGrid >
+							
+							</div>
+							<div class="tab5-cuerpo-derecho">
+								<div class="tab5-cuerpo-derecho1">
+									<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['14']}"/>
+									<h:outputText value="He terminado"/>
+									<p:spacer width="20"/>
+									<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['14']}"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['14']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['14']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['14']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['14']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['14']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['14']!=null}"/>
+										
+								</div>
+						  </div>
+						
+					
+					</p:tab>
+					
+					<p:tab id="tab15" title="Paso (15): Subscripción de Contrato por Arrendamiento (A.A.)" rendered="#{segContratoMB.mapTabs['15']}">
+							<div class="tab5-contenedor">
+									<div class="tab5-cabecera">
+											<p:commandLink>
+														<p:graphicImage  width="106" height="18" value="../resources/images/inmueble/upload.png"
+															onclick="openUploadFileDialogue();" />
+											</p:commandLink>
+									</div>
+									<div class="tab5-cuerpo-izquiedo">
+											<p:dataGrid  id="iddatagridtab15"
+																value="#{segContratoMB.displayList}" var="varFile"
+																 emptyMessage="" 
+																columns="5">
+																<p:column>
+																<p:commandLink
+																		actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																		ajax="false" immediate="true">
+																		<p:graphicImage id="idNotificaciones"
+																		
+																			value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																		<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+																	</p:commandLink>
+																	<p:commandLink title="Eliminar de lista"
+																		style=""
+																		action="#{segContratoMB.eliminarArchivodeLista}"
+																		update="iddatagridtab15">
+																		<p:graphicImage id="idNotificacioness" width="15"
+																			style="float:left; margin-bottom:15px;" height="15"
+																			value="../resources/icons/trash.png" />
+																		<f:setPropertyActionListener value="#{varFile}"
+																			target="#{segContratoMB.archivoDelete}" />
+																	</p:commandLink>
+																<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																		showEffect="slide" hideEffect="slide" />
+																</p:column>
+														    	</p:dataGrid >
+										<p:fileUpload styleClass="ui-fileupload"
+																			update="iddatagridtab15"
+																			 style="visibility:hidden; width:0px;height:0px;"
+																			fileUploadListener="#{segContratoMB.subirDocumento}"
+																			mode="advanced" auto="true" sizeLimit="100000000"
+																			allowTypes="/(\.|\/)(gif|jpe?g|dwg|exe|7z|bpm|fla|html|swf|tgz|tif|png|xlsx|xls|doc|docx|txt|avi|mp3|mpeg|ppt|pptx|rar|zip|pdf|ppt|pptx)$/">
+										</p:fileUpload>
+									</div>
+		
+									<div class="tab5-cuerpo-derecho">
+											<div class="tab5-cuerpo-derecho1">
+												<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['15']}"/>
+														<h:outputText value="&nbsp;&nbsp;&nbsp;He Terminado"/>
+														<p:spacer width="20"/>
+											<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['15']}"/>
+											</div>
+											
+									</div>
+
+							</div>
+							
+							<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['15']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['15']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['15']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['15']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['15']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['15']!=null}"/>
+										
+								</div>
+						  </div>
+
+					</p:tab>
+					
+					<p:tab id="tab16" title="Paso (16): Subscripcion de Contrato por Gerencia (G.G.)" rendered="#{segContratoMB.mapTabs['16']}">
+								<div class="tab5-contenedor">
+									<div class="tab5-cuerpo-izquiedo">
+														<p:dataGrid  
+																value="#{segContratoMB.displayList}" var="varFile"
+																 emptyMessage="" 
+																columns="5">
+																<p:column>
+																<p:commandLink
+																		actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																		ajax="false" immediate="true">
+																		<p:graphicImage id="idNotificaciones"
+																		
+																			value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																		<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+																	</p:commandLink>
+		
+																<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																		showEffect="slide" hideEffect="slide" />
+																</p:column>
+														</p:dataGrid >
+									
+									</div>
+									<div class="tab5-cuerpo-derecho">
+										<div class="tab5-cuerpo-derecho1">
+											<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['16']}"/>
+											<h:outputText value="He terminado"/>
+											<p:spacer width="20"/>
+											<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['16']}"/>
+										</div>
+									</div>
+							</div>
+					
+							<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['16']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['16']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['16']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['16']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['16']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['16']!=null}"/>
+										
+								</div>
+						  </div>
+
+					</p:tab>
+					
+					<p:tab id="tab17" title="Paso (17): Entrega de Inmueble (G.G)" rendered="#{segContratoMB.mapTabs['17']}">
+					
+							<div class="tab5-contenedor">
+									<div class="tab5-cabecera">
+											<p:commandLink>
+														<p:graphicImage  width="106" height="18" value="../resources/images/inmueble/upload.png"
+															onclick="openUploadFileDialogue();" />
+											</p:commandLink>
+									</div>
+									<div class="tab5-cuerpo-izquiedo">
+											<p:dataGrid  id="iddatagridtab17"
+																value="#{segContratoMB.displayList}" var="varFile"
+																 emptyMessage="" 
+																columns="5">
+																<p:column>
+																<p:commandLink
+																		actionListener="#{archivoadjuntoMB.descargarArchivo(varFile)}"
+																		ajax="false" immediate="true">
+																		<p:graphicImage id="idNotificaciones"
+																		
+																			value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																		<p:fileDownload value="#{archivoadjuntoMB.filedownload}" />
+																	</p:commandLink>
+																	<p:commandLink title="Eliminar de lista"
+																		action="#{segContratoMB.eliminarArchivodeLista}"
+																		update="iddatagridtab17">
+																		<p:graphicImage id="idNotificacioness" width="15"
+																			style="float:left; margin-bottom:15px;" height="15"
+																			value="../resources/icons/trash.png" />
+																		<f:setPropertyActionListener value="#{varFile}"
+																			target="#{segContratoMB.archivoDelete}" />
+																	</p:commandLink>
+																<p:tooltip for="idNotificaciones" value="#{varFile.ruta}"
+																		showEffect="slide" hideEffect="slide" />
+																</p:column>
+														    	</p:dataGrid >
+										<p:fileUpload styleClass="ui-fileupload"
+																			update="iddatagridtab17"
+																			 style="visibility:hidden; width:0px;height:0px;"
+																			fileUploadListener="#{segContratoMB.subirDocumento}"
+																			mode="advanced" auto="true" sizeLimit="100000000"
+																			allowTypes="/(\.|\/)(gif|jpe?g|dwg|exe|7z|bpm|fla|html|swf|tgz|tif|png|xlsx|xls|doc|docx|txt|avi|mp3|mpeg|ppt|pptx|rar|zip|pdf|ppt|pptx)$/">
+										</p:fileUpload>
+									</div>
+		
+									<div class="tab5-cuerpo-derecho">
+											<div class="tab5-cuerpo-derecho1">
+												<p:selectBooleanCheckbox value="#{segContratoMB.mapFinalizadoPaso['17']}"/>
+														<h:outputText value="&nbsp;&nbsp;&nbsp;He Terminado"/>
+														<p:spacer width="20"/>
+											<p:commandButton value="Guardar" onclick="dlgRegistroPasoOtro.show();" rendered="#{!segContratoMB.mapFinalizadoPaso['17']}"/>
+											</div>
+											
+									</div>
+
+							
+							</div>
+							
+							<div class="leyenda-GrabacionPaso">
+								<div class="leyenda-GrabacionPaso-izq">
+									<div class="leyenda-GrabacionPaso-Nombre">
+										<h:outputText value="#{segContratoMB.mapNombresPaso['17']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['17']!=null}"/>
+									</div>
+									<div class="leyenda-GrabacionPaso-Fecha">
+										<h:outputText value="#{segContratoMB.mapFechaPaso['17']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['17']!=null}">
+										<f:convertDateTime
+												pattern="EEEEEEE dd 'de' MMMM 'de' yyyy  ' a las' hh:mm a" />
+										</h:outputText>
+									</div>
+								</div>
+								
+								<div class="leyenda-GrabacionPaso-der">
+									<p:graphicImage width="35" height="40" value="../resources/images/usuarios/#{segContratoMB.mapUrlUsuarioPaso['17']}" rendered="#{segContratoMB.mapUrlUsuarioPaso['17']!=null}"/>
+										
+								</div>
+						  </div>
+
+					</p:tab>
+				</p:accordionPanel>
+			</div>
+			
+			
+							<p:dialog header="Seleccione Contrato" id="iddlgContrato"
+											width="655" height="300" closable="true" closeOnEscape="true"
+											resizable="false" widgetVar="iddlgContrato" modal="true"
+											style="border-width:9px;border-style:solid;  border-color:#ffc600; ">
+
+											<p:dataTable var="detall"
+												value="#{segContratoMB.listaContratos}"
+												emptyMessage="No existe  ningún arbitrios registrados"
+												style="width:625px; font-size: 10px;  margin: 0px 0px 0px 0px;text-aling:center;"
+												styleClass="ui-datatable-hor-scroll"
+												rowKey="#{detall.idcontrato}" rowIndexVar="row"
+												selection="#{segContratoMB.contratoSeleccionado}"
+												selectionMode="single" paginator="true">
+												<p:ajax event="rowSelect" oncomplete="iddlgContrato.hide();" 
+													update=":frmSegContrato:idmayor" listener="#{segContratoMB.detectarUbicacionActual}"/>
+												<!-- 															        <p:column headerText="Clave">   -->
+												<!-- 															            <h:outputText value="#{detall.clave}" />   -->
+												<!-- 															        </p:column> -->
+
+												<p:column headerText="DEPARTAMENTO">
+													<h:outputText value="#{detall.upa.inmueble.ubigeo.depa}" />
+												</p:column>
+
+												<p:column headerText="PROVINCIA">
+													<h:outputText value="#{detall.upa.inmueble.ubigeo.prov}" />
+												</p:column>
+
+												<p:column headerText="DISTRITO">
+													<h:outputText value="#{detall.upa.inmueble.ubigeo.dist}" />
+												</p:column>
+
+												<p:column headerText="Dirección"
+													filterBy="#{detall.upa.direccion}"
+													filterMatchMode="contains">
+													<h:outputText value="#{detall.upa.inmueble.direccion}" />
+												</p:column>
+
+												<p:column headerText="Inquilino"
+													filterBy="#{detall.inquilino.nombrescompletos}"
+													filterMatchMode="contains">
+													<h:outputText value="#{detall.inquilino.nombrescompletos}" />
+												</p:column>
+
+												<p:column headerText="Uso"
+													filterBy="#{detall.upa.uso}"
+													filterMatchMode="contains">
+													<h:outputText value="#{detall.upa.uso}" />
+												</p:column>
+
+											</p:dataTable>
+										</p:dialog>
+										
+								
+		</h:form>
+		
+		<h:form id="idconfirmacionSeguimiento">
+			<p:confirmDialog message="¿Desea terminar paso?"
+										header="" severity="alert" width="200px;"
+										widgetVar="dlgRegistroPasoOtro">
+										
+									<center>
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmSegContrato:idmayor" 
+											actionListener="#{segContratoMB.registroSeguimientoContratoPasoOtro}"
+											oncomplete="dlgRegistroPasoOtro.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:spacer width="10"/>
+										<p:commandButton value="&nbsp;Cancelar"
+											oncomplete="dlgRegistroPasoOtro.hide()" icon="icon-cancel" />
+									</center>
+								</p:confirmDialog>
+								
+								<p:confirmDialog message="¿Desea terminar paso?"
+										header="" severity="alert"
+										widgetVar="dlgRegistroPasoUno">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											 actionListener="#{segContratoMB.registroSeguimientoContrato1}" update=":frmSegContrato:idmayor"
+											oncomplete="dlgRegistroPasoUno.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											oncomplete="dlgRegistroPasoUno.hide()" icon="icon-cancel" />
+								</p:confirmDialog>
+		</h:form>
+		
+		<h:form id="frmDlgNotificacionPersonalizable">
+		
+								<p:dialog id="iddlgNotificacion" width="530" height="350"
+									closable="true" closeOnEscape="true" resizable="false"
+									widgetVar="dlgNotificacion" modal="true"
+									style="border-width:9px;border-style:solid;  border-color:#ffc600; ">
+									<br />
+
+									<div class="dgaiMonitoreo_dlgTitulo">
+										<div class="dgaiMonitoreo_iconDlgRechazar"></div>
+
+										<div class="dgaiMonitoreo_TituloContador">
+											<h:outputText
+												style="color:#750101; font-size: 12px; font-weight:bold;"
+												value="Notificación " />
+										</div>
+									</div>
+
+									<div class="dgaiMonitoreo_TituloContador">
+
+										<h:outputText
+											style="color:#2f7501; font-size: 12px; font-weight:bold;"
+											value="Descripcion notificación:" />
+										<br />
+									</div>
+
+									<div class="dgaiMonitoreo_detalleDlg">
+										<p:inputTextarea style="width:325px; height:40px;"
+											autoResize="false" counter="counterSMS"
+											value="#{segContratoMB.contenidoMensajePersonalizado}"
+											counterTemplate="{0} caracteres faltantes" maxlength="75">
+										</p:inputTextarea>
+										<div style="color: #0000FF">
+											<h:outputText id="counterSMS" />
+										</div>
+									</div>
+									
+									
+										<p:scrollPanel style="width:500px;height:120px">
+												<p:dataTable id="tablaUsuarios" styleClass="noheader ui-datatable-hor-scroll"
+												value="#{segContratoMB.listadousuariosSeleccionados}"
+												var="d" editable="true" editMode="cell"
+												style="text-align: center;font-size:10px;"  emptyMessage="Agregar un usuario destino">
+												<p:ajax event="cellEdit"
+													listener="#{segContratoMB.onCellEdit}"
+													styleClass="noheader borderless cellSpacingTableClass"
+													update="tablaUsuarios" />
+												<f:facet name="header">
+														<p:commandLink title="Agregar Usuario" update="tablaUsuarios"
+															actionListener="#{segContratoMB.agregarUsuarioLista}">
+															<p:graphicImage width="20" height="20" value="../resources/images/monitoreoMesaPartes/addUsuario.png" />
+														</p:commandLink>
+												</f:facet>
+												<p:column>
+													<p:graphicImage id="imagenUsuario" width="35" height="35"
+														value="../resources/images/usuarios/#{d.rutaimgusr}" />
+												</p:column>
+												<p:spacer width="20px" />
+												<p:column width="99">
+													<p:cellEditor>
+														<f:facet name="output">
+															<h:outputText value="#{d.emailusr}" />
+														</f:facet>
+														<f:facet name="input">
+															<p:autoComplete id="idCajaUsuario" value="#{d.emailusr}"
+																style="width:136px"
+																completeMethod="#{fHvariado.autoCompleteUsuario}"
+																effect="fade">
+																
+															</p:autoComplete>
+														</f:facet>
+													</p:cellEditor>
+												</p:column>
+												<p:column>
+													<h:outputText value="#{d.cargo}" />
+												</p:column>
+												
+												<p:column headerText="Área" width="200">
+													<h:outputText value="#{d.area.desare}"/>
+												</p:column>
+												
+<!-- 												<p:column headerText="Perfil" width="88"> -->
+<!-- 												<p:cellEditor> -->
+<!-- 												<f:facet name="output"> -->
+<!-- 															<h:outputText value="#{d.usrmod}" /> -->
+<!-- 												</f:facet> -->
+<!-- 												<f:facet name="input"> -->
+
+<!-- 													<p:selectOneMenu  id="A" style="width: 80px;" value="#{d.usrmod}" -->
+<!-- 																			 effect="fade"> -->
+<!-- 																			<f:selectItem itemLabel="Seleccione Perfil" itemValue="0" /> -->
+<!-- 																			<f:selectItems value="#{segContratoMB.perfilesusuario}" -->
+<!-- 																				var="perf" itemLabel="#{perf.perfil.nombreperfil}" -->
+<!-- 																				itemValue="#{perf.perfil.nombreperfil}" /> -->
+<!-- 													</p:selectOneMenu> -->
+
+<!-- 												</f:facet> -->
+<!-- 												</p:cellEditor>				 -->
+<!-- 												</p:column> -->
+												
+												<p:column>
+													<p:commandLink title="Eliminar de lista"
+														actionListener="#{segContratoMB.eliminarUsuarioDeLista}"
+														update="tablaUsuarios">
+														<p:graphicImage  width="20" height="20" value="../resources/images/monitoreoMesaPartes/#{d.contrasenausr}"/>
+														<f:setPropertyActionListener value="#{d}"
+															target="#{segContratoMB.selectRegistroUsuario}" />
+													</p:commandLink>
+												</p:column>
+											</p:dataTable>
+										</p:scrollPanel>
+
+									<p:commandButton value="Enviar"
+										style="margin-left: 330px; margin-top:10px;"
+										update=":frmSegContrato:idmayor:tab3"
+										actionListener="#{segContratoMB.enviarNotificaciónPersonalizable}"
+										oncomplete="dlgNotificacion.hide();">
+									</p:commandButton>
+								</p:dialog>
+								
+								
+
+								
+							</h:form>
+		
+
+
+	</div>
+
+
+
+
+</h:body>
+</html>

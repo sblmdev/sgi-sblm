@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0b52d151-d037-47ae-8175-1f6dba26d209">
+	<property name="ireport.zoom" value="1.8660295208389373"/>
+	<property name="ireport.x" value="276"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#6495ED">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFD6FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="anio" class="java.lang.String">
+		<fieldDescription><![CDATA[anio]]></fieldDescription>
+	</field>
+	<field name="siclausulasuspensiontemporalrenta" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[siclausulasuspensiontemporalrenta]]></fieldDescription>
+	</field>
+	<field name="observacionpagofraccionrenta" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionpagofraccionrenta]]></fieldDescription>
+	</field>
+	<field name="montosuspensiontemporalrenta" class="java.lang.Double">
+		<fieldDescription><![CDATA[montosuspensiontemporalrenta]]></fieldDescription>
+	</field>
+	<field name="montopagoposterior" class="java.lang.Double">
+		<fieldDescription><![CDATA[montopagoposterior]]></fieldDescription>
+	</field>
+	<field name="siclausulareconocimientorenta" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[siclausulareconocimientorenta]]></fieldDescription>
+	</field>
+	<field name="sirentagenerada" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[sirentagenerada]]></fieldDescription>
+	</field>
+	<field name="sicancelado" class="java.lang.String">
+		<fieldDescription><![CDATA[sicancelado]]></fieldDescription>
+	</field>
+	<field name="mes" class="java.lang.String">
+		<fieldDescription><![CDATA[mes]]></fieldDescription>
+	</field>
+	<field name="contraprestacion" class="java.lang.Double">
+		<fieldDescription><![CDATA[contraprestacion]]></fieldDescription>
+	</field>
+	<field name="renta" class="java.lang.Double">
+		<fieldDescription><![CDATA[renta]]></fieldDescription>
+	</field>
+	<field name="igv" class="java.lang.Double">
+		<fieldDescription><![CDATA[igv]]></fieldDescription>
+	</field>
+	<field name="rentaTemp" class="java.lang.Double">
+		<fieldDescription><![CDATA[rentaTemp]]></fieldDescription>
+	</field>
+	<field name="montopagar" class="java.lang.Double">
+		<fieldDescription><![CDATA[montopagar]]></fieldDescription>
+	</field>
+	<field name="secuencia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[secuencia]]></fieldDescription>
+	</field>
+	<field name="sipagofraccionrenta" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[sipagofraccionrenta]]></fieldDescription>
+	</field>
+	<field name="siclausulareconocimientoinversion" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[siclausulareconocimientoinversion]]></fieldDescription>
+	</field>
+	<field name="montopagofraccionrenta" class="java.lang.Double">
+		<fieldDescription><![CDATA[montopagofraccionrenta]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="descuentoreconocimientorenta" class="java.lang.Double">
+		<fieldDescription><![CDATA[descuentoreconocimientorenta]]></fieldDescription>
+	</field>
+	<field name="observacionpagoposterior" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionpagoposterior]]></fieldDescription>
+	</field>
+	<field name="siclausulapagoposterior" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[siclausulapagoposterior]]></fieldDescription>
+	</field>
+	<field name="mc" class="java.lang.Double">
+		<fieldDescription><![CDATA[mc]]></fieldDescription>
+	</field>
+	<field name="observacionsuspensiontemporalrenta" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionsuspensiontemporalrenta]]></fieldDescription>
+	</field>
+	<field name="siclausulaperiodogracia" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[siclausulaperiodogracia]]></fieldDescription>
+	</field>
+	<field name="observacionreconocimientorenta" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionreconocimientorenta]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="345c78d6-9a0f-49ed-9e56-60849351d026" x="1" y="1" width="836" height="29" backcolor="#0066FF"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="57d64eca-90ce-4ace-8349-730e9c03ae79" x="134" y="2" width="63" height="29" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contraprestación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="71" y="2" width="48" height="29" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="521766d5-4910-4ea6-ac5b-aea047045c04" x="34" y="1" width="34" height="30" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="48e23c8c-877a-4d78-b54f-22e04a554945" x="213" y="2" width="36" height="29" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Renta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="305" y="0" width="30" height="30" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período Gracia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="398" y="-1" width="55" height="30" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clausula Reconocimiento Renta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="453" y="-1" width="59" height="30" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descuento por Reconocimiento Renta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="545" y="-1" width="56" height="30" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clausula Reconocimiento Inversión]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="344" y="-1" width="41" height="30" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clausula Suspension Temporal Renta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="632" y="-1" width="37" height="30" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clausula Pago Posterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="670" y="0" width="31" height="29" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto Pago Posterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="257" y="-1" width="48" height="30" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cancelado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a2809c2-3c0e-44de-972c-1fee7858efdc" x="781" y="0" width="34" height="29" forecolor="#FFFFFF"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto Cancelado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4c03a9e8-9b0e-4ecc-b9e1-6702f092d4b4" x="0" y="-1" width="21" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="bca893fd-6af9-4787-9dc4-131223e3b74a" x="1" y="14" width="836" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="3f566c6b-6978-45a5-9620-b9ae361e03b5" x="34" y="-2" width="34" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7df97ac9-746f-4088-8d03-3faa4080461a" x="71" y="-2" width="48" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7d5b96f8-0a57-4fea-bf2d-97f3ce319153" x="134" y="-2" width="63" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contraprestacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b3067608-61a3-4e29-a3c0-d1b23da915c2" x="781" y="-2" width="56" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montopagar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bc3bcb5d-1628-46c2-a0c7-82ec344b03f4" x="213" y="0" width="36" height="15"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{renta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6753209a-cc1c-46ba-8ea2-a4df3fa1ace5" x="306" y="-1" width="30" height="16"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{siclausulaperiodogracia}==true?"Sí":"No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d3769cff-cac6-42af-871e-a69e82cc817e" x="398" y="-1" width="55" height="16"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{siclausulareconocimientorenta}==true?"Sí":"No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9463e61d-79c5-43f1-9eb8-e391ced16b85" x="453" y="-1" width="59" height="16"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descuentoreconocimientorenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a0bd9ca9-b5c8-44a5-a977-fcf9e8febed7" x="545" y="-1" width="56" height="16"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{siclausulareconocimientoinversion}==true?"Sí":"No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="28d18e58-34b6-4d65-808f-4b0cfc9eb998" x="344" y="-1" width="41" height="16"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{siclausulasuspensiontemporalrenta}==true?"Sí":"No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5cfe189c-10f0-47c2-a0c8-56981def6941" x="633" y="-1" width="36" height="16"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{siclausulapagoposterior}==true?"Sí":"No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ec40ff8d-c433-4a68-b19a-faf3733f9413" x="670" y="-1" width="32" height="16"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montopagoposterior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7df97ac9-746f-4088-8d03-3faa4080461a" x="269" y="0" width="23" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sicancelado}.equals("1")? "SI":"NO"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

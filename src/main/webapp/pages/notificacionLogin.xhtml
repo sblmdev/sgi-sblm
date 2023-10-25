@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilox.css" rel="stylesheet"
+		type="text/css" />
+		<script type="text/javascript">
+		window.location = "/sgi-sblm/pages/login.jsf"
+// 		function handleLoginRequest(xhr, status, args) {
+
+// 			if (args.validationFailed || !args.loggedIn) {
+
+// 			} else {  
+// 				window.location = "/sistemaSBLM/pages/login.jsf"
+// 			}
+// 		}
+	</script>
+
+	<title>SBLM-SOCIEDAD DE BENEFICENCIA DE LIMA METROPOLITANA x</title>
+</h:head>
+
+<h:body>
+
+<div class="contenidoPrincipal">
+	<div class="cuadroMensaje_superiortotal"></div>
+	<div class="cuadroMensaje_total">
+		<div class="loginSBLM"></div>
+		<div class="simboloRestringido"></div>
+		<div class="lblAccesoRestringido">Acceso Restringido</div>
+		<div class="lblNuevoLogueo">Loguese nuevamente</div>
+
+		<div class="btnVolverRestringido">
+			<p:commandLink action="/pages/login.jsf" style="margin-right:20px;">
+				<p:graphicImage
+					value="/resources/images/usuario/btnVolverRestringido.png"
+					alt="Volver" title="Volverss" />
+			</p:commandLink>
+		</div>
+	</div>
+	<div class="pieLogin"></div>
+</div>
+	
+
+</h:body>
+</html>
+

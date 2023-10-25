@@ -1,0 +1,1095 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM-SOCIEDAD DE BENEFICENCIA DE LIMA METROPOLITANA</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+		  <div class="contenidoPrincipal_FondoPrincipal">
+		  		<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->	
+					<div class="contrato_IconoIdentificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">MANTENIMIENTO</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Reconocimiento de Deuda</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo" style="background-color: white;">
+				    <h:form id="formRegRecDeuda">
+				    <p:toolbar styleClass="ui-saju-toolbar">
+				    
+				    
+				    <p:toolbarGroup align="right" >
+				            <p:commandButton value="Documento" id="adjunto" title="adjuntar documento"  icon="ui-icon-pin-w"/>
+							<p:menu  overlay="true" trigger="adjunto" my="left top" at="left bottom">
+								<p:menuitem value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjunto('Contrato',rdMB.contratoBean.idcontrato)}"  update=":frmMaestra:listaMensajes,:frmAdjuntarDocumento:listaArchivoAdjunto" icon="ui-icon-arrowthickstop-1-w" />
+								<p:menuitem value="Ver" actionListener="#{archivoMB.abrirDialogoVerAdjunto('Condicion',rdMB.contratoBean.idcontrato)}"  update=":frmMaestra:listaMensajes,:frmVerDocumento:listaArchivosReferencia" icon="ui-icon-arrowthickstop-1-e"/>
+							</p:menu>
+							<p:commandButton  icon="ui-icon-search" oncomplete="dlgListaCondiciones.show();" title="Buscar contrato"/>
+					</p:toolbarGroup>
+				    </p:toolbar>
+				   		 <p:growl id="growlRegistrarReconocimiento" sticky="true" showDetail="true" />
+				        	 <p:accordionPanel id="acordion" multiple="true" activeIndex="0">
+				         		<p:tab title="INFORMACIÓN DE ACTA ">
+				         			<center>
+				         			<p:fieldset id="Informacionacta" style="width:200px;height: 200px" >
+				         			   <p:panelGrid columns="2" style="text-align: left">
+				         			       <p:outputLabel value="N&uacute;mero de Acta(*):" width="50%"/>
+				         			       <p:inputText id="idContratoNumero" style="font-size:18px;width:100px;font-weight: bold;margin-right:88px;"
+																	value="#{rdMB.contratoBean.nroacta}" disabled="#{rdMB.sicontratofuturo}" maxlength="10"  onkeyup="convertir_a_mayuscula(this);" onkeypress="if (event.keyCode == 13) { return false; }">
+				         			    
+				         			       </p:inputText>
+				         			   </p:panelGrid>
+				         				
+				         					<p:panelGrid columns="2" style="text-align: left;">
+				         				      <p:column>
+				         				      		<p:fieldset legend="U.P.A" style="text-align: left;width: 350px;height: 200px" >				         				      		 
+														<p:commandButton value="Agregar" icon="ui-icon-plusthick" styleClass="colorButton"
+															style="background: #36A6DE; color: white;float:left;width:150px"
+															  actionListener="#{rdMB.validarNroActa}" 
+															 title="Agregar"  update=":frmMaestra:listaMensajes"/>
+													
+													
+													<p:outputPanel id="upa">
+														<table width="500" style="margin: 15px;" cellspacing="10">
+															<tr>
+																<td width="25%"><h:outputText value="Clave:" /></td>
+																<td width="25%"><h:outputText
+																		id="idContratoCodigoUpa2"
+																		value="#{rdMB.contratoBean.claveUpa}" maxlength="9" /></td>
+																<td width="25%"><h:outputText
+																		value="Direcci&oacute;n:" /></td>
+																<td width="25%"><h:outputText
+																		id="idContratoInmueble"
+																		value="#{rdMB.contratoBean.direccion} #{rdMB.contratoBean.numeroprincipal} #{rdMB.contratoBean.numerointerior} #{rdMB.contratoBean.distrito}" />
+																</td>
+															</tr>
+															<tr>
+																<td><h:outputText value="Uso:" /></td>
+																<td><h:outputText id="idComboUso"
+																		value="#{rdMB.contratoBean.uso}" /></td>
+																<td><h:outputText value="Uso espec&iacute;fico:" /></td>
+																<td><h:inputText id="idContratoUsoEspecifico"
+																		value="#{rdMB.contratoBean.usoespecifico}"
+																		onkeyup="convertir_a_mayuscula(this);" onkeypress="if (event.keyCode == 13) { return false; }"/></td>
+															</tr>
+														</table>
+													</p:outputPanel>
+													</p:fieldset>
+												</p:column>
+				         				      <p:column>
+				         				      		<p:fieldset legend="INQUILINO" style="text-align: left;width: 350px;height: 200px">
+				         				      			<p:commandButton value="Agregar" icon="ui-icon-plusthick" styleClass="colorButton"
+															style="background: #36A6DE; color: white;float:left;width:150px"
+															actionListener="#{rdMB.validarRegistroUpa}"
+															 title="Agregar" update=":frmMaestra:listaMensajes" />
+														<table width="500" style="margin: 15px;" cellspacing="10">
+															<tr>
+																<td width="25%"><h:outputText value="Nombres:"
+																		rendered="#{rdMB.contratoBean.tipopersona=='Natural'}" /></td>
+																<td width="25%"><h:outputText
+																		value="#{rdMB.contratoBean.nombresInquilino}"
+																		rendered="#{rdMB.contratoBean.tipopersona=='Natural'}" /></td>
+																<td width="25%"><h:outputText value="DNI:"
+																		rendered="#{rdMB.contratoBean.tipopersona=='Natural'}" /></td>
+																<td width="25%"><h:outputText
+																		value="#{rdMB.contratoBean.dni}"
+																		rendered="#{rdMB.contratoBean.tipopersona=='Natural'}" />
+																</td>
+															</tr>
+															<tr>
+																<td><h:outputText value="RUC:"
+																		rendered="#{rdMB.contratoBean.tipopersona!='Natural'}" /></td>
+																<td><h:outputText value="#{rdMB.contratoBean.ruc}"
+																		rendered="#{rdMB.contratoBean.tipopersona!='Natural'}" /></td>
+																<td><h:outputText value="Razón Social:"
+																		rendered="#{rdMB.contratoBean.tipopersona!='Natural'}" /></td>
+																<td><h:outputText
+																		value="#{rdMB.contratoBean.nombresInquilino}"
+																		rendered="#{rdMB.contratoBean.tipopersona!='Natural'}" /></td>
+															</tr>
+														</table>
+														<h:panelGrid columns="4">
+
+															<p:selectBooleanCheckbox
+																value="#{rdMB.contratoBean.siocupante}"
+																style="margin-left:20px;margin-left:20px;">
+																<p:ajax update="idInputTextOcupante"
+																	listener="#{rdMB.ActivarDesactivarSiOcupante}" />
+															</p:selectBooleanCheckbox>
+
+															<p:outputPanel id="idInputTextOcupante">
+																<h:outputText value="Ocupante"
+																	style="margin-left:20px;color:#4C4C4C;" />
+
+																<p:inputText id="sinombreocupante"
+																	value="#{rdMB.contratoBean.nombreocupante}"
+																	maxlength="50" style="margin-left:20px; width:300px;"
+																	rendered="#{!rdMB.contratoBean.siocupante}">
+																	<p:watermark value="APELLIDOS Y NOMBRES"
+																		for="sinombreocupante" />
+																</p:inputText>
+																<p:inputText id="sidniocupante"
+																	value="#{rdMB.contratoBean.dniocupante}" maxlength="8"
+																	style="margin-left:20px; width:70px;"
+																	rendered="#{!rdMB.contratoBean.siocupante}">
+																	<p:watermark value="D.N.I." for="sidniocupante" />
+																</p:inputText>
+															</p:outputPanel>
+
+														</h:panelGrid>
+													</p:fieldset>
+				         				      </p:column>
+				         					</p:panelGrid>
+				         				</p:fieldset>
+				         			  
+				         			</center>
+				            	</p:tab>
+				            	<p:tab title="INFORMACIÓN DE DEUDA ">
+				         			<center>
+				         				<p:fieldset id="informaciondeuda">
+				         						
+				         					<h:panelGrid columns="4" style="text-align: left;width: 117% ;padding: 0px 310px 0px 0px ;border-width: 0px !important;" >
+				         					  
+											     <p:outputLabel  value="Reconoce deuda desde:" style="text-align:left ; width:89% ;margin: 0px 37px 0px 0px;"/>
+											     
+											     <p:calendar id="reconoce_fechadesde" navigator="true" pattern="dd/MM/yyyy" locale="es" style="width:32%;min-width:109px; float:left;text-align:left ;padding: 0px 34px 0px 0px;"
+													styleClass="anchoCalendar" disabled="#{rdMB.sicontratofuturo}" readonlyInput="true"
+													value="#{rdMB.contratoBean.fechadesde_rec}" showOn="button">
+													<p:ajax event="dateSelect"  listener="#{rdMB.validarRegistroInmueble}" update=":formRegRecDeuda,:frmMaestra:listaMensajes" process="@form"/>
+												</p:calendar>
+
+											     <p:outputLabel  value="hasta " style="text-align:left ; width:89% ;margin: 0px 33px 0px 0px;"/>
+											     
+											     <p:calendar id="reconoce_fechahasta" navigator="true" pattern="dd/MM/yyyy" locale="es" style="width:32%;min-width:109px; float:left;text-align:left ;padding: 0px 34px 0px 0px"
+													styleClass="anchoCalendar" disabled="#{rdMB.sicontratofuturo}" readonlyInput="true"
+													value="#{rdMB.contratoBean.fechahasta_rec}" showOn="button">
+													<p:ajax event="dateSelect" listener="#{rdMB.validarRegistroInmueble}" update=":formRegRecDeuda,:frmMaestra:listaMensajes" process="@form"/>
+												</p:calendar>
+											     <p:spacer></p:spacer>
+										     
+										   </h:panelGrid>
+										   <h:panelGrid columns="2" style="text-align: left;width: 89% ;padding: 0px 310px 0px 0px; margin: 0px 80px 0px 0px;" >
+										   			<p:outputLabel value="N&uacute;mero de meses impagados:" style="text-align:left  "></p:outputLabel> 
+													<p:inputText value="#{rdMB.contratoBean.nromes_rec}" style="width:40%;min-width:68px; float:left;text-align:left "  onkeypress="return validarKey(event);"/>
+											         
+										   </h:panelGrid>
+										   <center>
+<!-- 										   <h:panelGrid style="text-align: left;width: 142% ;padding: 0px 310px 0px 0px;" > -->
+										   		 <p:dataTable id="listaCuotasPendientesPagoRentaCancelar" var="cuota"
+										   		    rowKey="#{cuota.mes}"
+										   		    value="#{rdMB.listaCuotasPendientesCondicionCancelar}"
+										   		    selection="#{rdMB.cuotaPendienteCondicion}"
+										   		    selectionMode="single" 
+										   		    emptyMessage="No se ha encontrado ningún registro"							   		     
+										   		 	paginator="true" rowIndexVar="index"
+										   		 	style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;"
+													paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+													currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+													rowsPerPageTemplate="12,24,36" rows="12" scrollWidth="680"
+													styleClass="ui-datatable-hor-scroll" editable="true"													
+										   		 	>
+										   		 	<p:ajax event="rowEdit" listener="#{rdMB.actualizacionCuotaPendiente}" update=":formRegRecDeuda:acordion:totaldeuda, :formRegRecDeuda:acordion:informacionpago,:frmMaestra:listaMensajes" process="@form"/>
+										   		   <f:facet name="header">
+													<p:commandLink id="btnAgregarCuota" style="text-align:center;"													
+													actionListener="#{rdMB.validarCabeceraCuotasPendientes}"
+													update=":formRegRecDeuda,:frmMaestra:listaMensajes">
+													<p:graphicImage width="20" height="20"
+													value="../resources/images/monitoreoMesaPartes/addUsuario.png" />
+													</p:commandLink>
+												  </f:facet> 
+												  
+												  <p:inputText value="#{cuota.id_maedetallecondicion}" id="cuotaiddetallecondicion" type="hidden"/>
+												  <p:inputText value="#{cuota.idcontrato}" 		   id="cuotaidcontrato" 	    type="hidden"/>
+												<p:column style="width:32px">
+													<p:rowEditor
+														rendered="#{rdMB.contratoBean.idcontrato==0?true:false}" />
+												</p:column>
+												<p:column headerText="N°" style="width:32px" ><h:outputText value="#{index +1}" /></p:column>
+												  <p:column headerText="MES" style="width:32px" ><h:outputText value="#{cuota.mes}" /></p:column>
+												  <p:column headerText="AÑO" style="width:32px" ><h:outputText value="#{cuota.anio}" /></p:column>
+												  <p:column headerText="MONTO DEUDA" style="width:32px" >
+												  <p:cellEditor>
+												  <f:facet name="output"><h:outputText value="#{cuota.monto}" /></f:facet>
+												  <f:facet name="input"><h:inputText value="#{cuota.monto}" /></f:facet>
+												  
+												  </p:cellEditor>
+												  </p:column>
+										   		</p:dataTable>
+											<p:dialog width="auto" height="auto" resizable="false"
+												closeOnEscape="true" showHeader="true" closable="true"
+												widgetVar="dlgPendientePagoRenta" showEffect="slide"
+												hideEffect="slide">
+												<p:dataTable id="pendientePagoRenta" var="cuota"
+													rowKey="#{cuota.nrocuota}" paginatorPosition="top"
+													filteredValue="#{rdMB.listaCuotasPendienltesCondicionCancelarFilter}"
+													value="#{rdMB.listaCuotasPendientesCondicion}"
+													paginator="true"
+													selection="#{rdMB.listaCuotasPendientesCondicionCancelar}"													
+													paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+													currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+													rowsPerPageTemplate="12,24,36,48,60,72" rows="12"
+													scrollWidth="400px" emptyMessage="No tiene Pendientes">
+													<p:ajax event="toggleSelect"
+														listener="#{rdMB.calcularTotales}" 
+														 />
+
+													<p:ajax event="rowSelectCheckbox"
+														listener="#{rdMB.calcularTotales}"
+														
+														 />
+													<p:ajax event="rowUnselectCheckbox"
+														
+														listener="#{rdMB.calcularTotales}" />
+													<p:ajax event="rowSelect"
+														
+														listener="#{rdMB.calcularTotales}" />
+													<p:column selectionMode="multiple" width="15" disabledSelection="#{cuota.condicion.equals('Generado')||cuota.monto==0}"/>
+													
+													<p:column>
+														<h:outputText value="#{cuota.mes}" />
+													</p:column>
+													<p:column filterBy="#{cuota.anio}"
+														filterMatchMode="contains">
+														<h:outputText value="#{cuota.anio}" />
+													</p:column>
+													<p:column>
+														<h:outputText value="#{cuota.monto}" />
+													</p:column>
+													<p:column>
+														<h:outputText value="#{cuota.condicion}" />
+													</p:column>
+												</p:dataTable>
+												<center>
+													<p:commandButton value="Aceptar"
+														style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+														process="@this" actionListener="#{rdMB.validarListaCuotas}"
+														update=":formRegRecDeuda"></p:commandButton>
+														<p:spacer width="20"/>
+													<p:commandButton value="Cancelar"
+														style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+														process="@this" onclick="dlgPendientePagoRenta.hide()" ></p:commandButton>
+												</center>
+											</p:dialog>
+											</center>
+<!-- 										</h:panelGrid> -->
+										   <h:panelGrid columns="2" id="totaldeuda" style="text-align: left;width: 89% ;padding: 0px 310px 0px 0px;" >
+										   			<p:outputLabel value="Total:" style="text-align:left  "></p:outputLabel> 
+													<p:inputText value="#{rdMB.contratoBean.totalsoles_rec}" style="width:40%;min-width:68px; float:left;text-align:left " readonly="true"></p:inputText>
+											         
+										   </h:panelGrid>
+<!-- 										   <h:panelGrid columns="2" style="text-align: left;width: 89% ;padding: 0px 342px 0px 0px;" > -->
+<!-- 										   			<p:outputLabel value="Total dolares:" style="text-align:left  "></p:outputLabel>  -->
+<!-- 													<p:inputText value="#{rdMB.contratoBean.totaldolares_Rec}" style="width:46%;min-width:68px; float:left;text-align:left " readonly="true"></p:inputText> -->
+											         
+<!-- 										   </h:panelGrid> -->
+										   
+				         				</p:fieldset>
+				         			</center>
+				            	</p:tab>
+				            	<p:tab title="INFORMACIÓN DE PAGO" id="tablainformacionpago">
+				         			<center>
+				         				<p:fieldset id="informacionpago" >
+				         				    
+				         					<h:panelGrid columns="6" style="text-align: left;width: 93%" >
+										   			<p:outputLabel value="N&uacute;mero de cuotas:"/> 
+													<p:inputText value="#{rdMB.contratoBean.numerocuotas}" style="width:46%;min-width:60px" >
+														<p:ajax event="change" listener="#{rdMB.asignarMesAnio}" update="numAnioActa,numMesActa,idContratoFechainicio_,idContratoFechaFinContrato_,mesInicioCobro_rec,anioInicioCobro_rec,anioFinCobro_rec,mesFinCobro_rec" process="@form" ></p:ajax>
+													</p:inputText>
+													<h:outputLabel  value="Nº Años:"/>
+													<p:inputText   style="width:50%;min-width:60px" value="#{rdMB.numAniosContrato}" id="numAnioActa" readonly="true">
+														<p:ajax event="change" listener="#{rdMB.limpiarFinContrato}" update="idContratoFechainicio_,idContratoFechaFinContrato_"/>
+													</p:inputText>
+												
+													<h:outputLabel  value="Nº Meses:" style="text-align:left"/>
+													<p:inputText style="width:50%;min-width:60px" value="#{rdMB.numMesesContrato}" id="numMesActa" readonly="true">
+														<p:ajax event="change" listener="#{rdMB.limpiarFinContrato}" update="idContratoFechainicio_,idContratoFechaFinContrato_"/>
+													</p:inputText>
+											         
+										   </h:panelGrid>
+				         					 <h:panelGrid columns="4"  style="text-align: left;width: 74% ;border-width: 0px !important; padding: 0px 226px 0px 0px !important;">
+<!-- 												<h:outputLabel  value="Nº Años:" style="text-align:left"/> -->
+<!-- 												<p:inputText   style="width:30%;min-width:68px; float:left;text-align:right" value="#{rdMB.numAniosContrato}" id="numAnioActa" > -->
+<!-- 													<p:ajax event="change" listener="#{rdMB.limpiarFinContrato}" update="idContratoFechainicio_,idContratoFechaFinContrato_"/> -->
+<!-- 												</p:inputText> -->
+												
+<!-- 												<h:outputText styleClass="lblDatosContra" value="Nº Meses"/> -->
+<!-- 												<p:inputText style="width:25px;" value="#{rdMB.numMesesContrato}" id="numMesActa" > -->
+<!-- 													<p:ajax event="change" listener="#{rdMB.limpiarFinContrato}" update="idContratoFechainicio_,idContratoFechaFinContrato_"/> -->
+<!-- 												</p:inputText> -->
+												
+												<p:outputLabel  value="Inicio:" style="text-align:left ;padding: 0px 0px 0px 0px "/>
+												<p:calendar id="idContratoFechainicio_" navigator="true" pattern="dd/MM/yyyy" locale="es" style="width:32%;min-width:109px; float:left;text-align:left ;padding: 0px 34px 0px 0px"
+													styleClass="anchoCalendar" disabled="#{rdMB.sicontratofuturo}"
+													value="#{rdMB.contratoBean.iniciocontrato}" showOn="button">
+													<p:ajax event="dateSelect" listener="#{rdMB.calcularFinContrato}" update="idContratoFechaFinContrato_,mesInicioCobro_rec,anioInicioCobro_rec,anioFinCobro_rec,mesFinCobro_rec" process="@form"/>
+												</p:calendar>
+
+												<h:outputText value="T&eacute;rmino:" style="text-align:left ;padding: 0px 0px 0px 10px " />
+												<p:inputText id="idContratoFechaFinContrato_" value="#{rdMB.contratoBean.fincontrato}" style="width:108%;min-width:60px ;float:left;text-align:left " >
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</p:inputText>
+											</h:panelGrid>
+											<h:panelGrid columns="6" style="text-align: left;width: 93% ;border-width: 0px !important; padding: 0px 54px 0px 0px !important;" >
+											 <p:outputLabel  value="Intervalo de cobro:" style="text-align:left  "/>
+											 <p:selectOneMenu id="mesInicioCobro_rec" value="#{rdMB.mesInicioCobro}" 
+												        style="width:50%;min-width:76px; float:left;text-align:left;padding:0px 5px 0px 0px;" >
+											            <f:selectItem itemLabel="Mes" itemValue="" />
+											            <f:selectItems value="#{inicioMB.listaMes}" />
+											          <p:ajax event="change" listener="#{rdMB.calcularFinCobroxReconocimiento}" update="anioFinCobro_rec,mesFinCobro_rec" process="@form"/>
+									      	  	</p:selectOneMenu>
+									        
+												<p:selectOneMenu id="anioInicioCobro_rec"  value="#{rdMB.anioInicioCobro}" 
+												        style="width:30%;min-width:63px; float:left;text-align:left;padding:0px 20px 0px 0px;" >
+											            <f:selectItem itemLabel="Año" itemValue="" />
+											            <f:selectItems value="#{inicioMB.listaAnio}" />
+											           <p:ajax event="change" listener="#{rdMB.calcularFinCobroxReconocimiento}" update="anioFinCobro_rec,mesFinCobro_rec" process="@form"/>
+											     </p:selectOneMenu>
+											     <h:outputText value="hasta" style="text-align:left ; width:89%"/>
+												<h:panelGrid columns="2" style="text-align: left;width: 50% " >
+												<p:inputText id="mesFinCobro_rec" value="#{rdMB.mesFinCobro}" style="width:50%;min-width:76px; float:left;text-align:left"/>
+									        	
+									        	<p:inputText id="anioFinCobro_rec" value="#{rdMB.anioFinCobro}" style="width:50%;min-width:76px; float:left;text-align:left"/>
+											    </h:panelGrid>
+											</h:panelGrid>
+										<h:panelGrid columns="2"
+											style="text-align: left;width: 90% ;padding: 0px 282px 0px 0px !important ;">
+											<p:outputLabel value="Tipo de Moneda:" style="text-align:left  "></p:outputLabel>
+											
+											<h:panelGrid columns="2"  style="text-align:left ; width:80%">
+												<p:selectBooleanCheckbox id="idSoles"
+													value="#{rdMB.sisoles}" itemLabel="Soles">
+													<p:ajax update="idDolar"
+														listener="#{rdMB.cambiarDolarSoles}" />
+												</p:selectBooleanCheckbox>
+												<p:selectBooleanCheckbox id="idDolar"
+													value="#{rdMB.sidolar}" itemLabel="Dolar"
+													style="margin-left:20px;">
+													<p:ajax update="idSoles"
+														listener="#{rdMB.cambiarSolesDolar}" />
+												</p:selectBooleanCheckbox>
+											</h:panelGrid>
+										</h:panelGrid>
+
+										<h:panelGrid  id="montoactareconocimiento" columns="4" style="text-align: left;width: 89% ;border-width: 0px !important; padding: 0px 62px 0px 0px !important;">
+																
+										    <h:outputText value="Monto Deuda : " style="text-align:left  " />
+											<p:inputText value="#{rdMB.contratoBean.montodeuda}" style="width:50%;min-width:76px; float:left;text-align:left" readonly="true"/>
+											<h:outputText value="Cuota mensual: " style="text-align:left  "  />
+											<p:inputText value="#{rdMB.contratoBean.contraprestacion}" style="width:30%;min-width:68px; float:left;text-align:right"/>
+											
+											<h:outputText value="¿Cuota Inicial?: " style="text-align:left  " />
+											<p:selectBooleanCheckbox value="#{rdMB.contratoBean.simontoinicialdeuda}"  itemLabel="Sí">
+												<p:ajax update="contraprestacionadicionalLabel,contraprestacionMontoInicial" />
+											</p:selectBooleanCheckbox>
+											
+											<h:panelGrid id="contraprestacionadicionalLabel">
+											<h:outputText value="Monto Inicial: " style="text-align:left  "/>
+											</h:panelGrid>
+											
+											<h:panelGrid id="contraprestacionMontoInicial">
+											<p:inputText value="#{rdMB.contratoBean.montoinicialdeuda}" style="width:30%;min-width:68px; float:left;text-align:right" readonly = "#{!rdMB.contratoBean.simontoinicialdeuda}"/>
+											</h:panelGrid>
+											
+<!-- 											<h:panelGrid id="aniocontraprestacionadicionalLabel"> -->
+<!-- 											<h:outputText value="Aplica desde el año: " rendered="#{rdMB.contratoBean.sicontraprestacionadicional}"/> -->
+<!-- 											</h:panelGrid> -->
+											
+<!-- 											<h:panelGrid id="aniocontraprestacionadicionalDescripcion"> -->
+<!-- 											<p:inputText value="#{rdMB.contratoBean.aniocontraprestacionadicional}" style="text-align:right;width:20px;" rendered="#{rdMB.contratoBean.sicontraprestacionadicional}"/> -->
+<!-- 											</h:panelGrid> -->
+										
+											
+<!-- 											<h:outputText value="Clausula de Per&iacute;odo de Gracia: " /> -->
+<!-- 											<p:selectBooleanCheckbox value="#{rdMB.contratoBean.siclausulaperiodogracia}"  itemLabel="Sí"/> -->
+											
+<!-- 											<H:OUTPUTTEXT VALUE="CLAUSULA DE RECONOCIMIENTO DE RENTA: " /> -->
+<!-- 											<P:SELECTBOOLEANCHECKBOX VALUE="#{RDMB.CONTRATOBEAN.SICLAUSULARECONOCIMIENTORENTA}"  ITEMLABEL="SÍ"/> -->
+
+
+<!-- 											<h:outputText value="Clausula de Reconocimiento de Inversi&oacute;n: " /> -->
+<!-- 											<p:selectBooleanCheckbox  value="#{rdMB.contratoBean.siclausulareconocimientoinversion}" itemLabel="Sí"/> -->
+											
+<!-- 											<h:outputText value="Clausula de Suspensión de Temporal de Renta: " /> -->
+<!-- 											<p:selectBooleanCheckbox  value="#{rdMB.contratoBean.siclausulasuspensiontemporalrenta}" itemLabel="Sí"/> -->
+											
+<!-- 											<h:outputText value="Clausula de Pago de Posterior: " /> -->
+<!-- 											<p:selectBooleanCheckbox  value="#{rdMB.contratoBean.siclausulapagoposterior}" itemLabel="Sí"/> -->
+										
+											<!-- *********** INCREMENTO ANUAL ************* -->
+<!-- 											<h:outputText value="Tipo de incremento anual: " /> -->
+<!-- 											<p:selectOneMenu   value="#{rdMB.contratoBean.tiporeajusteanual}"> -->
+<!-- 																	<f:selectItem itemLabel="Seleccione Tipo " itemValue="" /> -->
+<!-- 																	<f:selectItem itemLabel="1. Incremento anual (%)" itemValue="0" /> -->
+<!-- 																	<f:selectItem itemLabel="2. Incremento IPC" itemValue="1"/> -->
+<!-- 																	<f:selectItem itemLabel="3. Mayor entre 1 y 2" itemValue="2" /> -->
+<!-- 															<p:ajax update="reajusteLabel,reajusteDesc"/> -->
+<!-- 											</p:selectOneMenu> -->
+											
+<!-- 											<h:panelGrid id="reajusteLabel"> -->
+<!-- 												<h:outputText value="Valor incremento anual (%): " rendered="#{rdMB.contratoBean.tiporeajusteanual.equals('1')?false:true}"/> -->
+<!-- 											</h:panelGrid> -->
+											
+<!-- 											<h:panelGrid id="reajusteDesc"> -->
+<!-- 												<p:inputText value="#{rdMB.contratoBean.reajusteanual}"  rendered="#{rdMB.contratoBean.tiporeajusteanual.equals('1')?false:true}"/> -->
+<!-- 											</h:panelGrid> -->
+											<!-- *********** FIN INCREMENTO ANUAL  ************* -->
+											
+<!-- 											<h:outputText value="Penalidad: " /> -->
+<!-- 											<p:selectBooleanCheckbox  value="#{rdMB.contratoBean.sipenalidad}" itemLabel="Sí"> -->
+<!-- 													<p:ajax update="penalidadLabel,penalidadDesc" listener="#{rdMB.ActivarDesactivarSiOcupante}" /> -->
+<!-- 											</p:selectBooleanCheckbox> -->
+											
+<!-- 											<h:panelGrid id="penalidadLabel"> -->
+<!-- 												<h:outputText value="Valor Penalidad (%): "  rendered="#{rdMB.contratoBean.sipenalidad}"/> -->
+<!-- 											</h:panelGrid> -->
+											
+<!-- 											<h:panelGrid id="penalidadDesc"> -->
+<!-- 												<p:inputText value="#{rdMB.contratoBean.porcentajepenalidad}"  rendered="#{rdMB.contratoBean.sipenalidad}"> -->
+<!-- 												</p:inputText> -->
+<!-- 											</h:panelGrid> -->
+											
+										</h:panelGrid>
+										<br/>
+										<center>
+										<p:dataTable id="listaRentas" value="#{rdMB.listaRentas}" selection="#{rdMB.selectedRenta}" 
+										 var="renta" editable="true" selectionMode="single" rowKey="#{renta.secuencia}"
+										style="font-size: 12px; text-align: center;"
+										emptyMessage="No ha generado ninguna renta" rowIndexVar="index"
+										rows="12" paginator="true" paginatorPosition="bottom"
+				                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+										
+										<p:ajax event="rowEdit" listener="#{rdMB.validarPeriodo}" update="listaRentas,:frmMaestra:listaMensajes" />
+										
+										<f:facet name="header">
+											<p:commandButton value="Generar Periodos" actionListener="#{rdMB.validarGenerarPeriodos}" update="listaRentas,:frmMaestra:listaMensajes" icon="ui-icon-wrench"/>
+										</f:facet>
+										<p:columnGroup type="header">
+										  <p:row>
+							                <p:column rowspan="2" headerText="" style="width:32px"/>
+<!-- 							                <p:column rowspan="2" headerText="#" style="vertical-align: middle;"/> -->
+							                <p:column rowspan="2" headerText="N° CUOTA" style="vertical-align: middle;"/>
+							                <p:column rowspan="2" headerText="FECHA DE VENCIMIENTO" style="vertical-align: middle;"/>							                
+<!-- 							                <p:column rowspan="2" headerText="Año" style="vertical-align: middle;"/> -->
+<!-- 							                <p:column rowspan="2" headerText="Mes" style="vertical-align: middle;"/> -->
+<!-- 							                <p:column rowspan="2" headerText="Contraprestaci&oacute;n (C)" style="vertical-align: middle;"/> -->
+<!-- 							                <p:column rowspan="2" headerText="C + Inc." style="vertical-align: middle;"/> -->
+<!-- 							                <p:column rowspan="2" headerText="Período Gracia" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulaperiodogracia}"/> -->
+<!-- 							                <p:column rowspan="2" headerText="Recono. de Inversi&oacute;n" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulareconocimientoinversion}"/> -->
+<!-- 							                <p:column colspan="3" headerText="Recono. de Renta" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulareconocimientorenta}"/> -->
+<!-- 							                <p:column colspan="3" headerText="Pago Posterior" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulapagoposterior}"/> -->
+<!-- 							                <p:column rowspan="2" headerText="Suspen. Temp. Renta" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulasuspensiontemporalrenta}"/> -->
+							                
+<!-- 							                <p:column colspan="3" headerText="Pago Fracci&oacute;n" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.sipagofraccionrenta}"/> -->							                
+											<p:column rowspan="2" headerText="TOTAL A PAGAR" style="vertical-align:middle;"/>
+											<p:column rowspan="3" headerText="DETALLE CUOTA" style="vertical-align:middle;"/>
+							              </p:row>
+							               <p:row>
+
+							                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulareconocimientorenta}"/>
+							                <p:column colspan="1" headerText="Valor" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulareconocimientorenta}"/>
+							                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulareconocimientorenta}"/>
+							                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulapagoposterior}"/>
+							                <p:column colspan="1" headerText="Valor" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulapagoposterior}"/>
+							                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulapagoposterior}"/>
+							                
+							                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.siclausulasuspensiontemporalrenta}"/>
+							                
+							                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.sipagofraccionrenta}"/>
+							                <p:column colspan="1" headerText="Valor Fracci&oacute;n" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.sipagofraccionrenta}"/>
+							                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{rdMB.contratoBean.sipagofraccionrenta}"/>
+							              </p:row>
+										 </p:columnGroup>
+										 <p:column style="width:32px">
+										           <p:rowEditor rendered="#{rdMB.contratoBean.idcontrato==0?true:false}"/>
+										</p:column>
+<!-- 										<p:column> -->
+<!-- 											<h:outputText value="#{index+1}" /> -->
+<!-- 										</p:column> -->
+										<p:column>
+											<h:outputText value="#{renta.nrocuota}" />
+										</p:column>
+										<p:column>
+												<h:outputText value="#{renta.fechavencimiento}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+										</p:column>
+<!-- 										<p:column> -->
+<!-- 											<h:outputText value="#{renta.anio}" /> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column> -->
+<!-- 											<h:outputText value="#{renta.mes}" /> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column> -->
+<!-- 											<h:outputText value="#{renta.contraprestacion}" /> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column> -->
+<!-- 											<h:outputText value="#{renta.renta}" /> -->
+<!-- 										</p:column> -->
+										
+<!-- 										<p:column  rendered="#{rdMB.contratoBean.siclausulaperiodogracia}"> -->
+<!-- 												   <p:cellEditor> -->
+<!-- 										               <f:facet name="output"><h:outputText value="#{renta.siclausulaperiodogracia.equals(true)?'S&iacute;':'No'}" /></f:facet> -->
+<!-- 										               <f:facet name="input"> -->
+<!-- 										              <h:selectOneMenu value="#{renta.siclausulaperiodogracia}" style="width:100%"> -->
+<!-- 									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" /> -->
+<!-- 									                  	   <f:selectItem itemLabel="No" itemValue="false" /> -->
+									                  	   
+<!-- 									                  </h:selectOneMenu> -->
+										               
+<!-- 										               </f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column rendered="#{rdMB.contratoBean.siclausulareconocimientoinversion}"> -->
+<!-- 												    <p:cellEditor> -->
+<!-- 										               <f:facet name="output"> -->
+<!-- 										               <h:outputText value="#{renta.siclausulareconocimientoinversion.equals(true)?'S&iacute;':'No'}" /> -->
+<!-- 										               </f:facet> -->
+<!-- 										               <f:facet name="input"> -->
+<!-- 										              <h:selectOneMenu value="#{renta.siclausulareconocimientoinversion}" style="width:100%"> -->
+<!-- 									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" /> -->
+<!-- 									                  	   <f:selectItem itemLabel="No" itemValue="false" /> -->
+<!-- 									                  </h:selectOneMenu> -->
+										               
+<!-- 										               </f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column rendered="#{rdMB.contratoBean.siclausulareconocimientorenta}"> -->
+<!-- 												   <p:cellEditor> -->
+<!-- 										               <f:facet name="output"><h:outputText value="#{renta.siclausulareconocimientorenta.equals(true)?'S&iacute;':'No'}" /></f:facet> -->
+<!-- 										               <f:facet name="input"> -->
+<!-- 										              <h:selectOneMenu value="#{renta.siclausulareconocimientorenta}" style="width:100%"> -->
+<!-- 									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" /> -->
+<!-- 									                  	   <f:selectItem itemLabel="No" itemValue="false" /> -->
+<!-- 									                  </h:selectOneMenu> -->
+										               
+<!-- 										               </f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+<!-- 										<p:column rendered="#{rdMB.contratoBean.siclausulareconocimientorenta}"> -->
+<!-- 												   <p:cellEditor> -->
+<!-- 										               <f:facet name="output"><h:outputText value="#{renta.descuentoreconocimientorenta}" /></f:facet> -->
+<!-- 										               <f:facet name="input"><p:inputText  value="#{renta.descuentoreconocimientorenta}" style="text-align:center; "/></f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+										
+<!-- 										<p:column rendered="#{rdMB.contratoBean.siclausulareconocimientorenta}"> -->
+<!-- 												<p:cellEditor> -->
+<!-- 										               <f:facet name="output"><h:outputText value="#{renta.observacionreconocimientorenta}" /></f:facet> -->
+<!-- 										               <f:facet name="input"><p:inputText  value="#{renta.observacionreconocimientorenta}" style="text-align:center; " /></f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+										
+<!-- 										<p:column rendered="#{rdMB.contratoBean.siclausulapagoposterior}"> -->
+<!-- 												   <p:cellEditor> -->
+<!-- 										               <f:facet name="output"> -->
+<!-- 										               <h:outputText value="#{renta.siclausulapagoposterior.equals(true)?'S&iacute;':'No'}"/> -->
+<!-- 										               </f:facet> -->
+<!-- 										               <f:facet name="input"> -->
+<!-- 										              <h:selectOneMenu value="#{renta.siclausulapagoposterior}" style="width:100%"> -->
+<!-- 									                       <f:selectItem itemLabel="No" itemValue="false" /> -->
+<!-- 									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" /> -->
+									                       
+<!-- 									                       <p:ajax listener="#{ccMB.configurarClausulaPagoPosterior(renta)}" update=":frmCondicion:j_idt162:configurarPagoRentaPosterior"/> -->
+<!-- 									                  </h:selectOneMenu> -->
+										               
+<!-- 										               </f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+										
+<!-- 										<p:column rendered="#{rdMB.contratoBean.siclausulapagoposterior}"> -->
+<!-- 												   <p:cellEditor> -->
+<!-- 										               <f:facet name="output"><h:outputText value="#{renta.montopagoposterior}" /></f:facet> -->
+<!-- 										               <f:facet name="input"><p:inputText  value="#{renta.montopagoposterior}" style="text-align:center; "/></f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+										
+<!-- 										<p:column rendered="#{rdMB.contratoBean.siclausulapagoposterior}"> -->
+<!-- 												<p:cellEditor> -->
+<!-- 										               <f:facet name="output"><h:outputText value="#{renta.observacionpagoposterior}" /></f:facet> -->
+<!-- 										               <f:facet name="input"><p:inputText  value="#{renta.observacionpagoposterior}" style="text-align:center; "/></f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+										
+										
+<!-- 										<p:column rendered="#{rdMB.contratoBean.siclausulasuspensiontemporalrenta}"> -->
+<!-- 												   <p:cellEditor> -->
+<!-- 										               <f:facet name="output"> -->
+<!-- 										               <h:outputText value="#{renta.siclausulasuspensiontemporalrenta.equals(true)?'S&iacute;':'No'}"/> -->
+<!-- 										               </f:facet> -->
+<!-- 										               <f:facet name="input"> -->
+<!-- 										              <h:selectOneMenu value="#{renta.siclausulasuspensiontemporalrenta}" style="width:100%"> -->
+<!-- 									                       <f:selectItem itemLabel="No" itemValue="false" /> -->
+<!-- 									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" /> -->
+									                       
+<!-- 									                       <p:ajax listener="#{rdMB.configurarClausulaSuspensionTemporalRenta(renta)}" update=":frmCondicion:j_idt162:configurarSuspensionTemporalRenta"/> -->
+<!-- 									                  </h:selectOneMenu> -->
+										               
+<!-- 										               </f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+										
+										
+<!-- 										<p:column rendered="#{rdMB.contratoBean.sipagofraccionrenta}"> -->
+<!-- 												   <p:cellEditor> -->
+<!-- 										               <f:facet name="output"> -->
+<!-- 										               <h:outputText value="#{renta.sipagofraccionrenta.equals(true)?'S&iacute;':'No'}"/> -->
+<!-- 										               </f:facet> -->
+<!-- 										               <f:facet name="input"> -->
+<!-- 										              <h:selectOneMenu value="#{renta.sipagofraccionrenta}" style="width:100%"> -->
+<!-- 									                       <f:selectItem itemLabel="No" itemValue="false" /> -->
+<!-- 									                       <f:selectItem itemLabel="S&iacute;" itemValue="true" /> -->
+<!-- 									                  </h:selectOneMenu> -->
+										               
+<!-- 										               </f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+										
+<!-- 										<p:column rendered="#{rdMB.contratoBean.sipagofraccionrenta}"> -->
+<!-- 												   <p:cellEditor> -->
+<!-- 										               <f:facet name="output"><h:outputText value="#{renta.montopagofraccionrenta}" /></f:facet> -->
+<!-- 										               <f:facet name="input"><p:inputText  value="#{renta.montopagofraccionrenta}" style="text-align:center; "/></f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+										
+<!-- 										<p:column rendered="#{rdMB.contratoBean.sipagofraccionrenta}"> -->
+<!-- 												<p:cellEditor> -->
+<!-- 										               <f:facet name="output"><h:outputText value="#{renta.observacionpagofraccionrenta}" /></f:facet> -->
+<!-- 										               <f:facet name="input"><p:inputText  value="#{renta.observacionpagofraccionrenta}" style="text-align:center; "/></f:facet> -->
+<!-- 										           </p:cellEditor> -->
+<!-- 										</p:column> -->
+																														
+										<p:column>
+												 <h:outputText value="#{renta.montopagar}" />
+										</p:column>
+										<p:column style="width:2rem">
+                							<p:rowToggler/>
+            							</p:column>
+            							<p:rowExpansion>
+            							   <h:outputText value="Información de Cuota" style="text-align:left  "/>
+            							   <p:dataTable id="listaRentas" value="#{renta.maecondiciondetalle}" var="rentadetalle" rowIndexVar="indexdetalle">
+            							       <p:columnGroup type="header">
+            							        <p:row>
+            							        		<p:column rowspan="2" headerText="#" style="vertical-align: middle;"/>
+							                            <p:column rowspan="2" headerText="Concepto" style="vertical-align: middle;"/>
+							                            <p:column rowspan="2" headerText="Mes" style="vertical-align: middle;"/>
+							                            <p:column rowspan="2" headerText="Año" style="vertical-align: middle;"/>
+							                            <p:column rowspan="2" headerText="Monto Deuda" style="vertical-align: middle;"/>
+            							        </p:row>
+            							       </p:columnGroup>
+										       <p:column>
+										             <h:outputText value="#{(index+1)+(indexdetalle+1)/10}" >  </h:outputText>
+										       </p:column>
+										       <p:column>
+										             <h:outputText value="#{rentadetalle.concepto}" >  </h:outputText>
+										       </p:column>
+										       <p:column>
+										             <h:outputText value="#{rentadetalle.mes}" >  </h:outputText>
+										       </p:column>
+										       <p:column>
+										             <h:outputText value="#{rentadetalle.anio}" >  </h:outputText>
+										       </p:column>
+										       <p:column>
+										             <h:outputText value="#{rentadetalle.monto}" >  </h:outputText>
+										       </p:column>
+										     
+										     </p:dataTable>
+            							
+            							</p:rowExpansion>
+										 
+										</p:dataTable>
+										</center>
+				         				</p:fieldset>
+				         			</center>
+				            	</p:tab>
+				            	<p:tab title="DOCUMENTOS SUSTENTATORIOS">
+				         			<center>
+				         				<p:fieldset id="documentossustentarios">
+				         					<p:tabView id="tabDocumentosSustentatorios">
+				         						<p:tab title="Nuevo Documento" id="tabNuevoDoc" rendered="true">
+				         						<center>
+				         							<p:panelGrid id="panelCargarDocumento" columns="3">
+				         								<h:outputText value="Documentos"/>					
+														<p:spacer />
+<!-- 														<div style="height: 40%;width: 100%; padding: 1% 0% 0% 2%">										 -->
+															<p:commandButton value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjuntoContrato()}"  update=":frmMaestra:listaMensajes,:frmAdjuntarArchivo:listaArchivoAdjunto" icon="ui-icon-wrench" rendered="#{rdMB.listContrato.size()>0 ? false:true}"/>
+<!-- 										   				 </div> -->
+													</p:panelGrid>
+				         						</center>
+				         						</p:tab>
+				         						<p:tab title="Documentos subidos" id="tabDocSubidos">	
+				         						</p:tab>
+				         					</p:tabView>
+				         				</p:fieldset>
+				         			</center>
+				            	</p:tab>
+				            	<p:tab title="OBSERVACIONES">
+								<center>
+									<h:panelGrid
+										style="text-align: left;width: 89% ;padding: 0px 310px 0px 0px;">
+										<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<br />
+										<h:outputText value="Observación: " />
+										<p:inputTextarea style="width:100%;"
+											value="#{rdMB.contratoBean.observacion}" rows="4"
+											maxlength="500" ><p:ajax event="change" listener="#{rdMB.asignarObservacion}"/></p:inputTextarea> 
+										<br />
+										<hr width="100%" size="1" style="color: #B8B8B8; float: left;" />
+										<br />
+									</h:panelGrid>
+								</center>
+							</p:tab>
+				         </p:accordionPanel>
+				         <center>
+				         <h:panelGrid columns="3" style="text-align: center;width: 63% ;border-width: 0px !important; padding: 0px 62px 0px 0px !important;">
+							
+								<p:commandButton value="Registrar"
+									style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+									rendered="#{rdMB.contratoBean.idcontrato==0?true:false}"
+									actionListener="#{rdMB.validarGrabarCabeceraContrato}" update=":frmMaestra:listaMensajes,:formRegRecDeuda"
+									process="@this" ></p:commandButton>
+<!-- 								<p:spacer width="20" /> -->
+<!-- 								<p:commandButton value="Modificar" -->
+<!-- 									style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;" -->
+<!-- 									rendered="#{rdMB.contratoBean.idcontrato==0?false:true}" -->
+<!-- 									actionListener="#{rdMB.validarGrabarCabeceraContrato}" update=":frmMaestra:listaMensajes,:formRegRecDeuda" -->
+<!-- 									process="@this"></p:commandButton> -->
+								<p:commandButton value="Cancelar"
+									style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+									process="@this" actionListener="#{rdMB.limpiarRegistroPropiedades}" update=":formRegRecDeuda"></p:commandButton>
+							
+						</h:panelGrid>
+				         </center>
+				         
+				         <!-- ************************** VISTA DE CONSULTA UPA *****************  -->
+				    <p:dialog header="Seleccione Upa" id="iddlgListaUpaRD"
+										width="auto" height="auto" closable="true" closeOnEscape="true"
+										resizable="false" widgetVar="iddlgListaUpaRD" modal="true"
+										style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+										
+										<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="tipobusquedaUpa" value="Consulta:" />
+										        <p:selectOneListbox id="tipobusquedaUpa" value="#{rdMB.tipobusquedaUpa}">
+										            <f:selectItem itemLabel="Clave" itemValue="1" />
+										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="2" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="testUpa" actionListener="#{rdMB.buscarUpa}" update="tblUpaRD"/>
+										        <p:inputText id="patronUpa"  value="#{rdMB.valorbusquedaUpa}" onkeypress="if (event.keyCode == 13) { testUpa(); return false; }" >
+										        	<p:watermark for="patronUpa" value="Ingrese campo"></p:watermark>
+										       
+										        <p:commandButton value="Buscar" icon="ui-icon-search" ajax="true"
+										       		 widgetvar="btnBuscarUpaRDS"
+										      		 actionListener="#{rdMB.buscarUpa}"
+										       		 style="float:right"
+										       		 update="tblUpaRD"
+										        	>
+										        </p:commandButton>
+										        </p:inputText>
+			 							</h:panelGrid>
+<!-- ********************TABLA DE LISTA CONSULTA UPA ****************** -->
+										<p:dataTable id="tblUpaRD" var="detall" value="#{rdMB.listUpa}"
+											emptyMessage="0 registros encontrados"
+											style="width:625px; font-size: 10px;  margin-right:0px;text-aling:center;" 
+											styleClass="ui-datatable-hor-scroll" rowKey="#{detall.idupa}"
+											rowIndexVar="row" selection="#{rdMB.upa}" 
+											selectionMode="single" paginator="true"
+											filteredValue="#{rdMB.listUpaFiltro}" rows="10"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											rowsPerPageTemplate="5,10,15">
+											<p:ajax event="rowSelect" listener="#{rdMB.seleccionarUpa}"
+												oncomplete="iddlgListaUpaRD.hide()"
+												update=":formRegRecDeuda,:frmMaestra:listaMensajes" />
+											<p:column headerText="Clave" filterBy="#{detall.clave}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.clave}" />
+											</p:column>
+
+											<p:column headerText="Ubigeo"
+												filterBy="#{detall.inmueble.ubigeo.ubigeo}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.ubigeo}" />
+											</p:column>
+
+											<p:column headerText="Departamento"
+												filterBy="#{detall.inmueble.ubigeo.depa}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.depa}" />
+											</p:column>
+
+											<p:column headerText="Provincia"
+												filterBy="#{detall.inmueble.ubigeo.prov}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.prov}" />
+											</p:column>
+
+											<p:column headerText="Distrito"
+												filterBy="#{detall.inmueble.ubigeo.dist}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.inmueble.ubigeo.dist}" />
+											</p:column>
+
+											<p:column headerText="Direcci&oacute;n"
+												filterBy="#{detall.direccion}" filterMatchMode="startsWith">
+												<h:outputText value="#{detall.direccion}" />
+												<!-- <h:outputText value="#{detall.inmueble.direccion}" /> -->
+											</p:column>
+
+											<p:column headerText="N&uacute;mero Principal"
+												filterBy="#{detall.inmueble.numeroprincipal}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.numprincipal}" />
+												<!-- <h:outputText value="#{detall.inmueble.numeroprincipal}" /> -->
+											</p:column>
+
+											<p:column headerText="Nombre Num. Interior"
+												filterBy="#{detall.nombrenuminterior}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.nombrenuminterior}" />
+											</p:column>
+
+											<p:column headerText="Uso"
+												filterBy="#{detall.uso}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.uso}" />
+											</p:column>
+
+											<p:column headerText="Situacion">
+												<h:outputText value="#{detall.inmueble.situacion}" />
+											</p:column>
+
+										</p:dataTable>
+									</p:dialog>
+	<!-- ******************************VISTA DE CONSULTA INQUILINO****************************** -->
+									<p:dialog header="Seleccione Inquilino"
+										id="iddlgListaInquilinoRD" width="auto" height="auto"
+										closable="true" closeOnEscape="true" resizable="false"	
+										widgetVar="iddlgListaInquilinoRD"
+										style="border-width:9px;border-style:solid;  border-color:#c2c2c2; ">
+										
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="tipobusquedaInq" value="Consulta:" />
+										        <p:selectOneListbox id="tipobusquedaInq" value="#{rdMB.tipobusquedaInquilino}">
+										            <f:selectItem itemLabel="Nombres/Raz&oacute;n Social:" itemValue="nombresRazonSocial" />
+										            <f:selectItem itemLabel="RUC:" itemValue="ruc" />
+										            <f:selectItem itemLabel="DNI:" itemValue="dni" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="testInquilino" actionListener="#{rdMB.buscarInquilino}" update="tblInquilinoRD"/>
+										        <p:inputText id="patronInq"  value="#{rdMB.valorbusquedaInquilino}" onkeypress="if (event.keyCode == 13) { testInquilino(); return false; }" >
+										        	<p:watermark for="patronInq" value="Ingrese campo"></p:watermark>
+										       
+										        <p:commandButton value="Buscar" icon="ui-icon-search" ajax="true"
+										        widgetvar="btnBuscarInquilinoRDS"
+										        actionListener="#{rdMB.buscarInquilino}"
+										        style="float:right"
+										        update="tblInquilinoRD"
+										        ></p:commandButton> </p:inputText>
+			 						</h:panelGrid>
+										
+<!-- ***********************TABLA LISTA DE CONSULTA INQUILINO********************** -->
+										<p:dataTable id="tblInquilinoRD" var="detall" value="#{rdMB.listInquilino}"
+											emptyMessage="0 registros encontrados"
+											style="width:625px; font-size: 10px;  margin: 0px 0px 0px 0px;text-aling:center;"
+											styleClass="ui-datatable-hor-scroll"
+											filteredValue="#{rdMB.listInquilinoFiltro}"
+											rowKey="#{detall.idinquilino}" rowIndexVar="row"	
+											selection="#{rdMB.inquilino}" selectionMode="single"
+											paginator="true" rows="10"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											rowsPerPageTemplate="5,10,15">
+
+											<p:ajax event="rowSelect" listener="#{rdMB.seleccionarInquilino}"
+												oncomplete="iddlgListaInquilinoRD.hide();"
+												update=":formRegRecDeuda,:frmMaestra:listaMensajes" />
+
+											<p:column headerText="RUC" filterBy="#{detall.ruc}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.ruc}" />
+											</p:column>
+
+											<p:column headerText="Razón Social"
+												filterBy="#{detall.razonsocial}" filterMatchMode="startsWith">
+												<h:outputText value="#{detall.razonsocial}" />
+											</p:column>
+
+											<p:column headerText="DNI" filterBy="#{detall.dni}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.dni}" />
+											</p:column>
+
+											<p:column headerText="Nombres"
+												filterBy="#{detall.nombrescompletos}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{detall.nombrescompletos}" />
+											</p:column>
+
+										</p:dataTable>
+									</p:dialog>
+				    </h:form>
+				   <!-- *************FORM CONDICION *************--> 
+				 	
+				    <!-- ****************************************MENSAJE DE CONFIRMACION DE REGISTRO******************************************************************* -->
+				    	<p:confirmDialog message="¿Desea grabar el reconocimiento de deuda ?"
+									header="Registro Reconocimiento de deuda" severity="alert"
+									widgetVar="dlgRegistrarContrato">
+									<center>
+									<p:commandButton value="&nbsp;Aceptar" icon="icon-save"
+										update=":formRegRecDeuda,:frmMaestra:listaMensajes"
+										actionListener="#{rdMB.grabarCabeceraContrato}" oncomplete="dlgRegistrarContrato.hide()" onstart="statusLoading.show();" onsuccess="statusLoading.hide();"
+										/>
+									<p:commandButton value="&nbsp;Cancelar" onclick="dlgRegistrarContrato.hide()" icon="icon-cancel" />
+									</center>
+								
+						</p:confirmDialog>
+						<h:form id="frmConsulta">
+								<p:dialog header="Consulta #{rdMB.estado}" 
+										width="auto" height="auto" closable="true" closeOnEscape="true" showEffect="slide" hideEffect="slide"
+										resizable="false" widgetVar="dlgListaCondiciones"   
+										style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+					
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="basic" value="Consulta:" />
+										        <p:selectOneListbox id="basic" value="#{rdMB.tipobusqueda}">
+										            <f:selectItem itemLabel="Clave Upa:" itemValue="1" />
+										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="2" />
+										            <f:selectItem itemLabel="Nombre de Inquilino:" itemValue="3" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="consultaContrato" actionListener="#{rdMB.buscarContrato}" update="tblista_actas"/>
+										        <p:inputText id="patron"  value="#{rdMB.valorbusqueda}" onkeypress="if (event.keyCode == 13) { consultaContrato(); return false; }" >
+										        	<p:watermark for="patron" value="Ingrese campo"/>
+										        </p:inputText>
+			 						</h:panelGrid>
+								
+									<p:dataTable id="tblista_actas" var="detall" value="#{rdMB.listContrato}" 
+										emptyMessage="0 registros encontrados" filteredValue="#{rdMB.listContratoFiltro}"
+										style="width:690px; font-size: 10px;  margin-left: 15px;text-aling:center;"
+										styleClass="ui-datatable-hor-scroll"
+										rowKey="#{detall.idcontrato}" rowIndexVar="row"
+										selection="#{rdMB.contratoBean}" selectionMode="single"
+										paginator="true" rows="15"
+										paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="15,30,45">
+										<p:ajax event="rowSelect"
+											listener="#{rdMB.setearContratoSeleccionado}" 
+											update=":formRegRecDeuda" oncomplete="dlgListaCondiciones.hide();" />
+
+										<p:column headerText="Nro. Acta"
+											filterBy="#{detall.nroacta}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.nroacta}" />
+										</p:column>
+
+										<p:column headerText="Clave upa"
+											filterBy="#{detall.claveUpa}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.claveUpa}" />
+										</p:column>
+
+										<p:column headerText="Direccion"
+											filterBy="#{detall.direccion}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.direccion}" />
+										</p:column>
+
+										<p:column headerText="Nº Principal"
+											filterBy="#{detall.numeroprincipal}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.numeroprincipal}" />
+										</p:column>
+
+										<p:column headerText="Nº Interior"
+											filterBy="#{detall.numerointerior}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.numerointerior}" />
+										</p:column>
+
+										<p:column headerText="Distrito"
+											filterBy="#{detall.distrito}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.distrito}" />
+										</p:column>
+
+										<p:column headerText="Provincia"
+											filterBy="#{detall.provincia}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.provincia}" />
+										</p:column>
+
+										<p:column headerText="Departamento"
+											filterBy="#{detall.departamento}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{detall.departamento}" />
+										</p:column>
+
+										<p:column headerText="Estado Contrato"
+											filterBy="#{detall.estado}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.estado}" />
+										</p:column>
+										<p:column headerText="U. Creador"
+											filterBy="#{detall.usrcre}" filterMatchMode="contains">
+											<h:outputText value="#{detall.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											filterBy="#{detall.feccre}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											filterBy="#{detall.usrmod}" filterMatchMode="contains">
+											<h:outputText value="#{detall.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											filterBy="#{detall.fecmod}" filterMatchMode="startsWith">
+											<h:outputText value="#{detall.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+
+									</p:dataTable>
+							</p:dialog>
+							
+							
+							
+					</h:form>
+				</div>
+		  </div>
+		  	<script type="text/javascript">
+				  //<![CDATA[
+		     	function convertir_a_mayuscula(elemento) {
+					//alert("metodo");
+					elemento.value = elemento.value.toUpperCase();
+	 		   		//e.value = e.value.toUpperCase();
+				}
+		     	function validarKey(evt){
+		     	    
+		     	    // code is the decimal ASCII representation of the pressed key.
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57) { // is a number.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+		  	   //]]>
+				
+
+
+			</script>
+			<ui:include src="archivo/pgUpload.xhtml" />
+			<ui:include src="archivo/pgDownload.xhtml"/>
+        </ui:define>
+        
+	</ui:composition>
+
+	
+</h:body>
+</html>

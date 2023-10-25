@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM-SOCIEDAD DE BENEFICENCIA DE LIMA METROPOLITANA</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="./paginaMaestra.xhtml">
+
+		<ui:define name="content">
+<!-- 		<script src="http://maps.google.com/maps/api/js?sensor=true|false" type="text/javascript"/> -->
+		<script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC5xhDgDeyPDOUXruKCPaWd6kbWAJv3vbw'></script>
+		
+		
+			 <div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="recaudacion_iconoTitulo"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Inmueble</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Mantenimiento</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo" style="background-color: white;">
+					<h:form id="frmInmueble">
+					
+						   <p:toolbar styleClass="ui-saju-toolbar">
+								<p:toolbarGroup align="left">
+								
+										<p:commandButton  icon="ui-icon-disk" ajax="true" value="Grabar Inmueble"
+											actionListener="#{inmuebleMB.validarGrabarInmueble}"
+											update=":frmMaestra:listaMensajes"/>
+
+										<p:commandButton value="Nuevo Inmueble" icon="ui-icon-plus"
+											actionListener="#{inmuebleMB.limpiarformulario}" update=":frmInmueble"/>
+											
+										<p:commandButton value="Baja de Inmueble" icon="ui-icon-closethick"
+											actionListener="#{inmuebleMB.validarEliminarInmueble}"
+											update=":frmMaestra:listaMensajes" />
+										<p:spacer width="1" height="22" style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+										<p:commandButton id="adjunto" title="adjuntar documento"  icon="ui-icon-pin-w"/>
+										<p:menu overlay="true" trigger="adjunto" my="left top" at="left bottom">
+									            <p:menuitem value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjunto('Inmueble',inmuebleMB.inmuebleBean.idinmueble)}"  update=":frmMaestra:listaMensajes,:frmAdjuntarDocumento:listaArchivoAdjunto" icon="ui-icon-arrowthickstop-1-w" />
+									            <p:menuitem value="Ver" actionListener="#{archivoMB.abrirDialogoVerAdjunto('Inmueble',inmuebleMB.inmuebleBean.idinmueble)}"  update=":frmMaestra:listaMensajes,:frmVerDocumento:listaArchivosReferencia" icon="ui-icon-arrowthickstop-1-e"/>
+								   		</p:menu>
+										
+								</p:toolbarGroup>
+								<p:toolbarGroup align="right">
+										
+										<p:commandButton  icon="ui-icon-search" oncomplete="dlgListaInmuebles.show();" title="Buscar inmueble"/>
+								</p:toolbarGroup>
+							</p:toolbar>
+							
+							<p:confirmDialog message="¿Desea Guardar Inmueble?"
+										header="Registro Inmueble" severity="alert"
+										widgetVar="dlgRegistrarInmueble">
+                                        <center>
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmInmueble,:frmMaestra:listaMensajes"
+											actionListener="#{inmuebleMB.grabarInmueble}"
+											onclick="PF('statusDialog').show();"
+											oncomplete="dlgRegistrarInmueble.hide();PF('statusDialog').hide();"
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar" 
+											oncomplete="dlgRegistrarInmueble.hide();"
+											icon="icon-cancel" />
+									    </center>
+							</p:confirmDialog>
+							
+
+							<p:tabView id="tabview">
+							
+								<p:tab id="tabGenerales" title="Generales">	
+											<center style="color: #403100;font-size: 24pt;">
+												<p:inputText id="propiedad"  value="#{inmuebleMB.inmuebleBean.codigotitularidad}" style="width:35px;" title="Ingrese tipo de titularidad del inmueble" maxlength="2" >
+													<p:ajax event="blur" listener="#{inmuebleMB.verificarExistenciaTitularidad}" update="panelPropiedad,clave" />
+												</p:inputText>
+    											<p:tooltip for="propiedad" showEvent="focus" hideEvent="blur" />
+												-
+												<p:inputText  id="clave"  value="#{inmuebleMB.inmuebleBean.codigoinmueble}"  style="width:80px;"  maxlength="4"/>
+												-
+												<h:outputText  value="000"/> 
+												
+												
+												
+											</center>
+											<br/>
+											<center>
+												<p:commandButton  icon="ui-icon-refresh" actionListener="#{inmuebleMB.generarClaveInmuebleSgt}" update="clave" title="Generar Clave automaticamente"/>
+											</center>
+																				<br/>
+									<p:panel id="panelPropiedad" header="Propiedad de Predio" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+										
+												<tr>
+													<td width="20%">
+														<h:outputText  value="Titularidad:" />
+													</td>
+													<td width="25%">
+														<h:outputText  value="#{inmuebleMB.inmuebleBean.nombretitularidad}" />
+													</td>	
+												
+													 <td width="20%">
+													 	<h:outputText value="Tipo de Titularidad" />
+													 </td>
+													 <td width="20%">
+													  	<h:outputText value="#{inmuebleMB.inmuebleBean.tipotitularidad}" />
+													 </td>
+											</tr>											 												
+									</table>
+									</p:panel>
+									<br/>
+									<p:panel header="Informaci&oacute;n ubicaci&oacute;n">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+									
+<!-- 											<tr> -->
+<!-- 																<td width="20%"> -->
+<!-- 																	<h:outputText  value="Nro. Registro SBN(*):" /> -->
+<!-- 																</td> -->
+<!-- 																<td width="25%"> -->
+<!-- 																	<p:inputText value="#{inmuebleMB.inmuebleBean.numregistrosbn}" />  -->
+<!-- 																</td>	 -->
+<!-- 											 </tr> -->
+															
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Departamento(*):" />
+																</td>
+																<td width="25%">
+																	<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																	     id="depa" style="width: 150px;  font-size: 11px;"
+																		
+																		value="#{inmuebleMB.depa}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaDepartamentos}" var="dpto"
+																			itemLabel="#{dpto}" itemValue="#{dpto}">
+																		</f:selectItems>
+																		
+																		<p:ajax listener="#{inmuebleMB.cargarComboProvincias}" update="prov" />
+
+																	</p:selectOneMenu> 
+																</td>
+																
+																
+																<td width="20%">
+																	<h:outputText  value="Provincia(*):" />
+																</td>
+																<td width="25%">
+																	<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																	 id="prov"  style="width: 150px;  font-size: 11px;"
+																		
+																		value="#{inmuebleMB.prov}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaProvincias}" var="prov"
+																			itemLabel="#{prov}" itemValue="#{prov}">
+																		</f:selectItems>
+																		<p:ajax listener="#{inmuebleMB.cargarComboDistritos}" update="dist"/>
+																	</p:selectOneMenu> 
+																</td>
+											 </tr>
+											 <tr>
+																<td width="20%">
+																		<h:outputText  value="Distrito(*):" />
+																</td>
+																<td width="25%">
+																<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																    id="dist" style="width: 150px;  font-size: 11px;"
+																		value="#{inmuebleMB.dist}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaDistritos}" var="dist"
+																			itemLabel="#{dist}" itemValue="#{dist}">
+																		</f:selectItems>
+																		<p:ajax listener="#{inmuebleMB.cargarUbigeo}" update="ubigeo"/>
+																		
+																	</p:selectOneMenu> </td>	
+											 </tr>
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Tipo Vía:" />
+																</td>
+																<td width="25%">
+																	<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																	    id="tipovia"  style="width: 150px;  font-size: 11px;"
+																		value="#{inmuebleMB.inmuebleBean.idtipovia}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaTipoVia}" var="tipovia"
+																			itemLabel="#{tipovia.descripcion}" itemValue="#{tipovia.idtipovia}">
+																		</f:selectItems>
+																	</p:selectOneMenu> 
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Nombre de vía:" />
+																</td>
+																<td width="25%">
+																	<p:inputText id="nombrevia" value="#{inmuebleMB.inmuebleBean.nombretipovia}" style="width: 150px;"/>
+																	<p:watermark for="nombrevia" value="Escribir nombre de vía"  />
+																 </td>
+											 </tr>
+											 
+											 					 <tr>
+																<td width="20%">
+																	<h:outputText  value="Tipo Zona:" />
+																</td>
+																<td width="25%">
+																	<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																	    id="tipozona"  style="width: 150px;  font-size: 11px;"
+																		value="#{inmuebleMB.inmuebleBean.idtipozona}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaTipoZona}" var="tipozona"
+																			itemLabel="#{tipozona.descripcion}" itemValue="#{tipozona.idtipozona}">
+																		</f:selectItems>
+																	</p:selectOneMenu> 
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Nombre de zona:" />
+																</td>
+																<td width="25%">
+																	<p:inputText id="nombrezona" value="#{inmuebleMB.inmuebleBean.nombretipozona}" style="width: 150px;"/>
+																	<p:watermark for="nombrezona" value="Escribir nombre de zona"  />
+																 </td>
+											 </tr>
+											 
+											  <tr>
+											  		<td>
+<!-- 											  				<h:outputText  value="Direcci&oacute;n" /> -->
+											  				<h:outputText  value="Direcci&oacute;n Principal" />
+											  		</td>
+											  		
+											  		<td colspan="2">
+											  				<p:inputText id="direccion" value="#{inmuebleMB.inmuebleBean.direccionprincipal}" style="width: 400px;" maxlength="150" />
+											  				<p:watermark for="direccion" value="Ejm: Nº 1090 / Mz. F Lt.4 / Nº 125 DPTO. 101 / N° 281 - ESTACIONAMIENTO 15" id="watermark" />
+											  		
+											  		</td>
+											  		
+											 			
+											  </tr>
+											 
+											 
+											 
+
+											 <tr>
+																 <td>
+																 <h:outputText  value="Referencia:" />
+																 </td>
+																<td colspan="3">
+																	<p:inputText id="referencia" value="#{inmuebleMB.inmuebleBean.referenciadireccion}" style="width:400px;" maxlength="150"/>
+																 	<p:watermark for="referencia" value="Ejm: Esquina / tienda / Calle"  />
+																 </td>
+											 </tr>
+											 
+											  <tr>
+																<td width="20%">
+																	<h:outputText  value="Habilitacion Urbana:" />
+																</td>
+																<td width="25%">
+																	<p:selectBooleanCheckbox id="checkHU"
+																		value="#{inmuebleMB.inmuebleBean.sihabilitacionurbana}">
+																	</p:selectBooleanCheckbox>
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Ubigeo(*):" />
+																 </td>
+																  <td width="20%">
+																	<h:outputText id="ubigeo" value="#{inmuebleMB.inmuebleBean.ubigeo}" />
+																 </td>
+
+											 </tr>										 												 										 
+									</table>
+									</p:panel>
+								</p:tab>
+								
+								<p:tab id="tabRegistrales" title="Registrales">
+
+									<br/>
+									<p:panel header="Monumento Histórico" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+												
+												
+												<tr>
+													<td>
+														<h:outputText  value="¿Es monumento histórico?:" />
+													</td>
+													<td>
+														 <p:selectBooleanCheckbox value="#{inmuebleMB.inmuebleBean.simonumentohistorico}" label="S&iacute;">
+														 <p:ajax update="tipomonumento"></p:ajax>
+														 </p:selectBooleanCheckbox>
+													</td>
+													
+												</tr>
+      									 </table>
+										
+									
+										<p:outputPanel id="tipomonumento" >
+										<h:panelGrid columns="2" rendered="#{inmuebleMB.inmuebleBean.simonumentohistorico}" cellspacing="10" >
+											<h:panelGrid columns="1">
+												<h:outputText  value="Tipo monumento:" />
+												<h:selectOneRadio value="#{inmuebleMB.inmuebleBean.tipomonumentohistorico}"  layout="pageDirection" >
+																<f:selectItem itemLabel="Zona Monumental" itemValue="Zona Monumental" />
+													            <f:selectItem itemLabel="Ambiente Urbano Monumental" itemValue="Ambiente Urbano Monumental" />
+													            <f:selectItem itemLabel="Inmueble de Valor Monumental" itemValue="Inmueble de Valor Monumental" />
+												</h:selectOneRadio>
+											</h:panelGrid>
+											<h:panelGrid columns="4">
+												<h:outputText value="Resoluci&oacute;n"/>
+												<h:inputText value="#{inmuebleMB.inmuebleBean.resolucionmonumentohistorico}"/>
+												<h:outputText value="Fecha"/>
+												<p:calendar  pattern="dd-MM-yyyy"  navigator="true" locale="es" styleClass="anchoCalendar" 
+												value="#{inmuebleMB.inmuebleBean.fecresolucionmonumentohistorico}">
+												</p:calendar>											
+									   		</h:panelGrid>        
+									      </h:panelGrid> 
+									     </p:outputPanel>     
+									     
+									</p:panel>
+									<br/>
+									<p:panel header="Registro" toggleable="true">
+										<table style="margin: 15px;" cellspacing="10" border="2">
+											<tr>
+													 <td>
+													 	<h:outputText value="Código de Predio" />
+													 </td>
+													 <td>
+													  	<p:inputText  value="#{inmuebleMB.inmuebleBean.codigopredio}" maxlength="20" />
+													 </td>
+												
+													 <td>
+													 	<h:outputText value="Fecha inscripción" />
+													 </td>
+													 <td>
+													  	<p:calendar  pattern="dd-MM-yyyy"  navigator="true" locale="es" styleClass="anchoCalendar" 
+														value="#{inmuebleMB.inmuebleBean.fecinscripcionregistral}">
+														</p:calendar>											
+													 </td>
+											</tr>
+										</table>
+									
+									<h:panelGrid columns="8" style="margin-left:20px; margin-top:10px;">
+												<h:panelGrid columns="1">
+													<h:outputText value="Asiento: " />
+													<p:inputText value="#{inmuebleMB.inmuebleBean.asientoregistral}" style="width:70px;text-align:right;" maxlength="10" />
+												</h:panelGrid>
+												
+												<h:panelGrid columns="1">
+													<h:outputText value="Fojas" />
+													<p:inputText value="#{inmuebleMB.inmuebleBean.fojasregistral}" style="width:70px;text-align:right;" maxlength="10" />
+												</h:panelGrid>
+												
+												<h:panelGrid columns="1">
+													<h:outputText value="Tomo" />
+													<p:inputText value="#{inmuebleMB.inmuebleBean.tomoregistral}" style="width:70px;text-align:right;" maxlength="10" />
+												</h:panelGrid>
+												
+												<p:spacer width="25"/>
+												
+												<h:panelGrid columns="1" >
+												<h:outputText/>
+												<h:outputText value="o en "/>
+												</h:panelGrid>
+												
+												<p:spacer width="25"/>
+												
+												<h:panelGrid columns="1" >
+													<h:outputText value="Ficha: " />
+													<p:inputText value="#{inmuebleMB.inmuebleBean.ficharegistral}" style="width:100px;text-align:right;" maxlength="20" />
+												</h:panelGrid>
+												<h:panelGrid columns="1">
+													<h:outputText value="Partida electr&oacute;nica: " />
+													<p:inputText value="#{inmuebleMB.inmuebleBean.partidaelectronicaregistral}" style="width:70px;text-align:right;" maxlength="10" />
+												</h:panelGrid>
+									</h:panelGrid>
+									
+<!-- 									<h:outputText value="Origen de dominio"/> -->
+<!-- 									<p:selectOneMenu id="origendominio" style="width: 184px;  font-size: 11px;"> -->
+<!-- 																		<f:selectItem itemLabel="Seleccione" -->
+<!-- 																			itemValue="0" /> -->
+
+
+<!-- 									</p:selectOneMenu>  -->
+
+
+
+
+
+								<table style="margin: 15px;" cellspacing="10" border="2">
+									<tr>
+																<td width="20%">
+																	<h:outputText  value="Origen de dominio:" />
+																</td>
+																<td width="25%">
+																	<p:selectOneMenu id="origendominio"  style="width: 150px;  font-size: 11px;"
+																		value="#{inmuebleMB.inmuebleBean.idorigendominio}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaOrigenDominio}" var="origendominio"
+																			itemLabel="#{origendominio.descripcion}" itemValue="#{origendominio.idorigendominio}">
+																		</f:selectItems>
+																	</p:selectOneMenu> 
+																 </td>
+																
+											 </tr>
+
+								</table>
+								
+								<h:panelGrid columns="1" cellspacing="5" style="margin-top:10px;margin-left:20px;">
+									<h:outputText value="Observaci&oacute;n: "/>
+									<p:inputTextarea value="#{inmuebleMB.inmuebleBean.observacionregistral}" maxlength="1000" rows="6" cols="100"  />
+								</h:panelGrid>
+									
+									</p:panel>
+									<br/>
+									
+									
+									<p:panel id="fabrica" header="F&aacute;brica" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+												
+												
+												<tr>
+													<td>
+														<h:outputText  value="¿Posee declaratorio de f&aacute;brica?:" />
+													</td>
+													<td>
+														 <p:selectBooleanCheckbox value="#{inmuebleMB.inmuebleBean.sideclaratoriafabrica}" label="S&iacute;">
+														 <p:ajax update="fabrica"></p:ajax>
+														 </p:selectBooleanCheckbox>
+													</td>
+													
+												</tr>
+										</table>
+										
+										<p:outputPanel rendered="#{inmuebleMB.inmuebleBean.sideclaratoriafabrica}">
+												<table>
+														<tr>
+															<td>
+																<h:outputText  value="Tipo de documento con la que fue declarada:" />
+															</td>
+															<td>
+		<!-- 														 <p:selectOneMenu id=tipodocumentofabrica style="width: 184px;  font-size: 11px;"> -->
+		<!-- 																		<f:selectItem itemLabel="Seleccione" -->
+		<!-- 																			itemValue="0" /> -->
+		<!-- 														</p:selectOneMenu>  -->
+															</td>
+															
+														</tr>
+		      									 </table>
+											
+											<h:panelGrid columns="8" style="margin-left:20px; margin-top:10px;">
+														<h:panelGrid columns="1">
+															<h:outputText value="Asiento: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.asientofabrica}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<h:panelGrid columns="1">
+															<h:outputText value="Fojas: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.fojasfabrica}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<h:panelGrid columns="1">
+															<h:outputText value="Tomo: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.tomofabrica}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<p:spacer width="25"/>
+														
+														<h:panelGrid columns="1" >
+														<h:outputText/>
+														<h:outputText value="o en "/>
+														</h:panelGrid>
+														
+														<p:spacer width="25"/>
+														
+														<h:panelGrid columns="1" >
+															<h:outputText value="Ficha: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.fichafabrica}" style="width:100px;text-align:right;" maxlength="20" />
+														</h:panelGrid>
+														<h:panelGrid columns="1">
+															<h:outputText value="Partida electr&oacute;nica: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.partidaelectronicafabrica}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+											</h:panelGrid>
+											<h:panelGrid columns="1" cellspacing="5" style="margin-top:10px;margin-left:20px;">
+												<h:outputText value="Observaci&oacute;n: "/>
+												<p:inputTextarea value="#{inmuebleMB.inmuebleBean.observacionfabrica}" maxlength="1000" rows="6" cols="100"/>
+											</h:panelGrid>
+											
+										</p:outputPanel>
+									</p:panel>
+																	<br/>
+									
+									
+									<p:panel id="independizacion" header="Independizaci&oacute;n" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+												
+												
+												<tr>
+													<td>
+														<h:outputText  value="¿Posee independizaci&oacute;n?:" />
+													</td>
+													<td>
+														 <p:selectBooleanCheckbox value="#{inmuebleMB.inmuebleBean.siindependizacion}" label="S&iacute;">
+														 <p:ajax update="independizacion"></p:ajax>
+														 </p:selectBooleanCheckbox>
+													</td>
+													
+												</tr>
+										</table>
+										
+										<p:outputPanel  rendered="#{inmuebleMB.inmuebleBean.siindependizacion}">
+												<table>
+														<tr>
+															<td>
+																<h:outputText  value="Nº de unidades inmobiliarias:" />
+															</td>
+															<td>
+																<p:inputText value="#{inmuebleMB.inmuebleBean.unidadesinmobiliariasindependizacion}"/>
+															</td>
+															
+														</tr>
+		      									 </table>
+											
+											<h:panelGrid columns="8" style="margin-left:20px; margin-top:10px;">
+														<h:panelGrid columns="1">
+															<h:outputText value="Asiento: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.asientoindependizacion}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<h:panelGrid columns="1">
+															<h:outputText value="Fojas" />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.fojasindependizacion}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<h:panelGrid columns="1">
+															<h:outputText value="Tomo" />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.tomoindependizacion}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<p:spacer width="25"/>
+														
+														<h:panelGrid columns="1" >
+														<h:outputText/>
+														<h:outputText value="o en "/>
+														</h:panelGrid>
+														
+														<p:spacer width="25"/>
+														
+														<h:panelGrid columns="1" >
+															<h:outputText value="Ficha" />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.fichaindependizacion}" style="width:100px;text-align:right;" maxlength="20" />
+														</h:panelGrid>
+														<h:panelGrid columns="1">
+															<h:outputText value="Partida electr&oacute;nica" />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.partidaelectronicaindependizacion}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+											</h:panelGrid>
+											
+											<h:panelGrid columns="1" cellspacing="5" style="margin-top:10px;margin-left:20px;">
+												<h:outputText value="Fecha de inscripci&oacute;n"/>
+												<p:calendar  pattern="dd-MM-yyyy"  navigator="true" locale="es" styleClass="anchoCalendar" 
+													value="#{inmuebleMB.inmuebleBean.fechainscripcionindependizacion}"/>
+												<h:outputText value="Observaci&oacute;n: "/>
+												<p:inputTextarea value="#{inmuebleMB.inmuebleBean.observacionindependizacion}" maxlength="1000" rows="6" cols="100"/>
+											</h:panelGrid>
+											
+										</p:outputPanel>
+									</p:panel>
+									
+									<br/>
+									
+									<p:panel id="gravamen" header="Gravamen" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+												
+												
+												<tr>
+													<td>
+														<h:outputText  value="¿Posee gravamen?: " />
+													</td>
+													<td>
+														 <p:selectBooleanCheckbox value="#{inmuebleMB.inmuebleBean.sigravamen}" label="S&iacute;">
+														 <p:ajax update="gravamen"></p:ajax>
+														 </p:selectBooleanCheckbox>
+													</td>
+													
+												</tr>
+										</table>
+										
+										<p:outputPanel  rendered="#{inmuebleMB.inmuebleBean.sigravamen}">
+											
+											<h:panelGrid columns="1" cellspacing="5" style="margin-top:10px;margin-left:20px;">
+																<h:outputText  value="¿A favor de quien?" />
+																<p:inputText value="#{inmuebleMB.inmuebleBean.afavordegravamen}"/>	
+											</h:panelGrid>
+												
+											
+											<h:panelGrid columns="8" style="margin-left:20px; margin-top:10px;">
+														<h:panelGrid columns="1">
+															<h:outputText value="Asiento: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.asientogravamen}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<h:panelGrid columns="1">
+															<h:outputText value="Fojas" />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.fojasgravamen}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<h:panelGrid columns="1">
+															<h:outputText value="Tomo" />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.tomogravamen}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<p:spacer width="25"/>
+														
+														<h:panelGrid columns="1" >
+														<h:outputText/>
+														<h:outputText value="o en "/>
+														</h:panelGrid>
+														
+														<p:spacer width="25"/>
+														
+														<h:panelGrid columns="1" >
+															<h:outputText value="Ficha: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.fichagravamen}" style="width:100px;text-align:right;" maxlength="20" />
+														</h:panelGrid>
+														<h:panelGrid columns="1">
+															<h:outputText value="Partida electr&oacute;nica: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.partidaelectronicagravamen}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+											</h:panelGrid>
+											
+											<h:panelGrid columns="1" cellspacing="5" style="margin-top:10px;margin-left:20px;">
+												<h:outputText value="Fecha de inscripci&oacute;n"/>
+												<p:calendar  pattern="dd-MM-yyyy"  navigator="true" locale="es" styleClass="anchoCalendar" 
+													value="#{inmuebleMB.inmuebleBean.fechainscripciongravamen}"/>
+												<h:outputText value="Observaci&oacute;n: "/>
+												<p:inputTextarea value="#{inmuebleMB.inmuebleBean.observaciongravamen}" maxlength="1000" rows="6" cols="100"/>
+											</h:panelGrid>
+											
+											
+										</p:outputPanel>
+									</p:panel>
+									<br/>
+									<p:panel id="mandascargas" header="Mandas o Cargas" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+												
+												
+												<tr>
+													<td>
+														<h:outputText  value="¿Posee mandascarga?:" />
+													</td>
+													<td>
+														 <p:selectBooleanCheckbox value="#{inmuebleMB.inmuebleBean.simandascargas}" label="S&iacute;">
+														 <p:ajax update="mandascargas"></p:ajax>
+														 </p:selectBooleanCheckbox>
+													</td>
+													
+												</tr>
+										</table>
+										
+										<p:outputPanel  rendered="#{inmuebleMB.inmuebleBean.simandascargas}">
+												<table>
+														<tr>
+															<td>
+																<h:outputText  value="¿A favor de quien?" />
+															</td>
+															<td>
+																<p:inputText value="#{inmuebleMB.inmuebleBean.afavordemandascargas}"/>
+															</td>
+															
+														</tr>
+		      									 </table>
+											
+											<h:panelGrid columns="8" style="margin-left:20px; margin-top:10px;">
+														<h:panelGrid columns="1">
+															<h:outputText value="Asiento: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.asientomandascargas}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<h:panelGrid columns="1">
+															<h:outputText value="Fojas: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.fojasmandascargas}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<h:panelGrid columns="1">
+															<h:outputText value="Tomo: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.tomomandascargas}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+														
+														<p:spacer width="25"/>
+														
+														<h:panelGrid columns="1" >
+														<h:outputText/>
+														<h:outputText value="o en "/>
+														</h:panelGrid>
+														
+														<p:spacer width="25"/>
+														
+														<h:panelGrid columns="1" >
+															<h:outputText value="Ficha: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.fichamandascargas}" style="width:100px;text-align:right;" maxlength="20" />
+														</h:panelGrid>
+														<h:panelGrid columns="1">
+															<h:outputText value="Partida electr&oacute;nica: " />
+															<p:inputText value="#{inmuebleMB.inmuebleBean.partidaelectronicamandascargas}" style="width:70px;text-align:right;" maxlength="10" />
+														</h:panelGrid>
+											</h:panelGrid>
+											
+											<h:panelGrid columns="1" cellspacing="5" style="margin-top:10px;margin-left:20px;">
+												<h:outputText value="Fecha de inscripci&oacute;n"/>
+												<p:calendar  pattern="dd-MM-yyyy"  navigator="true" locale="es" styleClass="anchoCalendar" 
+													value="#{inmuebleMB.inmuebleBean.fechainscripcionmandascargas}"/>
+												<h:outputText value="Observaci&oacute;n: "/>
+												<p:inputTextarea value="#{inmuebleMB.inmuebleBean.observacionmandascargas}" maxlength="1000" rows="6" cols="100"/>
+											</h:panelGrid>
+											
+										</p:outputPanel>
+									</p:panel>
+									
+									
+									
+									<br/>
+									<p:panel id="panelSaneamiento" header="Saneamiento" toggleable="true">
+									
+										<table width="600" style="margin: 15px;" cellspacing="10">
+													
+													
+													<tr>
+														<td>
+															<h:outputText  value="¿Est&aacute; saneado?:" />
+														</td>
+														<td>
+															 <p:selectBooleanCheckbox id="sisaneado" value="#{inmuebleMB.inmuebleBean.sisaneado}" label="S&iacute;" >
+															 		<p:ajax update="sanea" />
+															 </p:selectBooleanCheckbox>
+														</td>
+														
+													</tr>
+	      								</table>
+									
+										<p:outputPanel id="sanea">
+										<h:panelGrid columns="1" >
+												
+<!-- 												  <p:selectCheckboxMenu  id="condiciones"  label="Condiciones faltantes de Saneamiento"   panelStyle="width:220px"   -->
+<!-- 													style="width:200px; float:left;" showCheckbox="true" value="#{inmuebleMB.listaCondicionSaneamientoSeleccionado}" rendered="#{!inmuebleMB.inmuebleBean.sisaneado}"> -->
+													
+<!-- 											        <f:selectItems value="#{inmuebleMB.listaCondicionSaneamiento}" var="condicion" itemLabel="#{condicion.descripcion}" itemValue="#{condicion}"  /> -->
+											      
+<!-- 													      <p:ajax listener="#{inmuebleMB.verificarSaneamientoInmueble('change')}" update="sisaneado"/> -->
+<!-- 													      <p:ajax event="toggleSelect"  listener="#{inmuebleMB.verificarSaneamientoInmueble('toggleSelect')}" update="sisaneado" /> -->
+<!-- 											      </p:selectCheckboxMenu > -->
+ 											<p:selectCheckboxMenu id="condiciones" label="Condiciones faltantes de Saneamiento" panelStyle="width:220px"
+ 													  style="width:200px; float:left;" showCheckbox="true" value="#{inmuebleMB.listaCondSaneamientoSeleccionado}">
+ 													  <f:selectItems value="#{inmuebleMB.listaCondicionSaneamiento}"
+ 													  var="condItem" itemLabel="#{condItem.descripcion}"
+ 													  itemValue="#{condItem.idsaneamiento}"
+ 													  />
+ 													  <p:ajax listener="#{inmuebleMB.verificarSaneamientoInmueble('change')}" update="sisaneado"/>
+													      <p:ajax event="toggleSelect"  listener="#{inmuebleMB.verificarSaneamientoInmueble('toggleSelect')}" update="sisaneado" />
+ 											 </p:selectCheckboxMenu>		
+											      
+												
+										</h:panelGrid>
+										<p:outputPanel rendered="#{inmuebleMB.inmuebleBean.sisaneado}">
+										<h:panelGrid columns="1" cellspacing="5" style="margin-top:10px;margin-left:20px;">
+											<h:outputText  value="Observaci&oacute;n:" />
+											<p:inputTextarea  value="#{inmuebleMB.inmuebleBean.observacionsaneado}" style="width:240px;" rows="3" maxlength="200"/>
+										</h:panelGrid>
+										</p:outputPanel>
+										</p:outputPanel>
+										</p:panel>
+									
+									
+								</p:tab>
+								<p:tab id="tabTecnicos" title="Tecnicos">
+								<br/>
+									<p:panel header="Construcciones y Areas (En metros cuadrados)" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+										
+												<tr>
+													<td width="20%">
+														<h:outputText  value="Mat. Predominante:" />
+													</td>
+													<td width="25%">
+													<p:selectOneMenu id="materialpredominante"  style="width: 150px;  font-size: 11px;"
+																		value="#{inmuebleMB.inmuebleBean.idmaterialpredominante}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaMaterialPredominante}" var="materialpredominante"
+																			itemLabel="#{materialpredominante.descripcion}" itemValue="#{materialpredominante.idmaterialpredominante}">
+																		</f:selectItems>
+													</p:selectOneMenu> 
+													
+													
+													</td>	
+												
+													 <td width="20%">
+													 	<h:outputText value="Año Construccion" />
+													 </td>
+													 <td width="20%">
+													  	<p:inputText  value="#{inmuebleMB.inmuebleBean.anioconstruccion}" />
+													 </td>
+											</tr>
+											<tr>
+													<td width="20%">
+														<h:outputText  value="Numero Pisos:" />
+													</td>
+													<td width="25%">
+														<p:inputText  value="#{inmuebleMB.inmuebleBean.nropisos}" />
+													</td>	
+												
+													
+											</tr>		
+											<tr>
+													<td width="20%">
+														<h:outputText  value="Area Terreno (m2):" />
+													</td>
+													<td width="25%">
+														<p:inputText  value="#{inmuebleMB.inmuebleBean.areaterreno}" />
+														
+													</td>	
+												
+													 <td width="20%">
+													 	<h:outputText value="Area Construida (m2):" />
+													 </td>
+													 <td width="20%">
+													  	<p:inputText value="#{inmuebleMB.inmuebleBean.areaconstruida}"/>
+													 </td>
+											</tr>										 												
+									</table>
+									</p:panel>
+									<br/>
+									<p:panel header="Documentacion Existente" toggleable="true" >
+										<table width="600" style="margin: 15px;" cellspacing="10">
+										
+												<tr>
+													<td width="20%">
+														<h:outputText  value="Partida Registral:" />
+													</td>
+													<td width="25%">
+														<h:selectOneRadio value="#{inmuebleMB.inmuebleBean.sipartidaregistral}"  layout="pageDirection" >
+																<f:selectItem itemLabel="S&iacute;" itemValue="true" />
+													            <f:selectItem itemLabel="No" itemValue="false" />
+														</h:selectOneRadio>
+													</td>	
+												
+													 <td width="20%">
+													 	<h:outputText value="Plano Ubicacion" />
+													 </td>
+													 <td width="20%">
+													  	<h:selectOneRadio value="#{inmuebleMB.inmuebleBean.siplanoubicacion}"  layout="pageDirection" >
+																<f:selectItem itemLabel="S&iacute;" itemValue="true" />
+													            <f:selectItem itemLabel="No" itemValue="false" />
+														</h:selectOneRadio>
+													 </td>
+											</tr>
+											<tr>
+													<td width="20%">
+														<h:outputText  value="Memoria Descriptiva:" />
+													</td>
+													<td width="25%">
+														<h:selectOneRadio value="#{inmuebleMB.inmuebleBean.simemoriadescriptiva}"  layout="pageDirection" >
+																<f:selectItem itemLabel="S&iacute;" itemValue="true" />
+													            <f:selectItem itemLabel="No" itemValue="false" />
+														</h:selectOneRadio>
+													</td>	
+												
+													
+											</tr>		
+											<tr>
+													<td width="20%">
+														<h:outputText  value="Fotografias:" />
+													</td>
+													<td width="25%">
+														<h:selectOneRadio value="#{inmuebleMB.inmuebleBean.sifotografias}"  layout="pageDirection" >
+																<f:selectItem itemLabel="S&iacute;" itemValue="true" />
+													            <f:selectItem itemLabel="No" itemValue="false" />
+														</h:selectOneRadio>
+													</td>	
+												
+													
+											</tr>
+											<tr>
+													 <td width="20%">
+													 	<h:outputText value="Tasacion:" />
+													 </td>
+													 <td width="20%">
+													  <h:selectOneRadio value="#{inmuebleMB.inmuebleBean.sitasacion}"  layout="pageDirection" >
+																<f:selectItem itemLabel="S&iacute;" itemValue="true" />
+													            <f:selectItem itemLabel="No" itemValue="false" />
+														</h:selectOneRadio>
+													 </td>
+												
+
+<!-- 													 <td width="20%"> -->
+<!-- 													  	<p:calendar/> -->
+<!-- 													 </td> -->
+											</tr>													 												
+									</table>
+									</p:panel>
+								</p:tab>
+								<p:tab id="tabLocalizacion" title="Localizaci&oacute;n">
+											<table width="600" style="margin: 15px;" cellspacing="10">
+												<tr>
+																	<td width="20%">
+																		<h:outputText  value="Latitud(*):" />
+																		
+																	</td>
+																	<td width="25%">
+																		<p:inputText id="latitud" value="#{inmuebleMB.inmuebleBean.latitudlocalizacion}" /> 
+																		<p:watermark for="latitud" value="Ejm:-12.049975" />
+																	</td>
+																	<td width="20%">
+																		<h:outputText  value="Longitud(*):" />
+																		
+																	</td>
+																	<td width="25%">
+																		<p:inputText id="longitud" value="#{inmuebleMB.inmuebleBean.longitudlocalizacion}" /> 
+																		<p:watermark for="longitud" value="Ejm:-77.034156" />
+																	</td>		
+												 </tr>
+											 </table>
+											 
+											 <p:commandButton value="Ver Mapa" update="center-map" icon="ui-icon-image" actionListener="#{inmuebleMB.obtenerUbicacionGmap}"/>
+											 <h:panelGroup id="center-map" layout="block" styleClass="form-row">
+											 <p:gmap  center="#{inmuebleMB.inmuebleBean.latitudlocalizacion},#{inmuebleMB.inmuebleBean.longitudlocalizacion}"  zoom="15" type="HYBRID" style="width:100%;height:400px" model="#{inmuebleMB.simpleModel}" >
+											 </p:gmap>
+											 </h:panelGroup>
+											
+											 
+								</p:tab>
+
+							</p:tabView>
+							
+					</h:form>
+					
+					<h:form id="frmConsulta">
+								<p:dialog header="Consulta Inmueble" 
+										width="auto" height="auto" closable="true" closeOnEscape="true" showEffect="slide" hideEffect="slide"
+										resizable="false" widgetVar="dlgListaInmuebles"   
+										style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+					
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="direccion" value="Consulta:" />
+										        <p:selectOneListbox id="direccion" value="#{inmuebleMB.tipoBusqueda}">
+										            <f:selectItem itemLabel="Direcci&oacute;n:"  itemValue="direccion"/>
+										            <f:selectItem itemLabel="Clave:" 			 itemValue="clave"/>
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="consultaInmueble" actionListener="#{inmuebleMB.buscarInmueble}" update="tblInmuebles"/>
+										        <p:inputText id="patron"  value="#{inmuebleMB.valorbusqueda}" onkeypress="if (event.keyCode == 13) { consultaInmueble(); return false; }" >
+										        	<p:watermark for="patron" value="Ingrese campo"/>
+										        </p:inputText>
+										        
+										        
+			 						</h:panelGrid>
+									
+									<p:dataTable id="tblInmuebles" var="inmueble" value="#{inmuebleMB.listaInmuebleBean}" 
+										emptyMessage="0 registros encontrados" filteredValue="#{inmuebleMB.listaInmuebleBeanFilter}"
+										style="width:690px; font-size: 10px;  margin-left: 15px;text-aling:center;"
+										styleClass="ui-datatable-hor-scroll"
+										rowKey="#{inmueble.idinmueble}" rowIndexVar="row"
+										selection="#{inmuebleMB.inmuebleBean}" selectionMode="single"
+										paginator="true" rows="15"
+										paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="15,30,45">
+										<p:ajax event="rowSelect"
+											listener="#{inmuebleMB.setearInmuebleSeleccionado}" 
+											update=":frmInmueble" oncomplete="dlgListaInmuebles.hide();" />
+                                        <p:column headerText="Clave"
+											filterBy="#{inmueble.clave}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.clave}" />
+										</p:column>
+										
+										<p:column headerText="Direccion"
+											filterBy="#{inmueble.direccion}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.direccion}" />
+										</p:column>
+
+										<p:column headerText="Distrito"
+											filterBy="#{inmueble.distrito}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.distrito}" />
+										</p:column>
+
+										<p:column headerText="Provincia"
+											filterBy="#{inmueble.provincia}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.provincia}" />
+										</p:column>
+
+										<p:column headerText="Departamento"
+											filterBy="#{inmueble.departamento}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.departamento}" />
+										</p:column>
+										
+										<p:column headerText="U. Creador"
+											filterBy="#{inmueble.usrcre}" filterMatchMode="contains">
+											<h:outputText value="#{inmueble.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											filterBy="#{inmueble.feccre}" filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											filterBy="#{inmueble.usrmod}" filterMatchMode="contains">
+											<h:outputText value="#{inmueble.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											filterBy="#{inmueble.fecmod}" filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+
+									</p:dataTable>
+							</p:dialog>
+					</h:form>
+				
+				</div>
+			 </div>
+				
+			 <ui:include src="archivo/pgUpload.xhtml" />
+			 <ui:include src="archivo/pgDownload.xhtml"/>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

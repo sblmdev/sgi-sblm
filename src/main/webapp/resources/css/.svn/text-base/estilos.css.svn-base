@@ -1,0 +1,166 @@
+@charset "utf-8";
+/* Servicio de AdministraciÃ³n Tributaria */
+
+header,nav,section,article,aside,figure,footer{
+	display:block;
+}
+html,body{
+	margin:0;
+	padding:0;
+	height:100%;
+}
+body{
+	margin:0;
+	background:url(../images/principal/bg-int.jpg);
+	position:relative;
+}
+img {border:0;} *{outline:0;}
+#logo-SAT{
+	width:173px;
+	height:72px;
+	display:block;
+	background:url(../images/principal/logo-SAT.png) no-repeat 30px 17px;
+	text-indent:-8000px;
+	float:left;
+	margin-right:50px;
+}
+#titulo-sistema{
+	width:700px;
+	float:left;
+	margin:20px auto 0 auto;
+}
+.titulo-sistema{
+	font-size:20px;
+	font-weight:bold;
+	color:#FFF;
+	text-align:center;
+}
+p,h1,h2,h3{
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:13px;
+	margin:4px;
+	color:#333;
+}
+.titulo{
+	font-size:25px;
+	font-weight:bold;
+	color:#FFF;
+	text-align:center;
+	margin-bottom:10px;
+}
+.piePagina{
+	color:#666;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align:center;
+	margin:2px;
+}
+label{
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#184FA0;
+	font-size:15px;
+	text-align:center;
+	color:#FFF;
+	margin:5px;
+}
+input{
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-ms-border-radius:5px;
+	-o-border-radius:5px;
+	-webkit-border-radius:5px;
+	margin:5px;
+	width:180px;
+}
+
+/* -------------- MAQUETACIÃ“N -----------*/
+
+header,nav,aside,article,footer,section,figura{
+	display:block;
+}
+#header{
+	width:100%;
+	height:90px;
+	background:url(../images/principal/fondo-azul.jpg);
+	margin-bottom:7px;
+}
+#cabecera{
+	width:960px;
+	height:90px;
+	margin:0 auto;
+	margin-bottom:7px;
+}
+#contenedor{
+	width:100%;
+	height:200px;
+	margin:auto;
+	background:url(../images/principal/bg-intro.png);
+	position:absolute;
+	top:250px;
+	left:0px;
+}
+#bg-img{
+	width:200px;
+	height:214px;
+	display:block;
+	background:url(../images/principal/candado.png) no-repeat bottom;
+	float:left;
+	position:absolute;
+	top:200px;
+	left:0px;
+	z-index:1000;
+}
+#contenedor-intro{
+	width:100%;
+	min-height:200px;
+	height:auto;
+	float:left;
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+#intro{
+	width:300px;
+	height:140px;
+	display:block;
+	margin: 0 auto;
+	padding:20px;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-ms-border-radius:10px;
+	-o-border-radius:10px;
+	-webkit-border-radius:10px;
+}
+#footer{
+	width:100%;
+	height:50px;
+	position:absolute;
+	bottom:0;
+	left:0;
+}
+
+
+/* -------------- FORMULARIO --------------- */
+
+#intro p{
+	padding:10px;
+	text-align:center;
+}
+.boton{
+	width:120px;
+	height:25px;
+	display:block;
+	margin:auto;
+	background:url(../images/principal/boton-plomo.png) no-repeat;
+	border:0;
+	color:#1A4B82;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+
+
+
+
+
+

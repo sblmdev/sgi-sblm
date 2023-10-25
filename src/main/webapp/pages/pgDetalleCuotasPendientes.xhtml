@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition>
+
+    <h:form id="frmCuotasPendientes" >
+
+        <p:dialog  widgetVar="dlgCuotasPendientes"
+                  resizable="false"
+                  width="auto" height="auto"  position="bottom" closeOnEscape="true">
+								<p:dataTable var="cuota" value="#{arrendamientoconsultaMB.cuotasPendientes}"
+											selection="#{arrendamientoconsultaMB.cuotasPendientesSeleccion}"   selectionMode="multiple" filteredValue="#{arrendamientoconsultaMB.cuotasPendientesFilter}"
+											rowKey="#{cuota.mes}"
+											emptyMessage="No se ha registrado ningún pago"
+											style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;width:400px;"
+											rowIndexVar="index"
+											scrollable="true" scrollHeight="350">
+											
+											<p:ajax event="rowSelect"
+												listener="#{arrendamientoconsultaMB.determinarSumaTotalCuotasPendientesSeleccion}"
+												update=":frmCuotasPendientes:totales" />
+											<p:ajax event="rowUnselect"
+											    listener="#{arrendamientoconsultaMB.determinarSumaTotalCuotasPendientesSeleccion}"
+												update=":frmCuotasPendientes:totales"
+												 />
+											
+									   		<p:column width="8" headerText="#">
+									            <h:outputText value="#{index+1}" />
+									        </p:column>
+
+											<p:column width="40"   headerText="Mes"  filterBy="#{cuota.mes}" filterMatchMode="contains" rendered="#{!arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}">
+												<h:outputText value="#{cuota.mes}" />
+											</p:column>
+
+											<p:column width="35" headerText="Período"  filterBy="#{cuota.anio}" filterMatchMode="contains" rendered="#{!arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}">
+												<h:outputText value="#{cuota.anio}" />
+											</p:column>
+											<p:column width="40"   headerText="Nro Cuota"  filterBy="#{cuota.numerocuota}" filterMatchMode="contains" rendered="#{arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}">
+												<h:outputText value="#{cuota.numerocuota}" />
+											</p:column>
+											<p:column width="40"   headerText="Fecha Vencimiento"  filterBy="#{cuota.fechavencimiento}" filterMatchMode="contains" rendered="#{arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}">
+												<h:outputText value="#{cuota.fechavencimiento}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+											</p:column>
+
+											<p:column width="60" style="text-align: right;" headerText="Monto">
+												<h:outputText value="#{cuota.monto}" >
+													<f:convertNumber pattern="#0.00"  />
+												</h:outputText>
+											</p:column>
+
+											<p:column width="60" style="text-align: right;" headerText="Mora Soles" >
+												<h:outputText value="#{cuota.mora}">
+												<f:convertNumber pattern="#0.00"  />
+												</h:outputText>
+											</p:column>
+											<p:column width="35" headerText="Estado" >
+												<h:outputText value="#{cuota.condicion}" />
+											</p:column>
+										
+										</p:dataTable>
+										<p:panelGrid id="totales" style="width: 100%;">
+												<p:row>
+													<p:column>
+														<p:outputLabel
+															value="Total Monto"
+															style="color: #2E2EFE; font-size: 15px;" />										
+													</p:column>
+													<p:column>
+														<p:outputLabel
+															value="#{arrendamientoconsultaMB.totalMontoCuotasPendientesSeleccion}"
+															style="font-size: 15px;" />										
+													</p:column>
+												</p:row>
+												
+												<p:row>
+													<p:column>
+														<h:outputText value="Total Mora" 
+														style="color: #2E2EFE; font-size: 15px;"/>
+													</p:column>
+													<p:column>
+														<p:outputLabel
+															value="#{arrendamientoconsultaMB.totalMoraCuotasPendientesSeleccion}"
+															style="font-size: 15px;" />										
+													</p:column>
+												</p:row>
+										 </p:panelGrid>
+            
+        </p:dialog>
+        </h:form>
+       
+</ui:composition>
+</html>

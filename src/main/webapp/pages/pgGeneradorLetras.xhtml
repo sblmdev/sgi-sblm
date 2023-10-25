@@ -1,0 +1,274 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{request.contextPath}/resources/icons/favicon.ico" />
+
+	<link href="./resources/css/default.css" rel="stylesheet"
+		type="text/css" />
+	<link href="./resources/css/cssLayout.css" rel="stylesheet"
+		type="text/css" />
+
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+
+	<link href="../resources/css/cssLayout.css" rel="stylesheet"
+		type="text/css" />
+	<link rel="stylesheet" href="../resources/css/estiloImagenes.css" />
+
+	<script type="text/javascript"
+		src="../resources/js/notificacion_gadget.js" />
+
+	<link rel="stylesheet" href="../resources/css/estilosValidacion.css" />
+	<script type="text/javascript" src="../resources/js/primefaces
+	.js" />
+	<script type="text/javascript" src="../resources/js/superAll.js" />
+	<script type="text/javascript" src="../resources/js/dgaiMonitoreo.js" />
+	<script type="text/javascript"
+		src="../resources/js/funcionesValidacion.js" />
+	<script type="text/javascript"
+		src="../resources/js/funcionesValidacionRecaudacion.js" />
+	<script type="text/javascript" src="../resources/js/menuFlotante.js" />
+	<link href="../resources/css/menuFlotante.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript" src="../resources/js/recaudacion.js" />
+	<script type="text/javascript" src="../resources/js/inmueble.js" />
+	<script type="text/javascript" src="../resources/js/upa.js" />
+	<script type="text/javascript" src="../resources/js/inquilino.js" />
+	<script type="text/javascript" src="../resources/js/contrato.js" />
+	<script type="text/javascript" src="../resources/js/igv.js" />
+	<script type="text/javascript" src="../resources/js/cobranza.js" />
+	<script type="text/javascript" src="../resources/js/cobranzaCartera.js" />
+	<script type="text/javascript"
+		src="../resources/js/cobranzaRegistro.js" />
+	<script type="text/javascript"
+		src="../resources/js/funcionesValidacionRepresentanteInstitucion.js" />
+	<script type="text/javascript"
+		src="../resources/js/funcionesValidacionContrato.js" />
+	<script type="text/javascript"
+		src="../resources/jquery/jquery.blockUI.js" />
+	<script type="text/javascript" src="../resources/js/cargado.js" />
+	<script type="text/javascript" src="../resources/js/consultaArrendamiento.js" />
+	<script type="text/javascript" src="../resources/js/seguimiento.js" />
+
+	<script type="text/javascript" src="../resources/js/calendar_es.js" />
+	<script type="text/javascript" src="../resources/js/calendarRestrictedDays.js" />
+	<script type="text/javascript"
+		src="../resources/js/seguimientoAlerta.js" />
+		
+	<script type="text/javascript"
+		src="../resources/js/reportesGerenciales.js" />
+			<script type="text/javascript"
+		src="../resources/js/primefaces.js" />
+
+	<title>SOCIEDAD BENEFICENCIA DE LIMA METROPOLITANA</title>
+</h:head>
+
+<h:body>
+
+
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+		<h:form id="formLetra">
+		<h:panelGrid columns="1">
+			<br/>
+			<h:outputText value="Lugar de Giro"/>
+			<p:inputText value="#{herramientaGeneradorLetraMB.lugargiro}"/>
+		<h:panelGrid columns="2" cellpadding="5" cellspacing="10">
+			<p:panel style="margin-left:-10px;">
+			<h:panelGrid id="girado">
+			<h:outputText value="GIRADO" style="font-size:18px;"/>
+				 <h:selectOneRadio value="#{herramientaGeneradorLetraMB.visiblegirador}">
+		            <f:selectItem itemLabel="Persona Jurídica" itemValue="#{false}" />
+		            <f:selectItem itemLabel="Persona Natural" itemValue="#{true}" />
+					<p:ajax event="valueChange" update="girado" />		            
+	       		 </h:selectOneRadio>
+	       		 <br/>
+	       		 
+	       		 <h:outputText  value="Nombres y Apellidos: " rendered="#{herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.nombresgirador}"  style="width:300px;font-size:14px;" rendered="#{herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <h:outputText value="DNI: " rendered="#{herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <p:inputText  value="#{herramientaGeneradorLetraMB.dnigirador}" style="width:75px;font-size:14px;" rendered="#{herramientaGeneradorLetraMB.visiblegirador}" maxlength="8"/>
+	
+	       		 <h:outputText  value="Razón Social: " rendered="#{!herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <p:inputText  value="#{herramientaGeneradorLetraMB.razonsocialgirador}" style="width:300px;font-size:14px;" rendered="#{!herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <h:outputText   value="RUC: " rendered="#{!herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.rucgirador}" style="width:90px;font-size:14px;" rendered="#{!herramientaGeneradorLetraMB.visiblegirador}" maxlength="12"/>
+				 
+				 <h:outputText value="Telf. " rendered="#{herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.telfgirador}" rendered="#{herramientaGeneradorLetraMB.visiblegirador}"/>
+				 
+				 <h:outputText value="Domicilio: "/>
+				 <p:inputText  value="#{herramientaGeneradorLetraMB.domiciliogirador}" style="width:300px;"/>
+				 <br/>
+				 <br/>
+				 <h:outputText value="Representante Legal: " style="font-size:14px;text-decoration: underline;" rendered="#{!herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <br/>
+				 <h:outputText value="Nombres: "   rendered="#{!herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <p:inputText  value="#{herramientaGeneradorLetraMB.rptelegalnombresgirador}" rendered="#{!herramientaGeneradorLetraMB.visiblegirador}" style="width:200px;"/>
+				 <h:outputText value="DNI: " rendered="#{!herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.rptelegaldnigirador}" style="width:75px;font-size:14px;" rendered="#{!herramientaGeneradorLetraMB.visiblegirador}" maxlength="8"/>
+				 <h:outputText value="Telf. " rendered="#{!herramientaGeneradorLetraMB.visiblegirador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.rptelegaltelfgirador}" rendered="#{!herramientaGeneradorLetraMB.visiblegirador}"/>			        		 
+			
+			</h:panelGrid>
+			</p:panel>
+			<p:panel>
+			<h:panelGrid id="fiador">
+				<h:outputText value="FIADOR" style="font-size:18px;"/>
+				<h:selectOneRadio value="#{herramientaGeneradorLetraMB.visiblefiador}">
+		            <f:selectItem itemLabel="Persona Jurídica" itemValue="#{false}" />
+		            <f:selectItem itemLabel="Persona Natural" itemValue="#{true}" />
+		            <p:ajax event="valueChange" update="fiador"/>
+	       		 </h:selectOneRadio>
+	       		 <br/>
+	       		 <h:outputText  value="Nombres y Apellidos: " rendered="#{herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <p:inputText  value="#{herramientaGeneradorLetraMB.nombresfiador}" style="width:300px;font-size:14px;" rendered="#{herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <h:outputText   value="DNI: " rendered="#{herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.dnifiador}" style="width:75px;font-size:14px;" rendered="#{herramientaGeneradorLetraMB.visiblefiador}" maxlength="8"/>
+				 
+				 <h:outputText value="Telf. " rendered="#{herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.telffiador}" rendered="#{herramientaGeneradorLetraMB.visiblefiador}"/>	
+				 
+	       		 <h:outputText   value="Razón Social: " rendered="#{!herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.razonsocialfiador}" style="width:300px;font-size:14px;" rendered="#{!herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <h:outputText   value="RUC: " rendered="#{!herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.rucfiador}" style="width:90px;font-size:14px;" rendered="#{!herramientaGeneradorLetraMB.visiblefiador}" maxlength="12"/>
+				 
+				 <h:outputText value="Domicilio: "/>
+				 <p:inputText  value="#{herramientaGeneradorLetraMB.domiciliofiador}" style="width:300px;"/>
+				 <br/>
+				 <br/>
+				 <h:outputText value="Representante Legal: " style="font-size:14px;text-decoration: underline;" rendered="#{!herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <br/>
+				 <h:outputText value="Nombres: "  rendered="#{!herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.rptelegalnombresfiador}" rendered="#{!herramientaGeneradorLetraMB.visiblefiador}" style="width:200px;"/>
+				 <h:outputText value="DNI: " rendered="#{!herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.rptelegaldnifiador}" style="width:75px;font-size:14px;" rendered="#{!herramientaGeneradorLetraMB.visiblefiador}" maxlength="8"/>
+				 <h:outputText value="Telf. " rendered="#{!herramientaGeneradorLetraMB.visiblefiador}"/>
+				 <p:inputText value="#{herramientaGeneradorLetraMB.rptelegaltelffiador}" rendered="#{!herramientaGeneradorLetraMB.visiblefiador}"/>			        		
+			</h:panelGrid>
+			</p:panel>
+		</h:panelGrid>
+			<br/>		
+			<p:panel>
+				<h:panelGrid columns="7" cellspacing="5">
+					
+					<h:outputText value="Fecha de giro: "/>
+					<p:calendar value="#{herramientaGeneradorLetraMB.fechagiro}" styleClass="widthcalendarToolLetra" style="font-size:16px;"/>
+					
+					<h:outputText value="Vencimiento" style="margin-left:45px;"/>
+					<p:calendar  value="#{herramientaGeneradorLetraMB.vencimiento}" styleClass="widthcalendarToolLetra" style="font-size:16px;"/>
+					
+					<h:outputText value="Nro. Cuotas de Contrato:" style="margin-left:45px;"/>
+					<p:remoteCommand name="test" actionListener="#{herramientaGeneradorLetraMB.agregar}" update="cuotas" />
+					<p:inputText value="#{herramientaGeneradorLetraMB.nrocuotas}" style="width:20px;font-size:16px;" onkeypress="if (event.keyCode == 13) { test(); return false; }"/>
+					
+				</h:panelGrid>
+				
+				<br/>
+			
+				<h:panelGrid id="cuotas" columns="1" cellspacing="5">
+	
+					<p:outputPanel id="merced1" rendered="#{herramientaGeneradorLetraMB.merced1}">
+						<h:outputText value="1.Renta: "/>
+						<p:inputText  id="rentanumero1"  value="#{herramientaGeneradorLetraMB.montomerced1}" style="width:60px;margin-left:20px;">
+						<p:watermark for="rentanumero1" value="en números" />
+						</p:inputText>
+						<p:inputText id="rentaletras1" value="#{herramientaGeneradorLetraMB.montoletramerced1}" style="width:400px;margin-left:20px;" >
+						<p:watermark for="rentaletras1" value="en letras"/>
+						</p:inputText>
+					</p:outputPanel>
+	
+					<p:outputPanel id="merced2" rendered="#{herramientaGeneradorLetraMB.merced2}">
+					<h:outputText value="2.Renta: "/>
+					<p:inputText id="rentanumero2" value="#{herramientaGeneradorLetraMB.montomerced2}" style="width:60px;margin-left:20px;">
+					<p:watermark for="rentanumero2" value="en números" />
+					</p:inputText>
+					<p:inputText id="rentaletras2" value="#{herramientaGeneradorLetraMB.montoletramerced2}"  style="width:400px;margin-left:20px;">
+					<p:watermark for="rentaletras2" value="en letras" />
+					</p:inputText>
+					</p:outputPanel>
+	
+					<p:outputPanel id="merced3" rendered="#{herramientaGeneradorLetraMB.merced3}">
+					<h:outputText value="3.Renta: "/>
+					<p:inputText id="rentanumero3" value="#{herramientaGeneradorLetraMB.montomerced3}" style="width:60px;margin-left:20px;">
+					<p:watermark for="rentanumero3" value="en números" />
+					</p:inputText>
+					<p:inputText id="rentaletras3" value="#{herramientaGeneradorLetraMB.montoletramerced3}" style="width:400px;margin-left:20px;">
+					<p:watermark for="rentaletras3" value="en letras" />
+					</p:inputText>
+					</p:outputPanel>
+					
+	
+					<p:outputPanel id="merced4" rendered="#{herramientaGeneradorLetraMB.merced4}">
+					<h:outputText value="4.Renta: "/>	
+					<p:inputText id="rentanumero4" value="#{herramientaGeneradorLetraMB.montomerced4}" style="width:60px;margin-left:20px;">
+					<p:watermark for="rentanumero4" value="en números" />
+					</p:inputText>
+					<p:inputText id="rentaletras4"  value="#{herramientaGeneradorLetraMB.montoletramerced4}" style="width:400px;margin-left:20px;">
+					<p:watermark for="rentaletras4" value="en letras" />
+					</p:inputText>
+					</p:outputPanel>
+	
+					<p:outputPanel id="merced5" rendered="#{herramientaGeneradorLetraMB.merced5}">
+					<h:outputText value="5.Renta: "/>
+					<p:inputText id="rentanumero5" value="#{herramientaGeneradorLetraMB.montomerced5}" style="width:60px;margin-left:20px;">
+					<p:watermark for="rentanumero5" value="en números" />
+					</p:inputText>
+					<p:inputText id="rentaletras5" value="#{herramientaGeneradorLetraMB.montoletramerced1}" style="width:400px;margin-left:20px;">
+					<p:watermark for="rentaletras5" value="en letras" />
+					</p:inputText>
+					</p:outputPanel>
+	
+					<p:outputPanel id="merced6" rendered="#{herramientaGeneradorLetraMB.merced6}">
+					<h:outputText value="6.Renta: "/>
+					<p:inputText id="rentanumero6" value="#{herramientaGeneradorLetraMB.montomerced6}" style="width:60px;margin-left:20px;">
+					<p:watermark for="rentanumero6" value="en números" />
+					</p:inputText>
+					<p:inputText id="rentaletras6" value="#{herramientaGeneradorLetraMB.montoletramerced6}" style="width:400px;margin-left:20px;">
+					<p:watermark for="rentaletras6" value="en letras" />
+					</p:inputText>
+					</p:outputPanel>
+				</h:panelGrid>
+				<br/>
+				<h:panelGrid columns="4">
+
+					<h:outputText value="Nombre de Gerente:" />
+					<p:inputText value="#{herramientaGeneradorLetraMB.nombresgerente}" style="width:300px;font-size:16px;"/>
+					<h:outputText value="RUC:" style="margin-left:60px;"/>
+					<p:inputText value="#{herramientaGeneradorLetraMB.rucgerente}" style="width:100px;font-size:16px;"/>
+				</h:panelGrid>
+				<br/>
+				<h:panelGrid columns="4">
+					<h:outputText value="Nro. Cuotas pagadas"/>
+					<p:inputText value="#{herramientaGeneradorLetraMB.nrocuotaspagadas}" style="width:20px;font-size:16px;"/>
+					<p:commandButton style="width:20px;height:20px;" actionListener="#{herramientaGeneradorLetraMB.generarLetra}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+								 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:100px;" />
+									<p:fileDownload value="#{herramientaGeneradorLetraMB.report}" contentDisposition="attachment" />
+					</p:commandButton>
+				</h:panelGrid>
+			<br/><br/><br/>
+			</p:panel>
+		</h:panelGrid>
+			
+			
+		</h:form>
+		</ui:define>
+	</ui:composition>
+
+
+	
+</h:body>
+
+</html>

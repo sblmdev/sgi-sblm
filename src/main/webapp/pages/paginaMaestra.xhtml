@@ -1,0 +1,470 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="shortcut icon" type="image/x-icon"
+	       href="#{request.contextPath}/resources/icons/favicon.ico" />
+<!-- 		href="#{request.contextPath}/resources/icons/favicon.png" /> -->
+
+	<link href="./resources/css/default.css" rel="stylesheet"
+		type="text/css" />
+	<link href="./resources/css/cssLayout.css" rel="stylesheet"
+		type="text/css" />
+
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+
+	<link href="../resources/css/cssLayout.css" rel="stylesheet"
+		type="text/css" />
+	<link rel="stylesheet" href="../resources/css/estiloImagenes.css" />
+
+	<script type="text/javascript"
+		src="../resources/js/notificacion_gadget.js" />
+
+	<link rel="stylesheet" href="../resources/css/estilosValidacion.css" />
+	<script type="text/javascript" src="../resources/js/primefaces.js" />
+	<script type="text/javascript" src="../resources/js/superAll.js" />
+	<script type="text/javascript" src="../resources/js/dgaiMonitoreo.js" />
+	<script type="text/javascript"
+		src="../resources/js/funcionesValidacion.js" />
+	<script type="text/javascript"
+		src="../resources/js/funcionesValidacionRecaudacion.js" />
+	<script type="text/javascript" src="../resources/js/menuFlotante.js" />
+	<link href="../resources/css/menuFlotante.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript" src="../resources/js/recaudacion.js" />
+	<script type="text/javascript" src="../resources/js/inmueble.js" />
+	<script type="text/javascript" src="../resources/js/upa.js" />
+	<script type="text/javascript" src="../resources/js/inquilino.js" />
+	<script type="text/javascript" src="../resources/js/contrato.js" />
+	<script type="text/javascript" src="../resources/js/igv.js" />
+	<script type="text/javascript" src="../resources/js/cobranza.js" />
+	<script type="text/javascript" src="../resources/js/cobranzaCartera.js" />
+	<script type="text/javascript"
+		src="../resources/js/cobranzaRegistro.js" />
+	<script type="text/javascript"
+		src="../resources/js/funcionesValidacionRepresentanteInstitucion.js" />
+	<script type="text/javascript"
+		src="../resources/js/funcionesValidacionContrato.js" />
+	<script type="text/javascript"
+		src="../resources/jquery/jquery.blockUI.js" />
+	<script type="text/javascript" src="../resources/js/cargado.js" />
+	<script type="text/javascript" src="../resources/js/consultaArrendamiento.js" />
+	<script type="text/javascript" src="../resources/js/seguimiento.js" />
+
+	<script type="text/javascript" src="../resources/js/calendar_es.js" />
+	<script type="text/javascript" src="../resources/js/calendarRestrictedDays.js" />
+	<script type="text/javascript"
+		src="../resources/js/seguimientoAlerta.js" />
+		
+	<script type="text/javascript"
+		src="../resources/js/reportesGerenciales.js" />
+	<script type="text/javascript"
+		src="../resources/js/primefaces.js" />
+	
+	<script type="text/javascript" >
+	function redirect() {
+			window.location.href="/sgi-sblm/pages/pgNotificaciones.jsf";
+	}
+	</script>
+	
+<!-- 	<title>Beneficencia de Lima - Sistema de Gestion Inmobiliaria</title> -->
+	<title>SOCIEDAD BENEFICENCIA DE LIMA METROPOLITANA</title>
+</h:head>
+
+<h:body>
+
+    
+	<h:panelGroup rendered="#{usuarioMB.loggedIn}">
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false" header="Cargando">
+			<center>				
+				<p:graphicImage name="images/icon/cargando.gif" />
+			</center>
+		</p:dialog>
+		<div id="contenidoPrincipal_Contenedor">
+			<div id="menuflotante">
+				<div id="top" class="top">
+					<h:form id="frmMaestra">
+
+						<!-- Contenido del menu lateral -->
+
+						<div class="contenidoPrincipal_Cabecera">
+							<div class="contenidoPrincipal_IconoUltCon"></div>
+
+							<div class="contenidoPrincipal_hora">
+								<h:outputText value=" &Uacute;ltima conexi&oacute;n" />
+								<h:outputText value=" #{usuarioMB.horaconexion}" />
+							</div>
+
+							<p:commandLink action="pgNotificaciones.xhtml?faces-redirect=true">
+								<div class="contenidoPrincipal_IconoNotificar">
+									<p:graphicImage style="margin-bottom:5px;float:left" value="../resources/icons/notificaciones.png" width="35" height="35" alt="Ver Notificaciones"/>
+
+								</div>
+							</p:commandLink>
+							<div class="contenidoPrincipal_IconoModificarPerfil">
+								<p:commandLink
+									actionListener="#{ceditarusuarios.cargarDataEditarPaginaMaestra}"
+									onclick="window.location.href='/sgi-sblm/pages/editarUsuario.jsf'" >
+									<p:graphicImage width="30" height="30"
+										value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+								</p:commandLink>
+							</div>
+							<div class="contenidoPrincipal_perfil">
+								<h:outputText value=" #{usuarioMB.usuariologueado.nombres}" />
+								<h:outputText value=" #{usuarioMB.usuariologueado.apellidopat}" />
+								<br />
+								<p:commandLink id="chartBtn" style="margin-right:20px;">
+									<h:outputText style="color:#029c05"
+										value=" #{usuarioMB.perfil.nombreperfil}" />
+								</p:commandLink>
+
+
+								<p:overlayPanel id="chartPanel" for="chartBtn" hideEffect="fade">
+									<div>
+										<h:outputLabel value="Cambiar Perfil:" />
+										<p:selectOneMenu id="cbxModuPagina" style="width: 190px;"
+											value="#{perfilusuarioMB.idperfilseleccionado}" effect="fade">
+											<f:selectItem itemLabel="Seleccione Perfil" itemValue="0" />
+											<f:selectItems value="#{perfilusuarioMB.perfilusuariosporid}"
+												var="perusu" itemLabel="#{perusu.perfil.nombreperfil}"
+												itemValue="#{perusu.perfil.idperfil}" />
+											<p:ajax listener="#{perfilusuarioMB.cambiarPerfil}"
+												oncomplete="redirect();"  />
+										</p:selectOneMenu>
+
+									</div>
+								</p:overlayPanel>
+							</div>
+
+						</div>
+
+						<div class="contenidoPrincipal_Barramenus">
+							<p:commandLink
+								actionListener="#{gadgetManagedBean.counterNumeroNoficaciones}"
+								update=":frmGadget">
+								<div class="contenidoPrincipal_gadget" id="S_slide"
+									onclick="mostrarGadget();"></div>
+							</p:commandLink>
+							<div class="contenidoPrincipal_menus">
+								
+								<p:menubar model="#{usuarioMB.model}"
+									style="padding:1px; border:none;" autoDisplay="false">
+								</p:menubar>
+								
+							</div>
+							<div class="contenidoPrincipal_menuSalir">
+								<p:commandButton type="outlogin" value=""
+									actionListener="#{usuarioMB.cerrarSesion}" id="btnSalir"
+									action="/pages/login.jsf"
+									styleClass="contenidoPrincipal_btnSalir"></p:commandButton>
+							</div>
+						</div>
+						
+						
+						 <p:dialog modal="true" widgetVar="statusLoading" draggable="false" closable="false" resizable="false" closeOnEscape="false" >
+					       	<center>
+					        <p:graphicImage value="/resources/icons/clock.gif"  width="35" height="35"/>
+					        </center>
+					     </p:dialog>
+						
+						<p:growl id="listaMensajes" showDetail="true" showSummary="false"
+						globalOnly="true" life="9000" />
+
+					</h:form>
+					<h:form id="frmGadget">
+						<div id="mostrar" class="demo">
+							<p:commandLink>
+								<div class="menuOpen_btnMenu" id="H_slide"
+									onclick="ocultarGadget();"></div>
+							</p:commandLink>
+							<div>
+								<div class="menuOpen_subfondo">
+									<div class="foto_user">
+										<p:graphicImage width="60" height="60"
+											value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+									</div>
+									<div class="detalle_user">
+
+										<div class="lblNombre">
+											<h:outputText value=" #{usuarioMB.nombrecompleto}" />
+
+										</div>
+										<br />
+										<div class="lblArea">
+											<h:outputText value=" #{usuarioMB.usuariologueado.cargo}" />
+										</div>
+										<br />
+										<div class="lblId">
+											<h:outputText value=" #{usuarioMB.usuariologueado.nombreusr}" />
+										</div>
+
+									</div>
+								</div>
+
+
+								<div class="menuOpen_subfcrema" style="text-decoration: none;">
+									<div
+										style="margin-top: 8px; margin-left: 22px; font-size: 11px; color: #636A78;">
+										Notificaciones</div>
+									<div class="fondonotif">
+										<div style="margin-left: 7px; margin-top: 4px; color: #a8c2d8">
+											<h:outputText value="#{gadgetManagedBean.nroPendienteTotal}" />
+										</div>
+									</div>
+
+								</div>
+								<div>
+
+									<div class="menuOpen_subfondMes">
+										<p:commandLink action="#{bandejaMB.seleccionarItem(1)}"
+											oncomplete="EstadoNotificacionMaestras();" immediate="true"
+											style="text-decoration: none;">
+
+
+											<div class="cuadradoTransparente"
+												style="text-align: center; color: #fde871; font-size: 25pt;">
+												<h:outputText
+													value="#{gadgetManagedBean.nroNotificacionesMes}" />
+											</div>
+
+
+											<div>
+												<p:spacer width="60" height="35" />
+												<h:outputText style="color:#fff"
+													value="Total Mes #{inicioMB.nombreMesActual}" />
+											</div>
+										</p:commandLink>
+									</div>
+
+									<div class="menuOpen_subfondoRevisado">
+										<p:commandLink action="#{bandejaMB.seleccionarItem(2)}"
+											oncomplete="EstadoNotificacionMaestras(); " immediate="true">
+											<div class="cuadradoBlanco"
+												style="text-align: center; color: #2B626F; font-size: 15pt;">
+												<h:outputText value="#{gadgetManagedBean.nroRevisado}" />
+											</div>
+										</p:commandLink>
+
+										<div>
+											<p:spacer width="60" height="25" />
+											<h:outputText style="color:#fff" value="Revisados" />
+										</div>
+
+									</div>
+
+									<div class="menuOpen_subfondoCancelado">
+
+										<p:commandLink action="#{bandejaMB.seleccionarItem(3)}"
+											oncomplete="EstadoNotificacionMaestras();" immediate="true">
+											<div class="cuadradoBlanco"
+												style="text-align: center; color: #BC1B30; font-size: 15pt;">
+												<h:outputText value="#{gadgetManagedBean.nroCancelado}" />
+											</div>
+
+										</p:commandLink>
+
+										<div>
+											<p:spacer width="60" height="25" />
+											<h:outputText style="color:#fff" value="Cancelados" />
+										</div>
+
+									</div>
+
+									<div class="menuOpen_subfondoPendiente">
+										<p:commandLink action="#{bandejaMB.seleccionarItem(1)}"
+											oncomplete="EstadoNotificacionMaestras();" immediate="true">
+											<div class="cuadradoBlanco"
+												style="text-align: center; color: #3E9326; font-size: 15pt;">
+												<h:outputText value="#{gadgetManagedBean.nroPendiente}" />
+											</div>
+										</p:commandLink>
+										<div>
+											<p:spacer width="60" height="25" />
+											<h:outputText style="color:#fff" value="Pendientes" />
+										</div>
+
+									</div>
+								</div>
+
+								<p:commandLink action="#{tipocambioMB.irtipocambio()}">
+
+									<div class="menuOpen_subfcrema2">
+										<div style="margin-top: 10px;">
+											<div class="menuOpen_tipoCambio">
+												<div class="menuOpen_Texto_tipoCambio">Tipo de cambio</div>
+											</div>
+											<div class="menuOpen_lblTipoCambio">
+												<h:outputText
+													value="S./ #{gadgetManagedBean.resultadoTipoCambio}" />
+											</div>
+										</div>
+									</div>
+								</p:commandLink>
+							</div>
+
+							<div></div>
+
+							<div>
+								<div class="menuOpen_ultimo">
+									<div class="menuOpen_ultimoTexto">
+										<div style="color: #2DA100;">Ultimo</div>
+										<div style="color: #2DA100;">Modulo Activo</div>
+									</div>
+								</div>
+								<div style="margin-top: -50px; margin-left: 58px;">
+									<div>
+										<h:outputText
+											value="Modulo: #{gadgetManagedBean.ultimoModulo}" />
+									</div>
+									<div>
+										<h:outputText
+											value="Pagina: #{gadgetManagedBean.ultimaPagina}" />
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</h:form>
+
+					<h:form id="frmDlgNotificacionPersonalizableCompuesta">
+
+						<p:dialog id="iddlgNotificacion" width="530" height="350"
+							closable="true" closeOnEscape="true" resizable="false"
+							widgetVar="dlgNotificacionCompuesta"
+							style="border-width:9px;border-style:solid;  border-color:#ffc600;"
+							showEffect="slide" hideEffect="slide">
+							<br />
+
+							<div class="dgaiMonitoreo_dlgTitulo">
+								<div class="dgaiMonitoreo_iconDlgRechazar"></div>
+
+								<div class="dgaiMonitoreo_TituloContador">
+									<h:outputText
+										style="color:#750101; font-size: 12px; font-weight:bold;"
+										value="Notificación " />
+								</div>
+							</div>
+
+							<div class="dgaiMonitoreo_TituloContador">
+
+								<h:outputText
+									style="color:#2f7501; font-size: 12px; font-weight:bold;"
+									value="Descripcion notificación:" />
+								<br />
+							</div>
+
+							<div class="dgaiMonitoreo_detalleDlg">
+								<p:inputTextarea style="width:390px; height:40px;"
+									autoResize="false" counter="counterSMS"
+									value="#{bandejaMB.contenidoMensajePersonalizado}"
+									counterTemplate="{0} caracteres faltantes" maxlength="75">
+								</p:inputTextarea>
+								<div style="color: #0000FF">
+									<h:outputText id="counterSMS" />
+								</div>
+							</div>
+
+
+							<p:scrollPanel style="width:500px;height:120px">
+								<p:dataTable id="tablaUsuarios"
+									styleClass="noheader ui-datatable-hor-scroll"
+									value="#{bandejaMB.listadousuariosSeleccionados}" var="d"
+									editable="true" editMode="cell"
+									style="text-align: center;font-size:10px;"
+									emptyMessage="Agregar un usuario destino">
+									<p:ajax event="cellEdit"
+										listener="#{bandejaMB.onCellEdit}"
+										styleClass="noheader borderless cellSpacingTableClass"
+										update="tablaUsuarios" />
+									<f:facet name="header">
+										<p:commandLink title="Agregar Usuario" update="tablaUsuarios"
+											actionListener="#{bandejaMB.agregarUsuarioLista}">
+											<p:graphicImage width="20" height="20"
+												value="../resources/images/monitoreoMesaPartes/addUsuario.png" />
+										</p:commandLink>
+									</f:facet>
+									<p:column>
+										<p:graphicImage id="imagenUsuario" width="35" height="35"
+											value="../resources/images/usuarios/#{d.rutaimgusr}" />
+									</p:column>
+									<p:spacer width="20px" />
+									<p:column width="99">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{d.emailusr}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:autoComplete id="idCajaUsuario" value="#{d.emailusr}"
+													style="width:136px"
+													completeMethod="#{fHvariado.autoCompleteUsuario}"
+													effect="fade">
+
+												</p:autoComplete>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{d.cargo}" />
+									</p:column>
+
+									<p:column headerText="Área" width="200">
+										<h:outputText value="#{d.area.desare}" />
+									</p:column>
+
+									<p:column>
+										<p:commandLink title="Eliminar de lista"
+											actionListener="#{bandejaMB.eliminarUsuarioDeLista}"
+											update="tablaUsuarios">
+											<p:graphicImage width="20" height="20"
+												value="../resources/images/monitoreoMesaPartes/#{d.contrasenausr}" />
+											<f:setPropertyActionListener value="#{d}"
+												target="#{bandejaMB.selectRegistroUsuario}" />
+										</p:commandLink>
+									</p:column>
+								</p:dataTable>
+							</p:scrollPanel>
+
+							<p:commandButton value="Enviar"
+								style="margin-left: 435px; margin-top:10px;" update=""
+								actionListener="#{bandejaMB.enviarNotificaciónPersonalizable}"
+								oncomplete="dlgNotificacionCompuesta.hide();">
+							</p:commandButton>
+						</p:dialog>
+					
+						
+
+
+
+					</h:form>
+				</div>
+			</div>
+			<!--FIN DIALOGO PERFILES-->
+			<div id="content" class="center_content">
+				<ui:insert name="content">Content</ui:insert>
+			</div>
+		</div>
+		
+
+	</h:panelGroup>
+	<h:panelGroup rendered="#{not usuarioMB.loggedIn}">
+		<h:form>
+			<div id="contenedor">
+				<ui:include src="notificacionLogin.xhtml" />
+			</div>
+		</h:form>
+	</h:panelGroup>
+</h:body>
+
+</html>

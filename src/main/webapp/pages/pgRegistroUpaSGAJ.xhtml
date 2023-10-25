@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>SBLM</title>
+
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+				<div class="contenidoPrincipal_fondoIdentificador" style="background-color:#36A6DE;">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="recaudacion_iconoTitulo"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">SGAJ</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Registro de U.P.A Judicial</label>
+					</div>
+				</div>
+				
+					<h:form id="frmProceso">
+					 <p:confirmDialog message="¿Desea Registrar el cambio de estado de Judicializado?"
+								  header="Registro de Upa Judicializada" severity="alert"
+								  widgetVar="dlgConfirmarActualizarProcesoJudicial">
+						 <center>
+								   <p:commandButton value="&nbsp;Aceptar"
+								   actionListener="#{consultaogajMB.actualizarProcesoJudicial}"
+								   update="datos,tblSeguimientoUpa,growlPanel,informacionExpedienteRegistrar"
+								   onclick="dlgConfirmarActualizarProcesoJudicial.hide();"
+								   icon="icon-save">
+								   </p:commandButton>
+								   <p:spacer width="15"/>
+								   <p:commandButton value="&nbsp;Cancelar"
+								   	oncomplete="dlgConfirmarActualizarProcesoJudicial.hide()"
+								   	icon="icon-cancel" />
+					    </center>				 
+				    </p:confirmDialog>
+				     <p:confirmDialog message="¿Desea Registrar el Expediente de la upa judicializada?"
+								  header="Registro de Upa Judicializada" severity="alert"
+								  widgetVar="dlgConfirmarRegistroExpedienteProcesoJudicial">
+						 <center>
+								   <p:commandButton value="&nbsp;Aceptar"
+								   actionListener="#{consultaogajMB.grabarEventoSeguimiento}"
+								   update="datos,tblSeguimientoUpa,growlPanel,informacionExpedienteRegistrar"
+								   oncomplete="dlgConfirmarRegistroExpedienteProcesoJudicial.hide();dlgAgregarExpediente.hide();"
+								   icon="icon-save">
+								   </p:commandButton>
+								   <p:spacer width="15"/>
+								   <p:commandButton value="&nbsp;Cancelar"
+								   	oncomplete="dlgConfirmarRegistroExpedienteProcesoJudicial.hide()"
+								   	icon="icon-cancel" />
+					    </center>				 
+				    </p:confirmDialog>
+				     
+					<p:focus context="panel"/>
+					<p:growl id="growlPanel" showDetail="true" sticky="false" life="3000" />
+					<p:toolbar styleClass="ui-saju-toolbar">
+			  	
+			  		<p:toolbarGroup align="right">
+			  				Buscar <p:commandButton icon="ui-icon-search" oncomplete="dlgListaUpas.show();" title="Buscar U.P.A."/>
+			  		</p:toolbarGroup>
+			  	 </p:toolbar>
+					<p:panel id="panel" >
+						<h:panelGrid columns="3" cellspacing="5" style="margin-top:20px;margin-left:30px;" >
+							<h:outputText value="Ingrese Clave de Upa:"/>
+							<p:remoteCommand name="buscarupa" 
+										actionListener="#{consultaogajMB.buscarUpa}" update="datos,tblSeguimientoUpa,growlPanel"/>
+									<p:inputMask id="clave" mask="**-****-***" value="#{consultaogajMB.clave}"
+										onkeypress="if (event.keyCode == 13) { buscarupa(); return false; }"
+										style="width:100px;text-align:center;font-size:15px;">
+									</p:inputMask>
+									
+						</h:panelGrid>
+
+					<p:outputPanel id="datos">
+					<table width="730px;" style="margin: 30px;" cellspacing="5">
+							<tr>
+								<td><h:outputText  value="Dirección:" style="color: #4C4C4C;"/></td>
+								<td><h:outputText value="#{consultaogajMB.upa.inmueble.direccion}"/></td>
+								<td><h:outputText  value="Nº Principal:" style="color: #4C4C4C;"/></td>
+								<td><h:outputText value="#{consultaogajMB.upa.inmueble.numeroprincipal}"/></td>
+							</tr>
+							
+							<tr> 
+								<td><h:outputText  value="Nº de Interior" style="color: #4C4C4C;"/></td>
+								<td><h:outputText value="#{consultaogajMB.upa.nombrenuminterior}"/></td>
+								<td><h:outputText  value="Distrito: " style="color: #4C4C4C;"/></td>
+								<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.dist}"/></td>
+							</tr>
+							
+							<tr> 
+								<td><h:outputText  value="Provincia:" style="color: #4C4C4C;"/></td>
+								<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.prov}"/></td>
+								<td><h:outputText  value="Departamento:" style="color: #4C4C4C;"/></td>
+								<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.depa}"/></td>
+							</tr>
+							
+							<tr> 
+								<td><h:outputText  value="Uso: " style="color: #4C4C4C;"/></td>
+								<td><h:outputText value="#{consultaogajMB.upa.uso}"/></td>
+								<td><h:outputText  value="Proceso Judicial:" style="color: #4C4C4C;"/></td>
+								<td><h:selectOneMenu value="#{consultaogajMB.siprocesojudicial}" >
+									<f:selectItem itemLabel="S&iacute;" itemValue="true"></f:selectItem>
+									<f:selectItem itemLabel="No" itemValue="false"></f:selectItem>
+									<p:ajax event="change" listener="#{consultaogajMB.validarProcesoJudicialUpa}"  update="datos,tblSeguimientoUpa,growlPanel"/>
+									</h:selectOneMenu>
+								</td>
+							</tr>
+					</table>
+					</p:outputPanel>
+					
+					<p:dataTable id="tblSeguimientoUpa" var="segupa" value="#{consultaogajMB.listsegupa}" selectionMode="single"
+											emptyMessage="No existe  ning&uacute;n proceso judicial registrado "
+											style="width:775px; font-size: 10px;  margin-right:0px;text-align:center;"
+											styleClass="ui-datatable-hor-scroll" rowKey="#{segupa.idprocesojudicialupa}"											
+											rowIndexVar="row" paginator="true" rows="10" 
+											rowsPerPageTemplate="5,10,15">
+											
+											<f:facet name="header">
+												<p:commandLink id="btnAgregar" style="text-align:center;" action ="#{consultaogajMB.agregarExpedienteProcesoJudicialUpa}" process="@this" update=":frmProceso:informacionExpedienteRegistrar" >
+													<p:graphicImage width="20" height="20"
+														value="../resources/images/monitoreoMesaPartes/addUsuario.png" />
+												</p:commandLink>
+											</f:facet>
+
+											<p:column headerText="# Expediente" >
+												<h:outputText value="#{segupa.expediente}" />
+											</p:column>
+
+											<p:column headerText="Motivo de Proceso" >
+												<p:commandLink  style="text-align:center;" action="#{consultaogajMB.buscarExpediente(segupa.idprocesojudicialupa)}" process="@this" oncomplete="dlgVerMotivoProcesoUpa.show();"
+												update=":frmVerMotivoProcesoJudicial"> 
+													<p:graphicImage width="20" height="20"
+														value="../resources/images/varios/editar1.png" />
+													</p:commandLink>
+											</p:column>
+<!-- 											<p:column headerText="Situación" > -->
+<!-- 												<h:outputText value="#{segupa.situacion}" /> -->
+<!-- 											</p:column> -->
+											<p:column headerText="Estado" >
+												<h:outputText value="#{segupa.estado}" />
+											</p:column>
+											<p:column headerText="Usu. Creador" >
+												<h:outputText value="#{segupa.usrcre}" />
+											</p:column>
+											<p:column headerText="Fec. Creación" >
+												<h:outputText value="#{segupa.feccre}" />
+											</p:column>
+											<p:column headerText="Detalle/Editar ">
+											
+													<p:commandLink  style="text-align:center;" oncomplete="dlgDetalleProceso.show();" update=":frmMaestra:listaMensajes,:frmProceso:informacionExpediente"
+													  action="#{consultaogajMB.datosExpediente(segupa.idprocesojudicialupa)}" process="@this" >
+<!-- 													<f:setPropertyActionListener value="#{segupa}" target="#{consultaogajMB.segupa}" /> -->
+													<p:graphicImage width="20" height="20"
+														value="../resources/images/varios/search.png" />
+													</p:commandLink>
+													<p:commandLink  style="text-align:center;" oncomplete="dlgDetalleProcesoEditar.show();" 
+													 action="#{consultaogajMB.datosExpediente(segupa.idprocesojudicialupa)}" process="@this"
+													 update=":frmMaestra:listaMensajes,:frmProceso:informacionExpedienteEditar">
+<!-- 													<f:setPropertyActionListener value="#{segupa}" target="#{consultaogajMB.segupa}" /> -->
+													<p:graphicImage width="20" height="20"
+														value="../resources/images/varios/editar2.png" />
+													</p:commandLink>
+											</p:column>
+											<p:column headerText="Doc.">
+													<p:commandLink  style="text-align:center;" action="#{archivoMB.abrirDialogoVerAdjunto('ProcesoJudicialUpa',segupa.idprocesojudicialupa)}" process="@this" 
+													update=":frmMaestra:listaMensajes,:frmVerDocumento:listaArchivosReferencia">
+													<p:graphicImage width="20" height="20"
+														value="../resources/icons/tipoArchivo/pdf.png" />
+													</p:commandLink>
+											</p:column>
+<!-- 									    <p:column headerText="Obs."> -->
+<!-- 													<p:commandLink  style="text-align:center;" onclick="dlgAgregarEvento.show();"> -->
+<!-- 													<p:graphicImage width="20" height="20" -->
+<!-- 														value="../resources/images/varios/editar2.png" /> -->
+<!-- 													</p:commandLink> -->
+<!-- 										</p:column> -->
+											
+					</p:dataTable>
+					
+					<f:facet name="footer">
+					</f:facet>
+					
+					</p:panel>
+					
+					    <p:dialog header="Informaci&oacute;n del Expediente" widgetVar="dlgDetalleProceso" showEffect="fade" hideEffect="fade" resizable="false" width="800" height="auto" style="border-width:3px;border-style:solid;  border-color:#6043dd;">
+								        <p:outputPanel id="informacionExpediente">
+
+											<p:panel >
+												<h:panelGrid  columns="2" cellspacing="10">
+													<h:outputText value="N° de Expediente: " style="align-text:left;"/>
+													<h:outputText value="#{consultaogajMB.segupa.expediente}" style="text-align:center"/>
+													<h:outputText value="Motivo: " style="align-text:left;"/>
+													<h:outputText value="#{consultaogajMB.segupa.motivo}" style="text-align:center"/>
+													<h:outputText value="Situaci&oacute;n: " style="align-text:left;"/>
+													<h:outputText value="#{consultaogajMB.segupa.situacion}"/>
+													
+													<h:outputText value="Documento: "/>
+													<h:outputText value="#{consultaogajMB.segupa.sidocumento == 'true' ? 'Sí':'No'}"/>
+													<h:outputText value="Observaci&oacute;n: "/>
+													<h:outputText value="#{consultaogajMB.segupa.observacion}"/>
+													<h:outputText value="Usuario creador: "/>
+													<h:outputText value="#{consultaogajMB.segupa.usrcre}"/>
+													<h:outputText value="Fecha creaci&oacute;n: "/>
+													<h:outputText value="#{consultaogajMB.segupa.feccre}"/>
+													<h:outputText value="Motivo de modificaci&oacute;n: "/>
+													<h:outputText value="#{consultaogajMB.segupa.observacionmodificacion}"/>
+													<h:outputText value="Usuario modificador: "/>
+													<h:outputText value="#{consultaogajMB.segupa.usrmod}"/>
+													<h:outputText value="Fecha modificaci&oacute;n: "/>
+													<h:outputText value="#{consultaogajMB.segupa.fecmod}"/>
+													
+												</h:panelGrid>
+											
+								        	</p:panel>
+								        		
+								        </p:outputPanel>	
+					    </p:dialog>
+                       
+					       <p:dialog header="Informaci&oacute;n del Expediente" widgetVar="dlgDetalleProcesoEditar" showEffect="fade" hideEffect="fade" resizable="false" width="800" height="auto" style="border-width:3px;border-style:solid;  border-color:#6043dd;" >
+								        <p:outputPanel id="informacionExpedienteEditar">
+
+<!-- 											<p:panel > -->
+												<h:panelGrid  columns="2" cellspacing="10">
+													<h:outputText value="N° de Expediente: " style="align-text:left;"/>
+													<h:outputText value="#{consultaogajMB.segupa.expediente}" style="text-align:center"/>
+													<h:outputText value="Motivo: " style="align-text:left;"/>
+													<h:outputText value="#{consultaogajMB.segupa.motivo}" style="text-align:center"/>
+													<h:outputText value="Situaci&oacute;n: " style="align-text:left;"/>
+													<h:outputText value="#{consultaogajMB.segupa.situacion}"/>
+													
+													<h:outputText value="Documento: "/>
+													<h:outputText value="#{consultaogajMB.segupa.sidocumento == 'true' ? 'Sí':'No'}"/>
+													<h:outputText value="Motivo de modificaci&oacute;n: "/>
+													<p:inputText value="#{consultaogajMB.segupa.observacionmodificacion}" readonly="#{!consultaogajMB.segupa.sifinalizado }" style="width: 300%;"/>												
+													<h:outputText value="Observaci&oacute;n: "/>
+													<p:inputText value="#{consultaogajMB.segupa.observacion}" style="width: 300%;" readonly="#{consultaogajMB.segupa.sifinalizado }"/>
+												
+<!-- 													<h:outputText value="Peso (KB): "/> -->
+<!-- 													<h:outputText value="#{archivoMB.archivoAdjuntoBean.peso/1024}"> -->
+<!-- 														<f:convertNumber pattern="#0.00" /> -->
+<!-- 													</h:outputText> -->
+<!-- 													<h:outputText value="Usuario creador: "/> -->
+<!-- 													<h:outputText value="#{consultaogajMB.segupa.usrcre}"/> -->
+<!-- 													<h:outputText value="Fecha creaci&oacute;n: "/> -->
+<!-- 													<h:outputText value="#{consultaogajMB.segupa.feccre}"/> -->
+<!-- 													<h:outputText value="Usuario modificador: "/> -->
+<!-- 													<h:outputText value="#{consultaogajMB.segupa.usrmod}"/> -->
+<!-- 													<h:outputText value="Fecha modificaci&oacute;n: "/> -->
+<!-- 													<h:outputText value="#{consultaogajMB.segupa.fecmod}"/> -->
+													
+												</h:panelGrid>
+												<p:fieldset id="documentossustentarios">
+													<p:tabView id="tabDocumentosSustentatorios">
+													<p:tab title="Nuevo Documento" id="tabNuevoDoc" rendered="true">
+													<center>
+														<p:panelGrid id="panelCargarDocumento" columns="3">
+															<h:outputText value="Documentos" />
+															<p:spacer />
+													<!-- 														<div style="height: 40%;width: 100%; padding: 1% 0% 0% 2%">										 -->
+															<p:commandButton value="Adjuntar"
+																actionListener="#{archivoMB.abrirDialogoAsociarAdjuntoContrato()}" 
+																update=":frmMaestra:listaMensajes,:frmAdjuntarArchivo:listaArchivoAdjunto"
+																icon="ui-icon-wrench"
+											 					rendered="#{rdMB.listContrato.size()>0 ? false:true}" />
+													<!-- 										   				 </div> -->
+														</p:panelGrid>
+													</center>
+													</p:tab>
+									<!-- 				         						<p:tab title="Documentos subidos" id="tabDocSubidos">	 -->
+									<!-- 				         						</p:tab> -->
+													</p:tabView>
+													   
+												</p:fieldset>
+
+												<br/>
+<!-- 										     <div style=" padding: 1em 3em; margin: 1em 25%;"> -->
+<!-- 												<p:commandButton value="&nbsp;Aceptar"  ajax="true" update="tblSeguimientoUpa" -->
+<!-- 													actionListener="#{consultaogajMB.validarRegistroExpediente}" -->
+<!-- 													oncomplete="dlgAgregarExpediente.hide()" icon="icon-save" /> -->
+												
+<!-- 										     </div> -->
+												<center>
+												<p:commandButton  value="Guardar" actionListener="#{consultaogajMB.validarActualizarExpediente}"  update="tblSeguimientoUpa,:frmMaestra:listaMensajes" style="width: 120px;margin-right: 12px" 
+												icon="icon-save"  />
+												<p:commandButton  value="Cancelar" actionListener="#{consultaogajMB.limpiarDatosExpediente}" process="@this" style="width: 120px;margin-right: 12px" oncomplete="dlgDetalleProcesoEditar.hide()" update=":frmMaestra:listaMensajes,:frmAdjuntarArchivo:listaArchivoAdjunto"
+								            	icon="icon-cancel"  />
+												</center>
+											
+<!-- 								        	</p:panel> -->
+								        		
+								        </p:outputPanel>	
+					    </p:dialog>
+					       <p:confirmDialog message="¿Esta Seguro de Actualizar el Expediente ?"
+								  header="Actualización de Datos del Expediente" severity="alert"
+								  widgetVar="dlgConfirmarActualizarExpedienteProcesoJudicial">
+						 <center>
+								   <p:commandButton value="&nbsp;Aceptar"
+								   actionListener="#{consultaogajMB.actualizarExpedienteJudicial}" process="@this"
+								   update="tblSeguimientoUpa" ajax="true" 
+								   onclick="dlgConfirmarActualizarExpedienteProcesoJudicial.hide(),dlgDetalleProcesoEditar.hide(),:frmMaestra:listaMensajes"
+								   icon="icon-save">
+								   </p:commandButton>
+								   <p:spacer width="15"/>
+								   <p:commandButton value="&nbsp;Cancelar"
+								   	oncomplete="dlgConfirmarActualizarExpedienteProcesoJudicial.hide()"
+								   	icon="icon-cancel" />
+					    </center>				 
+				        </p:confirmDialog>
+
+						<p:dialog header="" swidth="auto" height="auto"
+										closable="true" closeOnEscape="true" resizable="false" howEffect="slide" hideEffect="slide"
+										widgetVar="dlgAgregarEvento"
+										style="border-width:3px;border-style:solid;  border-color:#6043dd; ">
+										
+								<p:dataTable id="tblDetalleSeguimientoUpa" var="segupa" value="#{consultaogajMB.listsegupa}"
+											emptyMessage="No existe  ning&uacute;n evento "
+											style="width:775px; font-size: 10px;  margin-right:0px;text-align:center;"
+											styleClass="ui-datatable-hor-scroll" rowKey="#{segupa.idprocesojudicialupa}"
+											rowIndexVar="row" paginator="true" rows="10" 
+											rowsPerPageTemplate="5,10,15">
+											
+											<f:facet name="header">
+												<p:commandLink id="btnAgregar" style="text-align:center;" onclick="dlgAgregarEvento.show();">
+													<p:graphicImage width="20" height="20"
+														value="../resources/images/monitoreoMesaPartes/addUsuario.png" />
+												</p:commandLink>
+											</f:facet>
+											<p:column headerText="Situación" >
+												<h:outputText value="#{segupa.situacion}" />
+											</p:column>
+
+											<p:column headerText="Observacion" >
+												<h:outputText value="#{segupa.observacion}" />
+											</p:column>
+											
+											<p:column headerText="Usu. Creador" >
+												<h:outputText value="#{segupa.usrcre}" />
+											</p:column>
+											<p:column headerText="Fec. Creación" >
+												<h:outputText value="#{segupa.feccre}" />
+											</p:column>
+								</p:dataTable>
+						</p:dialog >
+						
+						
+						<p:dialog header="Registro Expediente" swidth="auto" height="auto"
+										closable="true" closeOnEscape="true" resizable="false" howEffect="slide" hideEffect="slide"
+										widgetVar="dlgAgregarExpediente"
+										style="border-width:3px;border-style:solid;  border-color:#6043dd; ">
+										 <p:outputPanel id="informacionExpedienteRegistrar">
+										<h:panelGrid columns="2">
+													<h:outputText value="Expediente : " style="color:#4C4C4C;" />
+													<p:inputMask mask="*****-****-*-****-**-**-**" value="#{consultaogajMB.expediente}"
+														style="width:200px;font-size:15px;font-weight:bold;">
+													</p:inputMask>
+													<p:spacer height="10"/>
+													<p:spacer height="10"/>
+<!-- 													<h:outputText value="Motivo de Proceso: " style="color:#4C4C4C;" /> -->
+<!-- 													<p:inputTextarea value="#{consultaogajMB.observacion}" style="width:250px;height:50px;"> -->
+<!-- 													</p:inputTextarea> -->
+													
+													<h3 style="color:#4C4C4C;">Motivo de Proceso : </h3>
+													<p:inputTextarea rows="2" cols="33" counter="display" value="#{consultaogajMB.motivo}"
+															maxlength="1000" counterTemplate="{0} caracteres."
+															autoResize="false" />
+													<br />
+													<h:outputText id="display" />
+													<h:outputText value="Situación de Proceso : " style="color:#4C4C4C;"  />
+														<p:inputText value="#{consultaogajMB.situacion}" style="width:250px;height: 25px;">
+													</p:inputText>
+													 
+													<h:outputText  value="Documentos:"  />
+
+<!-- 													<div style="height: 40%;width: 100%; padding: 1% 0% 0% 2%">										 -->
+													<p:commandButton value="Adjuntar" actionListener="#{consultaogajMB.archivoMB.abrirDialogoAsociarAdjuntoContrato()}"  update=":frmMaestra:listaMensajes,:frmAdjuntarArchivo:listaArchivoAdjunto" icon="ui-icon-wrench" />
+<!-- 										    		</div> -->
+														
+													<h:outputText value="Observaci&oacute;n: " style="color:#4C4C4C;"  />
+														<p:inputText value="#{consultaogajMB.observacion}" style="width:250px;height: 25px;">
+													</p:inputText>
+										<br />
+													
+													
+										</h:panelGrid>
+										</p:outputPanel>
+										
+										<br/>
+										
+										       <center>
+												<p:commandButton value="&nbsp;Aceptar"  ajax="true" update="tblSeguimientoUpa"
+													actionListener="#{consultaogajMB.validarRegistroExpediente}"
+													 icon="icon-save" />
+											    <p:commandButton value="&nbsp;Cancelar"  onclick="dlgAgregarExpediente.hide()" icon="icon-cancel"/>
+											    </center>
+												
+										
+						</p:dialog>
+						<p:dialog header="Cambio de Proceso Judicializado" swidth="auto" height="auto"
+										closable="true" closeOnEscape="true" resizable="false" howEffect="slide" hideEffect="slide"
+										widgetVar="dlgCambioProcesoJudicial"
+										style="border-width:3px;border-style:solid;  border-color:#6043dd; ">
+										
+										<h:panelGrid columns="2">
+		
+													<h3 style="color:#4C4C4C;">Motivo : </h3>
+													<p:inputTextarea rows="2" cols="40" counter="display2" value="#{consultaogajMB.observacionmodificacion}"
+															maxlength="1000" counterTemplate="{0} caracteres."
+															autoResize="false" />
+													<br />
+													<h:outputText id="display2" />												 
+													
+										<br />
+													
+													
+										</h:panelGrid>
+										
+										<br/>
+										<center>
+												<p:commandButton value="&nbsp;Aceptar"  ajax="true" 
+													actionListener="#{consultaogajMB.validarModificacionCondicionProcesoJudicialUpa}"
+													oncomplete="dlgCambioProcesoJudicial.hide()" style="width: 120px;margin-right: 12px" icon="icon-save" />
+												<p:commandButton  value="Cancelar"  style="width: 120px;margin-right: 12px" oncomplete="dlgCambioProcesoJudicial.hide()" update=":frmMaestra:listaMensajes,datos,tblSeguimientoUpa,growlPanel"
+								            	icon="icon-cancel"  />
+										</center>
+						</p:dialog>
+					<p:dialog widgetVar="dlgmensaje_expediente1" header="No registrado"  modal="true"
+						height="25">
+						<h:outputText value="Se debe agregar el N° del expediente." />
+					</p:dialog>
+					<p:dialog widgetVar="dlgmensaje_expediente2" header="No registrado"  modal="true"
+						height="30">
+						<h:outputText value="Se debe agregar el motivo de proceso del expediente." />
+					</p:dialog>
+					<p:dialog widgetVar="dlgmensaje_expediente2_1" header="No registrado"  modal="true"
+						height="30">
+						<h:outputText value="El motivo debe ser mayor a 8 caracteres." />
+					</p:dialog>
+					<p:dialog widgetVar="dlgmensaje_expediente3" header="No registrado"  modal="true"
+						height="45">
+						<h:outputText value="Se debe agregar el motivo del cambio en el proceso judicializado." />
+					</p:dialog>
+					<p:dialog widgetVar="dlgmensaje_expediente4" header="No valido"  modal="true"
+						height="40">
+						<h:outputText value="Se debe ingresar la upa para agregar el expediente." />
+					</p:dialog>
+					<p:dialog widgetVar="dlgmensaje_expediente5" header="No valido"  modal="true"
+						height="40">
+						<h:outputText value="Se debe agregar la situación del expediente." />
+					</p:dialog>
+
+				</h:form>
+				<h:form id="frmVerMotivoProcesoJudicial">
+						<p:dialog header="Motivo de Expediente" swidth="auto" height="auto" showEffect="explode"
+										closable="true" closeOnEscape="true" resizable="false" howEffect="slide" hideEffect="slide"
+										widgetVar="dlgVerMotivoProcesoUpa"
+										style="border-width:3px;border-style:solid;  border-color:#6043dd;" >
+										<p:outputPanel id="motivo" style="text-align:center;">
+											         <p:dataTable value="#{consultaogajMB.procesojudicialseleccionado}" var="proceso"
+											         	 style="text-align:center;font-size:11px;margin-top:10px;width:630px" emptyMessage="No exite registros"
+														 scrollWidth="630" styleClass="ui-datatable-hor-scroll">
+											         			
+											         			<p:column headerText="Motivo">
+																<h:outputText value="#{proceso.motivo}" />
+																</p:column>
+																
+															</p:dataTable>
+										 </p:outputPanel>
+						</p:dialog>
+				</h:form>
+					<h:form id="frmConsulta">
+
+			  			
+			  			<p:dialog header="Búsqueda Upa" id="iddlgListaUpa"
+										width="auto" height="auto" closable="true" closeOnEscape="true"
+										resizable="false" widgetVar="dlgListaUpas" modal="true"
+										style="border-width:3px;border-style:solid;  border-color:#6043dd;">
+										
+										<h:panelGrid columns="6" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="tipobusquedaUpa" value="Consulta:" />
+										        <p:selectOneListbox id="tipobusquedaUpa" value="#{consultaogajMB.tipoBusquedaUpa}">
+										            <f:selectItem itemLabel="Clave" 			itemValue="clave" />
+										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="direccion" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="testUpa" actionListener="#{consultaogajMB.buscarListaUpa}" update="tblUpa"/>
+										        <p:inputText id="patronUpa"  value="#{consultaogajMB.valorbusquedaUpa}" onkeypress="if (event.keyCode == 13) { testUpa(); return false; }" >
+										        	<p:watermark for="patronUpa" value="Ingrese campo"></p:watermark>
+										        </p:inputText>
+										        
+										        <p:selectBooleanCheckbox value="#{consultaogajMB.siprocesojudicial}" >Judicializado
+														 
+											     </p:selectBooleanCheckbox>
+			 							</h:panelGrid>
+
+										<p:dataTable id="tblUpa" var="upa" value="#{consultaogajMB.listaUpaBean}"
+											emptyMessage="0 registros encontrados"
+											style="width:625px; font-size: 10px;  margin-right:0px;text-aling:center;" 
+											styleClass="ui-datatable-hor-scroll" rowKey="#{upa.idupa}"
+											rowIndexVar="row" selection="#{consultaogajMB.upaBean}" 
+											selectionMode="single" paginator="true"
+											filteredValue="#{consultaogajMB.listaUpaBeanFilter}" rows="10"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											rowsPerPageTemplate="5,10,15">
+											<p:ajax event="rowSelect"  
+											    listener="#{consultaogajMB.buscarUpaSeleccionada}"
+												update=":frmProceso" oncomplete="dlgListaUpas.hide();"/>
+											<p:column headerText="Clave" filterBy="#{upa.clave}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{upa.clave}" />
+											</p:column>
+                                            <p:column headerText="Judicializado"
+												filterBy="#{upa.siprocesojudicial}" filterMatchMode="startsWith">
+												<h:outputText value="#{upa.siprocesojudicial==NULL ? 'No': (upa.siprocesojudicial=='true' ? 'Sí':'No')}" />
+											</p:column>
+											<p:column headerText="Direcci&oacute;n"
+												filterBy="#{upa.direccion}" filterMatchMode="startsWith">
+												<h:outputText value="#{upa.direccion}" />
+											</p:column>
+
+
+
+											<p:column headerText="Nombre Num. Interior"
+												filterBy="#{upa.numerointerior}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{upa.numerointerior}" />
+											</p:column>
+
+											<p:column headerText="Uso"
+												filterBy="#{upa.tipouso}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{upa.tipouso}" />
+											</p:column>
+
+
+										</p:dataTable>
+									</p:dialog>
+			  </h:form>
+			  	
+			</div>
+			
+			<ui:include src="archivo/pgUpload.xhtml" />
+			<ui:include src="archivo/pgDownload.xhtml"/>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

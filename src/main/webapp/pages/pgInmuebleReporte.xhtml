@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+		
+				<div class="contenidoPrincipal_FondoPrincipal">
+						<div class="contenidoPrincipal_fondoIdentificador">
+							<!-- TITULO SUBCONTENIDO -->
+							<div class="recaudacion_iconoTitulo"></div>
+							<div class="contenidoPrincipal_SubContenido">
+								<label class="contenidoPrincipal_lblTituloSubContenido">Inmueble</label><br/>
+								<label class="contenidoPrincipal_lblSubTituloSubContenido">Consulta/Reportes</label>
+							</div>
+						</div>
+			
+			
+					<div class="contenidoPrincipal_SubFondo">
+					<h:form id="formConsultaInmueble">
+					 <p:tabView style="background-color:white;margin:10px;">
+					    <p:tab title="Consulta ">
+					    <p:outputPanel id="panelConsulta">
+					       <p:fieldset legend="Inmuebles" style="text-align: left;width: 700px;height: 102px" >
+					       
+					       <table width="10%" style="margin: 15px;" cellspacing="5">
+					         <tr>
+					               <td width="20%">
+					               <center> 
+					               <h:outputText  value="Clave" />
+					               </center>
+							        </td>
+							        <td width="20%">
+							        <center> 
+									 <h:outputText  value="Departamento" />
+									 </center>
+							        </td>
+							        <td width="20%">
+							        <center> 
+									 <h:outputText  value="Provincia" />
+									 </center>
+							        </td>
+							        <td width="20%">
+							        <center> 
+									 <h:outputText  value="Distrito" />
+									 </center>
+							        </td>
+							        <td width="35%">
+							        <center> 
+									 <h:outputText  value="Tipo Titularidad" />
+									 </center> 
+							        </td>
+							        
+					         </tr>
+					         <tr>
+					               <td width="20%">									
+									 <p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith" panelStyle="width:160px"
+														style="width: 100px;  font-size: 11px;" value="#{inmuebleMB.inmuebleSeleccionado}" converter="converterInmuebleMa">
+														<f:selectItem itemLabel="Seleccionar" itemValue="" />
+														<f:selectItems value="#{inmuebleMB.listaInmuebleMaestro}" var="inm" itemLabel="#{inm.clave}"
+															itemValue="#{inm}" />
+															<p:ajax event="change" listener="#{inmuebleMB.cargaInmueble}" ></p:ajax>
+														
+									</p:selectOneMenu>
+							        </td>
+							        <td width="20%">
+									 <p:selectOneMenu id="depa" style="width: 100px;  font-size: 11px;"
+																		
+																		value="#{inmuebleMB.depa}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaDepartamentos}" var="dpto"
+																			itemLabel="#{dpto}" itemValue="#{dpto}">
+																		</f:selectItems>
+																		
+																		<p:ajax listener="#{inmuebleMB.cargarComboProvincias}" update="prov" />
+
+									 </p:selectOneMenu> 
+							        </td>
+							        <td width="20%">
+									 <p:selectOneMenu id="prov"  style="width: 100px;  font-size: 11px;"
+																		
+																		value="#{inmuebleMB.prov}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaProvincias}" var="prov"
+																			itemLabel="#{prov}" itemValue="#{prov}">
+																		</f:selectItems>
+																		<p:ajax listener="#{inmuebleMB.cargarComboDistritos}" update="dist"/>
+									</p:selectOneMenu> 
+							        </td>
+							        <td width="20%">
+									 <p:selectOneMenu id="dist" style="width: 100px;  font-size: 11px;"
+																		value="#{inmuebleMB.dist}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaDistritos}" var="dist"
+																			itemLabel="#{dist}" itemValue="#{dist}">
+																		</f:selectItems>
+																		<p:ajax listener="#{inmuebleMB.cargarUbigeo}" />
+																		
+																	</p:selectOneMenu>
+							        </td>
+							        <td width="35%">
+									<p:selectOneMenu id="tipotitularidad" style="width: 100px;  font-size: 11px;"
+																		value="#{inmuebleMB.ttitularidad}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{inmuebleMB.listaTipoTitularidad}" var="ttitularidad"
+																			itemLabel="#{ttitularidad}" itemValue="#{ttitularidad}">
+																		</f:selectItems>
+																		<p:ajax listener="#{inmuebleMB.cargaInmueble}" />
+																		
+																	</p:selectOneMenu>
+<!-- 																	<p:spacer width="1" height="22" style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" /> -->
+																	
+																	
+							        </td>
+							        <td width="20%">
+<!-- 							        	<p:commandButton icon="ui-icon-search"  value="Buscar" id="buscar"  style="text-align:left ; width:89% ;margin: 0px 33px 0px 0px;height: 24px; padding: 10px 0px 0px 0px; " /> -->
+<!-- 							        <div style="margin-top:10px;">						 -->
+																		
+<!-- 														<p:commandButton style="background: #36A6DE; color: white;padding: 14px 0px;border-radius: 7px; ;border: 0px;margin: 0px;" -->
+<!-- 						                			  					 process="@this"	 									 								  -->
+<!-- 																		 actionListener="#{inmuebleReporteMB.buscarInmuebleMatriz}" -->
+<!-- 																		 icon="ui-icon-search" -->
+<!-- 																		 update="listainmuebles" -->
+<!-- 																		 > -->
+<!-- 														</p:commandButton> -->
+														
+<!-- 														</div> -->
+
+  													<p:commandButton style="background: #36A6DE; color: white;    height: 21px;margin: 0px 85px 0px 1px;padding: 4px 0px 0px 0px;width: 38%;"
+						                			  					 process="@this" 									 								 
+																		 actionListener="#{inmuebleReporteMB.buscarInmuebleMatriz}"
+																		 icon="ui-icon-search"
+																		 update="listainmuebles"
+																		 >
+														</p:commandButton>
+							        </td>
+							        
+					         </tr>
+					       </table>
+
+					       </p:fieldset>
+					    
+					    
+					    
+					    
+<!-- 					    <h:panelGrid> -->
+<!-- 								<h:outputText value="Clave: " /> -->
+<!-- 									<p:inputMask mask="**-****-***" value="" -->
+<!-- 										style="width:90px;text-align:center;font-size:15px;"> -->
+<!-- 									</p:inputMask> -->
+<!-- 								</h:panelGrid> -->
+						
+<!-- 					    <h:panelGrid columns="1" style="margin-bottom:10px;float: right;"> -->
+<!-- 								<p:selectCheckboxMenu -->
+									
+<!-- 									label="Tipo Titularidad" style="float: right;" filter="true" -->
+<!-- 									filterMatchMode="startsWith" panelStyle="width:250px; "> -->
+<!-- 									<f:selectItem itemLabel="ADMIN. JUDICIAL" itemValue="03" /> -->
+<!-- 									<f:selectItem itemLabel="ARCHICOFRADIA" itemValue="01" /> -->
+<!-- 									<f:selectItem itemLabel="COFRADIA" itemValue="08" /> -->
+<!-- 									<f:selectItem itemLabel="CONGREGACION" itemValue="09" /> -->
+<!-- 									<f:selectItem itemLabel="PROPIEDAD" itemValue="04" /> -->
+									
+
+
+<!-- 						</p:selectCheckboxMenu> -->
+<!-- 						</h:panelGrid> -->
+					    
+					    
+					    </p:outputPanel>
+<!-- 								<p:dataTable id="listacomprobantespago" var="cp" -->
+<!-- 									rowKey="#{cp.idcomprobante}" -->
+<!-- 									filteredValue="#{cobranzaConsultaMB.filtrolistacomprobantespago}" -->
+<!-- 									value="#{cobranzaConsultaMB.listacomprobantespago}" -->
+<!-- 									selection="#{cobranzaConsultaMB.comprobantepago}" -->
+								<p:dataTable id="listainmuebles" var="inmueble"
+								    rowKey="#{inmueble.idinmueble}"
+								    value="#{inmuebleReporteMB.listainmueblematriz}"
+								    
+									selectionMode="single"
+									emptyMessage="No se ha encontrado ningún registro"
+									paginator="true"
+									style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;"
+									paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+									currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+									rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="680"
+									styleClass="ui-datatable-hor-scroll-horizontal2"
+									editable="true"
+									>
+									<p:column headerText="N° Clave"
+											filterBy="#{inmueble.clave}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inmueble.clave}" />
+										</p:column>
+									<p:column headerText="Direccion"
+											>
+											<h:outputText value="#{inmueble.direccion}" />
+										</p:column>
+
+										<p:column headerText="Departamento"
+											>
+											<h:outputText value="#{inmueble.departamento}" />
+										</p:column>
+
+										<p:column headerText="Provincia"
+											>
+											<h:outputText value="#{inmueble.provincia}" />
+										</p:column>
+
+										<p:column headerText="Distrito"
+											>
+											<h:outputText value="#{inmueble.distrito}" />
+										</p:column>
+										<p:column headerText="Titularidad"
+											>
+											<h:outputText value="#{inmueble.nombretitularidad}" />
+										</p:column>
+										<p:column headerText="Tipo Titularidad"
+											
+											>
+											<h:outputText value="#{inmueble.tipotitularidad}" />
+										</p:column>
+										<p:column headerText="Monumento Historico"
+											>
+											<h:outputText value="#{inmueble.simonumentohistorico==NULL ? 'No': (inmueble.simonumentohistorico=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Tipo Monumento Historico"
+											>
+											<h:outputText value="#{inmueble.tipomonumentohistorico}" />
+										</p:column>
+										<p:column headerText="Código Predio"
+											>
+											<h:outputText value="#{inmueble.codigopredio}" />
+										</p:column>
+										<p:column headerText="Fec. Incripcion"
+											>
+											<h:outputText value="#{inmueble.fecinscripcionregistral}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Asiento"
+											>
+											<h:outputText value="#{inmueble.asientoregistral}" />
+										</p:column>
+										<p:column headerText="Fojas"
+											>
+											<h:outputText value="#{inmueble.fojasregistral}" />
+										</p:column>
+										<p:column headerText="Tomo"
+											>
+											<h:outputText value="#{inmueble.tomoregistral}" />
+										</p:column>
+										<p:column headerText="Ficha de Partida"
+											>
+											<h:outputText value="#{inmueble.ficharegistral}" />
+										</p:column>
+										<p:column headerText="Partida Electrónica"
+											>
+											<h:outputText value="#{inmueble.partidaelectronicaregistral}" />
+										</p:column>
+										<p:column headerText="Origen Dominio"
+											>
+											<h:outputText value="#{inmueble.descripcionorigendominio}" />
+										</p:column>
+										<p:column headerText="Declaratoria de Fabrica"
+											>
+											<h:outputText value="#{inmueble.sideclaratoriafabrica==NULL ? 'No': (inmueble.sideclaratoriafabrica=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Independizacion"
+											>
+											<h:outputText value="#{inmueble.siindependizacion==NULL ? 'No': (inmueble.siindependizacion=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Gravamen"
+											>
+											<h:outputText value="#{inmueble.sigravamen==NULL ? 'No': (inmueble.sigravamen=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Cargas"
+											>
+											<h:outputText value="#{inmueble.simandascargas==NULL ? 'No': (inmueble.simandascargas=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Saneamiento"
+											>
+											<h:outputText value="#{inmueble.sisaneado==NULL ? 'No': (inmueble.sisaneado=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Material Predominante"
+											>
+											<h:outputText value="#{inmueble.materialpredominante}" />
+										</p:column>
+										<p:column headerText="Año de Construcción"
+											>
+											<h:outputText value="#{inmueble.anioconstruccion}" />
+										</p:column>
+										<p:column headerText="N° de Pisos"
+											>
+											<h:outputText value="#{inmueble.nropisos}" />
+										</p:column>
+										<p:column headerText="Area Terreno(m2)"
+											>
+											<h:outputText value="#{inmueble.areaterreno}" />
+										</p:column>
+										<p:column headerText="Area Construida(m2)"
+											>
+											<h:outputText value="#{inmueble.areaconstruida}" />
+										</p:column>
+										<p:column headerText="Plano Ubicación"
+											>
+											<h:outputText value="#{inmueble.siplanoubicacion==NULL ? 'No': (inmueble.siplanoubicacion=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Memoria Descriptiva"
+											>
+											<h:outputText value="#{inmueble.simemoriadescriptiva==NULL ? 'No': (inmueble.simemoriadescriptiva=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Fotografias"
+											>
+											<h:outputText value="#{inmueble.sifotografias==NULL ? 'No': (inmueble.sifotografias=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Tasación"
+											>
+											<h:outputText value="#{inmueble.sitasacion==NULL ? 'No': (inmueble.sitasacion=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Localización Latitud"
+											>
+											<h:outputText value="#{inmueble.latitudlocalizacion}" />
+										</p:column>
+										<p:column headerText="Localización Longitud"
+											>
+											<h:outputText value="#{inmueble.longitudlocalizacion}" />
+										</p:column>
+										<p:column headerText="Condición"
+											>
+											<h:outputText value="#{inmueble.condicion}" />
+										</p:column>
+										
+										<p:column headerText="U. Creador"
+											>
+											<h:outputText value="#{inmueble.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											>
+											<h:outputText value="#{inmueble.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											>
+											<h:outputText value="#{inmueble.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											>
+											<h:outputText value="#{inmueble.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+									
+								</p:dataTable>
+								<p:outputPanel id="outoutpanelDescarga">
+									<p:panel id="panelExportar" header="Exportar"
+										style="margin-top:15px;text-align:center;"
+										>
+										<center>
+										<h:panelGrid columns="8">
+											<p:spacer width="20" />
+											
+											     <p:commandButton style="width:20px;height:20px;" actionListener="#{inmuebleReporteMB.generarReporteInmueble('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:20px;margin-top:15px;" />
+															<p:fileDownload value="#{inmuebleReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+													<p:commandButton style="width:20px;height:20px;" actionListener="#{inmuebleReporteMB.generarReporteInmueble('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+															<p:fileDownload value="#{inmuebleReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+										 
+										
+										</h:panelGrid>
+										</center>
+									</p:panel>
+								</p:outputPanel>
+							</p:tab>
+						
+				        <p:tab title="Reportes">
+				          
+								<p:accordionPanel activeIndex="99">									
+											<p:tab title="Registrados" >
+										
+										<p:commandButton style="width:20px;height:20px;" actionListener="#{inmuebleReporteMB.generarReporte('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:20px;margin-top:15px;" />
+															<p:fileDownload value="#{inmuebleReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+													<p:commandButton style="width:20px;height:20px;" actionListener="#{inmuebleReporteMB.generarReporte('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+															<p:fileDownload value="#{inmuebleReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+											
+											</p:tab>
+											
+											
+								</p:accordionPanel>
+								
+				        </p:tab>
+
+
+
+				    </p:tabView>
+				   </h:form>
+					</div>
+				
+				
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>
+	  <title>Beneficencia de Lima - SGI</title>
+	</h:head>
+	
+	<h:body>
+	      <ui:composition template="./paginaMaestra.xhtml">
+	      	 <ui:define name="content">
+	      	 	<div class="contenidoPrincipal_FondoPrincipal">
+	      	 		<div class="contenidoPrincipal_fondoIdentificador">
+	      	 		   <!-- TITULO SBCONTENIDO -->
+	      	 		   <div class="administrador_tipocambioIcono"></div>
+	      	 		   <div class="contenidoPrincipal_SubContenido">
+	      	 		   	<label class="contenidoPrincipal_lblTituloSubContenido">Administracion</label><br/>
+	      	 		    <label class="contenidoPrincipal_lblSubTituloSubContenido">Interes Mora</label>
+	      	 		   </div>
+	      	 		</div>
+	      	 		<div class="contenidoPrincipal_SubFondo" >
+	      	 		    <div class="administrador_tipocambioIconoInterior"></div>
+<!-- 	      	 		    <div id="lblSubtitulo" -->
+<!-- 						class="contenidoPrincipal_subFondo_lblTitulox"> -->
+						<div class="contenidoPrincipal_Subtitulo_lblSubtitulos">
+						<h:form id="formTituloTipoInteres">
+						<h:outputText value="Tipo Interes :" />
+						<p:commandLink id="chartBtn" style="margin-right:100px;">
+									<h:outputText style="color:#029c05"
+										value=" #{interesmoraMB.tipointeresmora.descripcion}" />
+								</p:commandLink>
+<!-- 						</div> -->
+						<p:overlayPanel id="chartPanel" for="chartBtn" hideEffect="fade">
+									<div>
+										<h:outputLabel value="Cambiar Tipo Interes:" />
+										<br />
+										<p:selectOneMenu id="cbxTipoInteresMora" style="width: 190px;"
+											value="#{interesmoraMB.tipoInteresSelected}" effect="fade">
+											<f:selectItem itemLabel="Seleccione Tipo Interes" itemValue="0" />
+											<f:selectItems value="#{interesmoraMB.listaTipoTasaInteres}"
+												var="tipointeres" itemLabel="#{tipointeres.descripcion}"
+												itemValue="#{tipointeres.id_tipointeres}" />
+											<p:ajax listener="#{interesmoraMB.actualizarTipoDeTasa}" update=":formTituloTipoInteres,:formNuevaTasa,:frmTipoInteres,:frmTablaTipoInteres,:frmMaestra:listaMensajes,:frmInfoTipoTasa"
+												  />
+										</p:selectOneMenu>
+
+									</div>
+								</p:overlayPanel>
+						 </h:form>
+						</div>
+						<div class="contenidoPrincipal_fondo_formulario">
+						   <!-- CONTENIDO MODIFICABLE -->
+							<div class="mant_subFondo">
+							<div class="mant_subFondo_formulario">
+							
+							 <h:form id="frmTipoInteres">
+							      <div class="fila_tipointeres" style="margin-top:10px;">
+										<div class="tipo_cambio">Fecha de Registro:</div>
+										
+										<p:calendar value="#{interesmoraMB.interesMoraSelected.fec_reg}" pattern="dd-MM-yyyy" navigator="true" showOn="button"/>
+										<p:commandButton value="Consultar" actionListener="#{interesmoraMB.consultaTasaInteres}"
+										update=":frmTipoInteres,:frmMaestra:listaMensajes"
+										/>
+										<p:commandButton value="Nuevo" actionListener="#{interesmoraMB.habilitarVentanaNuevaTasaInteres}"
+										update=":frmTipoInteres,:frmMaestra:listaMensajes,:formNuevaTasa"
+										/>
+									</div>
+									<br/>
+									<br/>
+							         <div style="padding: 0px 0px 0px 96px;">
+							         <p:outputLabel value="#{interesmoraMB.tipointeresmora.descripcion} PROMEDIO DEL DIA ">
+							         <h:outputText value="#{interesmoraMB.tInteresActual.fec_reg}" >
+		               						  <f:convertDateTime pattern="dd/MM/yyyy" />
+		               						  </h:outputText>
+							         </p:outputLabel> 
+							      </div>
+							      <div class="fila_tipointeres" style="margin-top:10px;">
+										<div class="tipo_cambio">Moneda Nacional(TAMN)</div>
+										<div>
+										    <p:inputText value="#{interesmoraMB.tInteresActual.tamn}" readonly="true" />
+										</div>									
+									</div>
+									<div class="fila_tipointeres" style="margin-top:10px;">
+										<div class="tipo_cambio">Moneda Extranjera(TAMEX)</div>
+										<div>
+										    <p:inputText value="#{interesmoraMB.tInteresActual.tamex}" readonly="true" />
+										</div>									
+									</div>
+									
+									
+							 </h:form>
+							 <h:form id="formNuevaTasa">
+							    <p:confirmDialog message="¿Desea Guardar el Interes de Tasa?"
+										header="#{interesmoraMB.actualizado? 'Actualizar':'Registrar'} Tasa de Interes" severity="alert"
+										widgetVar="dlgConfirmarRegistroTasaInteres">
+ 										<center>
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":formNuevaTasa,:frmTipoInteres,:frmTablaTipoInteres,:frmMaestra:listaMensajes,:frmInfoTipoTasa"
+											actionListener="#{interesmoraMB.grabarInteresMora}"
+											oncomplete="dlgConfirmarRegistroTasaInteres.hide();dlgNuevaTasaInteres.hide();" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											oncomplete="dlgConfirmarRegistroTasaInteres.hide()"
+											icon="icon-cancel" />
+											</center>
+									</p:confirmDialog>
+							 
+								<p:dialog header=" #{interesmoraMB.actualizado? 'Actualizar':'Registrar'}  Tasa de Interes" width="auto"
+									height="auto" closable="true" resizable="false"
+									widgetVar="dlgNuevaTasaInteres">
+									<h:panelGrid columns="2" cellspacing="10">
+
+										<h:outputText value="Tasa Moneda Nacional (TAMN):" style="color: #4C4C4C;margin-left:15px;" />
+										<h:inputText value="#{interesmoraMB.interesMora.tamn}" type="number"  oninput="limitDecimalPlaces(event, 2)" onkeypress="return isNumberKey(event)"
+											 />
+
+
+										<h:outputText value="Tasa Moneda Extranjera (TAMEX):" style="color: #4C4C4C;margin-left:15px;" />
+
+										<h:inputText value="#{interesmoraMB.interesMora.tamex}" onkeypress="return isNumberKey(event)"
+											/>
+										<h:outputText value="Fecha de Registro :"
+											style="color: #4C4C4C;margin-left:15px;" />
+										<p:calendar pattern="dd/MM/yyyy" locale="es"
+											styleClass="anchoCalendar" navigator="true"
+											value="#{interesmoraMB.interesMora.fec_reg}"
+											showOn="button" />
+									</h:panelGrid>
+									<br/>
+												
+												<center>
+												<p:commandButton value="Aceptar" actionListener="#{interesmoraMB.validarDatosInteres}" ajax="true" icon="icon-save" update=":frmMaestra:listaMensajes" />
+												<p:spacer width="10"/>
+												<p:commandButton value="Cancelar" onclick="dlgNuevaTasaInteres.hide();" icon="icon-cancel" />
+												</center>
+
+
+								</p:dialog>
+							</h:form>
+								<h:form id="frmTablaTipoInteres">
+							   <div class="mant_tbTipoCambio">
+							   <p:dataTable id="tbTipoInteres" var="tipoint"
+											value="#{interesmoraMB.listaTasaInteres}"
+											rowKey="#{tipoint.id_interes}"
+											selection="#{interesmoraMB.tInteresMora}" selectionMode="single"
+											paginator="true"
+											style="width:435px; font-size: 10px;  text-align:center;"
+											paginatorTemplate="Reg. por p&aacute;gina: {RowsPerPageDropdown}  &nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp;   {CurrentPageReport}"
+											currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+											rowsPerPageTemplate="10,15,20" rows="10" rowIndexVar="index"
+											paginatorPosition="top" scrollable="true" 
+											scrollWidth="435">
+											<p:ajax event="rowSelect"
+												listener="#{interesmoraMB.onRowSelect}"
+												update=":frmTipoInteres" />
+                                            <p:column headerText="#"
+                                          		  >
+                                            		<h:outputText value="#{index+1}" />
+                                            </p:column>
+											<p:column headerText="Tasa Mn"
+												style="width: 60px;">
+												<h:outputText value="#{tipoint.tamn}" />
+											</p:column>
+											<p:column headerText="Tasa MExt"
+												style="width: 60px;">
+												<h:outputText value="#{tipoint.tamex}" />
+											</p:column>
+											<p:column headerText="Del día"
+												style="width: 60px;">
+												<h:outputText value="#{tipoint.fec_reg}">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</p:column>
+											
+											<p:column headerText="Usuario Creador" style="width: 120px; ">
+												<h:outputText value="#{tipoint.usr_cre}" />
+											</p:column>
+											<p:column headerText="Fecha creacion" style="width:100px;">
+												<h:outputText value="#{tipoint.fec_cre}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="GMT-5" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="U. Mod." style="width: 120px; ">
+												<h:outputText value="#{tipoint.usr_mod}" />
+											</p:column>
+											<p:column headerText="Fecha mod." style="width:100px;">
+												<h:outputText value="#{tipoint.fec_mod}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="GMT-5" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="" style="width: 80px; ">
+											      <p:commandButton value="Modificar"
+											      action="#{interesmoraMB.obtenerDatosSeleccionado(tipoint.id_interes)}"
+											      update=":formNuevaTasa,:frmMaestra:listaMensajes"
+											      >
+											      
+											      </p:commandButton>
+											</p:column>
+										</p:dataTable>
+							 
+							   </div>
+							 </h:form>
+						
+							</div>
+							<h:form id="frmInfoTipoTasa">
+								<div class="paginaInterior2" style="height: auto;">
+
+<!-- 									<div class="subcontenidoInfo_Cabecera"> -->
+<!-- 										<div class="subcontenidoInfo_logoTitulo" /> -->
+<!-- 										<div class="subcontenidoInfo_descripcionTitulo"> -->
+<!-- 											Informaci&oacute;n</div> -->
+<!-- 									</div> -->
+                                    <div class="subcontenidoInfo_Cabecera">
+										<div class="subcontenidoInfo_logoTitulo" />
+										<div class="subcontenidoInfo_descripcionTitulo" >
+											 #{interesmoraMB.tipointeresmora.descripcion}
+											
+											</div>
+									</div>
+
+									<div class="subcontenidoInfo_detContenidoFondo" style="height: auto;">
+
+
+										<div class="descripcionTipoCambio">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Tasa Moneda Nacional: " />
+											<br />
+										</div>
+										<div class="valorTipoCambio" >
+											<h:outputText value=" #{interesmoraMB.tInteresActual.tamn} %" style="margin-left:25px;"/>
+										</div>
+										<div class="descripcionTipoCambio">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Tasa Moneda Extranjera: " />
+											<br />
+										</div>
+										<div class="valorTipoCambio" >
+											<h:outputText value=" #{interesmoraMB.tInteresActual.tamex} %" style="margin-left:25px;"/>
+										</div>
+									</div>
+									<div class="subcontenidoInfo_detUsuario">
+
+										<div class="detalleTopfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value="Del dia :" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value="#{interesmoraMB.tInteresActual.fec_reg}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</div>
+
+
+
+									</div>
+
+								</div>
+
+							</h:form>
+						</div>
+						</div>
+	      	 		</div>
+	      	 		
+	      	 	</div>
+	      	 	<script type="text/javascript">
+				  //<![CDATA[
+		     	function convertir_a_mayuscula(elemento) {
+					//alert("metodo");
+					elemento.value = elemento.value.toUpperCase();
+	 		   		//e.value = e.value.toUpperCase();
+				}
+		     	function validarKey(evt){
+		     	    
+		     	    // code is the decimal ASCII representation of the pressed key.
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57) { // is a number.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+				function validarLetrasNumeros(evt){
+		     	    
+		     	    // code is the decimal ASCII representation of the pressed key.
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57 || (code>=65 && code<=90) || (code>=97 && code<=122)) { // es num y letras.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+				function limitDecimalPlaces(e, count) {
+					  if (e.target.value.indexOf('.') == -1) {
+						   return; 
+						   }
+					  if ((e.target.value.length - e.target.value.indexOf('.')) > count) {
+					    e.target.value = parseFloat(e.target.value).toFixed(count);
+					  }
+					}
+
+					function isNumberKey(evt)
+					{  
+						
+					  var charCode = (evt.which) ? evt.which : evt.keyCode;
+					  if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+						  return false;
+						  }else{
+							  limitDecimalPlaces(evt, 2);
+							  return true;
+							  }
+					    
+
+					 
+					}
+		     	
+		  	   //]]>
+		     	</script>
+	      	 </ui:define>	      
+	      </ui:composition>
+	</h:body>
+</html>

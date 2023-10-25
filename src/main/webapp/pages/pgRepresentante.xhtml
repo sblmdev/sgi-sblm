@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript">
+		// 		function limpiarForm() {
+		// 			document.getElementById("frmRepresentante").reset();
+		// 		}
+	</script>
+
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="administrador_paginasIcono"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Mantenimiento</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Representante</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+
+					<div class="administrador_paginasIconoSubcont"></div>
+					<div id="lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">Nuevo</div>
+					<div class="contenidoPrincipal_fondo_formulario">
+						<!-- CONTENIDO MODIFICABLE -->
+						<div class="administrador_paginasContenedor">
+
+
+							<div class="paginaInterior1">
+								<h:form>
+									<div class="btnNuevoRegistro">
+										<p:commandLink update=":frmRepresentante"
+											action="#{representanteMB.limpiarRegistro}" style="margin-right:20px;">
+											<p:graphicImage
+												value="/resources/images/perfil/nuevo_mas.png"
+												alt="Limpiar formulario" title="limpiar" />
+										</p:commandLink>
+									</div>
+								</h:form>
+								<h:form id="frmRepresentante">
+									<p:growl id="growlRegitrar" showDetail="true" sticky="false"
+										life="3000" />
+										
+									<h:panelGrid columns="2" styleClass="filaDescripcionPagina">
+										<h:outputLabel class="lblDescripcion" style="width:100px; margin-top:5px;" value="Nombres:" />
+										<p:inputText id="idnombres" styleClass="txtDescripcion"
+											value="#{representanteMB.representante.nombres}" />
+											
+										<h:outputLabel class="lblDescripcion" style="width:100px; margin-top:5px;" value="Apellidos:" />
+										<p:inputText id="idapellidos" styleClass="txtDescripcion"
+											value="#{representanteMB.representante.apellidos}" />
+											
+										<h:outputLabel class="lblDescripcion" style="width:100px; margin-top:5px;" value="Ruc:" />
+										<p:inputText id="idruc" styleClass="txtDescripcion"
+											value="#{representanteMB.representante.ruc}" />
+											
+										<h:outputLabel class="lblDescripcion" style="width:100px; margin-top:5px;" value="Dni:" />
+										<p:inputText id="iddni" styleClass="txtDescripcion"
+											value="#{representanteMB.representante.dni}" />
+									</h:panelGrid>
+									
+								
+									
+									<div class="filaBotonModulo"> 
+										<p:commandButton value="Guardar" onclick="validacionRepresentante();"
+											/>
+									</div>
+								</h:form>
+								<h:form id="frmdlgGuardarPagina">
+
+									<p:confirmDialog message="¿Desea Guardar Representante?"
+										header="Registro Representante" severity="alert"
+										widgetVar="dlgRegistrarRepresentante">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTablaPaginas:tbPagina , :frmRepresentante,:frmMaestra,:frmPaginaInformacion"
+											actionListener="#{representanteMB.grabarRepresentante}"
+											oncomplete="dlgRegistrarRepresentante.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmRepresentante "
+											oncomplete="dlgRegistrarRepresentante.hide()" icon="icon-cancel" />
+									</p:confirmDialog>
+								</h:form>
+
+								<h:form id="frmTablaPaginas">
+									<div class="paginaTabla">
+										<p:dataTable id="tbPagina" var="representante"
+											value="#{representanteMB.listaRepresentantes}"
+											rowKey="#{representante.idrepresentante}"
+											selection="#{representanteMB.representante}" selectionMode="single"
+											paginator="true" stickyHeader="true"
+											style="width:435px; font-size: 10px;  text-align:center;"
+											paginatorTemplate="Reg. por p&aacute;gina: {RowsPerPageDropdown}  &nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp;   {CurrentPageReport}"
+											currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+											rowsPerPageTemplate="10,15,20" rows="10"
+											paginatorPosition="top" scrollable="true" 
+											scrollWidth="435" emptyMessage="No existen registros">
+											<p:ajax event="rowSelect" 
+												update=":frmRepresentante" />
+
+											<p:column headerText="Nombres"
+												style="width: 80px;">
+												<h:outputText value="#{representante.nombrescompletos}" />
+											</p:column>
+											
+											<p:column headerText="DNI" style="width: 120px; ">
+												<h:outputText value="#{representante.dni}" />
+											</p:column>
+											
+											<p:column headerText="Ruc" style="width: 120px; ">
+												<h:outputText value="#{representante.ruc}" />
+											</p:column>
+											<p:column headerText="Usuario Creador" style="width: 120px; ">
+												<h:outputText value="#{representante.usuariocreador}" />
+											</p:column>
+											<p:column headerText="Fec. Creación" style="width: 120px; ">
+												<h:outputText value="#{representante.fechacreacion}" >
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</p:column>
+											
+<!-- 											<p:column headerText="Usuario Creador" style="width: 120px; "> -->
+<!-- 												<h:outputText value="#{ig.usrcre}" /> -->
+<!-- 											</p:column> -->
+<!-- 											<p:column headerText="Fecha creacion" style="width:100px;"> -->
+<!-- 												<h:outputText value="#{ig.feccre}"> -->
+<!-- 													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" /> -->
+<!-- 												</h:outputText> -->
+<!-- 											</p:column> -->
+<!-- 											<p:column headerText="Usuario Modificador" style="width: 120px; "> -->
+<!-- 												<h:outputText value="#{ig.usrmod}" /> -->
+<!-- 											</p:column> -->
+<!-- 											<p:column headerText="Fecha modificaci&oacute;n" style="width:100px;"> -->
+<!-- 												<h:outputText value="#{ig.fecmod}"> -->
+<!-- 													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" /> -->
+<!-- 												</h:outputText> -->
+<!-- 											</p:column> -->
+											
+											<p:column width="15">
+
+												<p:commandButton oncomplete="dlgEliminar.show();"
+													style="margin-left:-4px;"
+													update=":frmEliminar, :frmRepresentante" icon="icon-delete"
+													title="Eliminar">
+													<f:setPropertyActionListener value="#{representante}"
+														target="#{representanteMB.representante}" />
+												</p:commandButton>
+
+											</p:column>
+										</p:dataTable>
+									</div>
+									
+								</h:form>
+								<h:form id="frmEliminar">
+									<p:growl id="growlEliminar" showDetail="true" sticky="false"
+										life="4000" />
+									<p:confirmDialog id="dlgEliminar"
+										message="¿Desea eliminar este registro?"
+										header="Eliminar IGV" severity="alert"
+										widgetVar="dlgEliminar">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTablaPaginas:tbPagina , growlEliminar,  :frmMaestra,:frmPaginaInformacion"
+											actionListener="#{representanteMB.eliminarRepresentante}"
+											oncomplete="dlgEliminar.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmTablaPaginas:tbPagina "
+											oncomplete="dlgEliminar.hide()" icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+							</div>
+							<h:form id="frmPaginaInformacion">
+								<div class="paginaInterior2">
+
+									<div class="subcontenidoInfo_Cabecera">
+										<div class="subcontenidoInfo_logoTitulo" />
+										<div class="subcontenidoInfo_descripcionTitulo">
+											Informaci&oacute;n</div>
+									</div>
+
+
+									<div class="subcontenidoInfo_detContenidoFondo">
+
+										<div class="subcontenidoInfo_Numero2">
+											<h:outputText styleClass="informacion6"
+												value="#{representanteMB.nrorepresentantes}" />
+										</div>
+										<div class="subcontenidoInfo_textoconectadosfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Registros" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Creados" />
+										</div>
+									</div>
+
+									<div class="subcontenidoInfo_detUsuario">
+
+										<div class="detalleTopfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value="&Uacute;ltimo representante creado" />
+											<br />
+
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila2"
+												value="#{representanteMB.ultimoRepresentante.nombrescompletos}" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila3"
+												value="#{representanteMB.ultimoRepresentante.fechacreacion}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</div>
+
+									</div>
+								</div>
+
+							</h:form>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

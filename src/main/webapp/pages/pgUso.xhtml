@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript">
+		// 		function limpiarForm() {
+		// 			document.getElementById("frmFormuPaginas").reset();
+		// 		}
+	</script>
+
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="administrador_paginasIcono"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Mantenimiento</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Uso</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+
+					<div class="administrador_paginasIconoSubcont"></div>
+					<div id="lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">Uso</div>
+					<div class="contenidoPrincipal_fondo_formulario">
+						<!-- CONTENIDO MODIFICABLE -->
+						<div class="administrador_paginasContenedor">
+
+
+							<div class="paginaInterior1">
+								<h:form>
+									<div class="btnNuevoRegistro">
+										<p:commandLink update=":frmFormuPaginas"
+											action="#{usoMB.limpiarCampos}" style="margin-right:20px;">
+											<p:graphicImage
+												value="/resources/images/perfil/nuevo_mas.png"
+												alt="Limpiar formulario" title="limpiar" />
+										</p:commandLink>
+									</div>
+								</h:form>
+								<h:form id="frmFormuPaginas">
+									<p:growl id="growlRegitrar" showDetail="true" sticky="false"
+										life="3000" />
+									<div class="filaDescripcionPagina">
+										<h:outputLabel class="lblDescripcion" style="width:100px;" value="Descripcion Uso:" />
+										<p:inputText styleClass="txtDescripcion"
+											id="iddescripcion"
+											value="#{usoMB.uso.descripcion}" />
+									</div>
+									
+									<div class="filaBotonModulo">
+										<p:commandButton value="Guardar"
+											oncomplete="validacionMantenimientos();" id="btnregistroPagina" />
+									</div>
+								</h:form>
+								<h:form id="frmdlgGuardarPagina">
+
+									<p:confirmDialog message="¿Desea Guardar Uso?"
+										header="Registro Uso" severity="alert"
+										widgetVar="dlgRegistrarPagina">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTablaPaginas:tbPagina , :frmFormuPaginas,:frmMaestra,:frmPaginaInformacion"
+											actionListener="#{usoMB.registrarUso}"
+											oncomplete="dlgRegistrarPagina.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmFormuPaginas "
+											oncomplete="dlgRegistrarPagina.hide()" icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+
+								<h:form id="frmTablaPaginas">
+									<div class="paginaTabla">
+										<p:dataTable id="tbPagina" var="us"
+											value="#{usoMB.usos}"
+											rowKey="#{us.iduso}"
+											selection="#{usoMB.uso}" selectionMode="single"
+											paginator="true" stickyHeader="true"
+											style="width:435px; font-size: 10px;  text-align:center;"
+											paginatorTemplate="Reg. por p&aacute;gina: {RowsPerPageDropdown}  &nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp;   {CurrentPageReport}"
+											currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+											rowsPerPageTemplate="10,15,20" rows="10"
+											paginatorPosition="top" scrollable="true" 
+											scrollWidth="435">
+											<p:ajax event="rowSelect" listener="#{usoMB.onRowSelect}"
+												update=":frmFormuPaginas" />
+
+											<p:column headerText="Descripci&oacute;n Uso"
+												style="width: 80px;">
+												<h:outputText value="#{us.descripcion}" />
+											</p:column>
+											
+										<p:column headerText="Usuario Creador" style="width: 120px; ">
+												<h:outputText value="#{us.usrcre}" />
+											</p:column>
+											<p:column headerText="Fecha creacion" style="width:100px;">
+												<h:outputText value="#{us.feccre}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="Usuario Modificador" style="width: 120px; ">
+												<h:outputText value="#{us.usrmod}" />
+											</p:column>
+											<p:column headerText="Fecha modificaci&oacute;n" style="width:100px;">
+												<h:outputText value="#{us.fecmod}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+												</h:outputText>
+											</p:column>
+											
+											<p:column width="15">
+
+												<p:commandButton oncomplete="dlgEliminar.show();"
+													style="margin-left:-4px;"
+													update=":frmEliminar, :frmFormuPaginas" icon="icon-delete"
+													title="Eliminar">
+													<f:setPropertyActionListener value="#{us}"
+														target="#{usoMB.usocapturado}" />
+
+												</p:commandButton>
+
+											</p:column>
+										</p:dataTable>
+									</div>
+									
+								</h:form>
+								<h:form id="frmEliminar">
+									<p:growl id="growlEliminar" showDetail="true" sticky="false"
+										life="4000" />
+									<p:confirmDialog id="dlgEliminar"
+										message="¿Desea eliminar este registro?"
+										header="Eliminar Uso" severity="alert"
+										widgetVar="dlgEliminar">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTablaPaginas:tbPagina , growlEliminar,  :frmMaestra,:frmPaginaInformacion"
+											actionListener="#{usoMB.eliminarUso}"
+											oncomplete="dlgEliminar.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmTablaPaginas:tbPagina "
+											oncomplete="dlgEliminar.hide()" icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+							</div>
+							<h:form id="frmPaginaInformacion">
+								<div class="paginaInterior2">
+
+									<div class="subcontenidoInfo_Cabecera">
+										<div class="subcontenidoInfo_logoTitulo" />
+										<div class="subcontenidoInfo_descripcionTitulo">
+											Informaci&oacute;n</div>
+									</div>
+
+
+									<div class="subcontenidoInfo_detContenidoFondo">
+
+										<div class="subcontenidoInfo_Numero2">
+											<h:outputText styleClass="informacion6"
+												value="#{usoMB.numUsos}" />
+										</div>
+										<div class="subcontenidoInfo_textoconectadosfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Usos" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Creadas" />
+										</div>
+									</div>
+
+									<div class="subcontenidoInfo_detUsuario">
+
+										<div class="detalleTopfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value="&Uacute;ltimo registro creado" />
+											<br />
+
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila2"
+												value="#{usoMB.resultadouso.descripcion}" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila3"
+												value="#{usoMB.resultadouso.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</div>
+
+									</div>
+								</div>
+
+							</h:form>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,177 @@
+root { 
+    display: block;
+}
+
+body {
+    background: url(../images/principal/bg-intro.png);
+    padding: 0.5% 0.5% 0.5% 0.5%;
+    font-family: arial;
+    font-size: 11px;
+    color:#000000;
+    font-weight:bold;}
+}
+
+img {
+    width: 18px;
+    height: 18px;
+}
+
+a:link {
+    text-decoration:none;
+}
+
+#cuerpo {
+    position: absolute;
+    width: 97.5%;
+}
+
+#titulo {
+    font-size: 16px;
+    font-weight: bold;
+    background: #FAFAFA;
+    background: -webkit-gradient(linear,left top,left bottom,from(#FAFAFA),to(#eaeaea));
+    background: -moz-linear-gradient(left top,left bottom,from(#FAFAFA),to(#eaeaea));
+}
+
+#subTitulo {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#contenedor {
+    position: relative;
+    clear: both;
+    margin-bottom: 10px;
+}
+
+#bloqueIzquierda {
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+#bloqueDerecha {
+    float: right;
+    margin-right: 5px;
+}
+
+#prompt {
+    padding-left: 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#label {
+    padding-left: 5px;
+    padding-right: 5px;
+    float: left;
+}
+
+#marcador {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: bold;
+    color: blue;
+    float: left;
+}
+
+.boton {
+    width: 65px;
+    height: 30px;
+    border: 1px solid;
+    font-weight: bold;
+}
+
+.normal {
+    background-color: #F4F4F4;
+    border-color: #C0C0C0;
+    color: #5F3333;
+}
+
+.normal:hover { 
+    color: #3399CC;
+    border-color: #3399CC;
+}
+
+.facebook {
+    background-color: #3B5CA8;
+    border-color: #294487;
+    color: white;
+}
+
+.facebook:hover { 
+    background-color: #3D82F0; 
+    border-color: #3D82F0;
+    color: white;
+}
+
+.callBack {
+    background-color: #CA3B2A;
+    border-color: #EB4033;
+    color: white;
+}
+
+.callBack:hover { 
+    background-color: #EB4033;
+    border-color: #EB4033;
+    color: white;
+}
+
+.grabar {
+    background-color: #0A8BE9;
+    border-color: #0295F3;
+    color: white;
+}
+
+.grabar:hover { 
+    background-color: #09A7F5;
+    border-color: #0295F3;
+    color: white;
+}
+
+.cerrar {
+    background-color: #01AD05;
+    border-color: #378C37;
+    color: white;
+}
+
+.cerrar:hover { 
+    background-color: #42C215;
+    border-color: #378C37;
+    color: white;
+}
+
+.pausa {
+    background-color: #F77F00;
+    color: white;
+    border-color: #EB4033;
+}
+
+.pausa:hover { 
+    background-color: #F06602;
+    border-color: #EB4033;
+    color: white;
+}
+
+.plus {
+    background-color: #F77F00;
+    color: white;
+    border-color: #EB4033;
+}
+
+.plus:hover { 
+    background-color: #F06602;
+    border-color: #EB4033;
+    color: white;
+}
+
+#ventanaChat {
+    clear: both; 
+    width: 297px; 
+    height: 200px; 
+    border: 1px solid; 
+    border-color: #3399CC;
+    overflow: auto;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}

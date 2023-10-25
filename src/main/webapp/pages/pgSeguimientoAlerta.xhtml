@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<title>SBLM</title>
+</h:head>
+<h:body>
+
+
+
+	<!-- PANEL REGISTRO -->
+	<div id="idDivCarteraRegistro" class="recau_panelPendientes">
+		<h:form id="frmdlgselecContra">
+
+			<div class="filaDatoLargosCorto" style="margin: 20px 0 20px 50px;">
+				<div>
+					<h:outputText styleClass="lblDatos"
+						style="width:70px; font-size:12px;" value="Contrato:" />
+					<p:selectOneMenu styleClass="cbxDatos" id="idContratoAlerta"
+						onchange="limpiarvalidacion()" panelStyle="width:150px"
+						style="width:160px" filter="true" filterMatchMode="startsWith"
+						value="#{alertaMB.contrato.idcontrato}">
+						<f:selectItem itemLabel="Seleccione Contrato" itemValue="0" />
+						<f:selectItems value="#{ccMB.listContrato}" var="co"
+							itemValue="#{co.idcontrato}" itemLabel="#{co.nrocontrato}">
+						</f:selectItems>
+					</p:selectOneMenu>
+
+				</div>
+
+			</div>
+			<div class="filaDatoLargosCorto" style="margin: 20px 0 0 0;">
+				<h:outputText style="float:left;margin-left:95px;"
+					value="Agregar alerta &nbsp;" />
+				<p:commandLink oncomplete="validacionSeleccionContratoSeg();"
+					style="margin-left:0px;"
+					>
+					<p:graphicImage
+						value="/resources/images/cobranza/icon_registro.png"
+						alt="Agregar alerta" title="Agregar alerta" />
+				</p:commandLink>
+			</div>
+
+
+
+		</h:form>
+		<h:form id="frmTblAlerta">
+			<div class="dgaiMonitoreo_detalle">
+				<p:dataTable id="dtbAlertaSeg" var="aler"
+					value="#{alertaMB.alertas}"
+					filteredValue="#{alertaMB.filtroAlertas}"
+					rowKey="#{exp.idexportardato}" widgetVar="mifiltroListar"
+					stickyHeader="true" paginator="true"
+					emptyMessage="NO EXISTEN REGISTROS"
+					style="width:690px; font-size: 10px;  margin: 0px 0px 0px 0px;"
+					paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+					rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="690"
+					styleClass="ui-datatable-hor-scroll">
+					<f:facet name="header">
+						<p:panel>
+							<h:outputText value="Filtrar Datos:" />
+							<p:inputText id="globalFilter" onkeyup="mifiltroListar.filter()"
+								style="width:150px; margin-left: 10px;" />
+						</p:panel>
+					</f:facet>
+
+					<p:column headerText="Fecha Ejecucion"
+						filterBy="#{aler.fechaejecucion}"
+						filterStyle="display: none; visibility: hidden;">
+						<h:outputText value="#{aler.fechaejecucion}" >
+						<f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Correo"
+						filterBy="#{aler.usuario.emailusr}"
+						filterStyle="display: none; visibility: hidden;">
+						<h:outputText value="#{aler.usuario.emailusr}" />
+							
+					</p:column>
+					<p:column headerText="Destinatario"
+						filterBy="#{aler.usuario.nombrescompletos}"
+						filterStyle="display: none; visibility: hidden;">
+						<h:outputText
+							value="#{aler.usuario.nombrescompletos}" />
+					</p:column>
+					<p:column headerText="Envio de notificacion"
+						filterBy="#{aler.envionotificacion?'Sí' :'No'}"
+						filterStyle="display: none; visibility: hidden;">
+						<h:outputText value="#{aler.envionotificacion?'Sí' :'No'}" />
+					</p:column>
+					<p:column headerText="Envio de correo"
+						filterBy="#{aler.envioemail?'Sí' :'No'}"
+						filterStyle="display: none; visibility: hidden;">
+						<h:outputText value="#{aler.envioemail?'Sí' :'No'}"/>
+					</p:column>
+					<p:column headerText="Estado"
+						filterBy="#{aler.estado?'Enviado' :'Pendiente'}"
+						filterStyle="display: none; visibility: hidden;">
+						<h:outputText value="#{aler.estado?'Enviado' :'Pendiente'}"/>
+					</p:column>
+				
+				</p:dataTable>
+
+			</div>
+
+		</h:form>
+		<h:form id="frmDlgAlert">
+		<p:growl id="msjalertaenvio" showDetail="true" sticky="false"
+										life="4000" />
+			<p:dialog header="ALERTAS" closable="true" closeOnEscape="true"
+				resizable="false" widgetVar="dlgAlertaSeguimiento" width="800"
+				height="350"
+				style="border-width:9px;border-style:solid;  border-color:#ffc600; ">
+				
+				<h:form id="frmEnvioAlertaSeg">
+					
+					<div class="alertaBody">
+						
+						<div class="alertaLeft">
+									<div class="filaDatoLargosCorto">
+											<h:outputText styleClass="lblDatos" style="width:70px; font-size:12px;" value="Destinatarios:" />
+									</div>
+									<div class="">
+										<p:pickList id="pickList" value="#{alertaMB.users}" var="usu"
+											itemLabel="#{usu.nombrescompletos}" itemValue="#{usu}"  addLabel="Añadir"
+											addAllLabel="Añadir todos" removeLabel="Quitar" 
+											removeAllLabel="Quitar todos"    converter="#{primeFacesPickListConverter}"
+											requiredMessage="POr lo menos debe seleccionar un Usario"
+						                    showCheckbox="true"   
+						                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >
+											<p:ajax event="transfer" listener="#{alertaMB.capturarUsuarios}" />
+											<f:facet name="sourceCaption">
+												<h:outputLabel value="Lista Usuarios" />
+											</f:facet>
+											<f:facet name="targetCaption">
+												<h:outputLabel value="Lista usuarios añadidos" />
+											</f:facet>
+										</p:pickList>
+								 </div>
+						</div>
+						
+						<div class="alertaRight">
+									<h:panelGrid columns="1">
+											<h:outputText styleClass="lblDatos" value="Mensaje:" />
+										
+											<p:inputTextarea id="idmsj" counter="contadorSMS" maxlength="450"
+												value="#{alertaMB.alerta.mensaje}" rows="3" cols="50" autoResize="false"
+												counterTemplate="Caracteres faltantes: {0} " style="width: 250px" />
+											<h:outputText id="contadorSMS" />
+											
+											<br/>
+									
+											<h:outputText styleClass="" value="Fecha:" />
+											<p:calendar styleClass="txtDatos"
+											value="#{alertaMB.alerta.fechaejecucion}"
+											pattern="MM/dd/yyyy HH:mm" />
+											<br/>
+									
+									</h:panelGrid>
+									
+									<br/>
+							
+									
+									<h:panelGrid columns="2">
+							   		<p:selectBooleanCheckbox id="segAlertaNoti"
+									value="#{alertaMB.alerta.envionotificacion}"> 
+
+									</p:selectBooleanCheckbox>
+									<h:outputText style="margin:0 0 3px 5px;" value="Notificacion" />
+							   		</h:panelGrid>
+							   		
+							   		<h:panelGrid columns="2">
+							   		<p:selectBooleanCheckbox id="segAlertaEmail"
+									value="#{alertaMB.alerta.envioemail}">
+
+									</p:selectBooleanCheckbox>
+									<h:outputText style="margin:0 0 3px 5px;" value="Email" />
+									</h:panelGrid>
+									<br/>
+									
+									<p:commandButton value="Registrar" oncomplete="dlgAlertaSeguimiento.hide()"
+												actionListener="#{alertaMB.registrarAlerta}" update=":frmDlgAlert:msjalertaenvio,:frmTblAlerta:dtbAlertaSeg" />
+							
+							
+						
+						</div>
+					
+					</div>
+				
+
+				</h:form>
+
+			</p:dialog>
+
+		</h:form>
+	</div>
+
+
+
+
+</h:body>
+</html>

@@ -1,0 +1,1358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+		
+				<div class="contenidoPrincipal_FondoPrincipal">
+						<div class="contenidoPrincipal_fondoIdentificador">
+							<!-- TITULO SUBCONTENIDO -->
+							<div class="recaudacion_iconoTitulo"></div>
+							<div class="contenidoPrincipal_SubContenido">
+								<label class="contenidoPrincipal_lblTituloSubContenido">Arrendamiento</label><br/>
+								<label class="contenidoPrincipal_lblSubTituloSubContenido">Reportes</label>
+							</div>
+						</div>
+			
+			
+					<div class="contenidoPrincipal_SubFondo">
+					<h:form id="frmReporteContrato">
+					 <p:tabView style="background-color:white;margin:10px;">
+					 	<!-- ###################################################### Estado de Contratos ###################################################### -->
+				        <p:tab title="Estado Contratos">
+				          
+								<p:accordionPanel activeIndex="99">									
+											<p:tab title="Vigentes" >
+										<h:panelGrid>
+											<h:outputText value="Intervalo Fecha: " />
+										</h:panelGrid>
+										<h:panelGrid columns="5">
+											<p:calendar id="inicio" pattern="dd-MM-yyyy" mask="true"
+												value="#{arrendamientoReporteMB.desdeCartera}" navigator="true"
+												locale="es">
+												<p:ajax event="dateSelect"
+													listener="#{arrendamientoReporteMB.setdesdecartera}"
+													update="fin" />
+											</p:calendar>
+											<p:watermark for="inicio" value="Desde" />
+											<p:calendar id="fin"
+												value="#{arrendamientoReporteMB.hastaCartera}"
+												pattern="dd-MM-yyyy" mask="true" navigator="true"
+												locale="es" />
+											<p:watermark for="fin" value="Hasta" />
+
+
+<!-- 											<p:commandButton icon="ui-icon-search" value="Buscar" -->
+<!-- 												actionListener="#{cobranzaConsultaMB.buscarComprobantesUsuario}" -->
+<!-- 												update=":formConsultaComprobantes:listacomprobantespago,:formConsultaComprobantes:total" /> -->
+
+										</h:panelGrid>
+										<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoVigente('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:20px;margin-top:15px;" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+													<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoVigente('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+											
+											</p:tab>
+											<p:tab	 title="Finalizados" >
+											<h:panelGrid>
+												<h:outputText value="Intervalo Fecha: " />
+											</h:panelGrid>
+											<h:panelGrid columns="5">
+												<p:calendar id="inicio3" pattern="dd-MM-yyyy" mask="true"
+													value="#{arrendamientoReporteMB.desdeContratoFinalizado}"
+													navigator="true" locale="es">
+													<p:ajax event="dateSelect"
+														listener="#{arrendamientoReporteMB.setdesdeContratoFinalizado}"
+														update="fin3" />
+												</p:calendar>
+												<p:watermark for="inicio3" value="Desde" />
+												<p:calendar id="fin3"
+													value="#{arrendamientoReporteMB.hastaContratoFinalizado}"
+													pattern="dd-MM-yyyy" mask="true" navigator="true"
+													locale="es" />
+												<p:watermark for="fin3" value="Hasta" />
+											</h:panelGrid>
+											<h:panelGrid columns="2">
+											
+											<h:panelGrid columns="2" cellspacing="5" >
+															<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoFinalizado('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+																 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:20px;margin-top:15px;" />
+																	<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+															</p:commandButton>
+															<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoFinalizado('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+																 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+																	<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+															</p:commandButton>
+												</h:panelGrid>
+												<h:panelGrid >
+																<h:selectOneRadio value="#{arrendamientoReporteMB.tipSelectedCondicionFinalizado}" layout="pageDirection">
+													            <f:selectItem itemLabel="Histórico" itemValue="1" />
+													            <f:selectItem itemLabel="Terminados de Pagar" itemValue="2" />
+													            <f:selectItem itemLabel="Pendientes de Pago" itemValue="3" />
+													            </h:selectOneRadio>
+												</h:panelGrid>
+											</h:panelGrid>
+											
+											</p:tab>
+											<p:tab title="Vigentes y Finalizados" >
+											<h:panelGrid>
+											<h:outputText value="Intervalo Fecha: " />
+										     </h:panelGrid>
+										     <h:panelGrid columns="5">
+											<p:calendar id="inicio2" pattern="dd-MM-yyyy" mask="true"
+												value="#{arrendamientoReporteMB.desdeCarteraTodo}" navigator="true"
+												locale="es">
+												<p:ajax event="dateSelect"
+													listener="#{arrendamientoReporteMB.setdesdecarteraTodo}"
+													update="fin2" />
+											</p:calendar>
+											<p:watermark for="inicio2" value="Desde" />
+											<p:calendar id="fin2"
+												value="#{arrendamientoReporteMB.hastaCarteraTodo}"
+												pattern="dd-MM-yyyy" mask="true" navigator="true"
+												locale="es" />
+											<p:watermark for="fin2" value="Hasta" />
+											</h:panelGrid>
+											<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoVigenteFinalizado('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:20px;margin-top:15px;" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+													<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoVigenteFinalizado('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+										
+											</p:tab>
+											
+								</p:accordionPanel>
+								
+							
+								
+				        </p:tab>
+				        <!-- ###################################################   PreContrato   ############################################################# -->
+				        <p:tab title="Precontrato">
+				            	<p:accordionPanel activeIndex="99">									
+											<p:tab title="Pendientes de actualización" >
+										            <p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReportePreContratoVigente('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:20px;margin-top:15px;" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+													<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReportePreContratoVigente('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+											
+											</p:tab>
+								</p:accordionPanel>
+				        </p:tab>
+						
+                        <!-- ###################################################   Global Contratos   ############################################################# -->
+				        <p:tab title="Global">
+				            	<p:accordionPanel activeIndex="99">						            	         						
+											<p:tab title="Vigentes" >
+											<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoGlobal_Vigentes('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:20px;margin-top:15px;" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+													<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoGlobal_Vigentes('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>	
+											</p:tab>
+											<p:tab title="Vigentes y Finalizados" >
+											<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoGlobal('pdf')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" style="margin-left:20px;margin-top:15px;" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>
+													<p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoReporteMB.generarReporteContratoGlobal('xls')}"  icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)">
+														 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+															<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+													</p:commandButton>	
+											</p:tab>
+								</p:accordionPanel>
+				        </p:tab>
+				        <p:tab title="Consulta Arrendamiento">
+				        			<div>
+								   <p:commandLink style="padding: 8px 15px;color: #0088CC ;" actionListener="#{arrendamientoReporteMB.openDlgConsultaContrato}"
+								   update=":frmConsultaArrendamiento,:frmMaestra:listaMensajes"
+								   >
+								        <h:outputLabel value="Consulta Arrendamiento" style="color: #0088CC ;"/>
+								   </p:commandLink>
+								</div>
+				        </p:tab>
+				    </p:tabView>
+				   </h:form>
+				    <!-- ###################################################   Consulta Arrendamiento   ############################################################# -->
+				   	<h:form id="frmConsultaArrendamiento" onkeypress="if (event.keyCode == 13) { return false; }" >
+						<p:dialog header="CONSULTA ARRENDAMIENTO" widgetVar="dlgConsultaContrato" width="1500px" height="570px" closable="true" closeOnEscape="true">
+								<p:tabView style="background-color:white;margin:10px;">
+								<p:tab title="Condicion Arrendamiento">
+								<p:outputPanel id="tblValoresConsulta">
+								<table >
+								<tr>
+								    <td>
+								     	 <h:outputText  value="Condición:"  />
+								     </td>
+								     <td>
+								     	<p:selectCheckboxMenu id="condiciones" label="Condicion" panelStyle="width:210px"
+ 													  style="width:179px; float:left;" showCheckbox="true"  multiple="true" filter="true"
+ 													  value="#{arrendamientoReporteMB.selectedCondicionSeleccionado}">
+ 													  <f:selectItems value="#{arrendamientoReporteMB.listacondicion}" var="cond"
+ 													  itemValue="#{cond}" itemLabel="#{cond}" />
+ 											 </p:selectCheckboxMenu>	
+								     </td>
+<!-- 								     <td> -->
+<!-- 								     	 <h:outputText  value="Estado"  /> -->
+<!-- 								     </td> -->
+								     <td>
+								     	<p:selectCheckboxMenu   label="Estado" multiple="true" filter="true"  panelStyle="width:230px" style="width:180px; float:left;"
+								     	value="#{arrendamientoReporteMB.selectedEstadoSeleccionado}">
+										 <f:selectItems value="#{arrendamientoReporteMB.listaestado}" var="cond"
+ 													  itemValue="#{cond}" itemLabel="#{cond}" />
+										 </p:selectCheckboxMenu>
+								     </td>
+								</tr>
+								<tr>
+								   <td>
+									   <h:outputText value="Inicio Contrato:" />
+								   </td>
+								   <td>
+								   <p:calendar id="desdeinicioContrato" pattern="dd-MM-yyyy" mask="true"
+												value="#{arrendamientoReporteMB.desdeInicioContrato}" navigator="true"
+												locale="es" readonlyInput="true">
+												<p:ajax event="dateSelect"
+													listener="#{arrendamientoReporteMB.setDesdeInicioContrato}"
+													update="hastaInicioContrato" />
+											</p:calendar>
+											<p:watermark for="desdeinicioContrato" value="Desde" />
+								   </td>
+								   <td>
+								   <p:calendar id="hastaInicioContrato"
+												value="#{arrendamientoReporteMB.hastaInicioContrato}"
+												pattern="dd-MM-yyyy" mask="true" navigator="true" readonlyInput="true"
+												locale="es" />
+											<p:watermark for="hastaInicioContrato" value="Hasta" />
+								   </td>
+								</tr>
+								<tr>
+								   <td>
+									   <h:outputText value="Fin Contrato :" />
+								   </td>
+								   <td>
+								   <p:calendar id="desdeFinContrato" pattern="dd-MM-yyyy" mask="true"
+												value="#{arrendamientoReporteMB.desdeFinContrato}" navigator="true"
+												locale="es">
+												<p:ajax event="dateSelect"
+													listener="#{arrendamientoReporteMB.setDesdeFinContrato}"
+													update="hastaFinContrato" />
+											</p:calendar>
+											<p:watermark for="desdeFinContrato" value="Desde" />
+								   </td>
+								   <td>
+								  <p:calendar id="hastaFinContrato"
+												value="#{arrendamientoReporteMB.hastaFinContrato}"
+												pattern="dd-MM-yyyy" mask="true" navigator="true"
+												locale="es" />
+											<p:watermark for="hastaFinContrato" value="Hasta" />
+								   </td>
+
+								</tr>
+								    
+								</table>
+								</p:outputPanel>
+								<center>
+								<p:commandButton value="Buscar" actionListener="#{arrendamientoReporteMB.consultaContrato}"
+								 update="tblContratos,:frmMaestra:listaMensajes"
+								 icon="ui-icon-search"
+								 onclick="PF('statusDialog').show();"
+								 oncomplete="PF('statusDialog').hide();"
+								 >
+								</p:commandButton>
+								<p:commandButton value="Limpiar" actionListener="#{arrendamientoReporteMB.limpiarValores}" icon="ui-icon-refresh"
+								update="tblValoresConsulta,tblContratos,:frmMaestra:listaMensajes"
+								>
+								</p:commandButton>
+								</center>
+								 <p:dataTable id="tblContratos" var="contrato" 
+								     value="#{arrendamientoReporteMB.listaContratoBean}"
+								     selection="#{arrendamientoReporteMB.condicionBeanSelected}" rowKey="#{contrato.idcontrato}"
+								     selectionMode="single"
+									 emptyMessage="No se ha encontrado ningun registro " paginator="true"
+									 style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center; width:1600px ; max-height:380px!important;"	
+									 paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+									 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+									 rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="680" 
+									 styleClass="ui-datatable-hor-scroll-horizontal3" editable="true"							     >
+								 <p:columnGroup type="header">
+									  <p:row>
+										<p:column rowspan="2" headerText="Clave"  style="vertical-align: middle;width:80px;"/>
+						                <p:column rowspan="2" headerText="Condici&oacute;n" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Estado" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Nombre/Raz&oacute;n Social" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Direcci&oacute;n" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Distrito" style="vertical-align: middle;"/>
+						                <p:column colspan="7" headerText="Contrato / Reconocimiento Deuda" style="vertical-align: middle;"/>						                
+						                <p:column rowspan="2" headerText="Tipo de Alquiler" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Uso Especifico" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Copropiedad" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Inicio Cobro" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Fin Cobro" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Proceso Judicial" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Documento" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Renta Actual" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Ultimo Renta Pagada" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Fecha Pago" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Meses Pagados" style="vertical-align: middle;"/>
+																
+						            </p:row>
+						            <p:row>
+										<p:column colspan="1" headerText="Nro Contrato" style="vertical-align: middle;"/>
+										<p:column colspan="1" headerText="Nro Acta" style="vertical-align: middle;"/>
+						                <p:column colspan="1" headerText="Inicio" style="vertical-align: middle;"/>
+						                <p:column colspan="1" headerText="Fin" style="vertical-align: middle;"/>
+						                <p:column colspan="1" headerText="Moneda" style="vertical-align: middle;"/>
+						                <p:column rowspan="1" headerText="Adenda" style="vertical-align: middle;"/>
+						                <p:column rowspan="1" headerText="Escritura Publica" style="vertical-align:middle;"/>
+						                
+						            </p:row>
+									 		
+									 </p:columnGroup>
+									 <p:column>
+										<h:outputText value="#{contrato.claveUpa}" style="width:100px;text-align: left;"/>
+									</p:column>
+								      <p:column>
+										<h:outputText value="#{contrato.condicion}" />
+									</p:column>
+									<p:column >
+										<h:outputText value="#{contrato.estado}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.nombresInquilino}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.direccion}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.distrito}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.nrocontrato==NULL ? 'S/N':contrato.nrocontrato}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.nroacta==NULL ? '':contrato.nroacta}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.iniciocontrato}" >
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.fincontrato}" >
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.moneda}" />
+									</p:column>
+									<p:column headerText="Adenda">
+<!-- 									<p:commandLink id="botonContratoSubTabContrato"   -->
+<!-- 											action="#{arrendamientoconsultaMB.buscarAdenda(contrato.idcontrato)}" process="@this" oncomplete="vistaDetalleAdenda.show();" -->
+<!-- 											update=":frmDetalleAdenda"> -->
+											<div class="btncentrado">
+												<p:outputLabel value="#{contrato.siadenda =='true' ? 'Sí':'No'}"
+													style="margin-bottom:5px; float:center;margin-left:0px;font-size:10px;" />
+
+											</div>
+<!-- 										</p:commandLink> -->
+									</p:column>
+									<p:column headerText="EscrituraPublica" >
+									 	<h:outputText value="#{contrato.siescriturapublica == 'true' ? 'Sí':'No'}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.tipo==NULL ? '':contrato.tipo}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.usoespecifico==NULL ? '':contrato.usoespecifico}" />
+									</p:column>
+									<p:column headerText="Copropiedad" >
+									 	<h:outputText value="#{contrato.sicopropiedad== 'true' ? 'Sí':'No'}" />
+									</p:column>
+									<p:column headerText="Inicio Cobro">
+										<h:outputText value="#{contrato.iniciocobro}" >
+										<f:convertDateTime pattern="MMM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Fin Cobro">
+										<h:outputText value="#{contrato.fincobro}" >
+										<f:convertDateTime pattern="MMM/yyyy" />
+										</h:outputText>
+									</p:column>
+
+									<p:column headerText="">
+									<h:outputText value="#{contrato.siprocesojudicial=='true' ? 'Sí':'No'}" />
+									</p:column>	
+	
+								
+									<p:column headerText="Documento">
+<!-- 									<p:commandLink id="botonContratoDocumento"   -->
+<!-- 											action="#{archivoMB.abrirDialogoVerAdjunto('Condicion',contrato.idcontrato)}" process="@this"  -->
+<!-- 											update=":frmMaestra:listaMensajes,:frmVerDocumento:listaArchivosReferencia"> -->
+											<div class="btncentrado">
+												<p:outputLabel value="#{contrato.sidocumento =='true' ? 'Sí':'No'}"
+													style="margin-bottom:5px; float:center;margin-left:0px;font-size:10px;" />
+											</div>
+<!-- 										</p:commandLink> -->
+										
+
+									</p:column>
+									<p:column headerText="Renta Actual">
+										<h:outputText value="#{contrato.rentaActual}" />
+									</p:column>
+									<p:column headerText="Ultimo pago">
+									 <h:outputText value="#{contrato.rentaPagada}" />
+									</p:column>
+									<p:column headerText="Fecha Pago">
+										<h:outputText value="#{contrato.fechaPagada}" >
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Meses Pagados">
+									    <p:commandLink	actionListener="#{arrendamientoconsultaMB.obtenerInformacionCuotasPagadas(contrato.idcontrato)}"															
+															 oncomplete="dlgCuotasPagadas.show()" process="@this"
+															 icon="ui-icon-info"
+													         update=":frmCuotasPagadas, :frmMaestra:listaMensajes" >
+															<div class="btncentrado">
+												<p:outputLabel value="Ver"
+													style="margin-bottom:5px; float:center;margin-left:0px;font-size:14px;" />
+													</div>
+												</p:commandLink>
+									</p:column>
+								
+								 
+								 </p:dataTable>
+								 <center>
+								 <p:outputPanel id="outpanelDescarga" style="width:500px;">
+								      
+									<p:panel id="panelExportar" header="Exportar" style="margin-top:15px;text-align:center;" >
+										<center>
+										<h:panelGrid columns="8" >
+										   
+											<p:spacer width="20"/>
+												<p:commandButton style="width:20px;height:20px;"  actionListener="#{arrendamientoReporteMB.generarReporteContratoNuevo('pdf')}" icon="ui-icon-arrowthickstop-1-s" onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+													   <p:graphicImage value="/resources/icons/tipoArchivo/pdf.png" />
+													   <p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+												</p:commandButton>
+											<p:spacer width="20"/>
+												<p:commandButton style="width:20px;height:20px;"  actionListener="#{arrendamientoReporteMB.generarReporteContratoNuevo('excel')}" icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+														<p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+														<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+											</p:commandButton>
+											
+										</h:panelGrid>
+										</center>
+									</p:panel>
+									
+								</p:outputPanel>
+								  </center>
+								  </p:tab>
+								  <p:tab title="UPA">
+								  	<p:outputPanel id="tblValoresUpaConsulta">
+										<table width="15%" style="margin: 0px 0px;" cellspacing="5" >
+											<tr>
+								   				 <td>
+								     				 <h:outputText  value="Clave :"  />
+								    			 </td>
+								    			 
+								    			 <td width="20%"><p:inputMask id="claveupa"
+																	mask="**-****-***"
+																	value="#{arrendamientoReporteMB.upa.clave}"
+																	style="width:90px;text-align:center;font-size:14px;">
+												</p:inputMask>												
+												</td>
+								    			 
+								    	    </tr>
+								    	    <tr>
+								    	    	<td width="20%">
+														<center>
+															<h:outputText value="Av/Jr/Calle/Pasaje:" />
+														</center>
+												</td>
+												<td width="20%"><p:inputText id="direccionc"
+																	value="#{arrendamientoReporteMB.upa.direccion}"
+																	style="width: 172px;" maxlength="150" /> 
+																	<p:watermark for="direccionc" value="Ejm: Abancay , Huanuco" />
+												</td>
+
+								    	   		<td width="20%">
+														<center>
+															<h:outputText value="N°Principal:" />
+														</center>
+												</td>
+												<td width="20%"><p:inputText id="numprinicipalc"
+																	value="#{arrendamientoReporteMB.upa.numprincipal}"
+																	style="width: 172px;" maxlength="150" />
+																	<p:watermark for="numprinicipalc" value="Ejm: 1075 ,101," /> 
+												</td>
+												<td width="20%">
+														<center>
+															<h:outputText value="N°Interior:" />
+														</center>
+											    </td>
+											    <td width="20%"><p:inputText id="numinteriorc"
+																	value="#{arrendamientoReporteMB.upa.nombrenuminterior}"
+																	style="width: 172px;" maxlength="150" /> 
+																	<p:watermark for="numinteriorc" value="Ejm: 5 , INT 5" /> 
+												</td>
+								    	    </tr>
+								    	    <tr>
+								    	    	<td>
+								     				 <h:outputText  value="Departamento:"  />
+								  			   </td>
+								   				  <td>
+								     					<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																	     id="depa" style="width:179px; float:left;"
+																		
+																		value="#{arrendamientoReporteMB.depa}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{arrendamientoReporteMB.listaDepartamentos}" var="dpto"
+																			itemLabel="#{dpto}" itemValue="#{dpto}">
+																		</f:selectItems>
+																		
+																		<p:ajax listener="#{arrendamientoReporteMB.cargarComboProvincias}" update="prov" />
+
+													</p:selectOneMenu> 
+								     			</td>
+								     			<td width="20%">
+								     				 <h:outputText  value="Provincia:"  />
+								  			   </td>
+								   				  <td>
+								     					<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																	 id="prov"  style="width:179px; float:left;"
+																		
+																		value="#{arrendamientoReporteMB.prov}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{arrendamientoReporteMB.listaProvincias}" var="prov"
+																			itemLabel="#{prov}" itemValue="#{prov}">
+																		</f:selectItems>
+																		<p:ajax listener="#{arrendamientoReporteMB.cargarComboDistritos}" update="dist"/>
+														 </p:selectOneMenu> 
+								     			</td>
+								     			<td width="20%">
+								     				 <h:outputText  value="Distrito:"  />
+								  			   </td>
+								   				  <td>
+								     					<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																    id="dist" style="width:179px; float:left;"
+																		value="#{arrendamientoReporteMB.dist}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{arrendamientoReporteMB.listaDistritos}" var="dist"
+																			itemLabel="#{dist}" itemValue="#{dist}">
+																		</f:selectItems>
+																		<p:ajax listener="#{arrendamientoReporteMB.cargarUbigeo}" />
+																		
+														</p:selectOneMenu> 	
+								     			</td>
+								    	    </tr>
+								    	    <tr>
+								    	     <td width="20%">
+														<h:outputText  value="Estado:" />
+													</td>
+													<td width="25%">
+														<p:selectOneMenu style="width:179px; float:left;" id="Estado" value="#{arrendamientoReporteMB.upa.tugurizadoruinoso}">
+															<f:selectItem itemLabel="Seleccione" itemValue="" />
+															<f:selectItem itemLabel="no seleccionado" itemValue="no seleccionado" />
+															<f:selectItem itemLabel="Tugurizado" itemValue="Tugurizado" />
+															<f:selectItem itemLabel="Ruinoso" itemValue="Ruinoso" />
+															<f:selectItem itemLabel="Habitable" itemValue="Habitable" />
+															<f:selectItem itemLabel="Inhabitable" itemValue="InHabitable" />
+														</p:selectOneMenu>
+													</td>	
+													<td width="20%">
+													 	<h:outputText value="Uso:" />
+													 </td>
+													 <td width="20%">
+													  	<p:selectOneMenu value="#{arrendamientoReporteMB.upa.uso}"
+															style="width:179px; float:left;">
+																<f:selectItem itemLabel="Seleccione" itemValue="" />
+																<f:selectItems value="#{arrendamientoReporteMB.listaTipoUso}" var="uso" itemLabel="#{uso.descripcion}" itemValue="#{uso.descripcion}"/>
+														</p:selectOneMenu>
+													 </td>
+													 <td width="20%">
+													 	<h:outputText value="Titularidad:" />
+													 </td>
+													 <td width="20%">
+													  	<p:selectOneMenu value="#{arrendamientoReporteMB.upaBean.descripciontitularidad}"
+															style="width:179px; float:left;">
+																<f:selectItem itemLabel="Seleccione" itemValue="" />
+																<f:selectItems value="#{arrendamientoReporteMB.listaTipoTitularidad}" var="tipot" itemLabel="#{tipot.descripcion}" itemValue="#{tipot.descripcion}"/>
+														</p:selectOneMenu>
+													 </td>
+								    	    
+								    	    </tr>
+								    	    <tr>
+								    	    		<td width="20%">
+														<h:outputText  value="Monumento Historico:" />
+													</td>
+													<td width="25%">
+														<p:selectOneMenu style="width:179px; float:left;" id="Monumento" value="#{arrendamientoReporteMB.upaBean.simonumentoHistorico}">
+															<f:selectItem itemLabel="Seleccione" itemValue="" />
+															<f:selectItem itemLabel="Si" itemValue="1" />
+															<f:selectItem itemLabel="No" itemValue="0" />
+															
+														</p:selectOneMenu>
+													</td>	
+								    	    </tr>
+								    	    
+								    	 </table>
+								    </p:outputPanel>
+								    <center>
+								<p:commandButton value="Buscar" actionListener="#{arrendamientoReporteMB.validarDatosConsultaUpa(arrendamientoReporteMB.upa,arrendamientoReporteMB.upaBean)}"
+								 update="tblUpas,:frmMaestra:listaMensajes"
+								 icon="ui-icon-search"
+								 onclick="PF('statusDialog').show();"
+								 oncomplete="PF('statusDialog').hide();"
+								 >
+								</p:commandButton>
+								<p:commandButton value="Limpiar" actionListener="#{arrendamientoReporteMB.limpiarValoresConsultaUpa}" icon="ui-icon-refresh"
+								update="tblValoresUpaConsulta,tblUpas,:frmMaestra:listaMensajes"
+								>
+								</p:commandButton>
+								</center>
+								<center>
+								<p:dataTable  id="tblUpas" var="upa" rowKey="#{upa.idupa}"
+								        value="#{arrendamientoReporteMB.listaUpas}"
+										selectionMode="single"
+										emptyMessage="No se ha encontrado ningún registro"
+										paginator="true"												
+										paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+										currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+										rowsPerPageTemplate="15,20,25,50" rows="15" scrollWidth="680"
+										selection="#{arrendamientoReporteMB.upaselected}"
+										 style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center; width:1600px ; max-height:380px!important;"
+										styleClass="ui-datatable-hor-scroll-horizontal3" rowIndexVar="index"
+										editable="true">
+										<p:ajax event="rowSelect"  
+										update=":frmMaestra:listaMensajes" />
+									 <p:column headerText="#">
+												     <h:outputText value="#{index+1}" />
+												</p:column>
+												<p:column headerText="N° Clave" filterBy="#{upa.clave}"
+													filterMatchMode="startsWith">
+													<h:outputText value="#{upa.clave}" />
+												</p:column>
+												<p:column headerText="Direcci&oacute;n" filterBy="#{upa.direccion}">
+													<h:outputText value="#{upa.direccion}" />
+												</p:column>
+												<p:column headerText="Nro Principal" filterBy="#{upa.numprincipal}">
+													<h:outputText value="#{upa.numprincipal}" />
+												</p:column>
+												<p:column headerText="Nro. Interior" filterBy="#{upa.nombrenuminterior}">
+													<h:outputText value="#{upa.nombrenuminterior}" />
+												</p:column>
+												<p:column headerText="Distrito" filterBy="#{upa.inmueble.ubigeo.dist}">
+													<h:outputText value="#{upa.inmueble.ubigeo.dist}" />
+												</p:column>
+												<p:column headerText="Provincia" filterBy="#{upa.inmueble.ubigeo.prov}">
+													<h:outputText value="#{upa.inmueble.ubigeo.prov}" />
+												</p:column>
+												<p:column headerText="Departamento" filterBy="#{upa.inmueble.ubigeo.depa}">
+													<h:outputText value="#{upa.inmueble.ubigeo.depa}" />
+												</p:column>
+												<p:column headerText="Uso" >
+													<h:outputText value="#{upa.uso}" />
+												</p:column>
+												<p:column headerText="Condicion" >
+													<h:outputText value="#{upa.tugurizadoruinoso}" />
+												</p:column>
+												<p:column headerText="Tipo Titularidad" >
+													<h:outputText value="#{upa.inmueblemaestro.titularidad.tipotitularidad.descripcion}" />
+												</p:column>
+												<p:column headerText="Proceso Judicial" >
+													<h:outputText value="#{upa.siprocesojudicial==null? 'No':(upa.siprocesojudicial?'Si':'No')}" />
+												</p:column>
+												<p:column headerText="Copropiedad" >
+													<h:outputText value="#{upa.sicopropiedad==null? 'No':(upa.sicopropiedad?'Si':'No')}" />
+												</p:column>
+												<p:column headerText="Estado" >
+													<h:outputText value="#{upa.estado==null? 'Activo':(upa.estado? 'Inactivo':'Activo' )}" />
+												</p:column>
+									</p:dataTable>
+									</center>
+									<center>
+									<p:outputPanel id="outpanelDescargaUpa" style="width:500px;">
+								      
+									<p:panel id="panelExportarDocumentoUpa" header="Exportar" style="margin-top:15px;text-align:center;" >
+										<center>
+										<h:panelGrid columns="8" >
+										   
+											<p:spacer width="20"/>
+
+											<p:spacer width="20"/>
+												<p:commandButton style="width:20px;height:20px;"  actionListener="#{arrendamientoReporteMB.generarReporteUpa('excel')}" icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+														<p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+														<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+											</p:commandButton>
+											
+										</h:panelGrid>
+										</center>
+									</p:panel>
+									
+								</p:outputPanel>
+								</center>
+								  </p:tab>
+								  <p:tab title="Inmueble Matriz">
+								  <p:outputPanel id="tblValoresInmuebleMaestroConsulta">
+										<table width="15%" style="margin: 0px 0px;" cellspacing="5" >
+											<tr>
+								   				 <td>
+								   				 	
+								     				 <h:outputText  value="Clave:" style="width:50px; float:left;" />
+								     				 
+								    			 </td>
+								    			 
+
+							   			     <td width="20%"><p:inputMask id="claveinmueble"
+																	mask="**-****-000"
+																	value="#{arrendamientoReporteMB.inmuebleBean.clave}"
+																	style="width:90px;text-align:center;font-size:14px;">
+												</p:inputMask>												
+												</td>
+								    			 <td width="20%">
+														
+															<h:outputText value="Cod.Predio;" />
+														
+												</td>
+												<td width="20%"><p:inputText id="codigopredioinmueble"
+																	value="#{arrendamientoReporteMB.inmuebleBean.codigopredio}"
+																	style="width: 172px;" maxlength="150" /> 
+																	<p:watermark for="codigopredioinmueble" value="Ejm: L5-001,L4-001" />
+												</td>
+								    	       </tr>
+								    	       <tr>
+								    	    	<td width="20%">
+														
+															<h:outputText value="Direccion:" />
+														
+												</td>
+												<td width="20%"><p:inputText id="direccioninmueble"
+																	value="#{arrendamientoReporteMB.inmuebleBean.direccion}"
+																	style="width: 172px;" maxlength="150" /> 
+																	<p:watermark for="direccioninmueble" value="Ejm: Abancay , Huanuco" />
+												</td>
+												<td width="20%">
+														<center>
+															<h:outputText value="N°Principal:" />
+														</center>
+												</td>
+												<td width="20%"><p:inputText id="numprinicipalinmueble"
+																	value="#{arrendamientoReporteMB.inmuebleBean.direccionprincipal}"
+																	style="width: 172px;" maxlength="150" />
+																	<p:watermark for="numprinicipalinmueble" value="Ejm: 1075 ,101," /> 
+												</td>
+								    	   		<td width="20%">
+													 	<h:outputText value="Tipo Zona:" />
+												</td>
+												<td width="20%">
+													  	<p:selectOneMenu value="#{arrendamientoReporteMB.inmuebleBean.idtipozona}"
+															style="width:179px; float:left;">
+																<f:selectItem itemLabel="Seleccione" itemValue="" />
+																<f:selectItems value="#{arrendamientoReporteMB.listaTipoZona}" var="tz" itemLabel="#{tz.descripcion}" itemValue="#{tz.idtipozona}"/>
+														</p:selectOneMenu>
+												</td>
+
+								    	    </tr>
+								    	    <tr>
+								    	    	<td>
+								     				 <h:outputText  value="Departamento:"  />
+								  			   </td>
+								   				  <td>
+								     					<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																	     id="depainm" style="width:179px; float:left;"
+																		
+																		value="#{arrendamientoReporteMB.depa}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{arrendamientoReporteMB.listaDepartamentos}" var="dpto"
+																			itemLabel="#{dpto}" itemValue="#{dpto}">
+																		</f:selectItems>
+																		
+																		<p:ajax listener="#{arrendamientoReporteMB.cargarComboProvincias}" update="provinm" />
+
+													</p:selectOneMenu> 
+								     			</td>
+								     			<td width="20%">
+								     				 <h:outputText  value="Provincia:"  />
+								  			   </td>
+								   				  <td>
+								     					<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																	 id="provinm"  style="width:179px; float:left;"
+																		
+																		value="#{arrendamientoReporteMB.prov}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{arrendamientoReporteMB.listaProvincias}" var="prov"
+																			itemLabel="#{prov}" itemValue="#{prov}">
+																		</f:selectItems>
+																		<p:ajax listener="#{arrendamientoReporteMB.cargarComboDistritos}" update="distinm"/>
+														 </p:selectOneMenu> 
+								     			</td>
+								     			<td width="20%">
+								     				 <h:outputText  value="Distrito:"  />
+								  			   </td>
+								   				  <td>
+								     					<p:selectOneMenu filterText="Filter" filter="true" filterMatchMode="startsWith"
+																    id="distinm" style="width:179px; float:left;"
+																		value="#{arrendamientoReporteMB.dist}">
+																		<f:selectItem itemLabel="Seleccione"
+																			itemValue="0" />
+																		<f:selectItems value="#{arrendamientoReporteMB.listaDistritos}" var="dist"
+																			itemLabel="#{dist}" itemValue="#{dist}">
+																		</f:selectItems>
+																		<p:ajax listener="#{arrendamientoReporteMB.cargarUbigeo}" />
+																		
+														</p:selectOneMenu> 	
+								     			</td>
+								    	    </tr>
+								    	    <tr>
+								    	    
+												
+								    	    
+								    	    
+								    	    		<td width="20%">
+														<h:outputText  value="Monumento Historico:" />
+													</td>
+													<td width="25%">
+														<p:selectOneMenu style="width:179px; float:left;" id="monumentoinm" value="#{arrendamientoReporteMB.inmuebleBean.simonumentoHistorico}">
+															<f:selectItem itemLabel="Seleccione" itemValue="" />
+															<f:selectItem itemLabel="Si" itemValue="1" />
+															<f:selectItem itemLabel="No" itemValue="0" />
+															
+														</p:selectOneMenu>
+													</td>	
+														 <td width="20%">
+													 	<h:outputText value="Titularidad:" />
+													 </td>
+													 <td width="20%">
+													  	<p:selectOneMenu value="#{arrendamientoReporteMB.inmuebleBean.tipotitularidad}"
+															style="width:179px; float:left;">
+																<f:selectItem itemLabel="Seleccione" itemValue="" />
+																<f:selectItems value="#{arrendamientoReporteMB.listaTipoTitularidad}" var="tipot" itemLabel="#{tipot.descripcion}" itemValue="#{tipot.descripcion}"/>
+														</p:selectOneMenu>
+													 </td>
+								    	    </tr>
+								    	    
+								    	 </table>
+								    </p:outputPanel>
+								    <center>
+								<p:commandButton value="Buscar" actionListener="#{arrendamientoReporteMB.validarDatosConsultaInmuebleMaestro(arrendamientoReporteMB.inmuebleBean)}" 
+								 update="tblInmuebles,:frmMaestra:listaMensajes"
+								 icon="ui-icon-search"
+								 onclick="PF('statusDialog').show();"
+								 oncomplete="PF('statusDialog').hide();"
+								 >
+								</p:commandButton>
+								<p:commandButton value="Limpiar" actionListener="#{arrendamientoReporteMB.limpiarValoresConsultaInmueble}" icon="ui-icon-refresh"
+								update="tblValoresInmuebleMaestroConsulta,tblInmuebles,:frmMaestra:listaMensajes"
+								>
+								</p:commandButton>
+								</center>
+								<p:dataTable id="tblInmuebles" var="inmueble"
+								    rowKey="#{inmueble.idinmueble}"
+								    value="#{arrendamientoReporteMB.listaInmuebleMaestro}"
+								    
+									selectionMode="single"
+									emptyMessage="No se ha encontrado ningún registro"
+									paginator="true"
+									style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;"
+									paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+									currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+									rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="680"
+									styleClass="ui-datatable-hor-scroll-horizontal2"
+									editable="true"
+									>
+									<p:column headerText="N° Clave"
+											filterBy="#{inmueble.clave}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inmueble.clave}" />
+										</p:column>
+									<p:column headerText="Direccion"
+											>
+											<h:outputText value="#{inmueble.direccion}" />
+										</p:column>
+
+										<p:column headerText="Departamento"
+											>
+											<h:outputText value="#{inmueble.departamento}" />
+										</p:column>
+
+										<p:column headerText="Provincia"
+											>
+											<h:outputText value="#{inmueble.provincia}" />
+										</p:column>
+
+										<p:column headerText="Distrito"
+											>
+											<h:outputText value="#{inmueble.distrito}" />
+										</p:column>
+										<p:column headerText="Titularidad"
+											>
+											<h:outputText value="#{inmueble.nombretitularidad}" />
+										</p:column>
+										<p:column headerText="Tipo Titularidad"
+											
+											>
+											<h:outputText value="#{inmueble.tipotitularidad}" />
+										</p:column>
+										<p:column headerText="Monumento Historico"
+											>
+											<h:outputText value="#{inmueble.simonumentohistorico==NULL ? 'No': (inmueble.simonumentohistorico=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Tipo Monumento Historico"
+											>
+											<h:outputText value="#{inmueble.tipomonumentohistorico}" />
+										</p:column>
+										<p:column headerText="Código Predio"
+											>
+											<h:outputText value="#{inmueble.codigopredio}" />
+										</p:column>
+										<p:column headerText="Fec. Incripcion"
+											>
+											<h:outputText value="#{inmueble.fecinscripcionregistral}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Asiento"
+											>
+											<h:outputText value="#{inmueble.asientoregistral}" />
+										</p:column>
+										<p:column headerText="Fojas"
+											>
+											<h:outputText value="#{inmueble.fojasregistral}" />
+										</p:column>
+										<p:column headerText="Tomo"
+											>
+											<h:outputText value="#{inmueble.tomoregistral}" />
+										</p:column>
+										<p:column headerText="Ficha de Partida"
+											>
+											<h:outputText value="#{inmueble.ficharegistral}" />
+										</p:column>
+										<p:column headerText="Partida Electrónica"
+											>
+											<h:outputText value="#{inmueble.partidaelectronicaregistral}" />
+										</p:column>
+										<p:column headerText="Origen Dominio"
+											>
+											<h:outputText value="#{inmueble.descripcionorigendominio}" />
+										</p:column>
+										<p:column headerText="Declaratoria de Fabrica"
+											>
+											<h:outputText value="#{inmueble.sideclaratoriafabrica==NULL ? 'No': (inmueble.sideclaratoriafabrica=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Independizacion"
+											>
+											<h:outputText value="#{inmueble.siindependizacion==NULL ? 'No': (inmueble.siindependizacion=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Gravamen"
+											>
+											<h:outputText value="#{inmueble.sigravamen==NULL ? 'No': (inmueble.sigravamen=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Cargas"
+											>
+											<h:outputText value="#{inmueble.simandascargas==NULL ? 'No': (inmueble.simandascargas=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Saneamiento"
+											>
+											<h:outputText value="#{inmueble.sisaneado==NULL ? 'No': (inmueble.sisaneado=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Material Predominante"
+											>
+											<h:outputText value="#{inmueble.materialpredominante}" />
+										</p:column>
+										<p:column headerText="Año de Construcción"
+											>
+											<h:outputText value="#{inmueble.anioconstruccion}" />
+										</p:column>
+										<p:column headerText="N° de Pisos"
+											>
+											<h:outputText value="#{inmueble.nropisos}" />
+										</p:column>
+										<p:column headerText="Area Terreno(m2)"
+											>
+											<h:outputText value="#{inmueble.areaterreno}" />
+										</p:column>
+										<p:column headerText="Area Construida(m2)"
+											>
+											<h:outputText value="#{inmueble.areaconstruida}" />
+										</p:column>
+										<p:column headerText="Plano Ubicación"
+											>
+											<h:outputText value="#{inmueble.siplanoubicacion==NULL ? 'No': (inmueble.siplanoubicacion=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Memoria Descriptiva"
+											>
+											<h:outputText value="#{inmueble.simemoriadescriptiva==NULL ? 'No': (inmueble.simemoriadescriptiva=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Fotografias"
+											>
+											<h:outputText value="#{inmueble.sifotografias==NULL ? 'No': (inmueble.sifotografias=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Tasación"
+											>
+											<h:outputText value="#{inmueble.sitasacion==NULL ? 'No': (inmueble.sitasacion=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Localización Latitud"
+											>
+											<h:outputText value="#{inmueble.latitudlocalizacion}" />
+										</p:column>
+										<p:column headerText="Localización Longitud"
+											>
+											<h:outputText value="#{inmueble.longitudlocalizacion}" />
+										</p:column>
+										<p:column headerText="Condición"
+											>
+											<h:outputText value="#{inmueble.condicion}" />
+										</p:column>
+										
+										<p:column headerText="U. Creador"
+											>
+											<h:outputText value="#{inmueble.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											>
+											<h:outputText value="#{inmueble.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											>
+											<h:outputText value="#{inmueble.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											>
+											<h:outputText value="#{inmueble.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+									
+								</p:dataTable>
+								<center>
+									<p:outputPanel id="outpanelDescargaInmuebleMatriz" style="width:500px;">
+								      
+									<p:panel id="panelExportarDocumentoInmuebleMatriz" header="Exportar" style="margin-top:15px;text-align:center;" >
+										<center>
+										<h:panelGrid columns="8" >
+										   
+											<p:spacer width="20"/>
+
+											<p:spacer width="20"/>
+												<p:commandButton style="width:20px;height:20px;"  actionListener="#{arrendamientoReporteMB.generarReporteInmueble('excel')}" icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+														<p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+														<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+											</p:commandButton>
+											
+										</h:panelGrid>
+										</center>
+									</p:panel>
+									
+								</p:outputPanel>
+								</center>
+								  </p:tab>
+				<!-- *******************************************		PANEL DE INQUILINO      ***************************************** -->
+								  <p:tab title="Inquilino">
+								  	<p:outputPanel id="tblValoresInquilinoConsulta">
+								  		<p:tab id="tabGenerales" title="">	
+											<p:panel header="Datos Generales" toggleable="true">
+												<table width="600" style="margin: 15px;" cellspacing="10">
+										
+													<tr>
+													<td width="50%">
+														<h:outputText  value="Tipo Persona: " />
+													</td>
+													<td width="50%">
+														<p:selectOneMenu value="#{arrendamientoReporteMB.inquilinoBean.idtipopersona}" style="width: 188px;  font-size: 11px;">
+															<f:selectItem itemLabel="Seleccione Tipo Persona" itemValue="0" />
+															<f:selectItems value="#{arrendamientoReporteMB.listaTipoPersona}"
+																var="tp" itemLabel="#{tp.descripcion}" itemValue="#{tp.idtipopersona}">
+															</f:selectItems>
+															
+															<p:ajax event="change" listener="#{arrendamientoReporteMB.cambiarTipoPersona}" update="tblValoresInquilinoConsulta"/>
+														</p:selectOneMenu>
+													  </td>	
+												
+													</tr>											 												
+												</table>
+											</p:panel>
+											<br/>
+									<p:panel id="personaNatural" header="Datos de Persona de Natural" rendered="#{arrendamientoReporteMB.sipersonanatural}">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+
+											<tr>
+																 <td width="50%">
+																	<h:outputText  value="Apellido Paterno: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{arrendamientoReporteMB.inquilinoBean.apellidopat}" style="width: 150px;"  onkeyup="convertirMayus(this);" readonly="#{arrendamientoReporteMB.inquilinoBean.idtipopersona>0? 'false':'true'}"/>
+																 </td>
+											 
+											 
+																 <td width="50%">
+																	<h:outputText  value="Apellido Materno: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{arrendamientoReporteMB.inquilinoBean.apellidomat}" style="width: 150px;" onkeyup="convertirMayus(this);" readonly="#{arrendamientoReporteMB.inquilinoBean.idtipopersona>0? 'false':'true'}"/>
+																 </td>
+											 
+											 
+																 <td width="50%">
+																	<h:outputText  value="Nombres: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{arrendamientoReporteMB.inquilinoBean.nombre}" style="width: 150px;" onkeyup="convertirMayus(this);" readonly="#{arrendamientoReporteMB.inquilinoBean.idtipopersona>0? 'false':'true'}"/>
+																 </td>
+											 
+											 </tr>
+											 <tr>
+																 <td width="50%">
+																	<h:outputText  value="DNI: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{arrendamientoReporteMB.inquilinoBean.dni}" style="width: 150px;" maxlength="8" onkeypress="return validarKey(event)" readonly="#{arrendamientoReporteMB.inquilinoBean.idtipopersona>0? 'false':'true'}"/>
+																 </td>
+																 
+																<td width="50%">
+																	<h:outputText  value="RUC:" />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{arrendamientoReporteMB.inquilinoBean.ruc}" style="width: 150px;" maxlength="11" onkeypress="return validarKey(event)" readonly="#{arrendamientoReporteMB.idtipopersona>0? 'false':'true'}"/>
+																 </td>
+											
+											
+																 <td width="50%">
+																	<h:outputText  value="Carnet Ext.: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{arrendamientoReporteMB.inquilinoBean.carnetextranjeria}" style="width: 150px;" maxlength="12" onkeypress="return validarKey(event)" readonly="#{arrendamientoReporteMB.idtipopersona>0? 'false':'true'}"/>
+																 </td>
+																 
+																
+											
+											 </tr>
+<!-- 											 <tr> -->
+<!-- 																 <td width="50%"> -->
+<!-- 																	<h:outputText  value="Persona Fallecida: " /> -->
+<!-- 																</td> -->
+<!-- 																<td width="50%"> -->
+<!-- 																	<p:selectOneMenu style="width: 188px;  font-size: 11px;" -->
+<!-- 																					value="#{arrendamientoReporteMB.inquilinoBean.sifallecido}"> -->
+<!-- 																					<f:selectItem itemLabel="No" itemValue="false" /> -->
+<!-- 																					<f:selectItem itemLabel="S&iacute;" itemValue="true" /> -->
+<!-- 																	</p:selectOneMenu> -->
+<!-- 																 </td> -->
+<!-- 											 </tr> -->
+											 
+											 
+											 
+											 
+											 
+											 
+									</table> 
+									</p:panel>
+									<p:panel id="personaJuridica" header="Datos de Persona Jurídica" rendered="#{!arrendamientoReporteMB.sipersonanatural}">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+									
+															
+											 <tr>
+																<td width="50%">
+																	<h:outputText  value="Razón Social:" />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{arrendamientoReporteMB.inquilinoBean.razonsocial}" style="width: 150px;" onkeyup="convertirMayus(this);"/>
+																 </td>
+											</tr>
+											<tr>
+																<td width="50%">
+																	<h:outputText  value="RUC:" />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{arrendamientoReporteMB.inquilinoBean.ruc}" style="width: 150px;" maxlength="11" onkeypress="return validarKey(event)"/>
+																 </td>
+											</tr>
+<!-- 											<tr> -->
+<!-- 											    <td  width="50%"> -->
+<!-- 											         <h:outputText value="Estado"  rendered="#{arrendamientoReporteMB.inquilino.sianulado}"/> -->
+<!-- 											    </td> -->
+<!-- 											    <td width="50%"> -->
+<!-- 											    	<h:outputText   value ="#{arrendamientoReporteMB.inquilino.sianulado=='true'? 'ANULADO':'ACTIVO'}" rendered="#{arrendamientoReporteMB.inquilino.sianulado}" style="color: #f60505;"/> -->
+<!-- 											    </td> -->
+<!-- 											 </tr> -->
+<!-- 											  <tr> -->
+<!-- 											    <td  width="50%"> -->
+<!-- 											         <h:outputText value="Motivo de Anulacion"  rendered="#{arrendamientoReporteMB.inquilino.sianulado}"/> -->
+<!-- 											    </td> -->
+<!-- 											    <td width="50%"> -->
+<!-- 											    	<h:outputText   value ="#{arrendamientoReporteMB.inquilino.motivo_anulacion}" rendered="#{arrendamientoReporteMB.inquilino.sianulado}" /> -->
+<!-- 											    </td> -->
+<!-- 											 </tr> -->
+																					 
+									</table> 
+									</p:panel>
+								
+								</p:tab>
+								<center>
+								<p:commandButton value="Buscar" actionListener="#{arrendamientoReporteMB.validarDatosConsultaInquilino(arrendamientoReporteMB.inquilinoBean)}" 
+								 update="tblInquilinos,:frmMaestra:listaMensajes"
+								 icon="ui-icon-search"
+								 onclick="PF('statusDialog').show();"
+								 oncomplete="PF('statusDialog').hide();"
+								 >
+								</p:commandButton>
+								<p:commandButton value="Limpiar" actionListener="#{arrendamientoReporteMB.limpiarValoresConsultaInquilino}" icon="ui-icon-refresh"
+								update="tblValoresInquilinoConsulta,tblInquilinos,:frmMaestra:listaMensajes"
+								>
+								</p:commandButton>
+								</center>
+								<p:dataTable id="tblInquilinos" var="inquilino"
+								    rowKey="#{inquilino.idinquilino}"
+								    value="#{arrendamientoReporteMB.listaInquilino}"
+								    
+									selectionMode="single"
+									emptyMessage="No se ha encontrado ningún registro"
+									paginator="true"
+									style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;"
+									paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+									currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+									rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="680"
+									styleClass="ui-datatable-hor-scroll-horizontal2"
+									editable="true"
+									>
+									<p:column headerText="Tipo Persona"
+											filterBy="#{inquilino.descripciontipopersona}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inquilino.descripciontipopersona}" />
+										</p:column>
+									<p:column headerText="Razón Social"
+											filterBy="#{inquilino.razonsocial}"
+											filterMatchMode="startsWith" >
+											
+											<h:outputText value="#{inquilino.razonsocial}" />
+										</p:column>
+									<p:column headerText="A. Paterno"
+											filterBy="#{inquilino.apellidopat}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inquilino.apellidopat}" />
+										</p:column>
+
+										<p:column headerText="A. Materno"
+											filterBy="#{inquilino.apellidomat}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inquilino.apellidomat}" />
+										</p:column>
+
+										<p:column headerText="Nombre"
+											filterBy="#{inquilino.nombre}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inquilino.nombre}" />
+										</p:column>
+
+										
+										<p:column headerText="DNI "
+											filterBy="#{inquilino.dni}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inquilino.dni}" />
+										</p:column>
+										<p:column headerText="RUC"
+											filterBy="#{inquilino.ruc}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inquilino.ruc}" />
+										</p:column>
+										<p:column headerText="Carnet Extranjeria"
+											filterBy="#{inquilino.carnetextranjeria}"
+											filterMatchMode="startsWith" >
+											<h:outputText value="#{inquilino.carnetextranjeria}" />
+										</p:column>
+										<p:column headerText="Fallecio"
+											>
+											<h:outputText  value="#{inquilino.sifallecido==NULL ? 'No': (inquilino.sifallecido=='true' ? 'Sí':'No')}" />
+										</p:column>
+										<p:column headerText="Anulado"
+											>
+											<h:outputText  value="#{inquilino.sianulado==NULL ? 'No': (inquilino.sianulado=='true' ? 'Sí':'No')}" />
+										</p:column>
+
+										
+										<p:column headerText="U. Creador"
+											>
+											<h:outputText value="#{inquilino.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											>
+											<h:outputText value="#{inquilino.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="GMT-5" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											>
+											<h:outputText value="#{inquilino.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											>
+											<h:outputText value="#{inquilino.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="GMT-5" />
+											</h:outputText>
+										</p:column>
+									
+								</p:dataTable>
+								</p:outputPanel>
+								<center>
+									<p:outputPanel id="outpanelDescargaInquilino" style="width:500px;">
+								      
+									<p:panel id="panelExportarDocumentoInquilino" header="Exportar" style="margin-top:15px;text-align:center;" >
+										<center>
+										<h:panelGrid columns="8" >
+										   
+											<p:spacer width="20"/>
+
+											<p:spacer width="20"/>
+												<p:commandButton style="width:20px;height:20px;"  actionListener="#{arrendamientoReporteMB.generarReporteInquilino('excel')}" icon="ui-icon-arrowthickstop-1-s"   onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+														<p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+														<p:fileDownload value="#{arrendamientoReporteMB.report}" contentDisposition="attachment" />
+											</p:commandButton>
+											
+										</h:panelGrid>
+										</center>
+									</p:panel>
+									
+								</p:outputPanel>
+								</center>
+								  </p:tab>
+								  </p:tabView>
+								</p:dialog>
+						</h:form>
+					</div>
+				
+				
+			</div>
+			<ui:include src="pgDetalleCuotasPagadas.xhtml" />
+			<ui:include src="pgDetalleCuotasPendientes.xhtml" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

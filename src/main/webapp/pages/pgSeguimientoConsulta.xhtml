@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<title>SBLM</title>
+</h:head>
+<h:body>
+
+
+
+	<!-- PANEL REGISTRO -->
+	<div id="idDivCarteraRegistro" class="recau_panelPendientes">
+
+		<h:form id="frmTablaGeneral">
+			<div class="dgaiMonitoreo_detalle">
+				<p:dataTable id="dtbGeneral" var="seg"
+					value="#{segContratoMB.seguimientocontratos}"
+					rowKey="#{seg.idsegcontrato}" widgetVar="xxx"
+					selection="#{segContratoMB.seguimientocontrato}"
+					selectionMode="single" stickyHeader="true" paginator="true"
+					style="width:690px; font-size: 10px;  margin: 0px 0px 0px 0px;"
+					paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+					rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="690"
+					styleClass="ui-datatable-hor-scroll">
+					<f:facet name="header">
+
+						<p:panel>
+							<h:outputText value="Buscar todos los campos:" />
+							<p:inputText id="globalFilter" onkeyup="xxx.filter()"
+								style="width:150px; margin-left: 10px;" />
+						</p:panel>
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{segContratoMB.filaDlgSeguimiento}"
+						oncomplete="dlgDetalleSegConsul.show();"
+						update=":frmdlgDetalleSegConsul:iddlgDetalleSegConsul" />
+					<p:column headerText="Contrato"
+						filterBy="#{seg.contrato.nrocontrato}"  filterStyle="display: none; ">
+						<h:outputText value="#{seg.contrato.nrocontrato}" />
+					</p:column>
+					<p:column headerText="Inquilino" filterStyle="display: none; "
+						filterBy="#{seg.contrato.inquilino.nombrescompletos}">
+						<h:outputText value="#{seg.contrato.inquilino.nombrescompletos}" />
+					</p:column>
+					<p:column headerText="Clave Inmueble"  filterStyle="display: none; "
+						filterBy="#{seg.contrato.upa.inmueble.clave}">
+						<h:outputText value="#{seg.contrato.upa.inmueble.clave}" />
+					</p:column>
+					<p:column headerText="Upa" filterBy="#{seg.contrato.upa.clave}"  filterStyle="display: none;" >
+						<h:outputText value="#{seg.contrato.upa.clave}" />
+					</p:column>
+					<p:column headerText="Area" filterBy="#{seg.contrato.nrocontrato}"  filterStyle="display: none;" >
+						<h:outputText value="xxx" />
+					</p:column>
+					<p:column headerText="Estado de Tramite" filterBy="#{seg.siactivopaso?'Terminado':'En Proceso'}"  filterStyle="display: none;" >
+						<h:outputText value="#{seg.siactivopaso?'Terminado':'En Proceso'}" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+
+		</h:form>
+		<h:form id="frmdlgDetalleSegConsul">
+			<p:dialog id="iddlgDetalleSegConsul" header="DETALLE DE SEGUIMIENTO"
+				closable="true" closeOnEscape="true" resizable="false" modal="true"
+				widgetVar="dlgDetalleSegConsul" width="300" height="200">
+
+
+				<h:panelGrid columns="2" cellpadding="4" style="margin:10px">
+
+					<h:outputText style="color:#5a0000;" value="Contrato:" />
+					<h:outputText
+						value="#{segContratoMB.seguimientocontrato.contrato.nrocontrato}"
+						id="segnrocontrato" style="font-size: 10pt; font-weight: bold" />
+
+
+					<h:outputText style="color:#5a0000;" value="Inquilino:" />
+					<h:outputText style="color:#017514;"
+						value="#{segContratoMB.seguimientocontrato.contrato.inquilino.nombre}"
+						id="seginquilino">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+					<h:outputText style="color:#5a0000;" value="Inmueble:" />
+					<h:outputText style="color:#017514;"
+						value="#{segContratoMB.seguimientocontrato.contrato.upa.inmueble.clave}"
+						>
+						<f:convertDateTime pattern="hh:mm a" />
+					</h:outputText>
+
+					<h:outputText style="color:#5a0000;" value="UPA:" />
+					<h:outputText style="color:#017514;"
+						value="#{segContratoMB.seguimientocontrato.contrato.upa.clave}"
+						 />
+
+					
+					<h:outputText style="color:#5a0000;"
+						value="Estado de Tr&aacute;mite: " />
+					<h:outputText style="color:#017514;"
+						value="#{segContratoMB.seguimientocontrato.siactivopaso?'Terminado':'En Proceso'}" id="ipauditoria" />
+
+
+
+				</h:panelGrid>
+
+
+
+				<p:spacer width="100%" height="10" />
+
+
+
+
+
+				<p:growl id="growl" showSummary="true" showDetail="true"
+					autoUpdate="true" />
+
+
+
+				
+			
+
+			</p:dialog>
+
+		</h:form>
+	</div>
+
+
+
+
+</h:body>
+</html>

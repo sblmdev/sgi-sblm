@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+</h:head>
+<h:body >
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="recaudacion_iconoTitulo"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Recaudación/Autoval&uacute;o</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Monitoreo-Recaudación
+							y Autoval&uacute;o</label>
+					</div>
+				</div>
+				<div class="menuAzul_fondoOpciones">
+					<div class="menuAzul_submenuOpciones">
+						<p:commandLink id="idmenuAzul_submenOpc1"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionSupervisor.jsf'"
+							styleClass="menuAzul_submenOpc1" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc1Submenu.png"
+								alt="Bandeja" title="Supervisor" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_submenOpc2"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionCobranza.jsf'"
+							styleClass="menuAzul_submenOpc2" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc2Submenu.png"
+								alt="Cobranzas" title="Recaudacion" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_submenOpc3"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluo.jsf'"
+							styleClass="menuAzul_submenOpc3" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc3Submenu.png"
+								alt="Arbitrios" title="Autovaluo" />
+						</p:commandLink>
+
+					</div>
+					<div class="menuAzul_submenuItems">
+						<p:commandLink id="idmenuAzul_bandejaSubmenu"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluo.jsf'"
+							styleClass="menuAzul_bandejaSubmenu"
+							oncomplete="tabDerivacion();">
+							<p:graphicImage styleClass="menuAzul_imgsubmenbandeja"
+								value="/resources/images/recaudacion/menuAzul_bandejaSubmenu.png"
+								alt="Bandeja" title="Bandeja" />
+							<h:outputText style="float:left;margin-left:5px; margin-top:2px;"
+								value="Bandeja" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_arbitriosSubmenu"
+							styleClass="menuAzul_arbitriosSubmenu"
+							oncomplete="tabDerivacion();">
+							<p:graphicImage styleClass="menuAzul_imgsubmenarbitrios"
+								width="22" height="22"
+								value="/resources/images/recaudacion/ico_b.png" alt="arbitrios"
+								title="arbitrios" />
+							<h:outputText
+								style="float:left;margin-left:5px; margin-top:7px;color:white;"
+								value="Arbitrios" />
+						</p:commandLink>
+
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+
+					<!-- CONTENIDO MODIFICABLE -->
+					<div class="recaudacion_iconoSubTitulo">
+						<h:outputText id="arren_lblSubtituloDesc2"
+							style="float:left;margin-left:48px; margin-top:18px;font-size:10px;"
+							value="Carta" />
+					</div>
+					<div id="arren_lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">
+						<h:outputText style="float:left;margin-left:5px; margin-top:2px;"
+							value="Autovalúo" />
+					</div>
+					<p:commandLink id="idDivCartas" styleClass="arren_btnAtendidos"
+						style="background-color: #fed02e;"
+						onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluoRegistroReporte.jsf'">
+						<div class="btncentrado">Reporte</div>
+					</p:commandLink>
+					<p:commandLink id="idDivRegistro" styleClass="arren_btnPendientes"
+						onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluoRegistroCarta.jsf'">
+						<div class="btncentrado">Cartas</div>
+					</p:commandLink>
+					<p:commandLink id="idDivReporte" style="background-color: #fed02e;"
+						styleClass="botonDesactivadoCarta"
+						onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluoRegistroArbitrio.jsf'">
+						<div class="btncentrado">Registro</div>
+					</p:commandLink>
+
+					<div class="contenidoPrincipal_fondo_formulario">
+						<div class="contenidoPrincipal_ContenedorBlano">
+
+							<!--###################################################################-->
+							<!-- ########################### PANEL  ###################### -->
+							<!-- PANEL REPORTES -->
+							<div id="idDivReporteCobranza" class="recau_panelPendientes">
+
+								<div class="mante_gene_ContDescrip01">
+									<div class="cobranza_cartera_contenidoDatos">
+										<div class="cartera_ColumDatos">
+											<!-- REPORTE UPAS POR DISTRITO -->
+											<h:form  id="frmdlgGuardarReporteCobranza">
+												<div class="filaDatoLargo"
+													style="background-color: #CECECE; width: 490px; float: left;">
+													<div class="columLargo">
+														<h:outputText class="lblDatos" style="width:300px;"
+															value="Reporte de UPA por distrito" />
+
+													</div>
+												</div>
+												<div class="filaDatoLargosCorto" style="margin: 20px 0 0 0;">
+													<div style="width: 370px;">
+														<h:outputText styleClass="lblDatos" value="Distrito:" />
+														<p:selectOneMenu styleClass="cbxDatos" 
+															id="idCarteraReporte" onchange="limpiarvalidacion();cargaproceso();"
+															panelStyle="width:150px" style="width:160px"
+															filter="true" filterMatchMode="startsWith"
+															value="#{autovaluoReporteMB.ubigeo.ubigeo}">
+															<f:selectItem itemLabel="Seleccione numero Cartera"
+																itemValue="0" />
+															<f:selectItems value="#{autovaluoReporteMB.ubigeos}"
+																var="ub" itemValue="#{ub.ubigeo}" itemLabel="#{ub.dist}">
+															</f:selectItems>
+															<p:ajax   oncomplete="cargaterminado();"
+																listener="#{autovaluoReporteMB.mostrarReporteUpa}"
+																update=":frmTablaReporteCobranza:tablaReporteCobranza, :frmTablaReporteCobranza" />
+														</p:selectOneMenu>
+													</div>
+												</div>
+												<div style="float: right; margin: 15px 50px 15px 0;">
+
+													<p:commandLink oncomplete="dlgBuscarContrato.show();"
+														actionListener="#{autovaluoReporteMB.ExcelReporteUpa}"
+														ajax="false" style="float:left;margin-left:5px;">
+														<p:graphicImage width="28" height="28"
+															value="/resources/icons/tipoArchivo/xls.png"
+															alt="Detalle Contrato" title="detalle Contrato" />
+													</p:commandLink>
+													<p:commandLink oncomplete="dlgBuscarContrato.show();"
+														actionListener="#{autovaluoReporteMB.PDFReporteUpa}"
+														ajax="false" style="float:left;margin-left:5px;">
+														<p:graphicImage width="28" height="28"
+															value="/resources/icons/tipoArchivo/pdf.png" alt="pdf"
+															title="pdf" />
+													</p:commandLink>
+												</div>
+											</h:form>
+
+											<h:form id="frmTablaReporteCobranza">
+												<p:growl id="msjCarteradetalle" showDetail="true"
+													sticky="false" life="4000" />
+												<div class="dgaiMonitoreo_detalle">
+
+													<p:dataTable id="tablaReporteCobranza" var="up"
+														value="#{autovaluoReporteMB.listaupas}" paginator="true"
+														stickyHeader="true"
+														emptyMessage="NO EXISTEN UPAS EN ESTE DISTRITO"
+														style="width:435px; font-size: 10px;  text-align:center;"
+														paginatorTemplate="Reg. por p&aacute;gina: {RowsPerPageDropdown}  &nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp;   {CurrentPageReport}"
+														currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+														rowsPerPageTemplate="10,15,20" rows="10"
+														paginatorPosition="top" scrollWidth="435"
+														styleClass="ui-datatable-hor-scroll">
+														<f:facet name="header">
+															<div style="color: #59A7D4; font-size: 12px;">LISTADO
+																DE UPAS POR DISTRITO</div>
+														</f:facet>
+
+														<p:column headerText="xxx">
+															<h:outputText value="#{up.lstDetalle}" />
+														</p:column>
+														<p:column headerText="yyy">
+															<h:outputText value="#{up.lstDetalle.importeupa01}" />
+														</p:column>
+
+														<p:columnGroup type="header">
+															<p:row>
+																<p:column rowspan="2" headerText="Clave" />
+																<p:column colspan="4" headerText="Direccion" />
+																<p:column rowspan="2" headerText="Uso" />
+																<p:column rowspan="2" headerText="Distrito" />
+
+																<p:column rowspan="2" headerText="1999" />
+																<p:column rowspan="2" headerText="2000" />
+																<p:column rowspan="2" headerText="2001" />
+																<p:column rowspan="2" headerText="2002" />
+																<p:column rowspan="2" headerText="2003" />
+																<p:column rowspan="2" headerText="2004" />
+																<p:column rowspan="2" headerText="2005" />
+																<p:column rowspan="2" headerText="2006" />
+																<p:column rowspan="2" headerText="2007" />
+																<p:column rowspan="2" headerText="2008" />
+																<p:column rowspan="2" headerText="2009" />
+																<p:column rowspan="2" headerText="2010" />
+																<p:column rowspan="2" headerText="2011" />
+																<p:column rowspan="2" headerText="2012" />
+																<p:column rowspan="2" headerText="2013" />
+																<p:column rowspan="2" headerText="2014" />
+																<p:column rowspan="2" headerText="Importe Total" />
+															</p:row>
+															<p:row>
+																<p:column headerText="Jr/Av/Calle" />
+																<p:column headerText="Nro." />
+																<p:column headerText="Mz-Lote" />
+																<p:column headerText="int/Dpto/Stand" />
+															</p:row>
+
+														</p:columnGroup>
+														<p:subTable var="col" value="#{up.lstDetalle}">
+															<f:facet name="header" style="text-align:left;">
+																<div style="float: left; color: #686739;">
+																	Distrito: #{col.rep_distrito}</div>
+															</f:facet>
+
+															<p:column headerText="Clave" style="text-align:right;">  
+												               #{col.rep_clave}
+												            </p:column>
+															<p:column headerText="Jr/av/calle"
+																style="text-align:right;">  
+												               #{col.rep_direccion}
+												            </p:column>
+															<p:column headerText="Nro" style="text-align:right;">  
+												               #{col.rep_numero}
+												            </p:column>
+															<p:column headerText="Mz-Lote" style="text-align:right;">  
+												               #{col.rep_mazlote}
+												            </p:column>
+
+															<p:column headerText="int/tipo/stand"
+																style="text-align:right;">  
+												               #{col.rep_stand}
+												            </p:column>
+															<p:column headerText="Uso" style="text-align:right;">  
+												               #{col.rep_uso}
+												            </p:column>
+															<p:column headerText="Distrito" style="text-align:right;">  
+												               #{col.rep_distrito}
+												            </p:column>
+															<p:column headerText="Importe 1"
+																style="text-align:right;">  
+												               #{col.importeupa01}
+												            </p:column>
+															<p:column headerText="Importe 2"
+																style="text-align:right;">  
+												               #{col.importeupa02}
+												            </p:column>
+															<p:column headerText="Importe 3"
+																style="text-align:right;">  
+												               #{col.importeupa03}
+												            </p:column>
+															<p:column headerText="Importe 4"
+																style="text-align:right;">  
+												               #{col.importeupa04}
+												            </p:column>
+															<p:column headerText="Importe 5"
+																style="text-align:right;">  
+												               #{col.importeupa05}
+												            </p:column>
+															<p:column headerText="Importe 6"
+																style="text-align:right;">  
+												               #{col.importeupa06}
+												            </p:column>
+															<p:column headerText="Importe 7"
+																style="text-align:right;">  
+												               #{col.importeupa07}
+												            </p:column>
+															<p:column headerText="Importe 8"
+																style="text-align:right;">  
+												               #{col.importeupa08}
+												            </p:column>
+															<p:column headerText="Importe 9"
+																style="text-align:right;">  
+												               #{col.importeupa09}
+												            </p:column>
+															<p:column headerText="Importe 10"
+																style="text-align:right;">  
+												               #{col.importeupa10}
+												            </p:column>
+															<p:column headerText="Importe 11"
+																style="text-align:right;">  
+												               #{col.importeupa11}
+												            </p:column>
+															<p:column headerText="Importe 12"
+																style="text-align:right;">  
+												               #{col.importeupa12}
+												            </p:column>
+															<p:column headerText="Importe 13"
+																style="text-align:right;">  
+												               #{col.importeupa13}
+												            </p:column>
+															<p:column headerText="Importe 14"
+																style="text-align:right;">  
+												               #{col.importeupa14}
+												            </p:column>
+															<p:column headerText="Importe 15"
+																style="text-align:right;">  
+												               #{col.importeupa15}
+												            </p:column>
+															<p:column headerText="Importe 16"
+																style="text-align:right;">  
+												               #{col.importeupa16}
+												            </p:column>
+															<p:column headerText="Importe total"
+																style="text-align:right;">  
+												               #{col.importeupatotal}
+												            </p:column>
+
+
+														</p:subTable>
+
+
+													</p:dataTable>
+												</div>
+											</h:form>
+
+
+											<!-- REPORTE PADRON GENERAL DE UPAS -->
+											<h:form id="frmTablaPadronUpa">
+												<div class="filaDatoLargo"
+													style="background-color: #CECECE; width: 490px; float: left;">
+													<div class="columLargo">
+														<h:outputText class="lblDatos" style="width:300px;"
+															value="PADRON GENERAL DE UPAS" />
+
+													</div>
+												</div>
+												<div class="filaDatoLargosCorto" style="margin: 20px 0 0 0;">
+													<div style="width: 370px;">
+														<h:outputText styleClass="lblDatos" value="Mora:" />
+														<p:inputText id="idmora" styleClass="txtDescripcion" onblur="cargaproceso();"
+															value="#{autovaluoReporteMB.mora}" >
+														<p:ajax 
+																listener="#{autovaluoReporteMB.mostrarReporteUpaPadron}" oncomplete="cargaterminado();"
+																update=":frmTablaReporteUpaPadron:tablaReporteUpaPadron, :frmTablaReporteUpaPadron" />
+															</p:inputText>
+													</div>
+												</div> 
+												
+												<div style="float: right; margin: 15px 50px 15px 0;">
+
+													<p:commandLink oncomplete="dlgBuscarContrato.show();"
+														actionListener="#{autovaluoReporteMB.ExcelReporteUpaPadron}"
+														ajax="false" style="float:left;margin-left:5px;">
+														<p:graphicImage width="28" height="28"
+															value="/resources/icons/tipoArchivo/xls.png"
+															alt="Detalle Contrato" title="detalle Contrato" />
+													</p:commandLink>
+													<p:commandLink oncomplete="dlgBuscarContrato.show();"
+														actionListener="#{autovaluoReporteMB.PDFReporteUpaPadron}"
+														ajax="false" style="float:left;margin-left:5px;">
+														<p:graphicImage width="28" height="28"
+															value="/resources/icons/tipoArchivo/pdf.png" alt="pdf"
+															title="pdf" />
+													</p:commandLink>
+												</div>
+											</h:form>
+
+											<h:form id="frmTablaReporteUpaPadron">
+												<p:growl id="msjCarteradetalle" showDetail="true"
+													sticky="false" life="4000" />
+												<div class="dgaiMonitoreo_detalle">
+
+													<p:dataTable id="tablaReporteUpaPadron" var="dc"
+														value="#{autovaluoReporteMB.lstDetallecarteras}"
+														paginator="true" stickyHeader="true"
+														emptyMessage="NO EXISTEN UPAS EN ESTE DISTRITO"
+														style="width:435px; font-size: 10px;  text-align:center;"
+														paginatorTemplate="Reg. por p&aacute;gina: {RowsPerPageDropdown}  &nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp;   {CurrentPageReport}"
+														currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+														rowsPerPageTemplate="10,15,20" rows="10"
+														paginatorPosition="top" scrollWidth="435"
+														styleClass="ui-datatable-hor-scroll">
+														<f:facet name="header">
+															<div style="color: #59A7D4; font-size: 12px;">PATRON
+																GENERAL DE UPAS</div>
+														</f:facet>
+
+														<p:column headerText="INMUEBLE">
+															<h:outputText
+																value="#{dc.contrato.upa.inmueble.direccion}" />
+														</p:column>
+														<p:column headerText="Clave">
+															<h:outputText value="#{dc.contrato.upa.inmueble.clave}" />
+														</p:column>
+														<p:column headerText="Calles">
+															<h:outputText value="#{dc.contrato.upa.inmueble.direccion}" />
+														</p:column>
+														<p:column headerText="Nro.">
+															<h:outputText value="#{dc.contrato.upa.inmueble.numeroprincipal}" />
+														</p:column>
+														<p:column headerText="Mz-Lote">
+															<h:outputText value="#{dc.contrato.upa.inmueble.manzana} Lote #{dc.contrato.upa.inmueble.lote}" />
+														</p:column>
+														<p:column headerText="int/Dpto/Stand">
+															<h:outputText value="#{dc.contrato.upa.nombrenuminterior}" />
+														</p:column>
+														<p:column headerText="Distrito">
+															<h:outputText value="#{dc.contrato.upa.inmueble.ubigeo.dist}" />
+														</p:column>
+
+														<p:column headerText="Uso">
+															<h:outputText value="#{dc.contrato.upa.uso.descripcion}" />
+														</p:column>
+														<p:column headerText="Contrato">
+															<h:outputText value="#{dc.contrato.nrocontrato}" />
+														</p:column>
+														<p:column headerText="Suscripcion">
+															<h:outputText value="#{dc.contrato.sifechasuscrito}" />
+														</p:column>
+														<p:column headerText="Desde">
+															<h:outputText value="#{dc.contrato.iniciocontrato}" />
+														</p:column>
+														<p:column headerText="Hasta">
+															<h:outputText value="#{dc.contrato.fincontrato}" />
+														</p:column>
+														<p:column headerText="Penalidad">
+														
+														</p:column>
+														
+														<p:column headerText="Condicion del contrato">
+															<h:outputText value="#{dc.contrato.estado}" />
+														</p:column>
+														<p:column headerText="renta dolares">
+															<h:outputText value="#{dc.contrato.montototaldolar}" />
+														</p:column>
+														<p:column headerText="de 1 a 40">
+															<h:outputText value="#{dc.contrato.de1a40?'1':'0'}" />
+														</p:column>
+														<p:column headerText="de 41 a 400">
+															<h:outputText value="#{dc.contrato.de41a400?'1':'0'}" />
+														</p:column>
+														<p:column headerText="de 401 a 4000">
+															<h:outputText value="#{dc.contrato.de401a4000?'1':'0'}" />
+														</p:column>
+														<p:column headerText="de 4001 a 40000">
+															<h:outputText value="#{dc.contrato.de4001a40000?'1':'0'}" />
+														</p:column>
+														<p:column headerText="Renta Soles">
+															<h:outputText value="#{dc.contrato.montototalsoles}" />
+														</p:column>
+														<p:column headerText="De 1 a 99">
+															<h:outputText value="#{dc.contrato.de1a99?'1':'0'}" />
+														</p:column>
+														<p:column headerText="De 100 a 999">
+															<h:outputText value="#{dc.contrato.de100a999?'1':'0'}" />
+														</p:column>
+														<p:column headerText="De 1000 a 9999">
+															<h:outputText value="#{dc.contrato.de1000a9999?'1':'0'}" />
+														</p:column>
+														<p:column headerText="De 10000 a 48000">
+															<h:outputText value="#{dc.contrato.de10000a48000?'1':'0'}" />
+														</p:column>
+														<p:column headerText="Cartera de">
+															<h:outputText value="#{dc.cartera.numero}" />
+														</p:column>
+														
+														<p:column headerText="Condicion">
+															<h:outputText value="#{(dc.contrato.upa.inmueble.clave)? 'moroso' :'al dia' }" />
+														</p:column>
+														<p:column headerText="Area terreno">
+															<h:outputText value="#{dc.contrato.upa.areaterreno}" />
+														</p:column>
+														<p:column headerText="Area constr.">
+															<h:outputText value="#{dc.contrato.upa.areaconstruida}" />
+														</p:column>
+														
+														
+														<p:column headerText="Situacion">
+															<h:outputText value="#{dc.contrato.upa.inmueble.situacion}" />
+														</p:column>
+														
+														<p:column headerText="Monto deuda">
+															<h:outputText value="#{dc.contrato.upa.inmueble.clave}" />
+														</p:column>
+														<p:column headerText="Ocupante actual">
+															<h:outputText value="#{dc.contrato.inquilino.nombre}  #{dc.contrato.inquilino.apellidopat} #{dc.contrato.inquilino.apellidomat}" />
+														</p:column>
+														<p:column headerText="Ocupante">
+															<h:outputText value="#{dc.contrato.upa.inmueble.clave}" />
+														</p:column>
+														<p:column headerText="Observaciones">
+															<h:outputText value="#{dc.contrato.upa.obsupa}" />
+														</p:column>
+
+<!-- 														<p:columnGroup type="header"> -->
+<!-- 															<p:row> -->
+<!-- 																<p:column headerText="INMUEBLE" /> -->
+<!-- 																<p:column headerText="Clave" /> -->
+<!-- 																<p:column headerText="Calles" /> -->
+<!-- 																<p:column headerText="Nro." /> -->
+<!-- 																<p:column headerText="Mz-Lote" /> -->
+<!-- 																<p:column headerText="int/Dpto/Stand" /> -->
+<!-- 																<p:column headerText="Distrito" /> -->
+
+<!-- 																<p:column headerText="Uso" /> -->
+<!-- 																<p:column headerText="Contrato" /> -->
+<!-- 																<p:column headerText="Suscripcion" /> -->
+<!-- 																<p:column headerText="Desde" /> -->
+<!-- 																<p:column headerText="Hasta" /> -->
+<!-- 																<p:column headerText="Penalidad" /> -->
+<!-- 																<p:column headerText="Incremento" /> -->
+<!-- 																<p:column headerText="Condicion del contrato" /> -->
+<!-- 																<p:column headerText="renta dolares" /> -->
+<!-- 																<p:column headerText="de 1 a 40" /> -->
+<!-- 																<p:column headerText="de 41 a 400" /> -->
+<!-- 																<p:column headerText="de 401 a 4000" /> -->
+<!-- 																<p:column headerText="de 4001 a 40000" /> -->
+<!-- 																<p:column headerText="Renta Soles" /> -->
+<!-- 																<p:column headerText="De 1 a 99" /> -->
+<!-- 																<p:column headerText="De 100 a 999" /> -->
+<!-- 																<p:column headerText="De 1000 a 9999" /> -->
+<!-- 																<p:column headerText="De 10000 a 48000" /> -->
+<!-- 																<p:column headerText="Cartera de" /> -->
+<!-- 																<p:column headerText="Situacion de propiedad" /> -->
+<!-- 																<p:column headerText="Condicion" /> -->
+<!-- 																<p:column headerText="Area terreno" /> -->
+<!-- 																<p:column headerText="Area constr." /> -->
+<!-- 																<p:column headerText="Estado inmueble" /> -->
+<!-- 																<p:column headerText="Documento oficial" /> -->
+<!-- 																<p:column headerText="Situacion" /> -->
+<!-- 																<p:column headerText="Area(m2)" /> -->
+<!-- 																<p:column headerText="Monto deuda" /> -->
+<!-- 																<p:column headerText="Ocupante actual" /> -->
+<!-- 																<p:column headerText="Ocupante" /> -->
+<!-- 																<p:column headerText="Observaciones" /> -->
+
+<!-- 															</p:row> -->
+<!-- 															<p:row> -->
+
+<!-- 															</p:row> -->
+
+<!-- 														</p:columnGroup> -->
+<!-- 														<p:subTable var="col" value="#{up.lstDetalle}"> -->
+<!-- 															<f:facet name="header" style="text-align:left;"> -->
+<!-- 																<div style="float: left; color: #686739;"> -->
+<!-- 																	Distrito: #{col.rep_distrito}</div> -->
+<!-- 															</f:facet> -->
+
+<!-- 															<p:column headerText="Clave" style="text-align:right;">   -->
+<!-- 												               #{col.rep_clave} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Jr/av/calle" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.rep_direccion} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Nro" style="text-align:right;">   -->
+<!-- 												               #{col.rep_numero} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Mz-Lote" style="text-align:right;">   -->
+<!-- 												               #{col.rep_mazlote} -->
+<!-- 												            </p:column> -->
+
+<!-- 															<p:column headerText="int/tipo/stand" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.rep_stand} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Uso" style="text-align:right;">   -->
+<!-- 												               #{col.rep_uso} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Distrito" style="text-align:right;">   -->
+<!-- 												               #{col.rep_distrito} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 1" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa01} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 2" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa02} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 3" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa03} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 4" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa04} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 5" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa05} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 6" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa06} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 7" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa07} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 8" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa08} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 9" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa09} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 10" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa10} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 11" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa11} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 12" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa12} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 13" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa13} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 14" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa14} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 15" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa15} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe 16" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupa16} -->
+<!-- 												            </p:column> -->
+<!-- 															<p:column headerText="Importe total" -->
+<!-- 																style="text-align:right;">   -->
+<!-- 												               #{col.importeupatotal} -->
+<!-- 												            </p:column> -->
+
+
+<!-- 														</p:subTable> -->
+
+
+													</p:dataTable>
+												</div>
+											</h:form>
+
+											<!-- 	PANEL INFORMATIVO	-->
+
+
+
+										</div>
+										<h:form>
+											<div class="cartera_ColumInfo">
+
+												<div class="paginaInteriorCartera">
+													<div class="subcontenidoCreador_Cabecera"
+														style="width: 172px;">
+
+														<div class="subcontenidoInfo_descripcionTitulo">Usuario
+															Creador</div>
+													</div>
+
+													<div class="subcontenidoInfo_detContenidoNombre"
+														style="width: 180px">
+
+														<div class="detalleTopfiltroDerecha2"
+															style="width: 80px; text-align: right;">
+															<h:outputText
+																styleClass="subcontenidoInfo_detUsuarioFila1"
+																style="font-size:9pt"
+																value="#{carteraMB.usuariocreador}" />
+															<br />
+															<h:outputText
+																styleClass="subcontenidoInfo_detUsuarioFila2"
+																value="#{carteraMB.cargo}" />
+															<br />
+															<h:outputText
+																styleClass="subcontenidoInfo_detUsuarioFila3"
+																value="#{carteraMB.fecha}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</div>
+														<div class="iconoUserCreador">
+															<p:graphicImage width="60" height="60"
+																value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</h:form>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

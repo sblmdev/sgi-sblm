@@ -1,0 +1,44 @@
+horas = 0;
+minutos = 0;
+segundos = 0;
+function tiempoPermanencia(){ 
+	if (document.getElementById("form:avisoContador").value == "empieza" ||
+		document.getElementById("form:avisoContador").value == "empiezaLlamada") {
+		segundos++;
+	    if (segundos == 60) {
+	        segundos = 0;
+	        minutos++;
+	    }
+	            
+	    if (minutos == 60) {
+	        minutos = 0;
+	        horas++;
+	    }
+	            
+	    if (segundos.toString().length == 1 ) {
+	        segundos = 0 + '' + segundos;
+	    }
+	            
+	    if (minutos.toString().length == 1 ) {
+	        minutos = 0 + '' + minutos;
+	    }
+	            
+	    if (horas.toString().length == 1 ) {
+	        horas = 0 + '' + horas;
+	    }
+	            
+	    chronos = horas + ':' +minutos + ':' + segundos;
+	    
+	    if (document.getElementById("form:avisoContador").value == "empieza") {
+	    	document.getElementById("form:time").value = chronos;
+	    } else {
+	    	document.getElementById("form:time1").value = chronos;
+	    }
+	    
+	    
+	} else if (document.getElementById("form:avisoContador").value == "termina") {
+		document.getElementById("form:time").value = "";
+		document.getElementById("form:time1").value = "";
+	}
+}
+setInterval("tiempoPermanencia()", 1000); 

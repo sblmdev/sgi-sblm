@@ -1,0 +1,69 @@
+	function initApplet(){
+		document.applets[0].API_ServerInit("172.29.56.81");
+	}
+
+	function webphonetojs(varr)
+    {
+		var inCommingNum;
+		//CONTESTAR Y RECHAZAR
+		if(varr.indexOf('Ringing') >= 0){
+			var inCommingCall=varr.slice(varr.lastIndexOf(",")+1, varr.length);
+			inCommingNum = inCommingCall.slice(0,inCommingCall.indexOf(' '));
+			/*if(confirm('Incomming call from: ' + inCommingNum)){
+				voipAnswer();
+			}else{
+				voipReject();
+			}*/
+		}
+        //todo: handle incoming calls and other events here
+
+    }
+	
+	function voipRegister(username, password)
+    {
+        document.applets[0].API_Register("172.29.56.81", "2307", "23070");  	
+    }
+
+    function voipCall(number)
+    {
+        
+        document.applets[0].API_Call(-1, number); 
+    }
+
+    function voipHangup()
+    {
+        
+        document.applets[0].API_Hangup(-2); 	
+    }
+	
+	function voipMute()
+    {
+        
+        document.applets[0].API_MuteEx(-1,true,1); 	
+    }
+	
+	function voipUnMute()
+    {
+        
+        document.applets[0].API_MuteEx(-1,false,1);	
+    }
+	function voipAnswer()
+    {
+        document.applets[0].API_Accept(-1);
+    }
+	function voipHold()
+    {
+        
+        document.applets[0].API_Hold(-1,true);
+    }
+	function voipReloadHold()
+    {
+        
+        document.applets[0].API_Hold(-1,false);
+    }
+	function voipReject()
+    {
+        
+        document.applets[0].API_Reject(-1);
+    }
+	

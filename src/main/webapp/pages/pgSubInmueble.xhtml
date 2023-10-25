@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilox.css" rel="stylesheet"
+		type="text/css" />
+	<title>SBLM-SOCIEDAD DE BENEFICENCIA DE LIMA METROPOLITANA</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+			 <div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="contrato_IconoIdentificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Inmueble</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Mantenimiento</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo" style="background-color: white;">
+					<h:form id="frmInmueble" enctype="multipart/form-data">
+					
+						   <p:toolbar styleClass="ui-saju-toolbar">
+								<p:toolbarGroup align="left">
+								
+										<p:growl id="growlBoton" showDetail="true" sticky="true"
+											life="8000" autoUpdate="true" />
+										<p:commandButton  icon="ui-icon-disk" ajax="true" value="Grabar Inmueble"
+											actionListener="#{inmuebleMB.validarGrabarInmueble}"
+											update="growlBoton"/>
+										<p:growl id="growlSeleccionarItemCancelar" showDetail="true"
+										sticky="true" />
+										<p:commandButton value="Nuevo Inmueble" icon="ui-icon-plus"
+											actionListener="#{inmuebleMB.limpiarformulario}"/>
+											
+										<p:commandButton value="Eliminar Inmueble" icon="ui-icon-closethick"
+											actionListener="#{inmuebleMB.validarEliminarInmueble}"
+											update="growlBoton" />
+										<p:spacer width="1" height="22" style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+										<p:commandButton  icon="ui-icon-pin-w" actionListener="#{inmuebleMB.validarAdjuntarArchivo}"   title="adjuntar documento"/>
+								
+										
+								</p:toolbarGroup>
+								<p:toolbarGroup align="right">
+										
+										<p:commandButton  icon="ui-icon-search" oncomplete="dlgListaInmuebles.show();" title="Buscar inmueble"/>
+								</p:toolbarGroup>
+							</p:toolbar>
+							
+							<p:confirmDialog message="¿Desea Guardar Inmueble?"
+										header="Registro Inmueble" severity="alert"
+										widgetVar="dlgRegistrarInmueble">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmInmueble"
+											actionListener="#{inmuebleMB.grabarInmueble}"
+											oncomplete="dlgRegistrarInmueble.hide();"
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar" 
+											oncomplete="dlgRegistrarInmueble.hide();"
+											icon="icon-cancel" />
+
+							</p:confirmDialog>
+							
+							<p:confirmDialog message="¿Desea guardar adjuntar archivos a inmueble?"
+										header="Registro Adjuntos" severity="alert"
+										widgetVar="dlgRegistroAdjuntos">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update="listaArchivoAdjunto"
+											actionListener="#{inmuebleMB.grabarArchivoAdjunto}"
+											oncomplete="dlgRegistroAdjuntos.hide();"
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar" 
+											oncomplete="dlgRegistroAdjuntos.hide();"
+											icon="icon-cancel" />
+
+							</p:confirmDialog>
+							
+							<p:dialog widgetVar="dglAdjuntarArchivo" header="Vista Previa" width="auto" height="auto">
+								 <p:outputPanel id="listaArchivoAdjunto">
+									 <p:scrollPanel
+										style="width:450px;height:auto;max-height: 200px;"
+										mode="native">
+										<p:dataTable id="datalist"
+											value="#{inmuebleMB.listaArchivoAdjunto}" var="adjunto" styleClass="noheader" style="text-align: center;"
+											emptyMessage="No se ha adjuntado ningún archivo a la vista previa">
+											<f:facet name="header">
+												<p:growl id="growlAgregarFila" showDetail="true" sticky="true"
+												life="2000" autoUpdate="true" />
+												<p:commandLink title="Agregar archivo" id="btnAgregar" style="text-align:center;"  
+													update=":frmInmueble:agregarArchivoAdjunto" actionListener="#{inmuebleMB.limpiarAgregarArchivoAdjunto}"
+													onclick="dglAgregarArchivoAdjunto.show();">
+													<p:graphicImage width="20" height="20"
+														value="../resources/images/monitoreoMesaPartes/addUsuario.png" />
+												</p:commandLink>
+											</f:facet>
+											<p:column headerText="T&iacute;tulo">
+												<h:outputText value="#{adjunto.titulo}" />
+											</p:column>
+	
+											<p:column headerText="Descripci&oacute;n">
+												<h:outputText value="#{adjunto.descripcion}" />
+											</p:column>
+											<p:column headerText="Tipo">
+												<p:graphicImage width="20" height="20" 		value="../resources/icons/tipoArchivo/#{adjunto.tipo}.png" />
+											</p:column>
+										</p:dataTable>
+	
+									</p:scrollPanel>
+										
+										
+										<center>
+											<p:commandButton value="Grabar" actionListener="#{inmuebleMB.validarGrabarAdjuntos}"/>
+										</center>
+								</p:outputPanel>
+							</p:dialog>
+							<p:dialog widgetVar="dglAgregarArchivoAdjunto" header="Datos de archivo" width="auto" height="auto" modal="true">
+										<p:outputPanel id="agregarArchivoAdjunto">
+										<table width="200" style="margin: 15px;" cellspacing="10">
+											<tr>
+																<td width="75%">
+																	<h:outputText  value="T&iacute;tulo: " />
+																</td>
+																<td width="75%">
+																	<p:inputText  value="#{inmuebleMB.archivoAdjuntoBean.titulo}" style="width:240px;"/> 
+																</td>
+
+											 </tr>
+											
+											<tr>
+																<td width="25%">
+																	<h:outputText  value="Descripci&oacute;n:" />
+																</td>
+																<td width="75%">
+																	<p:inputTextarea  value="#{inmuebleMB.archivoAdjuntoBean.descripcion}" style="width:240px;" rows="3"/> 
+																</td>
+											 </tr>
+									</table>
+																<p:fileUpload  fileUploadListener="#{inmuebleMB.handleFileUpload}" mode="advanced" auto="true"   label="Seleccione archivo" />
+									</p:outputPanel>
+									<br/>
+									<br/>
+									<br/>
+									<center>
+									<p:commandButton value="Agregar(Vista Previa)" actionListener="#{inmuebleMB.validarAgregarAdjunto}"  update="listaArchivoAdjunto" 
+									icon="ui-icon-circle-plus"/>
+									</center>
+							</p:dialog>
+							
+							<p:dialog header="Clic para ir a documento" widgetVar="dlgInformacionDocumento" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="auto" height="auto">
+								        <p:outputPanel id="informacionDocumento" style="text-align:center;">
+
+<!-- Input oculto para leer mediante jquery el valor, y usarlo para abrir la url correcta en el  alfresco  -->
+<h:inputText id="uid" value="#{inmuebleMB.archivoAdjuntoBean.uid}" style="visibility: hidden;"/>
+
+											<p:panel  style="text-align:center">
+												<p:commandLink  onclick="abrirDocumentoEnAlfresco();">
+														 <p:graphicImage   value="../resources/icons/tipoArchivo/#{inmuebleMB.archivoAdjuntoBean.tipo}.png"  title="clic para abrir"/>
+												</p:commandLink>		     
+												
+								        	</p:panel>
+								        		
+<!-- Input oculto para leer mediante jquery el valor, y usarlo para abrir la url correcta en el  alfresco  -->
+<h:inputText id="uidAlfresco" value="#{inmuebleMB.archivoAdjuntoBean.uidAlfresco}" style="visibility: hidden;"/>
+								        </p:outputPanel>	
+							 </p:dialog>
+							
+							
+							<p:tabView>
+							
+								<p:tab id="tabGenerales" title="Generales">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+																				
+
+
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Direcci&oacute;n(*):" />
+																	</td>
+																<td width="25%">
+																	<p:inputText id="direccion"  value="#{inmuebleMB.inmuebleBean.direccion}" style="width: 200px;"/>
+																	<p:watermark for="direccion" value="Ejm:Jr. Puno/Av.Alfonso Ugarte" />
+																 </td>
+																  <td width="20%">
+																	<h:outputText  value="N&uacute;mero:" />
+																</td>
+																<td width="25%">
+																	<p:inputText value="#{inmuebleMB.inmuebleBean.numeroprincipal}" />
+																 </td>	
+											 </tr>
+											 
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Manzana:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Lote:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>	
+											 </tr>
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Urbanizacion:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Etapa:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>	
+											 </tr>
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Tipo Via:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Tipo Interior:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>	
+											 </tr>
+											  <tr>
+																 <td width="20%">
+																	<h:outputText  value="Nro. Grupal:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>	
+											 </tr>
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Zona:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Sector:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>	
+											 </tr>	
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Ubicado en Piso:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Sub Lote:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>	
+											 </tr>
+											 <tr>
+																<td width="20%">
+																	<h:outputText  value="Referencia:" />
+																</td>
+																<td width="25%">
+																	<p:inputText />
+																 </td>
+											 </tr>
+											 
+											  <tr>
+																<td width="20%">
+																	<h:outputText  value="Habilitacion Urbana:" />
+																</td>
+																<td width="25%">
+																	<p:selectBooleanCheckbox id="checkHU"
+																		value="#{inmuebleMB.inmuebleBean.sihabilitacionurbana}">
+																	</p:selectBooleanCheckbox>
+																 </td>
+																 <td width="20%">
+																	<h:outputText  value="Ubigeo(*):" />
+																</td>
+
+											 </tr>										 												 										 
+									</table>
+								</p:tab>
+
+								<p:tab id="tabAdjuntos" title="Adjuntos">
+								
+											<p:dataTable var="archivo"  value="#{inmuebleMB.listaArchivosReferencia}"
+												emptyMessage="No ha se ha encontrado documentos" style="text-align:center;" >
+												<f:facet name="header">
+													<h:outputText value=""/>
+												</f:facet>
+											    <p:column headerText="#">
+											    </p:column>
+											    <p:column headerText="T&iacute;tulo">
+											        <h:outputText value="#{archivo.titulo}" />
+											    </p:column>
+											 	<p:column headerText="Descripci&oacute;n">
+											        <h:outputText value="#{archivo.descripcion}" />
+											    </p:column>
+											    <p:column headerText="Tipo">
+											        <h:outputText value="#{archivo.tipo}" />
+											    </p:column>
+											 
+											    <p:column headerText="Usuario Creador">
+											        <h:outputText value="#{archivo.usrcre}" />
+											    </p:column>
+											 
+											    <p:column headerText="Fecha Creaci&oacute;n">
+											        <h:outputText value="#{archivo.feccre}" />
+											    </p:column>
+											    
+											   <p:column style="width:32px;text-align: center">
+										             <p:commandButton update=":frmInmueble:informacionDocumento" oncomplete="dlgInformacionDocumento.show();" icon="ui-icon-search" title="Abrir">
+										                <f:setPropertyActionListener value="#{archivo}" target="#{inmuebleMB.archivoAdjuntoBean}" />
+										            </p:commandButton>
+										        </p:column>
+			    
+											</p:dataTable>
+									
+								</p:tab>											
+							</p:tabView>
+							
+					</h:form>
+					
+					<h:form id="frmConsulta">
+								<p:dialog header="Consulta SubInmueble" 
+										width="auto" height="auto" closable="true" closeOnEscape="true" showEffect="slide" hideEffect="slide"
+										resizable="false" widgetVar="dlgListaInmuebles"   
+										style="border-width:9px;border-style:solid;  border-color:#ffc600;">
+					
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="basic" value="Consulta:" />
+										        <p:selectOneListbox id="basic" >
+										            <f:selectItem itemLabel="Direcci&oacute;n:" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="consultaInmueble" actionListener="#{inmuebleMB.buscarInmueble}" update="tblInmuebles"/>
+										        <p:inputText id="patron"  value="#{inmuebleMB.valorbusqueda}" onkeypress="if (event.keyCode == 13) { consultaInmueble(); return false; }" >
+										        	<p:watermark for="patron" value="Ingrese campo"/>
+										        </p:inputText>
+			 						</h:panelGrid>
+									
+									<p:dataTable id="tblInmuebles" var="inmueble" value="#{inmuebleMB.listaInmuebleBean}" 
+										emptyMessage="0 registros encontrados" filteredValue="#{inmuebleMB.listaInmuebleBeanFilter}"
+										style="width:690px; font-size: 10px;  margin-left: 15px;text-aling:center;"
+										styleClass="ui-datatable-hor-scroll"
+										rowKey="#{inmueble.idinmueble}" rowIndexVar="row"
+										selection="#{inmuebleMB.inmuebleBean}" selectionMode="single"
+										paginator="true" rows="15"
+										paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="15,30,45">
+										<p:ajax event="rowSelect"
+											listener="#{inmuebleMB.setearInmuebleSeleccionado}" 
+											update=":frmInmueble" oncomplete="dlgListaInmuebles.hide();" />
+
+										<p:column headerText="Direccion"
+											filterBy="#{inmueble.direccion}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.direccion}" />
+										</p:column>
+
+										<p:column headerText="Nº Principal"
+											filterBy="#{inmueble.numeroprincipal}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.numeroprincipal}" />
+										</p:column>
+
+										
+										<p:column headerText="Distrito"
+											filterBy="#{inmueble.distrito}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.distrito}" />
+										</p:column>
+
+										<p:column headerText="Provincia"
+											filterBy="#{inmueble.provincia}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.provincia}" />
+										</p:column>
+
+										<p:column headerText="Departamento"
+											filterBy="#{inmueble.departamento}"
+											filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.departamento}" />
+										</p:column>
+										
+										<p:column headerText="U. Creador"
+											filterBy="#{inmueble.usrcre}" filterMatchMode="contains">
+											<h:outputText value="#{inmueble.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											filterBy="#{inmueble.feccre}" filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											filterBy="#{inmueble.usrmod}" filterMatchMode="contains">
+											<h:outputText value="#{inmueble.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											filterBy="#{inmueble.fecmod}" filterMatchMode="startsWith">
+											<h:outputText value="#{inmueble.fecmod}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+
+									</p:dataTable>
+							</p:dialog>
+					</h:form>
+				
+				</div>
+			 </div>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

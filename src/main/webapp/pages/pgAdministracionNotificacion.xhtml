@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+		
+				<div class="contenidoPrincipal_FondoPrincipal">
+						<div class="contenidoPrincipal_fondoIdentificador">
+							<!-- TITULO SUBCONTENIDO -->
+							<div class="recaudacion_iconoTitulo"></div>
+							<div class="contenidoPrincipal_SubContenido">
+								<label class="contenidoPrincipal_lblTituloSubContenido">Administración</label><br/>
+								<label class="contenidoPrincipal_lblSubTituloSubContenido">Configuración de Notificaciones	</label>
+							</div>
+						</div>
+			
+			
+					<div class="contenidoPrincipal_SubFondo">
+							<h:form id="frmAdministracionNotificacion">
+							 <p:panel>
+								 <p:tabView style="background-color:white;margin:10px;">
+							        <p:tab title="Notificaciones de auditoría">
+							        
+							       				
+								        <fieldset class="fieldset-formulario" style="background: transparent;">
+								        	<h:panelGrid columns="2" cellspacing="10">
+								        	
+														<h:outputText value="Acción de auditoría: "/>
+										        		<p:selectOneMenu value="#{administrarNotificacionMB.idaccionSeleccionado}" filter="true" filterMatchMode="startsWith" style="margin-left:10px; ">
+																		<f:selectItem itemLabel="Seleccionar" itemValue="0" />
+																		<f:selectItems value="#{administrarNotificacionMB.listaAccion}" var="accion" itemLabel="#{accion.nombre}" itemValue="#{accion.idaccion}" />	
+														
+															<p:ajax event="change" listener="#{administrarNotificacionMB.obtenerUsuarioAccion}" update=":frmAdministracionNotificacion:tblUsuario"/>
+														</p:selectOneMenu>
+									        		
+												
+											</h:panelGrid>
+											
+										</fieldset>	
+									
+							        </p:tab>
+						    	</p:tabView>
+						    	
+						    	<p:spacer height="10"/>	
+											<p:dataTable id="tblUsuario" value="#{administrarNotificacionMB.listaUsuariosAccion}" var="usuario" style="width:100%;"
+																		 emptyMessage="No se encontraron registros" selection="#{administrarNotificacionMB.accionUsuarioBean}" selectionMode="single"
+																		 rowKey="#{ usuario.idusuario }" rowIndexVar="rowIndex"
+																		 paginator="true" rows="15" paginatorPosition="bottom"
+												                         currentPageReportTemplate="Registros: {totalRecords} - [ Página : {currentPage}/{totalPages} ]"
+												                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+												                         rowsPerPageTemplate="15,25,35,45">
+												                        
+												                
+																		<f:facet name="header">
+																			<p:commandLink style="text-align:center;" actionListener="#{administrarNotificacionMB.agregarUsuarioNotificacion}" title="Agregar Usuario"
+																						   update=":frmMaestra:listaMensajes">
+																				<p:graphicImage width="20" height="20" value="../resources/images/addUsuario.png" />
+																			</p:commandLink>
+																			<p:spacer width="10"/>
+																			<p:commandLink  style="text-align:center;"  actionListener="#{administrarNotificacionMB.quitarUsuarioNotificacion}" title="Quitar Usuario"
+																							update=":frmMaestra:listaMensajes">
+																				<p:graphicImage width="20" height="20" value="../resources/images/deleteUsuario.png" />
+																			</p:commandLink>
+																		</f:facet>
+																	
+																		<p:column style="text-align: center;" headerText="Nro." width="5%">
+																			<h:outputText value="#{rowIndex + 1}" />
+																		</p:column>
+												
+																		<p:column headerText="Nombres Usuario" style="text-align: center;" width="20%">
+																			<h:outputText value="#{ usuario.nombresUsuario }" />
+																		</p:column>
+												
+																		<p:column headerText="Correo Usuario" style="text-align: center;" width="20%">
+																			<h:outputText value="#{ usuario.correoUsuario }" />
+																		</p:column>
+										
+								</p:dataTable>
+						   </p:panel> 	
+						    	 <p:dialog id="dlgAgregarUsuario" width="auto" height="auto"
+						                  header="Agregar Usuario" resizable="false"
+						                 widgetVar="dlgAgregarUsuario" >
+						            
+						            <fieldset class="fieldset-formulario" style="background: transparent;">
+						            
+						            	<h:panelGrid style="width: 100%;" styleClass="panelGridSinoe" columns="2">
+								        		<p:selectOneMenu value="#{administrarNotificacionMB.idusuarioSeleccionado}" filter="true" filterMatchMode="contains" >
+																<f:selectItem itemLabel="Seleccionar" itemValue="0" />
+																<f:selectItems value="#{administrarNotificacionMB.listaUsuarios}" var="usuario" itemLabel="#{usuario.nombrescompletos}" itemValue="#{usuario.idusuario}" />	
+												
+												</p:selectOneMenu>
+										</h:panelGrid>
+										<br/>
+										<center>
+											<p:commandButton value="Grabar" actionListener="#{administrarNotificacionMB.grabarAgregarUsuarioNotificacion}" icon="ui-icon-disk" update=":frmMaestra:listaMensajes,tblUsuario"/>
+										</center>
+									</fieldset>
+								</p:dialog>
+								
+								<p:dialog id="dlgQuitarUsuario" width="auto" height="auto"
+						                  header="Quitar usuario asociado" resizable="false"
+						                 widgetVar="dlgQuitarUsuario" >
+						            
+						            <fieldset class="fieldset-formulario" style="background: transparent;">
+						            
+						            	<h:panelGrid style="width: 100%;" styleClass="panelGridSinoe" columns="1">
+												<h:outputText value="¿Usted esta seguro de quitar el usuario asociado de la acción?"/>
+										</h:panelGrid>
+										<br/>
+										<center>
+											<p:commandButton value="Grabar" actionListener="#{administrarNotificacionMB.grabarQuitarUsuarioNotificacion}" icon="ui-icon-disk" update=":frmMaestra:listaMensajes,tblUsuario"/>
+										</center>
+									</fieldset>
+								</p:dialog>
+						   </h:form>
+					</div>
+				
+				
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

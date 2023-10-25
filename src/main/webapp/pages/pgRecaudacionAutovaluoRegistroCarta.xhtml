@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="recaudacion_iconoTitulo"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Recaudación/Autoval&uacute;o</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Monitoreo-Recaudación
+							y Autoval&uacute;o</label>
+					</div>
+				</div>
+				<div class="menuAzul_fondoOpciones">
+					<div class="menuAzul_submenuOpciones">
+						<p:commandLink id="idmenuAzul_submenOpc1"   onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionSupervisor.jsf'"
+							styleClass="menuAzul_submenOpc1" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc1Submenu.png"
+								alt="Bandeja" title="Supervisor" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_submenOpc2"  onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionCobranza.jsf'"
+							styleClass="menuAzul_submenOpc2" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc2Submenu.png"
+								alt="Cobranzas" title="Recaudacion" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_submenOpc3" onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluo.jsf'"
+							styleClass="menuAzul_submenOpc3" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc3Submenu.png"
+								alt="Arbitrios" title="Autovaluo" />
+						</p:commandLink>
+
+					</div>
+					<div class="menuAzul_submenuItems">
+					<p:commandLink id="idmenuAzul_bandejaSubmenu"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluo.jsf'"
+							styleClass="menuAzul_bandejaSubmenu"
+							oncomplete="tabDerivacion();">
+							<p:graphicImage styleClass="menuAzul_imgsubmenbandeja"
+								value="/resources/images/recaudacion/menuAzul_bandejaSubmenu.png"
+								alt="Bandeja" title="Bandeja" />
+							<h:outputText style="float:left;margin-left:5px; margin-top:2px;"
+								value="Bandeja" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_arbitriosSubmenu"
+							styleClass="menuAzul_arbitriosSubmenu"
+							oncomplete="tabDerivacion();">
+							<p:graphicImage styleClass="menuAzul_imgsubmenarbitrios"
+								width="22" height="22"
+								value="/resources/images/recaudacion/ico_b.png" alt="arbitrios"
+								title="arbitrios" />
+							<h:outputText
+								style="float:left;margin-left:5px; margin-top:7px;color:white;"
+								value="Arbitrios" />
+						</p:commandLink>
+
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+
+					<!-- CONTENIDO MODIFICABLE -->
+					<div class="recaudacion_iconoSubTitulo">
+					<h:outputText id="arren_lblSubtituloDesc2"
+							style="float:left;margin-left:48px; margin-top:18px;font-size:10px;"
+							value="Carta" />
+					</div>
+					<div id="arren_lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">
+						<h:outputText style="float:left;margin-left:5px; margin-top:2px;"
+							value="Autovalúo" />
+					</div>
+					<p:commandLink id="idDivCartas" styleClass="arren_btnAtendidos"
+						style="background-color: #fed02e;"
+						onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluoRegistroReporte.jsf'">
+						<div class="btncentrado">Reporte</div>
+					</p:commandLink>
+					<p:commandLink id="idDivRegistro" styleClass="arren_btnPendientes"
+						onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluoRegistroCarta.jsf'">
+						<div class="btncentrado">Cartas</div>
+					</p:commandLink>
+					<p:commandLink id="idDivReporte" style="background-color: #fed02e;"
+						styleClass="botonDesactivadoCarta"
+						onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluoRegistroArbitrio.jsf'">
+						<div class="btncentrado">Registro</div>
+					</p:commandLink>
+					
+					<div class="contenidoPrincipal_fondo_formulario">
+						<div class="contenidoPrincipal_ContenedorBlano">
+			
+								<!--###################################################################-->
+								<!-- ########################### PANEL  ###################### -->
+								<div id="idpanel_recauAutovaluoRegistro"
+									class="recau_panelPendientes">
+										<div class="registroArbitrioCabeceraSubPestania">
+													
+													<p:commandLink id="idDivR" 
+														styleClass="btnRegistroCarta" style="background-color: #4ABBF4;"
+														onclick="subTabConsulta_recauAutovaluo_Carta();">
+														<div id="idBotonConsultaCarta" class="btncentrado"  style="margin-top:3px;">Consulta
+														<p:graphicImage width="20" height="20"
+															value="../resources/images/recaudacion/autovaluo/buscarRegistro.png" />
+														</div>
+														
+													</p:commandLink>
+													<p:commandLink id="idDiv" styleClass="btnRegistroCarta"
+														onclick="subTabRegistro_recauAutovaluo_Carta();">
+														<div id="idBotonRegitroCarta" class="btncentrado" style="margin-top:3px;">Registro
+														<p:graphicImage width="20" height="20"
+															value="../resources/images/recaudacion/autovaluo/nuevoregistro.png" />
+														</div>
+													</p:commandLink>
+												
+										</div>
+										<div id="idsubpanel_recauAutovaluoRegistro" style="margin-left:30px;">
+											<h:form id="formPanelRegistroCarta">
+											
+														<div class="registroArbitrioSubPestaniaIzquierdo">
+															<h:panelGrid columns="1"> 
+																<h:panelGrid columns="2" >
+																		<h:outputText 	value="Cartas" />
+																</h:panelGrid>
+																<h:panelGrid columns="2" >
+																		<h:outputText 	value="Registro" style="color:font-size:15px;" />
+																		<p:commandLink oncomplete="iddlgListaUpa.show();">
+																		<p:graphicImage width="20" height="20" value="/resources/images/upa/verInmueble.png"
+																		alt="Nuevo" title="Seleccione upa"  style="margin-left:10px;"/>
+																		</p:commandLink>
+																</h:panelGrid>
+																	
+															</h:panelGrid>
+															<p:spacer height="20"/>
+															<h:panelGrid columns="2" style="height:45px;">
+																<h:panelGrid columns="1">
+																	<h:outputText value="Clave de Upa" style="color: #4C4C4C;font-size:13px;"/>
+																	<h:outputText id="idclave" style="width:200px;"
+																		value="#{recaudacionautovaluocartaMB.contratoSeleccionado.upa.idupa}" />
+																</h:panelGrid>
+																<h:panelGrid columns="1">
+																	
+																</h:panelGrid>
+															</h:panelGrid>
+															
+															<h:panelGrid id="locacion" columns="3" style="height:45px;">
+																	<h:panelGrid columns="1" >
+																		<h:outputText 	value="Departamento" style="color: #4C4C4C;font-size:13px;"/>
+																		<h:outputText style="width: 150px;  font-size: 11px;" readonly="true"
+																			id="cbxLstDptos"
+																			value="#{recaudacionautovaluocartaMB.contratoSeleccionado.upa.inmueble.ubigeo.depa}">
+																		</h:outputText>
+																	</h:panelGrid>
+																	
+																	<h:panelGrid columns="1" style="margin-left:20px;">
+																		<h:outputText 	value="Provincia" style="color: #4C4C4C;font-size:13px;"/>
+																		
+																		<h:outputText id="idcomboprovincia" style="width: 150px;  font-size: 11px;" readonly="true"
+																			value="#{recaudacionautovaluocartaMB.contratoSeleccionado.upa.inmueble.ubigeo.prov}">
+
+																		</h:outputText>
+																	</h:panelGrid>
+																	
+																	<h:panelGrid columns="1" style="margin-left:30px;">
+																		<h:outputText 	value="Distrito" style="color: #4C4C4C;font-size:13px;"/>
+																		<h:outputText id="idcombodistrito" style="width: 150px;  font-size: 11px;" readonly="true"
+																			value="#{recaudacionautovaluocartaMB.contratoSeleccionado.upa.inmueble.ubigeo.dist}">
+
+																		</h:outputText> 
+																	</h:panelGrid>
+															
+															</h:panelGrid>			
+															
+															
+															<h:panelGrid columns="3" style="height:45px;"> 
+<!-- 																	<h:panelGrid columns="1" > -->
+<!-- 																		<h:outputText 	value="Jr./Av./Calle" /> -->
+<!-- 																		<h:inputText id="idjravcalle" style="width:120px;"	value="#{recaudacionautovaluoarbitrioMB.arbitrio.jravcalle}" /> -->
+<!-- 																	</h:panelGrid> -->
+<!-- 																	<h:panelGrid columns="1" style="margin-left:20px;"> -->
+<!-- 																		<h:outputText 	value="Nro." /> -->
+<!-- 																		<h:inputText  id="idnro" style="width:120px;"	value="#{recaudacionautovaluoarbitrioMB.arbitrio.nro}" /> -->
+<!-- 																	</h:panelGrid> -->
+<!-- 																	<h:panelGrid columns="1" style="margin-left:30px;"> -->
+<!-- 																		<h:outputText 	value="Int/Dto/Stand" /> -->
+<!-- 																		<h:inputText id="idintdtostand" style="width:120px;"	value="#{recaudacionautovaluoarbitrioMB.arbitrio.intdtostand}" /> -->
+<!-- 																	</h:panelGrid> -->
+																	<h:panelGrid columns="1" style="margin-left:0px;">
+																		<h:outputText 	value="Dirección" style="color: #4C4C4C;font-size:13px;"/>
+																		<h:outputText id="idintdtostand" style="width:300px;"	value="#{recaudacionautovaluocartaMB.contratoSeleccionado.upa.direccion}" readonly="true"/>
+																	</h:panelGrid>
+															</h:panelGrid>
+															
+															
+															<h:panelGrid columns="3" style="margin-left:3px"> 
+																<h:panelGrid columns="1" style="height:45px;" >
+																		<h:outputText 	value="Inquilino:" style="color: #4C4C4C;font-size:13px;"/>
+																		
+																		<h:outputText id="idCajaInquilino"
+																			value="#{recaudacionautovaluocartaMB.contratoSeleccionado.inquilino.nombrescompletos}"   readonly="true"
+																			effect="fade" style="width:150px;">
+																		</h:outputText>
+																</h:panelGrid>
+																	
+															</h:panelGrid>
+															
+															
+														</div>
+													
+													
+														<div class="registroArbitrioSubPestaniaDerechoCarta">
+														<p:outputPanel style="visibility: #{recaudacionautovaluocartaMB.usuarioCreador.rutaimgusr==null ? 'hidden' : 'visible'}">
+																	<div class="paginaInteriorArbitrios">
+																			<div class="subcontenidoCreador_Cabecera">
+																				
+																				<div class="subcontenidoInfo_descripcionTitulo">
+																					Usuario Creador</div>
+																			</div>
+										
+																			<div class="subcontenidoInfo_detContenidoNombre">
+										
+																				<div class="detalleTopfiltroDerecha2">
+																					<div 	 class="subcontenidoInfo_Arbitrio_nombres" style="margin-left:-2px;"> 
+																					<h:outputText styleClass="subcontenidoInfo_detUsuarioFila2"
+																						value="#{recaudacionautovaluocartaMB.usuarioCreador.nombres} #{recaudacionautovaluocartaMB.usuarioCreador.apellidopat}" />
+																					</div>
+																					
+																					<div class="subcontenidoInfo_Arbitrio_foto" >
+																					<p:graphicImage width="30" height="30" value="../resources/images/usuarios/#{recaudacionautovaluocartaMB.usuarioCreador.rutaimgusr}"/>
+																					</div>
+																					
+																					<h:outputText styleClass="subcontenidoInfo_detUsuarioFila3" style="margin-left:64px;"
+																						value="#{recaudacionautovaluocartaMB.carta.fechacreacion}">
+																						<f:convertDateTime pattern="dd/MM/yyyy" />
+																					</h:outputText>
+																				</div>
+										
+																			</div>
+																		</div>
+															
+														</p:outputPanel>
+														</div>
+														
+														<div class="botonRegistrarCarta" >
+														<p:commandButton value="Guardar" onclick="validacionRecaudacionCarta();" 	/>
+														</div>
+														
+														
+														<p:growl id="growlGrabadoExitoso" showDetail="true" sticky="true" life="4000"/>
+														<p:confirmDialog id="dialoGuardar"  header="SBLM" severity="alert"
+															message="Está seguro de guardar arbitrio"
+															widgetVar="widgetDlgConfirmGuardarCarta">
+															<center>
+																<p:commandButton id="btnGrabar" value="Aceptar"
+																	actionListener="#{recaudacionautovaluocartaMB.grabarCabeceraCarta}"
+																	oncomplete="widgetDlgConfirmGuardarCarta.hide();" update="growlGrabadoExitoso,:formPanelRegistroCarta,:idTablaConsultaCarta,:formFichero:smallCarousel,:idTablaCarta:">
+																	</p:commandButton>
+																<p:spacer width="10" />
+																<p:commandButton value="Cancelar" onclick="widgetDlgConfirmGuardarCarta.hide()" />
+															</center>
+														</p:confirmDialog> 
+													
+													
+															<p:dialog header="Seleccione Upa" id="iddlgListaUpa"
+																width="655" height="300" closable="true" closeOnEscape="true"
+																resizable="false" widgetVar="iddlgListaUpa" modal="true"
+																style="border-width:9px;border-style:solid;  border-color:#ffc600; ">
+					
+															</p:dialog>
+														
+														
+											
+											</h:form>
+											
+											<h:form id="formFichero" styleClass="formRegistrarCarta">
+														
+														<div style="width: 307px;height: 20px;font-size: 10px;margin-left:-24px  ">
+															<div style="text-align: right; ">
+																Agregar Carta
+															<p:commandLink >
+															<p:graphicImage width="20" height="20" value="/resources/images/recaudacionarbitrios/agregar.png" style="margin-top:10px;"
+																			alt="Nuevo" title="limpiar" onclick="openUploadFileDialogue();"  />
+															</p:commandLink>
+															</div>
+														
+														<p:carousel  id="smallCarousel"
+															value="#{recaudacionautovaluocartaMB.displayList}" var="varFile" styleClass="yourCarouselSelector"
+															circular="true" headerText="Cartas"
+															itemStyleClass="" style="height:100px; width:300px;" numVisible="9">
+															<h:panelGrid columns="1" cellpadding="5"
+																style="text-align: center;">
+																<p:graphicImage width="25"  height="25" id="idNotificaciones"
+																	value="../resources/icons/tipoArchivo/#{varFile.extensionarchivo.rutaIcono}" />
+																<p:commandLink title="Eliminar de lista"
+																	style="float:left;"
+																	action="#{recaudacionautovaluocartaMB.eliminarArchivodeLista}"
+																	update="smallCarousel">
+																	<p:graphicImage id="idNotificacioness" width="15"
+																		style="float:left; margin-bottom:15px;" height="15"
+																		value="../resources/icons/trash.png" />
+																	<f:setPropertyActionListener value="#{varFile}"
+																		target="#{recaudacionautovaluocartaMB.archivoDelete}" />
+																</p:commandLink>
+																
+																<p:tooltip for="idNotificaciones"
+																	value="#{varFile.ruta}" showEffect="slide"
+																	hideEffect="slide" />
+															</h:panelGrid>
+														</p:carousel>
+														</div>
+														
+														<p:growl id="idfileupload" showDetail="true" sticky="true" life="4000" />
+														<p:fileUpload  update="smallCarousel,idfileupload"
+																fileUploadListener="#{recaudacionautovaluocartaMB.cargarArchivo}" style="visibility:hidden;width:0px;height:0px;"
+																mode="advanced" auto="true" sizeLimit="100000000" 
+																allowTypes="/(\.|\/)(gif|jpe?g|dwg|exe|7z|bpm|fla|html|swf|tgz|tif|png|xlsx|xls|doc|docx|txt|avi|mp3|mpeg|ppt|pptx|rar|zip|pdf|ppt|pptx)$/">
+														</p:fileUpload>
+											
+											</h:form>
+											
+											
+											<div class="registroArbitrioSubPestaniaInferiorCarta" style="font-size: 10px;">
+														<h:form id="idTablaCarta">
+
+															<div style="text-align: center; margin-left: 10px;">
+																
+																
+																<br />
+																<h:outputText value="Últimos registros creados" ></h:outputText>					
+																<p:dataTable var="detall" value="#{recaudacionautovaluocartaMB.listaCartaConsultaTOP}" 
+																	emptyMessage="No existe  ninguna carta  registrada" 
+																	rowKey="#{detall.idcarta}" rowIndexVar="row" 
+																	style="width:675px; font-size: 10px;  margin: 0px 0px 0px 0px;text-aling:center;" styleClass="ui-datatable-hor-scroll"> 
+																	
+																	<p:column headerText="N°">  
+																	<h:outputText value="#{row + 1}"/>
+																	</p:column>
+																	 
+<!-- 															        <p:column headerText="Clave">   -->
+<!-- 															            <h:outputText value="#{detall.clave}" />   -->
+<!-- 															        </p:column>   -->
+
+															       <p:column headerText="DEPARTAMENTO">
+																		<h:outputText value="#{detall.contrato.upa.inmueble.ubigeo.depa}" />
+																	</p:column>
+					
+																	<p:column headerText="PROVINCIA">
+																		<h:outputText value="#{detall.contrato.upa.inmueble.ubigeo.prov}" />
+																	</p:column>
+					
+																	<p:column headerText="DISTRITO">
+																		<h:outputText value="#{detall.contrato.upa.inmueble.ubigeo.dist}" />
+																	</p:column>
+																	
+																	<p:column headerText="Dirección"
+																		filterBy="#{detall.upa.direccion}"
+																		filterMatchMode="contains">
+																		<h:outputText value="#{detall.contrato.upa.inmueble.direccion}" />
+																	</p:column>
+																	
+																	<p:column headerText="Inquilino"
+																		filterBy="#{detall.contrato.inquilino.nombrescompletos}"
+																		filterMatchMode="contains">
+																		<h:outputText value="#{detall.contrato.inquilino.nombrescompletos}" />
+																	</p:column>
+																	
+																	<p:column headerText="Uso"
+																		filterBy="#{detall.contrato.upa.uso.descripcion}"
+																		filterMatchMode="contains">
+																		<h:outputText value="#{detall.contrato.upa.uso.descripcion}" />
+																	</p:column>
+															  
+																    <p:column headerText="F. Creación">  
+																            <h:outputText value="#{detall.fechacreacion}">
+																            <f:convertDateTime pattern="dd/MM/yyyy" />
+																            </h:outputText> 
+																    </p:column>
+																    
+																	<p:column width="30">
+																		<p:commandButton icon="ui-icon-search" 
+																			actionListener="#{recaudacionautovaluocartaMB.obtenerCarta(detall.idcarta)}"
+																			onclick="subTabRegistro_recauAutovaluoArbitrio();"
+																			update=":formPanelRegistroCarta,:idTablaCarta,:formFichero"
+																			title="Ver">
+																		</p:commandButton>
+																	</p:column>
+																	
+															    </p:dataTable>  
+															</div>
+													</h:form>
+												
+												</div>
+																		
+						
+										</div>
+										
+														  <div id="idsubpanel_recauAutovaluoConsultaArbitrio">
+															
+															<div style="margin-left: 20px;margin-top: 40px;">
+																<h:panelGrid columns="1"> 
+																	<h:panelGrid columns="2" >
+																			<h:outputText 	value="Consulta" />
+																	</h:panelGrid>
+																	<h:panelGrid columns="2" >
+																			<h:outputText 	value="Reporte General" />
+																			
+																	</h:panelGrid>
+																		
+																</h:panelGrid>
+																<p:spacer height="20"/>
+															
+															</div>
+															
+										
+										
+													<h:form id="idTablaConsultaCarta">
+
+															<div style="text-align: center; margin: 10px; font-size: 10px;">
+																
+																<br />
+																					
+																<p:dataTable var="detall" value="#{recaudacionautovaluocartaMB.listaCartaConsulta}" 
+																	emptyMessage="No existe  ninguna carta  registrada" 
+																	rowKey="#{detall.idcarta}" rowIndexVar="row"  scrollWidth="690"
+																	paginator="true" filteredValue="#{recaudacionautovaluocartaMB.listafiltroCartaConsulta}"
+																	style="width:690px; font-size: 10px;  margin: 0px 0px 0px 0px;text-aling:center;" styleClass="ui-datatable-hor-scroll"> 
+																	
+																	<p:column headerText="N°">  
+																	<h:outputText value="#{row + 1}"/>
+																	</p:column>
+																	 
+<!-- 															        <p:column headerText="Clave">   -->
+<!-- 															            <h:outputText value="#{detall.clave}" />   -->
+<!-- 															        </p:column>   -->
+
+																	<p:column headerText="Inquilino"
+																		filterBy="#{detall.contrato.inquilino.nombrescompletos}"
+																		filterMatchMode="contains">
+																		<h:outputText value="#{detall.contrato.inquilino.nombrescompletos}" />
+																	</p:column>
+					
+																	<p:column headerText="Dirección">
+																		<h:outputText value="#{detall.contrato.upa.inmueble.direccion}" />
+																	</p:column>
+					
+																	<p:column headerText="Distrito">
+																		<h:outputText value="#{detall.contrato.upa.inmueble.ubigeo.dist}" />
+																	</p:column>
+					
+																	<p:column headerText="Provincia">
+																		<h:outputText value="#{detall.contrato.upa.inmueble.ubigeo.prov}" />
+																	</p:column>
+					
+																	<p:column headerText="Departamento">
+																		<h:outputText value="#{detall.contrato.upa.inmueble.ubigeo.depa}" />
+																	</p:column>
+					
+															        <p:column headerText="F. Creación">  
+																            <h:outputText value="#{detall.fechacreacion}">
+																     		<f:convertDateTime pattern="dd/MM/yyyy" />
+																            </h:outputText> 
+																    </p:column>
+																						
+																	<p:column headerText="Nro. Archivos">  
+																            <h:outputText value="#{detall.nroarchivos}"/>
+																    </p:column>
+																						
+																	<p:column width="30" headerText="Zip">
+																		<p:commandLink  
+																			actionListener="#{recaudacionautovaluocartaMB.zipiarArchivoCarta(detall.idcarta)}"
+																			ajax="false" immediate="true">
+																			<p:graphicImage width="20" height="20" style="visibility: #{detall.nroarchivos==0 ? 'hidden' : 'visible'}"
+																				value="../resources/icons/tipoArchivo/zip.png" />
+																			<p:fileDownload
+																				value="#{recaudacionautovaluocartaMB.filedownload}" />
+																		</p:commandLink>
+																	</p:column>
+																						
+																	<p:column width="30">
+																		<p:commandButton icon="ui-icon-search" 
+																			actionListener="#{recaudacionautovaluocartaMB.obtenerCarta(detall.idcarta)}"
+																			onclick="subTabRegistro_recauAutovaluoArbitrio();"
+																			update=":formPanelRegistroCarta,:idTablaCarta,:formFichero"
+																			title="Ver">
+																		</p:commandButton>
+																	</p:column>					
+																</p:dataTable> 
+															</div>
+															
+													</h:form>
+										</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<div class="carterasubpestanas">
+		<p:commandLink id="idTabRegistroConsulta" styleClass="btnRegistro" 
+			onclick="funcionTabRegistroConsulta();">
+			<div class="btncentrado">
+				<p:outputLabel value="Consulta"
+					style="margin-bottom:10px;  float:left;margin-left:5px;" />
+				<p:graphicImage value="/resources/images/cobranza/icon_consulta.png"
+					alt="Consulta" title="Consulta" />
+			</div>
+		</p:commandLink>
+		<p:commandLink id="idTabRegistroRegistro" styleClass="btnRegistro2"
+			onclick="funcionTabRegistroRegistro();">
+			<div class="btncentrado">
+				<p:outputLabel value="Registro"
+					style="margin-bottom:10px; float:left;margin-left:5px;" />
+				<p:graphicImage value="/resources/images/cobranza/icon_registro.png"
+					alt="Registro" title="Registro" />
+			</div>
+		</p:commandLink>
+
+	</div>
+	<div id="idDivRegistroRegistro" class="recau_panelPendientes">
+		<div class="filaBtnNuevoCartera">
+		  <div style="float: left; margin-left: 35px;">
+		  		<h:outputText value="Registro de Pago"/>
+		  </div>
+		</div>
+		<div class="mante_gene_ContDescrip01">
+			<div class="cobranza_cartera_contenidoDatos">
+				<div class="contenidoConsultaRegistroComprobante">
+				 <h:form id="frmRegistroCabecera">
+				  	<p:focus context="tabCartera"/>
+				  	<p:tabView id="tabCartera" style="margin-top:10px;margin-right:50px;" effect="slide">
+						<p:tab id="tab1" title="Pago Arbitrio ">
+							<h:panelGrid columns="3">
+								<h:outputText value="Clave:"/>
+								<p:remoteCommand name="test"
+									actionListener="#{autovaluoCobranzaMB.obtenerListaArbitrioxUpa}"
+									update="listaArbitrioxupa"/>
+									<p:inputMask mask="**-****-***" value="#{autovaluoCobranzaMB.claveupa}" 
+									onkeypress="if (event.keyCode == 13){ test(); return false;}"
+									style="width:100px; text-align:center;font-size:15px;">
+									</p:inputMask>
+							</h:panelGrid>
+							
+							<p:dataTable id="listaArbitrioxupa" var="arbitrio"
+							 selectionMode="single" rowKey="#{arbitrio.idarbitrio}"
+							 value="#{autovaluoCobranzaMB.listaAutovaluoArbitrio}"
+							 selection="#{autovaluoCobranzaMB.condicionSeleccionado}"
+							 style="text-align:center;font-size:11px;margin-top:10px;width:630px"
+							 emptyMessage="No se ha encontrado ningún registro"
+							 scrollWidth="630" styleClass="ui-datatable-hor-scroll">
+								 <p:columnGroup type="header">
+												<p:row>
+													<p:column rowspan="2" headerText="Cod. Arbitrio" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Upa" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Estado" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Frecuencia" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Direccion" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="N°Principal" style="vertical-align:middle;"/>
+<!-- 												<p:column rowspan="2" headerText="Zona" style="vertical-align:middle;"/> -->
+<!-- 												<p:column rowspan="2" headerText="Sector" style="vertical-align:middle;"/> -->
+<!-- 												<p:column rowspan="2" headerText="Manzana" style="vertical-align:middle;"/> -->
+<!-- 												<p:column rowspan="2" headerText="Lote" style="vertical-align:middle;"/> -->
+<!-- 												<p:column rowspan="2" headerText="Etapa" style="vertical-align:middle;"/> -->
+<!-- 												<p:column rowspan="2" headerText="Sublote" style="vertical-align:middle;"/> -->
+													<p:column rowspan="2" headerText="Urbanizacion" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="AA.HH." style="vertical-align:middle;"/>
+<!-- 												<p:column rowspan="2" headerText="N°Interior" style="vertical-align:middle;"/> -->
+													<p:column rowspan="2" headerText="Distrito" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Año" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Total" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Fec. Creación" style="vertical-align:middle;"/>
+													<p:column rowspan="2" headerText="Usu. Creador" style="vertical-align:middle;"/>
+												
+												</p:row>
+											</p:columnGroup>
+											<p:column>
+												<h:outputText value="#{arbitrio.idarbitrio}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.clave}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.estado}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.frecuencia}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.direccion}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.numeroprincipal}" />
+											</p:column>
+<!-- 											<p:column> -->
+<!-- 												<h:outputText value="#{arbitrio.zona}" /> -->
+<!-- 											</p:column> -->
+<!-- 											<p:column> -->
+<!-- 												<h:outputText value="#{arbitrio.sector}" /> -->
+<!-- 											</p:column> -->
+<!-- 											<p:column> -->
+<!-- 												<h:outputText value="#{arbitrio.manzana}" /> -->
+<!-- 											</p:column> -->
+<!-- 											<p:column> -->
+<!-- 												<h:outputText value="#{arbitrio.lote}" /> -->
+<!-- 											</p:column> -->
+<!-- 											<p:column> -->
+<!-- 												<h:outputText value="#{arbitrio.etapa}" /> -->
+<!-- 											</p:column> -->
+<!-- 											<p:column> -->
+<!-- 												<h:outputText value="#{arbitrio.sublote}" /> -->
+<!-- 											</p:column> -->
+											<p:column>
+												<h:outputText value="#{arbitrio.urbanizacion}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.aahh}" />
+											</p:column>
+<!-- 											<p:column> -->
+<!-- 												<h:outputText value="#{arbitrio.numnombreinterior}" /> -->
+<!-- 											</p:column> -->
+											<p:column>
+												<h:outputText value="#{arbitrio.distrito}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.anio}" />
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.monto}" >
+												<f:convertNumber currencySymbol="S/. " groupingUsed="true" locale="en"
+														maxFractionDigits="2" type="currency"/>
+												</h:outputText>
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.feccre}">
+												<f:convertDateTime pattern="dd/MM/yyyy"/>
+												</h:outputText>
+												
+											</p:column>
+											<p:column>
+												<h:outputText value="#{arbitrio.usrcre}" />
+											</p:column>
+											
+								<!-- Agregar pagos de una upa (comprobantes de pago) -->
+									<f:facet name="footer">
+										<h:outputText value="Agregar" />  
+										
+										<p:commandLink id="agregarPago">
+											<p:graphicImage width="25" height="25" style="margin-left:5px;"
+												value="/resources/images/varios/money2.png"
+												alt="Agregar pago" title="Agregar pago" />
+										</p:commandLink>
+										
+										<p:slideMenu overlay="true" trigger="agregarPago"   my="left top" at="left bottom" backLabel="Regresar" >
+
+<!-- 									            <p:menuitem value="Boleta de Venta"  actionListener="#{carteraMB.elegirTipoFacturacion('03')}" update=":frmMaestra:listaMensajes"   icon="ui-icon-copy"/> -->
+<!-- 									            <p:menuitem value="Factura"   actionListener="#{carteraMB.elegirTipoFacturacion('01')}" update=":frmMaestra:listaMensajes" icon="ui-icon-copy"/> -->
+<!-- 									        	<p:submenu label="Nota de débito"  icon="ui-icon-copy"> -->
+<!-- 									        		<p:menuitem value="Pendiente"   actionListener="#{carteraMB.elegirTipoFacturacionNotaDebitoyCredito('08','Pendiente')}" update=":formNotadebitoManual,:frmMaestra:listaMensajes"  icon="ui-icon-copy"/> -->
+<!-- 									        		<p:menuitem value="Nuevo"   actionListener="#{carteraMB.elegirTipoFacturacionNotaDebitoyCredito('08','Nuevo')}" update=":formRegistroNotaDebitoTipoDetalle,:frmMaestra:listaMensajes"  icon="ui-icon-copy"/> -->
+<!-- 									        	</p:submenu> -->
+									        	<p:menuitem value="Recibo de Caja"  actionListener="#{autovaluoCobranzaMB.elegirTipoFacturacion('04')}" update=":frmRegistroReciboCaja,:frmMaestra:listaMensajes" icon="ui-icon-copy"/>
+<!-- 									        	<p:menuitem value="Sin valor legal" actionListener="#{carteraMB.elegirTipoFacturacion('00')}"  update=":frmMaestra:listaMensajes"   icon="ui-icon-copy" disabled="false"/> -->
+									        
+<!-- 										        <p:submenu label="Nota de crédito" icon="ui-icon-copy"> -->
+<!-- 										      		<p:submenu label="Descontar Renta"  icon="ui-icon-copy"> -->
+<!-- 										      			<p:menuitem value="Total" actionListener="#{carteraMB.elegirTipoFacturacionNotaDebitoyCredito('10','Total')}"     update=":formRegistroNotaCreditoTipoDetalle,:frmMaestra:listaMensajes,:formRegistroNotaCreditoTipoDetalle:total"  icon="ui-icon-copy"/>										      		 -->
+<!-- 										      			<p:menuitem value="Parcial" actionListener="#{carteraMB.elegirTipoFacturacionNotaDebitoyCredito('10','Parcial')}" update=":formRegistroNotaCreditoTipoDetalle,:frmMaestra:listaMensajes,:formRegistroNotaCreditoTipoDetalle:total"  icon="ui-icon-copy"/>								      			 -->
+<!-- 										      		</p:submenu> -->
+<!-- 										      		<p:menuitem value="Descontar Mora"  actionListener="#{carteraMB.elegirTipoFacturacion('11')}" update=":formRegistroNotaCreditoTipoDetalle,:frmMaestra:listaMensajes" icon="ui-icon-copy" disabled="true"/> -->
+<!-- 										        </p:submenu> -->
+<!-- 										        EXTINCION DE DEUDA -->
+<!-- 										        <p:menuitem value="Documento administrativo" actionListener="#{carteraMB.elegirTipoFacturacion('DA')}"  update=":frmRegistroDocumentoAdministrativo,:frmMaestra:listaMensajes"   icon="ui-icon-copy" disabled="false"/> -->
+<!-- 												<p:menuitem value="Documento administrativo" actionListener="#{carteraMB.elegirTipoFacturacion('DA')}"  update=":frmMaestra:listaMensajes"   icon="ui-icon-copy" disabled="false"/> -->
+									    </p:slideMenu >
+										
+<!-- 										<h:outputText  value="Editar" style="margin-left:20px;"/> -->
+<!-- 										<p:commandLink  -->
+<!-- 											update=":frmMaestra:listaMensajes"> -->
+<!-- 											<p:graphicImage width="20" height="20" style="margin-left:5px;" -->
+<!-- 												value="/resources/images/varios/editar1.png" -->
+<!-- 												alt="Agregar pago" title="Editar pago" /> -->
+<!-- 										</p:commandLink> -->
+										
+<!-- 										<h:outputText value="Anulados" style="margin-left:20px;"/> -->
+<!-- 										<p:commandLink  -->
+<!-- 											onclick="widgetDlgAnularComprobante.show();" -->
+<!-- 											update=":frmMaestra:listaMensajes"> -->
+<!-- 											<p:graphicImage width="20" height="20" style="margin-left:5px;" -->
+<!-- 												value="/resources/images/varios/anular.png" -->
+<!-- 												alt="Agregar pago" title="Agregar pago" /> -->
+<!-- 										</p:commandLink> -->
+									</f:facet>
+							
+							</p:dataTable>
+							</p:tab>
+						</p:tabView>
+						</h:form>
+						<br />
+						<br />
+						<br />
+					<h:form id="frmRegistroReciboCaja">
+													<!-- Pago Recibo de Caja -->
+						<p:dialog header="#{autovaluoCobranzaMB.selectedTipoDocumento}" closable="true"
+							showEffect="slide" hideEffect="slide" closeOnEscape="true"
+							resizable="false" widgetVar="dlgRegistroReciboCajaRA" width="auto"
+							height="auto"
+							style="border-width:9px;border-style:solid;  border-color:#ffc600; ">
+								<div class="RegistroCuotaContrato" style="width: auto; height: auto;">
+									<div class="RegistroCuotaContratoIzq" style="width: auto; height: auto;">
+										<br></br>
+										<p:panel>										
+												<h:panelGrid columns="4" cellspacing="10" cellpadding="10">
+												<p:selectOneMenu panelStyle="width:130px"
+												style="width: 130px;  font-size: 11px;"
+												value="#{autovaluoCobranzaMB.idtipodocuseleccionado}" disabled="true">
+												<f:selectItem itemLabel="Tipo Documento"
+													itemValue="0" />
+												<f:selectItems value="#{autovaluoCobranzaMB.listaTipoDocumentos}"
+													var="tdoc" itemValue="#{tdoc.idtipodocu}"
+													itemLabel="#{tdoc.tipDocu}" />
+												</p:selectOneMenu>
+												<p:selectOneMenu panelStyle="width:180px" 
+													style="width: 180px;  font-size: 11px;"
+													value="#{autovaluoCobranzaMB.idtipoconceptoseleccionado}">
+													<f:selectItem itemLabel="Tipo Concepto" itemValue="0" />
+<!-- 													<f:selectItem itemLabel="R.V. Acho" itemValue="10" itemDisabled="#{!autovaluoCobranzaMB.sigarantia}"/> -->
+<!-- 													<f:selectItem itemLabel="P.P.A. Esp. Lib." itemValue="11" itemDisabled="#{!autovaluoCobranzaMB.sigarantia}" />										 -->
+<!-- 													<f:selectItem itemLabel="Pago de Garantía" itemValue="03" itemDisabled="#{!autovaluoCobranzaMB.sigarantia}"/> -->
+<!-- 													<f:selectItem itemLabel="Cartas Fianza Ejecutada" itemValue="12" itemDisabled="#{!autovaluoCobranzaMB.sigarantia}"/> -->
+													<f:selectItem itemLabel="Otros Ingresos" itemValue="05" />
+												</p:selectOneMenu>
+												
+											
+												<p:selectOneMenu panelStyle="width:130px"
+													style="width: 130px;  font-size: 11px;"
+													value="#{autovaluoCobranzaMB.idtipopagoseleccionado}" >
+													<f:selectItem itemLabel="Tipo Pago"
+														itemValue="0" />
+													<f:selectItems value="#{autovaluoCobranzaMB.tipopagos}" var="tdoc"
+														itemValue="#{tdoc.idtipopago}" itemLabel="#{tdoc.tipPago}" />
+												</p:selectOneMenu>
+
+											</h:panelGrid>
+											<h:panelGrid columns="4" style="margin-left:20px; margin-top:10px;">
+												<h:panelGrid columns="1">
+													<h:outputText value="Nro Serie: " />
+
+													<p:inputText value="#{autovaluoCobranzaMB.serieFacturacionFisica}"
+														style="width:50px;" maxlength="3" />
+												</h:panelGrid>
+												<h:panelGrid columns="1">
+													<h:outputText value="Nro Documento: " />
+													<p:inputText
+														value="#{autovaluoCobranzaMB.correlativoFacturacionFisica}"
+														maxlength="6" />
+												</h:panelGrid>
+
+												<h:panelGrid columns="1" style="margin-left:30px;" >
+													<h:outputText value="Fecha Emisión: " />
+													<p:calendar id="idDetalleCuota_fecharegistro" pattern="dd-MM-yyyy"
+														style="width:150px;" navigator="true" locale="es" 
+														
+														value="#{autovaluoCobranzaMB.comprobantepago.fechaemision}"
+														readonlyInput="#{autovaluoCobranzaMB.sicobrador}" >
+														<p:ajax event="dateSelect"
+															listener="#{autovaluoCobranzaMB.buscarTipoCambio}"
+															update="fechaCancelacion" />
+													</p:calendar>
+												</h:panelGrid>
+
+												<h:panelGrid columns="1" style="margin-left:30px;" >
+													<h:outputText value="Fecha Cancelación: " />
+													<p:calendar id="fechaCancelacion" style="width:150px;" pattern="dd-MM-yyyy" mask="true"
+														navigator="true" locale="es"
+														value="#{autovaluoCobranzaMB.comprobantepago.fechacancelacion}"
+														readonlyInput="#{autovaluoCobranzaMB.sicobrador}">
+													</p:calendar>
+												</h:panelGrid>
+											</h:panelGrid>
+											<h:panelGrid columns="2" >
+												<h:panelGrid columns="1" style="margin-left:20px;">
+													<h:outputText value="Recibido de Sr.(a)/R. Social:" />
+														<p:inputText value="#{autovaluoCobranzaMB.comprobantepago.nombrepagante}"
+															style="width:250px">
+														</p:inputText>
+												</h:panelGrid>
+												<h:panelGrid columns="1" style="margin-left:20px;">
+													<h:outputText value="DNI/RUC." />
+													<p:inputText style="width:120px;"
+														value="#{autovaluoCobranzaMB.comprobantepago.dnirucpagante}" maxlength="11"/>
+												</h:panelGrid>
+											</h:panelGrid>
+											
+											<h:panelGrid columns="2" style="margin-left:20px;">
+												<h:panelGrid columns="1">
+													<h:outputText value="Cobrador:" />
+													<p:autoComplete disabled="#{autovaluoCobranzaMB.sicobrador}"  var="cobrador" itemLabel="#{cobrador.descripcion}" itemValue="#{cobrador}"
+														value="#{autovaluoCobranzaMB.selectedCobrador}"
+														style="width:350px" converter="converterCobradorUsuario"
+														completeMethod="#{autovaluoCobranzaMB.completarUsuarioCobrador}"
+														effect="fade" maxResults="10">
+													</p:autoComplete>
+												</h:panelGrid>
+
+												<h:panelGrid columns="1" style="margin-left:20px;">
+													<h:outputText value="Observaciones:" />
+													<p:inputText style="width:300px;"
+														value="#{autovaluoCobranzaMB.comprobantepago.observacion}" />
+												</h:panelGrid>
+											</h:panelGrid>
+											
+										</p:panel>
+										<br /> <br />
+					<!-- ************************BOTON AGREGAR CUOTAS************** -->
+									<p:dataTable id="listaCuotasPendientesPagoRentaCancelar"
+										var="cuota" rowKey="#{cuota.mes}"
+										value="#{autovaluoCobranzaMB.listaCuotasPendientesCondicionCancelar}"
+										selection="#{autovaluoCobranzaMB.cuotaPendienteCondicion}"
+										style="text-align:center;font-size:11px;" editMode="cell"
+										selectionMode="single"
+										emptyMessage="No ha agregado ningun pago" editable="true">
+
+										<f:facet name="header">
+											<p:commandLink id="btnAgregar" style="text-align:center;"
+												update=":frmRegistroReciboCaja:pendientePagoRenta,:frmMaestra:listaMensajes"
+												actionListener="#{autovaluoCobranzaMB.validarCabeceraPagoArbitrio}">
+												<p:graphicImage width="20" height="20"
+													value="../resources/images/monitoreoMesaPartes/addUsuario.png" />
+											</p:commandLink>
+										</f:facet>
+
+										<p:ajax event="cellEdit"
+											listener="#{autovaluoCobranzaMB.calcularTotales}"
+											update=":frmRegistroReciboCaja:total" />
+
+										<p:column headerText="A&ntilde;o">
+											<h:outputText value="#{cuota.anio}" />
+										</p:column>
+
+										<p:column headerText="Mes">
+											<h:outputText value="#{cuota.mes}" />
+										</p:column>
+
+										<p:column headerText="Monto">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{cuota.monto}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputText value="#{cuota.monto}"
+														disabled="#{autovaluoCobranzaMB.sicobrador}" />
+												</f:facet>
+
+											</p:cellEditor>
+										</p:column>
+<!-- 										<p:column headerText="Mora"> -->
+<!-- 											<p:cellEditor> -->
+<!-- 												<f:facet name="output"> -->
+<!-- 													<h:outputText value="#{cuota.mora}" /> -->
+<!-- 												</f:facet> -->
+<!-- 												<f:facet name="input"> -->
+<!-- 													<p:inputText value="#{cuota.mora}" /> -->
+<!-- 												</f:facet> -->
+<!-- 											</p:cellEditor> -->
+<!-- 										</p:column> -->
+										<p:column headerText="Acci&oacute;n">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{cuota.condicion}" />
+												</f:facet>
+												<f:facet name="input">
+													<h:selectOneMenu value="#{cuota.condicion}"
+														style="width:100%" disabled="#{!cuota.siActivo}">
+														<f:selectItem itemLabel="Cancelado" itemValue="Cancelado" />
+														<f:selectItem itemLabel="Pendiente" itemValue="Pendiente" />
+														<f:selectItem itemLabel="Generado" itemValue="Generado"
+															itemDisabled="#{cuota.siActivo}" />
+													</h:selectOneMenu>
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+									</p:dataTable>
+									<!-- ***********************  PANEL TOTAL ********************** -->
+									<h:panelGrid id="total" columns="2"
+											style="margin-left:450px;">
+											<h:outputLabel value="Subtotal: " style="font-size:16px;" />
+											<h:outputText style="width:80px;font-size:16px;text-align:right;"
+												value="#{autovaluoCobranzaMB.totalSubTotalComprobante}" />
+												
+											<h:outputLabel value="IGV: " style="font-size:16px;" />
+											<h:outputText style="width:80px;font-size:16px;text-align:right;"
+												value="#{autovaluoCobranzaMB.igvComprobante}" />
+											
+											<h:outputLabel value="TOTAL: " style="font-size:16px;" />
+											<h:outputLabel style ="width:80px;font-size:16px;" value="#{autovaluoCobranzaMB.totalComprobante}" />
+<!-- 											<p:inputText -->
+<!-- 												style="width:80px;font-size:16px;text-align:right;" -->
+<!-- 												value="#{autovaluoCobranzaMB.totalComprobante}" > -->
+<!-- 											<p:ajax event="blur" listener="#{autovaluoCobranzaMB.calcularIgvSubtotal}" update="total"/> -->
+<!-- 											</p:inputText> -->
+
+									</h:panelGrid>
+										<p:commandButton style="margin-left:450px;margin-top:15px;"
+											update=":frmMaestra:listaMensajes"
+											actionListener="#{autovaluoCobranzaMB.validacionRegistrarReciboCaja}"
+											value="Registrar" icon="ui-icon-circle-check" />
+
+										<p:commandButton style="margin-top:15px;margin-left:5px"
+											onclick="dlgRegistroPagoOtro.hide();" value="Cerrar"
+											icon="ui-icon-circle-close" />
+									<!-- ******************************************************************************* -->
+							</div>
+
+					</div>
+
+			</p:dialog>
+			 
+			 <!-- ####################### PENDIENTE DE PAGO DE RENTA ###################### -->
+			 <p:dialog width="auto" height="auto" resizable="false"
+						closeOnEscape="true" showHeader="true" closable="true"
+						widgetVar="dlgPendientePagoRenta"
+						showEffect="slide" hideEffect="slide">
+
+						<p:dataTable id="pendientePagoRenta" var="cuota"
+							rowKey="#{cuota.nrocuota}" paginatorPosition="top"
+							filteredValue="#{autovaluoCobranzaMB.listaCuotasPendientesCondicionCancelarFilter}"
+							value="#{autovaluoCobranzaMB.listaCuotasPendientesCondicion}"
+							paginator="true"
+							selection="#{autovaluoCobranzaMB.listaCuotasPendientesCondicionCancelar}"
+						    
+							paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+							currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+							rowsPerPageTemplate="12,24,36,48,60,72" rows="12" scrollWidth="400px"
+							emptyMessage="No tiene Pendientes">
+							<p:ajax event="toggleSelect"
+									listener="#{autovaluoCobranzaMB.calcularTotales}"
+									update=":frmRegistroReciboCaja:listaCuotasPendientesPagoRentaCancelar,:frmRegistroReciboCaja:total" />
+								
+							<p:ajax event="rowSelectCheckbox"
+								listener="#{autovaluoCobranzaMB.calcularTotales}"
+								update=":frmRegistroReciboCaja:listaCuotasPendientesPagoRentaCancelar,:frmRegistroReciboCaja:total" />
+							<p:ajax event="rowUnselectCheckbox"
+								update=":frmRegistroReciboCaja:listaCuotasPendientesPagoRentaCancelar,:frmRegistroReciboCaja:total"
+								listener="#{autovaluoCobranzaMB.calcularTotales}" />
+							<p:ajax event="rowSelect"
+								update=":frmRegistroReciboCaja:listaCuotasPendientesPagoRentaCancelar,:frmRegistroReciboCaja:total"
+								listener="#{autovaluoCobranzaMB.calcularTotales}" />
+
+							<p:column selectionMode="multiple" width="15" disabledSelection="#{cuota.condicion.equals('Generado')}"/>
+
+							<p:column>
+								<h:outputText value="#{cuota.mes}" />
+							</p:column>
+							<p:column filterBy="#{cuota.anio}" filterMatchMode="contains">
+								<h:outputText value="#{cuota.anio}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{cuota.monto}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{cuota.condicion}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</p:dialog>
+			 <!-- ############################################ -->
+			
+			 <br />
+			 <br />
+			
+										
+
+
+						</h:form>
+					
+				 
+				</div>
+			</div>		
+		</div>
+		
+		
+	</div>
+	
+</h:body>
+</html>

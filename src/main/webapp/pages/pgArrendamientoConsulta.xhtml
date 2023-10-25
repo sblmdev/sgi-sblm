@@ -1,0 +1,1486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador" style="background-color:#36A6DE;">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="recaudacion_iconoTitulo"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Arrendamiento</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Consultas</label>
+					</div>
+				</div>
+				
+				<div class="contenidoPrincipal_SubFondo">
+				
+
+					<!-- CONTENIDO MODIFICABLE -->
+					<div class="consultaArrendamiento_iconoSubTitulo">
+					</div>
+					<div id="arren_lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">
+						<h:outputText style="float:left;margin-left:5px; margin-top:10px;font-size:15px;"
+							value="Consulta" />
+					</div>
+					<p:commandLink id="idTab01Cobranza" styleClass="arren_btnAtendidos" 
+						onclick="funcionTabConsultaArrendamientoUpa();" >
+						<div class="btncentrado">
+						<p:outputLabel value="Upa"/>
+						<p:graphicImage value="/resources/images/dgaiMonitoreo/iconTituloDgai.png" width="20" height="20" style="margin-left:5px;"
+													alt="Consulta" title="Consulta" />
+						</div>
+					</p:commandLink>
+					<p:commandLink id="idTab02Cobranza"
+						styleClass="arren_btnPendientes" onclick="funcionTabConsultaArrendamientoInquilino();"  update=":tabConsultaArrendamientoInquilino">
+						<div class="btncentrado">
+						<p:outputLabel value="Inquilino"/>
+						<p:graphicImage value="/resources/images/paginaMaestra/iconoPerfiles2.png" width="20" height="20"
+													alt="Consulta" title="Consulta" />
+						</div>
+					</p:commandLink>
+					<p:commandLink id="idTab03Cobranza"
+						styleClass="arren_btnPendientes" onclick="funcionTabConsultaArrendamientoContrato();" >
+						<div class="btncentrado" style="margin-top:15px;font-size:10px;">Condición(S/C/P)</div>
+					</p:commandLink>
+
+
+					<div class="contenidoPrincipal_fondo_formulario">
+						<div class="contenidoPrincipal_ContenedorBlano">
+
+							<!-- ########################### PANEL  ###################### -->
+							<div id="contentTabConsultaArrendamientoUpa" class="cartera_panelPendientes">
+								<h:form id="tabConsultaArrendamientoUpa">
+								<p:tabView style="background-color:white;margin:-10px;">
+							    	<p:tab title="Busqueda UPA">
+										<p:panel id="tab1Upa" header="Informaci&oacute;n Upa" style="margin-left:6px;"  >
+										  
+												<f:facet name="header">
+																<p:growl id="growlTabUpa" showDetail="true" sticky="false" life="3000" />
+																<p:remoteCommand name="test2"
+																	actionListener="#{arrendamientoconsultaMB.buscarUpa}"
+																	update="upa,growlTabUpa" />
+																<p:inputMask id="clave" mask="**-****-***" value="#{arrendamientoconsultaMB.claveupaTabUpa}"
+																	onkeypress="if (event.keyCode == 13) { test2(); return false; }"
+																	style="width:90px;text-align:center;font-size:12px;">
+																</p:inputMask>
+																<p:watermark for="clave" value="Ingrese Clave" id="watermark" />
+												</f:facet>
+											<p:outputPanel id="upa">
+												<table  style="margin: 30px;" width="600" cellspacing="10">
+														<tr>
+															<td width="25%"><h:outputText  value="Direcci&oacute;n:" style="color: #4C4C4C;"/></td>
+<!-- 															<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.upa.inmueble.direccion}"/></td> -->
+															<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.upa.direccion}"/></td>
+															<td width="25%"><h:outputText  value="Nº Principal:" style="color: #4C4C4C;"/></td>
+<!-- 															<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.upa.inmueble.numeroprincipal}"/></td> -->
+															<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.upa.numprincipal}"/></td>
+														</tr>
+														<tr> 
+															<td><h:outputText  value="Nº de Interior" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.nombrenuminterior}"/></td>
+															<td><h:outputText  value="Distrito" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.inmueble.ubigeo.dist}"/></td>
+														</tr>
+														
+														<tr> 
+															<td ><h:outputText  value="Provincia:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.inmueble.ubigeo.prov}"/></td>
+															<td><h:outputText  value="Departamento:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.inmueble.ubigeo.depa}"/></td>
+														</tr>
+														
+														<tr> 
+															<td ><h:outputText  value="Tugurizado/Ruinoso:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.tugurizadoruinoso}"/></td>
+															<td><h:outputText  value="Uso:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.uso}"/></td>
+														</tr>
+														
+														<tr> 
+															<td><h:outputText  value="Antiguedad:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.antiguedad}"/></td>
+															<td ><h:outputText  value="Conservacion:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.conservacion}"/></td>
+															
+														</tr>
+														
+														<tr> 
+															<td><h:outputText  value="Material Estructural:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.mep}"/></td>
+															
+														</tr>
+														
+														<tr> 
+															<td ><h:outputText  value="Usuario Creador:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.usrcre}"/></td>
+															<td><h:outputText  value="Fecha Creación:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.feccre}"/></td>
+														</tr>
+														
+														<tr> 
+															<td ><h:outputText  value="Ult. Usuario Modificador:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.usrmod}"/></td>
+															<td><h:outputText  value="Fecha modificación:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.fecmod}"/></td>
+														</tr>
+																											
+														<tr> 
+															<td><h:outputText  value="Proceso Judicial" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.upa.siprocesojudicial=='true' ? 'S&iacute;':'No'}" />
+															</td>
+														</tr>
+												</table>
+											</p:outputPanel>
+												</p:panel>
+										</p:tab>
+										<p:tab title="Busqueda UPA por Filtro">
+										   <p:panel id="tab1UpaFiltro" header="" style="margin-left:-19px;"  >
+											<p:outputPanel id="panelConsulta">
+												<p:fieldset legend="Filtro"
+													style="text-align: left;width: 500px;height: 102px   ;  margin: -10px ;">
+
+													<table width="10%" style="margin: 0px 0px;" cellspacing="5">
+														<tr>
+															<td width="20%">
+																<center>
+																	<h:outputText value="Clave" />
+																</center>
+															</td>
+															<td width="20%">
+																<center>
+																	<h:outputText value="Av/Jr/Calle/Pasaje" />
+																</center>
+															</td>
+															<td width="20%">
+																<center>
+																	<h:outputText value="N° Principal" />
+																</center>
+															</td>
+															<td width="20%">
+																<center>
+																	<h:outputText value="N° Interior" />
+																</center>
+															</td>
+
+														</tr>
+														<tr>
+															<td width="20%"><p:inputMask id="claveupa"
+																	mask="**-****-***"
+																	value="#{arrendamientoconsultaMB.upa.clave}"
+																	style="width:90px;text-align:center;font-size:14px;">
+																</p:inputMask></td>
+															<td width="20%"><p:inputText id="direccionc"
+																	value="#{arrendamientoconsultaMB.upa.direccion}"
+																	style="width: 200px;" maxlength="150" /> <!-- 											  				<p:watermark for="direccionc" value="Ejemplo: Carabaylla" id="watermark" /> -->
+															</td>
+															<td width="20%"><p:inputText id="numprinicipalc"
+																	value="#{arrendamientoconsultaMB.upa.numprincipal}"
+																	style="width: 76px;" maxlength="150" /> <!-- 											  				<p:watermark for="numprinicipalc" value="Ejemplo: 641 " id="watermark" /> -->
+															</td>
+															<td width="20%"><p:inputText id="numinteriorc"
+																	value="#{arrendamientoconsultaMB.upa.nombrenuminterior}"
+																	style="width: 76px;" maxlength="150" /> <!-- 											  				<p:watermark for="numinteriorc" value="Ejemplo:  102  " id="watermark" /> -->
+															</td>
+
+															<td width="20%">
+															<p:panelGrid columns="2">
+															<p:commandButton value="Buscar"
+																	style="background: #36A6DE; color: white;  margin: -0.5px; width: 70px;  "
+																	actionListener="#{arrendamientoconsultaMB.buscarListaUpa(arrendamientoconsultaMB.upa)}"
+																	ajax="true" icon="ui-icon-search" update=":frmMaestra:listaMensajes,listaUpa">
+																</p:commandButton>
+																 <p:commandButton value="Limpiar" 
+																 	style="background: #36A6DE; color: white;margin: -0.5px; width: 70px;  " 
+																 	actionListener="#{arrendamientoconsultaMB.limpiarListaFormulario}"
+																	icon="ui-icon-refresh"
+																	update="panelConsulta,listaUpa" />	
+																	 </p:panelGrid>
+																	 </td>
+<!-- <p:panelGrid columns="2"> -->
+<!-- 														<p:commandButton value="" icon="ui-icon-search"/> -->
+<!-- 														<p:commandButton value="Limpiar" icon="ui-icon-refresh"/> -->
+<!-- 													</p:panelGrid> -->
+<!-- </td> -->
+														</tr>
+													</table>
+													
+
+												</p:fieldset>
+
+
+											</p:outputPanel>
+											<p:dataTable id="listaUpa" var="upa" rowKey="#{upa.idupa}"
+												value="#{arrendamientoconsultaMB.listaUpas}"
+												selectionMode="single"
+												emptyMessage="No se ha encontrado ningún registro"
+												paginator="true"
+												
+												paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+												currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+												rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="680"
+												selection="#{arrendamientoconsultaMB.upaselected}"
+												style="width:680px;max-height:200px; font-size: 10px;  margin: 10px 0px 0px 20px;text-align: center;"
+												styleClass="ui-datatable-hor-scroll-horizontal" rowIndexVar="index"
+												editable="true">
+												<p:ajax event="rowSelect"
+												listener="#{arrendamientoconsultaMB.onRowSelect}"  oncomplete="dlgDetalleUpa.show();"
+												update=":frmMaestra:listaMensajes,:formInformacionUpas" />
+												<p:column headerText="#">
+												     <h:outputText value="#{index+1}" />
+												</p:column>
+												<p:column headerText="N° Clave" filterBy="#{upa.clave}"
+													filterMatchMode="startsWith">
+													<h:outputText value="#{upa.clave}" />
+												</p:column>
+												<p:column headerText="Direcci&oacute;n" filterBy="#{upa.direccion}">
+													<h:outputText value="#{upa.direccion}" />
+												</p:column>
+
+												<p:column headerText="Nro Principal" filterBy="#{upa.numprincipal}">
+													<h:outputText value="#{upa.numprincipal}" />
+												</p:column>
+
+												<p:column headerText="Nro. Interior" filterBy="#{upa.nombrenuminterior}">
+													<h:outputText value="#{upa.nombrenuminterior}" />
+												</p:column>
+												<p:column headerText="Distrito" filterBy="#{upa.inmueble.ubigeo.dist}">
+													<h:outputText value="#{upa.inmueble.ubigeo.dist}" />
+												</p:column>
+												<p:column headerText="Provincia" filterBy="#{upa.inmueble.ubigeo.prov}">
+													<h:outputText value="#{upa.inmueble.ubigeo.prov}" />
+												</p:column>
+												<p:column headerText="Departamento" filterBy="#{upa.inmueble.ubigeo.depa}">
+													<h:outputText value="#{upa.inmueble.ubigeo.depa}" />
+												</p:column>
+												<p:column headerText="Uso" >
+													<h:outputText value="#{upa.uso}" />
+												</p:column>
+												<p:column headerText="Condicion" >
+													<h:outputText value="#{upa.tugurizadoruinoso}" />
+												</p:column>
+												<p:column headerText="Proceso Judicial" >
+													<h:outputText value="#{upa.siprocesojudicial==null? 'No':(upa.siprocesojudicial?'Si':'No')}" />
+												</p:column>
+												<p:column headerText="Copropiedad" >
+													<h:outputText value="#{upa.sicopropiedad==null? 'No':(upa.sicopropiedad?'Si':'No')}" />
+												</p:column>
+												<p:column headerText="Estado" >
+													<h:outputText value="#{upa.estado==null? 'Activo':(upa.estado? 'Inactivo':'Activo' )}" />
+												</p:column>
+												
+
+											</p:dataTable>
+											<p:outputPanel id="outoutpanelDescarga">
+											<p:panel id="panelExportar" header="Exportar" style="margin-top:15px;text-align:center;" >
+											    <center>
+											    <h:panelGrid columns="8" >
+											       <p:spacer width="20"/>
+											       
+											       <p:commandButton style="width:20px;height:20px;" actionListener="#{arrendamientoconsultaMB.Excel}" icon="ui-icon-arrowthickstop-1-s" 
+											       onclick=" PrimeFaces.monitorDownload(start, stop);" 
+											       
+											       
+											       >
+														 <p:graphicImage value="/resources/icons/tipoArchivo/xls.png" />
+														 <p:fileDownload value="#{arrendamientoconsultaMB.report}" contentDisposition="attachment"  />
+													</p:commandButton>
+													
+											    </h:panelGrid>
+											    </center>
+											</p:panel>
+											</p:outputPanel>
+											
+											</p:panel>
+											
+											 
+										</p:tab>
+										
+									</p:tabView>
+									
+								</h:form>
+								<h:form id="formInformacionUpas">
+								<p:dialog header="Informaci&oacute;n de UPA" widgetVar="dlgDetalleUpa" showEffect="fade" hideEffect="fade" resizable="false" width="500" height="auto" style="border-width:5.5px;border-style:solid;  border-color:#6043dd;">
+								        <p:outputPanel id="informacionUpa">
+
+											<p:panel >
+												<h:panelGrid  columns="2" cellspacing="10">
+													<h:outputText value="N° de Clave: " style="align-text:left;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.clave}" style="text-align:center"/>
+													
+													<h:outputText  value="Direcci&oacute;n:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.direccion}"/>
+													<h:outputText  value="Nº Principal:" style="color: #4C4C4C;"/>
+
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.numprincipal}"/>
+
+													<h:outputText  value="Nº de Interior" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.nombrenuminterior}"/>
+													<h:outputText  value="Distrito" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.inmueble.ubigeo.dist}"/>
+
+													<h:outputText  value="Provincia:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.inmueble.ubigeo.prov}"/>
+													<h:outputText  value="Departamento:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.inmueble.ubigeo.depa}"/>
+														
+													<h:outputText  value="Condición:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.tugurizadoruinoso}"/>
+													<h:outputText  value="Uso:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.uso}"/>
+														
+													<h:outputText  value="Copropiedad " style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.sicopropiedad=='true' ? 'S&iacute;':'No'}" />
+															
+													<h:outputText  value="Usuario Creador:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.usrcre}"/>
+													<h:outputText  value="Fecha Creación:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.feccre}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="GMT-5"/>
+													</h:outputText>
+													<h:outputText  value="Usuario Modificador:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.usrmod}"/>
+													<h:outputText  value="Fecha modificación:" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.fecmod}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="GMT-5"/>
+													</h:outputText>
+
+													<h:outputText  value="Proceso Judicial" style="color: #4C4C4C;"/>
+													<h:outputText value="#{arrendamientoconsultaMB.upaselected.siprocesojudicial=='true' ? 'S&iacute;':'No'}" />
+													<br/><br/>		
+													
+												
+													
+												</h:panelGrid>
+												<center>
+														<p:commandButton value="Cerrar" oncomplete="dlgDetalleUpa.hide();" icon="icon-cancel" update=":frmMaestra:listaMensajes"/>
+													</center>
+											
+								        	</p:panel>
+								        		
+								        </p:outputPanel>	
+					    </p:dialog>
+								
+								
+								
+								</h:form>
+								
+							
+							</div>
+							
+							<div id="contentTabConsultaArrendamientoInquilino" class="cartera_panelPendientes">
+									<h:form id="tabConsultaArrendamientoInquilino">
+									
+											<p:panel>
+											<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+												        <p:outputLabel  value="Ingrese nombres:" />
+												        <p:remoteCommand name="busquedaInquilino" actionListener="#{arrendamientoconsultaMB.buscarInquilino}" update="listaInquilino"/>
+												        <p:inputText id="patron"  value="#{arrendamientoconsultaMB.nombreInquilinoBusqueda}" onkeypress="if (event.keyCode == 13) { busquedaInquilino(); return false; }" >
+												        	<p:watermark for="patron" value="Ingrese campo"/>
+												        </p:inputText>
+					 						</h:panelGrid>
+													
+											
+													<p:scrollPanel mode="native">
+													<p:dataTable id="listaInquilino" var="inquilino"
+														selectionMode="single" rowKey="#{inquilino.idinquilino}"
+														value="#{arrendamientoconsultaMB.listaInquilino}"
+														selection="#{arrendamientoconsultaMB.inquilino}"
+														emptyMessage="No se ha encontrado ning&uacute;n registro"  
+														style="width:680px;max-height:200px; font-size: 10px;  margin: 10px 0px 0px 20px;text-align: center;">
+														<p:ajax event="rowSelect" update=":tabConsultaArrendamientoInquilino" listener="#{arrendamientoconsultaMB.configurarTipoPersona}"/>
+														
+														<p:column headerText="Nombres/Razón Social):">
+															<h:outputText value="#{inquilino.nombrescompletos}"/>
+														</p:column>
+														<p:column headerText="Nombres/Razón Social):">
+															<h:outputText value="#{inquilino.tipopersona.descripcion}"/>
+														</p:column>
+														
+													</p:dataTable>	
+													</p:scrollPanel>
+											
+											</p:panel>
+											<p:panel id="tab1Inquilino" header="Informaci&oacute;n Inquilino" style="margin-left:6px;">
+
+													<p:outputPanel id="inq">
+														<table width="600" style="margin: 30px;" cellspacing="10">
+															<tr>
+																<td width="25%"><h:outputText  value="Tipo de Persona:" style="color: #4C4C4C;"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.inquilino.tipopersona.descripcion==null ? 'no registrado':arrendamientoconsultaMB.inquilino.tipopersona.descripcion}"/></td>
+																
+															</tr>
+															<tr> 
+																<td><h:outputText  value="Nombres:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.nombrescompletos}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="Dni:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.dni}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="Carnet Ext.:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.carnetextranjeria}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+															</tr>
+															<tr>
+																<td><h:outputText  value="Raz&oacute;n Social:" style="color: #4C4C4C;" rendered="#{!arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.nombrescompletos}" rendered="#{!arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="RUC:" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.ruc}" /></td>
+															</tr>
+															
+															<tr>
+																<td><h:outputText  value="Tel&eacute;fono:" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.telefono}" /></td>
+																<td><h:outputText  value="Email:" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.email}" /></td>
+															</tr>
+															
+															<tr>
+																<td><h:outputText  value="Celular:" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.celular}" /></td>
+																<td><h:outputText  value="Pagina Web:" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.paginaweb}" /></td>
+															</tr>
+															
+															<tr>
+																<td><h:outputText  value="Direcci&oacute;n" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.direccion}" /></td>
+																<td><h:outputText  value="Referencia:" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.referencia}" /></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Departamento Nac." style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.dpto}"/></td>
+																<td><h:outputText  value="Provincia Nac." style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.provincia}"/></td>
+															</tr>
+															<tr> 
+																<td><h:outputText  value="Distrito" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.distrito}"/></td>
+																<td><h:outputText  value="Carnet extranjer&iacute;a" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.carnetextranjeria}"/></td>	
+															</tr>
+																						
+															<tr> 
+																<td><h:outputText  value="Inquilino Haviende" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.estado}"/></td>
+															</tr>
+															
+															<tr> 
+																<td ><h:outputText  value="Usuario Creador:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.usrcre}"/></td>
+																<td><h:outputText  value="Fecha Creación:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.feccre}"/></td>
+															</tr>
+															
+															<tr> 
+																<td ><h:outputText  value="Ult. Usuario Modificador:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.usrmod}"/></td>
+																<td><h:outputText  value="Fecha modificación:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.inquilino.fecmod}"/></td>
+															</tr>
+															
+															
+													</table>
+												</p:outputPanel>	
+												</p:panel>
+									</h:form>
+							</div>
+							
+							<div id="contentTabConsultaArrendamientoContrato" class="cartera_panelPendientes">
+									<div class="carterasubpestanas">
+										<p:commandLink id="botonContratoSubTabUpa"  styleClass="botonContratoSubTabUpa" 
+											onclick="funcionContratoSubTabUpa();">
+											<div class="btncentrado">
+												<p:outputLabel value="Clave Upa"
+													style="margin-bottom:10px;  float:left;margin-left:5px;font-size:10px;" />
+												<p:graphicImage value="/resources/images/varios/search.png" width="15" height="20"  style="margin-top:-6px;"
+													alt="Consulta" title="Consulta" />
+											</div>
+										</p:commandLink>
+										<p:commandLink id="botonContratoSubTabInquilino" styleClass="botonContratoSubTabInquilino" 
+											onclick="funcionContratoSubTabInquilino();" >
+											<div class="btncentrado">
+												<p:outputLabel value="Espec&iacute;fico"
+													style="margin-bottom:10px; float:left;margin-left:5px;font-size:10px;" />
+												<p:graphicImage value="/resources/images/varios/search.png"  width="15" height="20"  style="margin-top:-6px;"
+													alt="Registro" title="Registro" />
+											</div>
+										</p:commandLink>
+										
+										<p:commandLink id="botonContratoSubTabContrato"  styleClass="botonContratoSubTabContrato"
+											onclick="funcionContratoSubTabContrato();">
+											<div class="btncentrado">
+												<p:outputLabel value="Nº Contrato"
+													style="margin-bottom:10px; float:left;margin-left:5px;font-size:10px;" />
+												<p:graphicImage value="/resources/images/varios/search.png"  width="15" height="20"  style="margin-top:-6px;"
+													alt="Registro" title="Registro" />
+											</div>
+										</p:commandLink>
+									</div>
+								
+								
+									<div id="contentContratoSubTabUpa" class="recau_panelPendientes">
+							 <h:form id="tabContratoUpa">
+													<h:panelGrid columns="4" style="text-align:center;margin-left:15px;margin-top:15px;">
+															<p:remoteCommand name="busquedaCondicionUpa"
+																	actionListener="#{arrendamientoconsultaMB.buscarContratoxUpa}"
+																	update="listacontratosupa" />
+															<h:outputText value="Ingrese clave: "/>
+															<p:inputMask id="clave"  mask="**-****-***" value="#{arrendamientoconsultaMB.claveupaTabCondicion}"
+																	onkeypress="if (event.keyCode == 13) { busquedaCondicionUpa(); return false; }"
+																	style="width:90px;text-align:center;font-size:12px;">
+															</p:inputMask>
+													</h:panelGrid>
+													<p:dataTable id="listacontratosupa" var="contrato"
+														selectionMode="single" rowKey="#{contrato.idcontrato}"
+														value="#{arrendamientoconsultaMB.listaContrato}"
+														selection="#{arrendamientoconsultaMB.contratoBean}"
+														emptyMessage="No se ha encontrado ning&uacute;n registro"  
+														style="width:680px;max-height:200px; font-size: 10px;  margin: 10px 0px 0px 20px;text-align: center;"
+														styleClass="ui-datatable-hor-scroll-horizontal" 
+														rowStyleClass="#{contrato.estado le 'ANULADO' ? 'red':null }">										
+														
+														<p:ajax event="rowSelect" update=":tabContratoUpa,:frmMaestra:listaMensajes" listener="#{arrendamientoconsultaMB.buscarxupa}"/>
+					
+									 <p:columnGroup type="header">
+									  <p:row>
+						                <p:column rowspan="2" headerText="Condici&oacute;n" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Nombre/Raz&oacute;n Social" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Estado" style="vertical-align: middle;"/>
+						                <p:column colspan="8" headerText="Contrato" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Inicio Cobro" style="vertical-align: middle;"/>
+						                <p:column rowspan="2" headerText="Fin Cobro" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Cuotas Canceladas" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Proceso Judicial" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Valor Carta Fianza" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Venc. carta Fianza" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Documento" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Usuario Creador" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Fecha Creación" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Usuario Modificación" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Fecha Modificación" style="vertical-align: middle;"/>				
+										<p:column rowspan="2" headerText="Usuario Modificación Resuelto" style="vertical-align: middle;"/>
+										<p:column rowspan="2" headerText="Fecha Modificación Resuelto" style="vertical-align: middle;"/>								
+						            </p:row>
+						            <p:row>
+										<p:column colspan="1" headerText="Nro Contrato" style="vertical-align: middle;"/>
+										<p:column colspan="1" headerText="Nro Acta" style="vertical-align: middle;"/>
+						                <p:column colspan="1" headerText="Inicio" style="vertical-align: middle;"/>
+						                <p:column colspan="1" headerText="Fin" style="vertical-align: middle;"/>
+						                <p:column rowspan="1" headerText="Resuelto" style="vertical-align: middle;"/>
+						                <p:column rowspan="1" headerText="Adenda" style="vertical-align: middle;"/>
+						                <p:column rowspan="1" headerText="Reconoce Deuda" style="vertical-align:middle;"/>
+						                <p:column rowspan="1" headerText="Escritura Publica" style="vertical-align:middle;"/>
+						                
+						            </p:row>
+									 		
+									 </p:columnGroup>
+									
+									<p:column>
+										<h:outputText value="#{contrato.condicion}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.nombresInquilino}" />
+									</p:column>
+									<p:column headerText="Estado">
+										<h:outputText value="#{contrato.estado}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.nrocontrato==NULL ? 'S/N':contrato.nrocontrato}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.nroacta==NULL ? '':contrato.nroacta}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.iniciocontrato}" >
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.fincontrato}" >
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Resuelto">
+										<h:outputText value="#{contrato.siresuelto==NULL ? 'No': (contrato.siresuelto=='true' ? 'Sí':'No')}" />
+									</p:column>
+									<p:column headerText="Adenda">
+									<p:commandLink id="botonContratoSubTabContrato"  
+											action="#{arrendamientoconsultaMB.buscarAdenda(contrato.idcontrato)}" process="@this" oncomplete="vistaDetalleAdenda.show();"
+											update=":frmDetalleAdenda">
+											<div class="btncentrado">
+												<p:outputLabel value="#{contrato.siadenda =='true' ? 'Sí':'No'}"
+													style="margin-bottom:5px; float:center;margin-left:0px;font-size:10px;" />
+<!-- 												<p:graphicImage value="/resources/images/varios/search.png"  width="15" height="20"  style="margin-top:-6px;" -->
+<!-- 													alt="Registro" title="Registro" /> -->
+											</div>
+										</p:commandLink>
+									</p:column>
+									<p:column headerText="ReconocimientoDeuda" >
+									 	<h:outputText value="#{contrato.sireconocimientodeuda == 'true' ? 'Sí':'No'}" />
+									</p:column>
+									<p:column headerText="EscrituraPublica" >
+									 	<h:outputText value="#{contrato.siescriturapublica == 'true' ? 'Sí':'No'}" />
+									</p:column>
+									<p:column headerText="Inicio Cobro">
+										<h:outputText value="#{contrato.iniciocobro}" >
+										<f:convertDateTime pattern="MMM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Fin Cobro">
+										<h:outputText value="#{contrato.fincobro}" >
+										<f:convertDateTime pattern="MMM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="">
+									<h:outputText value="#{contrato.sicuotascanceladas=='true' ? 'Sí':'No'}" />
+									</p:column>	
+									<p:column headerText="">
+									<h:outputText value="#{contrato.siprocesojudicial=='true' ? 'Sí':'No'}" />
+									</p:column>	
+									<p:column headerText="">
+									<h:outputText value="#{contrato.valorcartafianza}" />
+									</p:column>	
+									<p:column headerText="">
+									<h:outputText value="#{contrato.fechavencimientocartafianza}" />
+									</p:column>	
+									<p:column headerText="Documento">
+									<p:commandLink id="botonContratoDocumento"  
+											action="#{archivoMB.abrirDialogoVerAdjunto('Condicion',contrato.idcontrato)}" process="@this" 
+											update=":frmMaestra:listaMensajes,:frmVerDocumento:listaArchivosReferencia">
+											<div class="btncentrado">
+												<p:outputLabel value="#{contrato.sidocumento =='true' ? 'Sí':'No'}"
+													style="margin-bottom:5px; float:center;margin-left:0px;font-size:10px;" />
+											</div>
+										</p:commandLink>
+										
+
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contrato.usrcre}" />
+									</p:column>
+									<p:column headerText="">
+									<h:outputText value="#{contrato.feccre}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+									</p:column>	
+									<p:column>
+										<h:outputText value="#{contrato.usrmod}" />
+									</p:column>
+									<p:column headerText="">
+									<h:outputText value="#{contrato.fecmod}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+									</p:column>	
+					                <p:column>
+										<h:outputText value="#{contrato.usrmod}" />
+									</p:column>
+									<p:column headerText="">
+									<h:outputText value="#{contrato.fecmodresuelto}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+									</p:column>	
+								</p:dataTable>
+					<p:panel id="tab2Inquilino" header="Informaci&oacute;n Inquilino" style="margin-left:6px;margin-top:20px;">
+													
+														<table width="600" style="margin: 30px;" cellspacing="5">
+															<tr>
+																<td width="25%"><h:outputText  value="Tipo de Persona:" style="color: #4C4C4C;"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.tipopersona}"/></td>
+																
+															</tr>
+															<tr> 
+																<td><h:outputText  value="Nombres:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.nombresInquilino}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="Dni:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.dni}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="Carnet Ext.:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.carnetextranjeria}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+															</tr>
+															<tr>
+																<td><h:outputText  value="Raz&oacute;n Social:" style="color: #4C4C4C;" rendered="#{!arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.nombresInquilino}" rendered="#{!arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="RUC:" style="color: #4C4C4C;"  /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.ruc}" /></td>
+															</tr>
+															
+																						
+															<tr> 
+																<td><h:outputText  value="Inquilino Haviende" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.siocupante=='TRUE' ? 'Sí':'No'}"/></td>
+																<td><h:outputText  value="Nombres ocupante" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.nombreocupante}"/></td>
+																
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Direcci&oacute;n:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.prov}"/></td>
+																<td><h:outputText  value="Referencia:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.depa}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Tel&eacute;fono:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.prov}"/></td>
+																<td><h:outputText  value="Celular:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.depa}"/></td>
+															</tr>
+													</table>
+													
+												</p:panel>
+												
+												<p:panel id="tab2Upa" header="Informaci&oacute;n Upa: #{arrendamientoconsultaMB.contratoBean.claveUpa}" style="margin-left:7px;margin-top:5px;">
+													<table  style="margin: 30px;" width="600" cellspacing="5">
+															<tr>
+																<td width="25%"><h:outputText  value="Direcci&oacute;n:" style="color: #4C4C4C;"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.direccion}"/></td>
+																<td width="25%"><h:outputText  value="Nº Principal:" style="color: #4C4C4C;"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numeroprincipal}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Nº de Interior" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numerointerior}"/></td>
+																<td><h:outputText  value="Distrito" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.distrito}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText value="Provincia:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.provincia}"/></td>
+																<td><h:outputText value="Departamento:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.departamento}"/></td>
+															</tr>
+															
+															
+															<tr> 
+																<td><h:outputText value="Proceso Judicial" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.siprocesojudicial  =='true' ? 'Si' : 'No'}"   style="color: #f60505;" />
+																</td>
+															</tr>
+													</table>
+					
+												</p:panel>
+												
+												<p:panel id="tab2Contrato" header="Informaci&oacute;n de #{arrendamientoconsultaMB.contratoBean.condicion}" style="margin-top:5px;margin-left:6px;">
+												
+														<table  style="margin: 30px;" width="600" cellspacing="5">
+															
+															<tr>
+																<td width="25%"><h:outputText  value="Inicio Contrato" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.iniciocontrato}" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}">
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</td>
+																<td width="25%"><h:outputText  value="Fin Contrato" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.fincontrato}" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}">
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</td>
+															</tr>
+															
+															<tr>
+																<td width="25%"><h:outputText  value="Inicio Cobro" style="color: #4C4C4C;" /></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.iniciocobro}" >
+																	<f:convertDateTime pattern="MMM/yyyy" />
+																	</h:outputText>
+																</td>
+																<td width="25%"><h:outputText  value="Fin Cobro" style="color: #4C4C4C;" /></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.fincobro}" >
+																	<f:convertDateTime pattern="MMM/yyyy" />
+																	</h:outputText>
+																</td>
+															</tr>
+
+															
+															<tr> 
+																<td><h:outputText  value="Moneda:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.moneda=='S'? 'Soles' : 'D&oacute;lares'}" /></td>
+																<td><h:outputText  value="N&uacute;mero de Cuota:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numerocuotas}" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}"/></td>
+																
+															</tr>
+															<tr> 
+																<td><h:outputText  value="Resuelto:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.siresuelto=='true' ? 'Sí':'No'}" /></td>
+															</tr>
+															<tr>	
+																<td><h:outputText  value="Observaci&oacute;n:" style="color: #4C4C4C;"/></td>
+																<td colspan="3"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.observacionresuelto}" /></td>				
+															</tr>
+															
+															<tr>	
+																<td><h:outputText  value="Observaci&oacute;n Finalizado:" style="color: #4C4C4C;"/></td>
+																<td colspan="3"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.observacionfinalizado==null?'':arrendamientoconsultaMB.contratoBean.observacionfinalizado}" /></td>				
+															</tr>
+															<tr> 
+																<td><h:outputText  value="Monto Cuota 1:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced1}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota1}" rendered="#{arrendamientoconsultaMB.merced1}"/></td>																
+															</tr>
+															<tr>
+																<td><h:outputText  value="Reconoc. de Deuda :" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.sireconocimientodeuda=='true' ? 'Si' : 'No'}" rendered="#{arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}" style="color: #f60505;"  /></td>
+															</tr>
+															
+													</table>
+												</p:panel>
+												
+												<p:panel header="Cronograma de pago de #{arrendamientoconsultaMB.contratoBean.condicion}" rendered="#{arrendamientoconsultaMB.contratoBean.condicion!='Sin Contrato' || arrendamientoconsultaMB.contratoBean.condicion==NULL}"  style="margin-top:5px;margin-left:6px;">
+													<p:dataTable id="listaRentas" value="#{arrendamientoconsultaMB.listaRentas}"
+																 var="renta" rowKey="#{renta.secuencia}"
+																 style="font-size: 12px; text-align: center;"
+																 emptyMessage="No ha generado ninguna renta" rowIndexVar="index"
+																 rows="12" paginator="true" paginatorPosition="bottom"
+										                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+															
+															<p:columnGroup type="header">
+															  <p:row>
+												                <p:column rowspan="2" headerText="#" style="vertical-align: middle;"/>
+												                <p:column rowspan="2" headerText="#{arrendamientoconsultaMB.contratoBean.condicion!='Reconocimiento Deuda'? 'Año':'Nro Cuota'} " style="vertical-align: middle;"/>
+												                <p:column rowspan="2" headerText="#{arrendamientoconsultaMB.contratoBean.condicion!='Reconocimiento Deuda'? 'Mes':'Fecha Venc.'}" style="vertical-align: middle;"/>
+												                <p:column rowspan="2" headerText="Contraprestaci&oacute;n" style="vertical-align: middle;" rendered="#{!arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}"/>
+												                <p:column rowspan="2" headerText="M.C. + I.A" style="vertical-align: middle;" rendered="#{!arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}" />
+												                <p:column rowspan="2" headerText="Período Gracia" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulaperiodogracia}"/>
+												                <p:column rowspan="2" headerText="Recono. de Inversi&oacute;n" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientoinversion}"/>
+												                <p:column colspan="3" headerText="Recono. de Renta" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientorenta}"/>
+												                <p:column colspan="3" headerText="Pago Futuro" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulapagoposterior}"/>
+												                
+												                <p:column colspan="3" headerText="Pago Fracci&oacute;n" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.sipagofraccionrenta}"/>
+												                
+																<p:column rowspan="2" headerText="Monto a Pagar" style="vertical-align: middle;"/>
+																<p:column rowspan="2" headerText="Detalle Cuota" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}" />
+												                
+												              </p:row>
+												               <p:row>
+												                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientorenta}"/>
+												                <p:column colspan="1" headerText="Valor" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientorenta}"/>
+												                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientorenta}"/>
+												                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulapagoposterior}"/>
+												                <p:column colspan="1" headerText="Valor" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulapagoposterior}"/>
+												                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.siclausulapagoposterior}"/>
+												                
+												                <p:column colspan="1" headerText="" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.sipagofraccionrenta}"/>
+												                <p:column colspan="1" headerText="Valor Fracci&oacute;n" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.sipagofraccionrenta}"/>
+												                <p:column colspan="1" headerText="Observaci&oacute;n" style="vertical-align: middle;" rendered="#{arrendamientoconsultaMB.contratoBean.sipagofraccionrenta}"/>
+												              </p:row>
+															 </p:columnGroup>
+
+															<p:column>
+																<h:outputText value="#{index+1}" />
+															</p:column>
+															
+															<p:column>
+																<h:outputText value="#{arrendamientoconsultaMB.contratoBean.condicion!='Reconocimiento Deuda'? renta.anio:renta.nrocuota }" />
+															</p:column>
+															<p:column>
+																
+																<c:if test="#{arrendamientoconsultaMB.contratoBean.condicion=='Reconocimiento Deuda'}">
+																  <h:outputText value="#{renta.fechavencimiento}" ><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>															
+																</c:if>
+																<c:if test="#{arrendamientoconsultaMB.contratoBean.condicion!='Reconocimiento Deuda'}">
+																  <h:outputText value="#{renta.mes}" ></h:outputText>															
+																</c:if>
+															</p:column>
+															<p:column rendered="#{!arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}">
+																<h:outputText value="#{renta.contraprestacion}" />
+															</p:column>
+															<p:column rendered="#{!arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}">
+																<h:outputText value="#{renta.renta}" />
+															</p:column>
+															<p:column  rendered="#{arrendamientoconsultaMB.contratoBean.siclausulaperiodogracia}">
+															    <h:outputText value="#{renta.siclausulaperiodogracia.equals(true)?'S&iacute;':'No'}" />
+
+															</p:column>
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientoinversion}">
+															    <h:outputText value="#{renta.siclausulareconocimientoinversion.equals(true)?'S&iacute;':'No'}" />
+															</p:column>
+															
+															
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientorenta}">
+																<h:outputText value="#{renta.siclausulareconocimientorenta.equals(true)?'S&iacute;':'No'}" />
+															</p:column>
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientorenta}">
+																<h:outputText value="#{renta.descuentoreconocimientorenta}" />
+															</p:column>
+															
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.siclausulareconocimientorenta}">
+																<h:outputText value="#{renta.observacionreconocimientorenta}" />
+															</p:column>
+															
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.siclausulapagoposterior}">
+															    <h:outputText value="#{renta.siclausulapagoposterior.equals(true)?'S&iacute;':'No'}"/>
+															</p:column>
+															
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.siclausulapagoposterior}">
+																<h:outputText value="#{renta.montopagoposterior}" />
+															</p:column>
+															
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.siclausulapagoposterior}">
+																<h:outputText value="#{renta.observacionpagoposterior}" />
+															</p:column>
+															
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.sipagofraccionrenta}">
+																<h:outputText value="#{renta.sipagofraccionrenta.equals(true)?'S&iacute;':'No'}"/>
+															</p:column>
+															
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.sipagofraccionrenta}">
+																<h:outputText value="#{renta.montopagofraccionrenta}" />
+															</p:column>
+															
+															<p:column rendered="#{arrendamientoconsultaMB.contratoBean.sipagofraccionrenta}">
+																<h:outputText value="#{renta.observacionpagofraccionrenta}" />
+															</p:column>
+															<p:column>
+																	 <h:outputText value="#{renta.montopagar}" />
+															</p:column>
+															<p:column style="width:2rem" rendered="#{arrendamientoconsultaMB.contratoBean.sireconocimientodeuda}">
+                													<p:rowToggler/>
+            												</p:column>
+												<p:rowExpansion>
+													<h:outputText value="Información de Cuota "
+														style="text-align:left  " />
+													<p:dataTable id="listaRentas"
+														value="#{renta.maecondiciondetalle}" var="rentadetalle"
+														rowIndexVar="indexdetalle">
+														<p:columnGroup type="header">
+															<p:row>
+																<p:column rowspan="2" headerText="#"
+																	style="vertical-align: middle;" />
+																<p:column rowspan="2" headerText="Concepto"
+																	style="vertical-align: middle;" />
+																<p:column rowspan="2" headerText="Mes"
+																	style="vertical-align: middle;" />
+																<p:column rowspan="2" headerText="Año"
+																	style="vertical-align: middle;" />
+																<p:column rowspan="2" headerText="Monto Deuda"
+																	style="vertical-align: middle;" />
+															</p:row>
+														</p:columnGroup>
+														<p:column>
+															<h:outputText value="#{(index+1)+(indexdetalle+1)/10}">
+															</h:outputText>
+														</p:column>
+														<p:column>
+															<h:outputText value="#{rentadetalle.concepto}">
+															</h:outputText>
+														</p:column>
+														<p:column>
+															<h:outputText value="#{rentadetalle.mes}">
+															</h:outputText>
+														</p:column>
+														<p:column>
+															<h:outputText value="#{rentadetalle.anio}">
+															</h:outputText>
+														</p:column>
+														<p:column>
+															<h:outputText value="#{rentadetalle.monto}">
+															</h:outputText>
+														</p:column>
+
+													</p:dataTable>
+
+												</p:rowExpansion>
+											</p:dataTable>
+												</p:panel>
+										
+									
+												<p:panel  header="Informacion de Estado de Cuenta" style="margin-left:6px;margin-top:5px;align-text:center;">
+																		
+												<div style="margin-top:10px;">						
+													<center>					
+														<p:commandButton style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+						                			  					 process="@this"	 actionListener="#{arrendamientoconsultaMB.obtenerInformacionCuotasPagadas}"									 								 
+																		 oncomplete="dlgCuotasPagadas.show()"
+																		 icon="ui-icon-info"
+																		 update=":frmCuotasPagadas"
+																		 value="Pagados">
+														</p:commandButton>
+														
+														<p:spacer width="20"/>
+														
+														<p:commandButton style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+																		 process="@this"	 actionListener="#{arrendamientoconsultaMB.obtenerInformacionCuotasPendientes}"													 								 
+																		 oncomplete="dlgCuotasPendientes.show()"
+																		 icon="ui-icon-info"
+																		 update=":frmCuotasPendientes"
+																		 value="Pendiente">	
+														</p:commandButton>		
+													</center>
+												</div>
+						
+												</p:panel>
+											
+											</h:form>									
+									</div>
+									
+									<div id="contentContratoSubTabInquilino" class="recau_panelPendientes">
+											
+											<h:form id="tabContratoInquilino">
+											
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="basic" value="Consulta:" />
+										        <p:selectOneListbox id="basic" value="#{arrendamientoconsultaMB.tipobusquedatabContratoSubInquilino}">
+										            <f:selectItem itemLabel="Clave Upa:" itemValue="1" />
+										            <f:selectItem itemLabel="Direcci&oacute;n:" itemValue="2" />
+										            <f:selectItem itemLabel="Nombre de Inquilino:" itemValue="3" />
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="busquedaEspecifica" actionListener="#{arrendamientoconsultaMB.buscarContratoxInquilino}" update="listacontratosInquilino"/>
+										        <p:inputText id="patron"  value="#{arrendamientoconsultaMB.valorbusquedatabContratoSubInquilino}" onkeypress="if (event.keyCode == 13) { busquedaEspecifica(); return false; }" >
+										        	<p:watermark for="patron" value="Ingrese campo"/>
+										        </p:inputText>
+			 						</h:panelGrid>
+											
+													<p:growl id="ContratoxInq" showDetail="true" sticky="false" life="3000" />
+												<p:scrollPanel mode="native">
+													<p:dataTable id="listacontratosInquilino" var="contrato"
+														selectionMode="single" rowKey="#{contrato.idcontrato}"
+														value="#{arrendamientoconsultaMB.listaContrato}"
+														selection="#{arrendamientoconsultaMB.contratoBean}"
+														emptyMessage="No se ha encontrado ning&uacute;n registro"  
+														style="width:680px;max-height:600px; font-size: 10px;  margin: 10px 0px 0px 20px;text-align: center;">
+														<p:ajax event="rowSelect" update=":tabContratoInquilino" listener="#{arrendamientoconsultaMB.buscarxinquilino}"/>
+					
+														<p:columnGroup type="header">
+														  <p:row>
+											                <p:column rowspan="2" headerText="Condici&oacute;n" style="vertical-align: middle;"/>
+											                <p:column rowspan="2" headerText="Nombre/Raz&oacute;n Social" style="vertical-align: middle;"/>
+											                <p:column rowspan="2" headerText="Estado" style="vertical-align: middle;"/>
+											                <p:column colspan="5" headerText="Contrato" style="vertical-align: middle;"/>
+											                <p:column rowspan="2" headerText="Inicio Cobro" style="vertical-align: middle;"/>
+											                <p:column rowspan="2" headerText="Fin Cobro" style="vertical-align: middle;"/>
+											                <p:column rowspan="2" headerText="Cuotas Canceladas" style="vertical-align: middle;"/>	
+															<p:column rowspan="2" headerText="Proceso Judicial" style="vertical-align: middle;"/>
+															<p:column rowspan="2" headerText="Valor Carta Fianza." style="vertical-align: middle;"/>
+															<p:column rowspan="2" headerText="Venc. carta Fianza" style="vertical-align: middle;"/>
+											            </p:row>
+											            <p:row>
+															<p:column colspan="1" headerText="Nro Contrato" style="vertical-align: middle;"/>
+											                <p:column colspan="1" headerText="Inicio" style="vertical-align: middle;"/>
+											                <p:column colspan="1" headerText="Fin" style="vertical-align: middle;"/>
+											                <p:column rowspan="1" headerText="Resuelto" style="vertical-align: middle;"/>
+											                <p:column rowspan="1" headerText="Adenda" style="vertical-align: middle;"/>
+											            </p:row>
+														 		
+														 </p:columnGroup>
+														
+														<p:column>
+															<h:outputText value="#{contrato.condicion}" />
+														</p:column>
+														<p:column>
+															<h:outputText value="#{contrato.nombresInquilino}" />
+														</p:column>
+														<p:column headerText="Estado">
+															<h:outputText value="#{contrato.estado}" />
+														</p:column>
+														<p:column>
+															<h:outputText value="#{contrato.nrocontrato==NULL ? 'S/N':contrato.nrocontrato}" />
+														</p:column>
+					
+														<p:column>
+															<h:outputText value="#{contrato.iniciocontrato}" >
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</p:column>
+														<p:column>
+															<h:outputText value="#{contrato.fincontrato}" >
+															<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</p:column>
+														<p:column headerText="Resuelto">
+															<h:outputText value="#{contrato.siresuelto=='true' ? 'Sí':'No'}" />
+														</p:column>
+														<p:column headerText="Adenda">
+															<h:outputText value="#{contrato.siadenda=='true' ? 'Sí':'No'}" />
+														</p:column>
+														
+														<p:column headerText="Inicio Cobro">
+															<h:outputText value="#{contrato.iniciocobro}" >
+															<f:convertDateTime pattern="MMM/yyyy" />
+															</h:outputText>
+														</p:column>
+														<p:column headerText="Fin Cobro">
+															<h:outputText value="#{contrato.fincobro}" >
+															<f:convertDateTime pattern="MMM/yyyy" />
+															</h:outputText>
+														</p:column>
+														<p:column headerText="">
+															<h:outputText value="#{contrato.sicuotascanceladas=='true' ? 'Sí':'No'}" />
+														</p:column>
+														<p:column headerText="">
+														<h:outputText value="#{contrato.siprocesojudicial=='true' ? 'Sí':'No'}" />
+														</p:column>
+														<p:column headerText="">
+														<h:outputText value="#{contrato.valorcartafianza}" />
+														</p:column>	
+														<p:column headerText="">
+														<h:outputText value="#{contrato.fechavencimientocartafianza}" />
+														</p:column>	
+					
+													</p:dataTable>
+													
+													</p:scrollPanel>
+
+												
+												<p:panel id="tab2Contrato" header="Informaci&oacute;n de #{arrendamientoconsultaMB.contratoBean.condicion}" style="margin-top:20px;margin-left:6px;">
+												
+														<table  style="margin: 30px;" width="600" cellspacing="5">
+															
+															<tr>
+																<td width="25%"><h:outputText  value="Inicio Contrato" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.iniciocontrato}" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}">
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</td>
+																<td width="25%"><h:outputText  value="Fin Contrato" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.fincontrato}" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}">
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</td>
+															</tr>
+															
+															<tr>
+																<td width="25%"><h:outputText  value="Inicio Cobro" style="color: #4C4C4C;" /></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.iniciocobro}" >
+																	<f:convertDateTime pattern="MMM/yyyy" />
+																	</h:outputText>
+																</td>
+																<td width="25%"><h:outputText  value="Fin Cobro" style="color: #4C4C4C;" /></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.fincobro}" >
+																	<f:convertDateTime pattern="MMM/yyyy" />
+																	</h:outputText>
+																</td>
+															</tr>
+
+															
+															<tr> 
+																<td><h:outputText  value="Moneda:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.moneda=='S'? 'Soles' : 'D&oacute;lares'}" /></td>
+																<td><h:outputText  value="N&uacute;mero de Cuota:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numerocuotas}" rendered="#{arrendamientoconsultaMB.contratoBean.condicion=='Contrato'}"/></td>
+																
+															</tr>
+
+															<tr> 
+																<td><h:outputText  value="Monto Cuota 1:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced1}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota1}" rendered="#{arrendamientoconsultaMB.merced1}"/></td>
+																<td><h:outputText  value="Monto Cuota 2:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced2}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota2}" rendered="#{arrendamientoconsultaMB.merced2}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Monto Cuota 3:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced3}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota3}" rendered="#{arrendamientoconsultaMB.merced3}"/></td>
+																<td><h:outputText  value="Monto Cuota 4:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced4}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota4}" rendered="#{arrendamientoconsultaMB.merced4}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Monto Cuota 5:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced5}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota5}" rendered="#{arrendamientoconsultaMB.merced5}"/></td>
+																<td><h:outputText  value="Monto Cuota 6:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced6}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota6}" rendered="#{arrendamientoconsultaMB.merced6}"/></td>
+															</tr>
+						
+													</table>
+												</p:panel>
+										
+												<p:panel id="tab2Upa" header="Informaci&oacute;n Upa: #{arrendamientoconsultaMB.contratoBean.claveUpa}" style="margin-left:7px;">
+													<table  style="margin: 30px;" width="600" cellspacing="5">
+															<tr>
+																<td width="25%"><h:outputText  value="Direcci&oacute;n:" style="color: #4C4C4C;"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.direccion}"/></td>
+																<td width="25%"><h:outputText  value="Nº Principal:" style="color: #4C4C4C;"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numeroprincipal}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Nº de Interior" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numerointerior}"/></td>
+																<td><h:outputText  value="Distrito" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.distrito}"/></td>
+															</tr>
+															
+															<tr> 
+																<td ><h:outputText  value="Provincia:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.provincia}"/></td>
+																<td><h:outputText  value="Departamento:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.departamento}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Proceso Judicial" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="No" />
+																</td>
+															</tr>
+													</table>
+					
+												</p:panel>
+			
+									
+															
+												<p:panel id="tab2Inquilino" header="Informaci&oacute;n Inquilino" style="margin-left:6px;">
+													
+														<table width="600" style="margin: 30px;" cellspacing="5">
+															<tr>
+																<td width="25%"><h:outputText  value="Tipo de Persona:" style="color: #4C4C4C;"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.tipopersona}"/></td>
+																
+															</tr>
+															<tr> 
+																<td><h:outputText  value="Nombres:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.nombresInquilino}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="Dni:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.dni}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+															</tr>
+															<tr>
+																<td><h:outputText  value="Raz&oacute;n Social:" style="color: #4C4C4C;" rendered="#{!arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.nombresInquilino}" rendered="#{!arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="RUC:" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.ruc}" /></td>
+															</tr>
+															
+																						
+															<tr> 
+																<td><h:outputText  value="Inquilino Haviende" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="Si"/></td>
+																<td></td>
+																<td></td>
+																
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Direcci&oacute;n:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.prov}"/></td>
+																<td><h:outputText  value="Referencia:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.depa}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Tel&eacute;fono:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.prov}"/></td>
+																<td><h:outputText  value="Celular:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.depa}"/></td>
+															</tr>
+													</table>
+													
+												</p:panel>
+									
+												<p:panel  header="Informacion de Estado de Cuenta" style="margin-left:6px;margin-top:5px;align-text:center;">
+																		
+												<div style="margin-top:10px;">						
+													<center>					
+														<p:commandButton style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+						                			  					 process="@this"	 actionListener="#{arrendamientoconsultaMB.obtenerInformacionCuotasPagadas}"									 								 
+																		 oncomplete="dlgCuotasPagadas.show()"
+																		 icon="ui-icon-info"
+																		 update=":frmCuotasPagadas"
+																		 value="Pagados">
+														</p:commandButton>
+														
+														<p:spacer width="20"/>
+														
+														<p:commandButton style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+																		 process="@this"	 actionListener="#{arrendamientoconsultaMB.obtenerInformacionCuotasPendientes}"													 								 
+																		 oncomplete="dlgCuotasPendientes.show()"
+																		 icon="ui-icon-info"
+																		 update=":frmCuotasPendientes"
+																		 value="Pendiente">	
+														</p:commandButton>		
+													</center>
+												</div>
+						
+												</p:panel>
+											
+											</h:form>
+									</div>
+									
+									<div id="contentContratoSubTabContrato" class="recau_panelPendientes">
+											<h:form id="frmNumcontrato">
+												<h:panelGrid columns="4" cellspacing="5" style="margin-top:20px;margin-left:20px;">
+														<h:outputText value="Ingrese Número de Contrato:"/>
+														<p:remoteCommand name="nrocontrato"
+															actionListener="#{arrendamientoconsultaMB.buscarxcontrato}"
+															update="tab1Contrato,tab1Upa,tab1Inquilino,ContratoxNombre" />
+														<p:inputText  value="#{arrendamientoconsultaMB.nrocontrato}"
+															onkeypress="if (event.keyCode == 13) { nrocontrato(); return false; }"
+															style="width:100px;text-align:center;font-size:15px;">
+														</p:inputText>
+														
+														
+														<p:growl id="ContratoxNombre" showDetail="true" sticky="false" life="3000" />
+												</h:panelGrid>
+												<p:panel id="tab1Inquilino" header="Informaci&oacute;n Inquilino" style="margin-left:6px;margin-top:10px;">
+													
+														<table width="600" style="margin: 30px;" cellspacing="5">
+															<tr>
+																<td width="25%"><h:outputText  value="Tipo de Persona:" style="color: #4C4C4C;"/></td>
+																<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.tipopersona}"/></td>
+																
+															</tr>
+															<tr> 
+																<td><h:outputText  value="Nombres:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.nombresInquilino}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="Dni:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.dni}" rendered="#{arrendamientoconsultaMB.sipersonanatural}"/></td>
+															</tr>
+															<tr>
+																<td><h:outputText  value="Raz&oacute;n Social:" style="color: #4C4C4C;" rendered="#{!arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.nombresInquilino}" rendered="#{!arrendamientoconsultaMB.sipersonanatural}"/></td>
+																<td><h:outputText  value="RUC:" style="color: #4C4C4C;" /></td>
+																<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.ruc}" /></td>
+															</tr>
+															
+																						
+															<tr> 
+																<td><h:outputText  value="Inquilino Haviende" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="Si"/></td>
+																<td></td>
+																<td></td>
+																
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Direcci&oacute;n:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.prov}"/></td>
+																<td><h:outputText  value="Referencia:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.depa}"/></td>
+															</tr>
+															
+															<tr> 
+																<td><h:outputText  value="Tel&eacute;fono:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.prov}"/></td>
+																<td><h:outputText  value="Celular:" style="color: #4C4C4C;"/></td>
+																<td><h:outputText value="#{consultaogajMB.upa.inmueble.ubigeo.depa}"/></td>
+															</tr>
+													</table>
+													
+												</p:panel>
+												<p:panel id="tab1Upa" header="Informaci&oacute;n Upa: #{arrendamientoconsultaMB.contratoBean.claveUpa}" style="margin-left:6px;margin-top:10px;s"  >
+												<table  style="margin: 30px;" width="600" cellspacing="5">
+														<tr>
+															<td width="25%"><h:outputText  value="Direcci&oacute;n:" style="color: #4C4C4C;"/></td>
+															<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.direccion}"/></td>
+															<td width="25%"><h:outputText  value="Nº Principal:" style="color: #4C4C4C;"/></td>
+															<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numeroprincipal}"/></td>
+														</tr>
+														<tr> 
+															<td><h:outputText  value="Nº de Interior" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numerointerior}"/></td>
+															<td><h:outputText  value="Distrito" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.distrito}"/></td>
+														</tr>
+														
+														<tr> 
+															<td ><h:outputText  value="Provincia:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.provincia}"/></td>
+															<td><h:outputText  value="Departamento:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.departamento}"/></td>
+														</tr>
+														<tr> 
+															<td><h:outputText  value="Proceso Judicial" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.siprocesojudicial=='true' ? 'S&iacute;':'No'}" />
+															</td>
+														</tr>
+												</table>
+												</p:panel>
+												<p:panel id="tab1Contrato" header="Informaci&oacute;n Contrato" style="margin-top:10px;margin-left:6px;">
+												
+													<table  style="margin: 30px;" width="600" cellspacing="5">
+														<tr>
+															<td width="25%"><h:outputText  value="Fecha Inicio" style="color: #4C4C4C;"/></td>
+															<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.iniciocontrato}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+																</h:outputText>
+															</td>
+															<td width="25%"><h:outputText  value="Fecha Fin:" style="color: #4C4C4C;"/></td>
+															<td width="25%"><h:outputText value="#{arrendamientoconsultaMB.contratoBean.fincontrato}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+																</h:outputText></td>
+														</tr>
+														
+														<tr> 
+															<td><h:outputText  value="N&uacute;mero de Cuotas:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.numerocuotas}"/></td>
+															<td><h:outputText  value="Moneda:" style="color: #4C4C4C;"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.moneda=='S'? 'Soles' : 'D&oacute;lares'}"/></td>
+														</tr>
+														
+														<tr> 
+															<td><h:outputText  value="Monto Cuota 1:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced1}"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota1}" rendered="#{arrendamientoconsultaMB.merced1}"/></td>
+															<td><h:outputText  value="Monto Cuota 2:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced2}"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota2}" rendered="#{arrendamientoconsultaMB.merced2}"/></td>
+														</tr>
+														
+														<tr> 
+															<td><h:outputText  value="Monto Cuota 3:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced3}"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota3}" rendered="#{arrendamientoconsultaMB.merced3}"/></td>
+															<td><h:outputText  value="Monto Cuota 4:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced4}"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota4}" rendered="#{arrendamientoconsultaMB.merced4}"/></td>
+														</tr>
+														
+														<tr> 
+															<td><h:outputText  value="Monto Cuota 5:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced5}"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota5}" rendered="#{arrendamientoconsultaMB.merced5}"/></td>
+															<td><h:outputText  value="Monto Cuota 6:" style="color: #4C4C4C;" rendered="#{arrendamientoconsultaMB.merced6}"/></td>
+															<td><h:outputText value="#{arrendamientoconsultaMB.contratoBean.cuota6}" rendered="#{arrendamientoconsultaMB.merced6}"/></td>
+														</tr>
+					
+												</table>
+												</p:panel>
+									
+												<p:panel  header="Informacion de Estado de Cuenta" style="margin-left:6px;margin-top:5px;align-text:center;">
+																		
+												<div style="margin-top:10px;">						
+													<center>					
+														<p:commandButton style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+						                			  					 process="@this"	 actionListener="#{arrendamientoconsultaMB.obtenerInformacionCuotasPagadas}"									 								 
+																		 oncomplete="dlgCuotasPagadas.show()"
+																		 icon="ui-icon-info"
+																		 update=":frmCuotasPagadas"
+																		 value="Pagados">
+														</p:commandButton>
+														
+														<p:spacer width="20"/>
+														
+														<p:commandButton style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+																		 process="@this"	 actionListener="#{arrendamientoconsultaMB.obtenerInformacionCuotasPendientes}"													 								 
+																		 oncomplete="dlgCuotasPendientes.show()"
+																		 icon="ui-icon-info"
+																		 update=":frmCuotasPendientes"
+																		 value="Pendiente">	
+														</p:commandButton>		
+													</center>
+												</div>
+						
+												</p:panel>
+											</h:form>
+									</div>
+							</div>
+									
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<ui:include src="pgDetalleCuotasPagadas.xhtml" />
+			<ui:include src="pgDetalleCuotasPendientes.xhtml" />
+			<ui:include src="archivo/pgUpload.xhtml" />
+			<ui:include src="archivo/pgDownload.xhtml"/>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

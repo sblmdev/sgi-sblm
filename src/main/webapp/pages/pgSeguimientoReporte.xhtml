@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<title>SBLM</title>
+</h:head>
+<h:body>
+
+
+
+	<!-- PANEL REGISTRO -->
+	<div id="idDivCarteraRegistro" class="recau_panelPendientes">
+
+		<h:form id="frmTablaReporteSeg">
+			<div style="float: right; margin: 15px 50px 15px 0;">
+							<p:commandLink oncomplete="dlgBuscarContrato.show();"
+								actionListener="#{segContratoMB.reporteSeguimientoPDF}" ajax="false"
+								style="float:left;margin-left:5px;">
+								<p:graphicImage width="28" height="28"
+									value="/resources/icons/tipoArchivo/pdf.png"
+									alt="reporte cartera" title="reporte cartera" />
+							</p:commandLink>
+							<p:commandLink oncomplete="dlgBuscarContrato.show();"
+								actionListener="#{segContratoMB.reporteSeguimientoExcel}" ajax="false"
+								style="float:left;margin-left:5px;">
+								<p:graphicImage width="28" height="28"
+									value="/resources/icons/tipoArchivo/xls.png"
+									alt="Detalle Contrato" title="detalle Contrato" />
+							</p:commandLink>
+						</div>
+			<div class="dgaiMonitoreo_detalle">
+				<p:dataTable id="dtbGeneral" var="seg"
+					value="#{segContratoMB.seguimientocontratos}" 
+					filteredValue="#{segContratoMB.filtroReporteSeguimiento}" 
+					rowKey="#{seg.idsegcontrato}" widgetVar="mifiltro"
+					stickyHeader="true" paginator="true"
+					style="width:690px; font-size: 10px;  margin: 0px 0px 0px 0px;"
+					paginatorTemplate=" Ir a p&aacute;gina: {JumpToPageDropdown} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp; Registros por p&aacute;gina: {RowsPerPageDropdown}  &nbsp;  {CurrentPageReport}"
+					currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+					rowsPerPageTemplate="10,15,20" rows="10" scrollWidth="690"
+					styleClass="ui-datatable-hor-scroll">
+					<f:facet name="header">
+
+						<p:panel>
+							<h:outputText value="Buscar Contrato:" />
+							<p:inputText id="globalFilter" onkeyup="mifiltro.filter()"
+								style="width:150px; margin-left: 10px;" />
+
+
+						</p:panel>
+					</f:facet>
+
+					<p:column headerText="CONTRATO"
+						filterBy="#{seg.contrato.nrocontrato}"
+						filterStyle="display: none; visibility: hidden;">
+						<h:outputText value="#{seg.contrato.nrocontrato}" />
+					</p:column>
+					<p:column headerText="1. Evaluacion">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=1? (seg.numeropaso==1?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,1,seg.contrato.idcontrato)}" update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=1?(seg.numeropaso==1?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):'/resources/icons/semaforo_transparente.png'} "
+									alt="Activo" title="Activo" />
+								
+							</p:commandLink>
+
+							<h:outputText value="Area Arrendamiento"
+								renderedx="#{seg.numeropaso==1?true:false}"
+								style=" float:left;text-align:center;" />
+						</div>
+					</p:column>
+					<p:column headerText="2. Valorizacion"> 
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=2? (seg.numeropaso==2?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,2,seg.contrato.idcontrato)}">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=2?(seg.numeropaso==2?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+								
+							</p:commandLink>
+
+							<h:outputText value="Direccion de ingenieria y obras (DIO)"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==2?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="3. Notificacion">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=3? (seg.numeropaso==3?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,3,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=3?(seg.numeropaso==3?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+								
+							</p:commandLink>
+							<h:outputText value="Area Arrendamiento"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==3?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="4. Aceptacion de Merced Conductiva">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=4? (seg.numeropaso==4?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,4,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=4?(seg.numeropaso==4?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+									
+							</p:commandLink>
+							<h:outputText value="Area Arrendamiento"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==4?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="5. Proyecccion de resolucion(AA)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=5? (seg.numeropaso==5?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,5,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=5?(seg.numeropaso==5?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+									
+							</p:commandLink>
+							<h:outputText value="Area Arrendamiento"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==5?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="6. Visto Bueno de proyecto de resolucion">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=6? (seg.numeropaso==6?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,6,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=6?(seg.numeropaso==6?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Oficina general de asesoria juridica (OGAJ)"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==6?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="7. Aprobacion de proyecto de resolucion">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=7? (seg.numeropaso==7?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,7,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=7?(seg.numeropaso==7?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Genrencia General"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==7?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="8. Requerimiento de pago Renta/Garantia">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=8? (seg.numeropaso==8?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,8,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=8?(seg.numeropaso==8?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="xx" style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==8?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="9. Emision de contrato y letras(AA)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=9? (seg.numeropaso==9?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,9,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=9?(seg.numeropaso==9?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Area Arrendamiento"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==9?true:false}" />
+						</div>
+					</p:column>
+					<p:column
+						headerText="10. Visto Bueno de proyectos de contrato (AA)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=10? (seg.numeropaso==10?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,10,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=10?(seg.numeropaso==10?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Area Arrendamiento"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==10?true:false}" />
+						</div>
+					</p:column>
+					<p:column
+						headerText="11. Visto Bueno de proyecto de contrato (DAI)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=11? (seg.numeropaso==11?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,11,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=11?(seg.numeropaso==11?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText
+								value="Direccion de administracion inmobiliaria (DAI)"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==11?true:false}" />
+						</div>
+					</p:column>
+					<p:column
+						headerText="12. Visto Bueno de proyecto de contrato (DGAI)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=12? (seg.numeropaso==12?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,12,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=12?(seg.numeropaso==12?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText
+								value="Direccion general de administracion inmobiliaria (DGAI)"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==12?true:false}" />
+						</div>
+					</p:column>
+					<p:column
+						headerText="13. Visto Bueno de proyecto de contrato (OGAJ)">
+						<div style="float: left; text-align: center;">
+
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=13? (seg.numeropaso==13?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,13,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=13?(seg.numeropaso==13?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Oficina general de asesoria juridica (OGAJ)"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==13?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="14. Visto Bueno de proyecto de contrato (GG)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=14? (seg.numeropaso==14?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,14,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=14?(seg.numeropaso==14?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Gerencia General"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==14?true:false}" />
+						</div>
+					</p:column>
+					<p:column
+						headerText="15. Subscripcion de contrato por arrendamiento(AA)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=15? (seg.numeropaso==15?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,15,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=15?(seg.numeropaso==15?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Area Arrendamiento"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==15?true:false}" />
+						</div>
+					</p:column>
+					<p:column
+						headerText="16. Subscripcion de contrato por Gerencia (GG)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=16? (seg.numeropaso==16?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,16,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=16?(seg.numeropaso==16?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Gerencia General"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==16?true:false}" />
+						</div>
+					</p:column>
+					<p:column headerText="17. Entrega de Inmueble (GG)">
+						<div style="float: left; text-align: center;">
+							<p:commandLink
+								oncomplete="#{seg.numeropaso>=17? (seg.numeropaso==17?'javascript:location.reload()':'dlgDetalleSegRep.show()'):'dlgDetalleSegRep.hide()'}"
+								actionListener="#{segContratoMB.obtenerDatosPaso(seg.numeropaso,17,seg.contrato.idcontrato)}"
+								update=":frmDlgDetalleRep:iddlgDetalleSegRep">
+								<p:graphicImage width="20" height="20"
+									value="#{seg.numeropaso>=17?(seg.numeropaso==17?'/resources/icons/semaforo_amarillo.png':'/resources/icons/semaforo_verde.png'):('/resources/icons/semaforo_transparente.png')} "
+									alt="Activo" title="Activo" />
+							</p:commandLink>
+							<h:outputText value="Gerencia General"
+								style=" float:left;text-align:center;"
+								renderedx="#{seg.numeropaso==17?true:false}" />
+						</div>
+					</p:column>
+
+
+				</p:dataTable>
+				
+				
+			</div>
+			<div class="perfilLeyenda" style="width: 290px; margin-right: 18px;">
+				<div class="perfilLeyendaTitulo" style="width: 290px">
+					<p:graphicImage width="15" height="15"
+						style="margin-top:3px;margin-left:20px;"
+						value="/resources/icons/leyendaBandera.png" alt="Activo"
+						title="Activo" />
+					<p:outputLabel style="margin-left:5px;" value="Leyenda" />
+				</div>
+				<div class="perfilLeyendaActivo">
+					<div class="perfilLeyendaActivoIcon">
+						<p:graphicImage width="15" height="15"
+							value="/resources/icons/semaforo_verde.png" alt="Realizado"
+							title="Realizado" />
+					</div>
+					<div class="perfilLeyendaActivoDes">Realizado</div>
+				</div>
+
+				<div class="perfilLeyendaInactivo">
+					<div class="perfilLeyendaInactivoDesIcon">
+						<p:graphicImage width="15" height="15"
+							value="/resources/icons/semaforo_amarillo.png" alt="Proceso"
+							title="Proceso" />
+					</div>
+					<div class="perfilLeyendaInactivoDes">Proceso</div>
+				</div>
+				<div class="perfilLeyendaInactivo">
+					<div class="perfilLeyendaInactivoDesIcon">
+						<p:graphicImage width="15" height="15"
+							value="/resources/icons/semaforo_transparente.png"
+							alt="Pendiente" title="Pendiente" />
+					</div>
+					<div class="perfilLeyendaInactivoDes">Pendiente</div>
+				</div>
+			</div>
+		</h:form>
+		<h:form id="frmDlgDetalleRep">
+			<p:dialog id="iddlgDetalleSegRep" header="DETALLE DE SEGUIMIENTO"
+				closable="true" closeOnEscape="true" resizable="false" modal="true"
+				widgetVar="dlgDetalleSegRep" width="400" height="200">
+
+				<h:panelGrid columns="2" cellpadding="4" style="margin:10px">
+					<h:outputText style="color:#5a0000;" value="Usuario:" />
+					<h:outputText value="#{segContratoMB.seguimientocap.usercre}"
+						style="font-size: 10pt; font-weight: bold" />
+						
+						<h:outputText style="color:#5a0000;" value="Fecha registro:" />
+					<h:outputText value="#{segContratoMB.seguimientocap.feccre}"
+						style="font-size: 10pt; font-weight: bold" />
+						
+						<h:outputText style="color:#5a0000;" value="Area:" />
+					<h:outputText value="#{segContratoMB.seguimientocap.nombreperfil}"
+						style="font-size: 10pt; font-weight: bold" />
+						
+						<h:outputText style="color:#5a0000;" value="Notificar:" />
+					<h:outputText value="#{segContratoMB.seguimientocap.usercre}"
+						style="font-size: 10pt; font-weight: bold" />
+				</h:panelGrid>
+
+
+			</p:dialog>
+
+		</h:form>
+	</div>
+
+
+
+
+</h:body>
+</html>

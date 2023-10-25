@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM-SOCIEDAD DE BENEFICENCIA DE LIMA METROPOLITANA</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="./paginaMaestra.xhtml">
+
+		<ui:define name="content">
+		
+			 <div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="contrato_IconoIdentificador"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Inquilino</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Mantenimiento</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo" style="background-color: white;">
+					<h:form id="frmInquilino">
+					
+						   <p:toolbar styleClass="ui-saju-toolbar">
+								<p:toolbarGroup align="left">
+								
+										<p:commandButton  icon="ui-icon-disk" ajax="true" value="Grabar Inquilino"
+											actionListener="#{inquilinoMB.validarInquilino}"
+											update=":frmMaestra:listaMensajes"/>
+
+										<p:commandButton value="Nuevo Inquilino" icon="ui-icon-plus"
+											actionListener="#{inquilinoMB.limpiarformulario}" update=":frmInquilino"/>
+											
+										<p:commandButton value="Anular Inquilino" icon="ui-icon-closethick"
+											actionListener="#{inquilinoMB.validarAnularInquilino}"
+											update=":frmMaestra:listaMensajes" />
+										<p:spacer width="1" height="22" style="position: relative; bottom: -5px;background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+										<p:commandButton id="adjunto" title="adjuntar documento"  icon="ui-icon-pin-w"/>
+										<p:menu overlay="true" trigger="adjunto" my="left top" at="left bottom">
+									            <p:menuitem value="Adjuntar" actionListener="#{archivoMB.abrirDialogoAsociarAdjunto('Inmueble',inquilinoMB.inquilino.idinquilino)}"  update=":frmMaestra:listaMensajes" icon="ui-icon-arrowthickstop-1-w" />
+									            <p:menuitem value="Ver" actionListener="#{archivoMB.abrirDialogoVerAdjunto('Inmueble',inquilinoMB.inquilino.idinquilino)}"  update=":frmMaestra:listaMensajes,:frmVerDocumento:listaArchivosReferencia" icon="ui-icon-arrowthickstop-1-e"/>
+								   		</p:menu>
+										
+								</p:toolbarGroup>
+								<p:toolbarGroup align="right">
+										
+										<p:commandButton  icon="ui-icon-search" oncomplete="dlgListaInmuebles.show();" title="Buscar inquilino"/>
+								</p:toolbarGroup>
+							</p:toolbar>
+							
+							<p:confirmDialog message="¿Desea Guardar Inquilino ?"
+										header="Registro Inquilino" severity="alert"
+										widgetVar="dlgRegistrarInquilino">
+										<center>
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmMaestra:listaMensajes,:frmInquilino"
+											actionListener="#{inquilinoMB.grabarInquilino}"
+											oncomplete="dlgRegistrarInquilino.hide();"
+											icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar" 
+											oncomplete="dlgRegistrarInquilino.hide();"
+											icon="icon-cancel" />
+											</center>
+
+							</p:confirmDialog>
+							
+
+							<p:tabView id="tabview">
+							
+								<p:tab id="tabGenerales" title="">	
+									<p:panel header="Datos Generales" toggleable="true">
+										<table width="600" style="margin: 15px;" cellspacing="10">
+										
+												<tr>
+													<td width="50%">
+														<h:outputText  value="Tipo Persona: " />
+													</td>
+													<td width="50%">
+														<p:selectOneMenu value="#{inquilinoMB.idtipopersona}" style="width: 188px;  font-size: 11px;">
+															<f:selectItem itemLabel="Seleccione Tipo Persona" itemValue="0" />
+															<f:selectItems value="#{inquilinoMB.listaTipoPersona}"
+																var="tp" itemLabel="#{tp.descripcion}" itemValue="#{tp.idtipopersona}">
+															</f:selectItems>
+															
+															<p:ajax event="change" listener="#{inquilinoMB.cambiarTipoPersona}" update=":frmInquilino"/>
+														</p:selectOneMenu>
+													  </td>	
+												
+											</tr>											 												
+									</table>
+									</p:panel>
+									<br/>
+									<p:panel id="personaNatural" header="Datos de Persona de Natural" rendered="#{inquilinoMB.sipersonanatural}">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+
+											<tr>
+																 <td width="50%">
+																	<h:outputText  value="Apellido Paterno: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{inquilinoMB.inquilino.apellidopat}" style="width: 150px;"  onkeyup="convertirMayus(this);"/>
+																 </td>
+											 
+											 </tr>
+											 <tr>
+																 <td width="50%">
+																	<h:outputText  value="Apellido Materno: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{inquilinoMB.inquilino.apellidomat}" style="width: 150px;" onkeyup="convertirMayus(this);"/>
+																 </td>
+											 
+											 </tr>
+											 <tr>
+																 <td width="50%">
+																	<h:outputText  value="Nombres: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{inquilinoMB.inquilino.nombre}" style="width: 150px;" onkeyup="convertirMayus(this);"/>
+																 </td>
+											 
+											 </tr>
+											 <tr>
+																 <td width="50%">
+																	<h:outputText  value="DNI: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{inquilinoMB.inquilino.dni}" style="width: 150px;" maxlength="8" onkeypress="return validarKey(event)"/>
+																 </td>
+																 
+																<td width="50%">
+																	<h:outputText  value="RUC:" />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{inquilinoMB.inquilino.ruc}" style="width: 150px;" maxlength="11" onkeypress="return validarKey(event)"/>
+																 </td>
+											
+											 </tr>
+											  <tr>
+																 <td width="50%">
+																	<h:outputText  value="Carnet Ext.: " />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{inquilinoMB.inquilino.carnetextranjeria}" style="width: 150px;" maxlength="12" onkeypress="return validarKey(event)"/>
+																 </td>
+																 
+																
+											
+											 </tr>
+											 <tr>
+																 <td width="50%">
+																	<h:outputText  value="Persona Fallecida: " />
+																</td>
+																<td width="50%">
+																	<p:selectOneMenu style="width: 188px;  font-size: 11px;"
+																					value="#{inquilinoMB.inquilino.sifallecido}">
+																					<f:selectItem itemLabel="No" itemValue="false" />
+																					<f:selectItem itemLabel="S&iacute;" itemValue="true" />
+																	</p:selectOneMenu>
+																 </td>
+											 </tr>
+											 <tr>
+											    <td  width="50%">
+											         <h:outputText value="Estado"  rendered="#{inquilinoMB.inquilino.sianulado}"/>
+											    </td>
+											    <td width="50%">
+											    	<h:outputText   value ="#{inquilinoMB.inquilino.sianulado=='true'? 'ANULADO':'ACTIVO'}" rendered="#{inquilinoMB.inquilino.sianulado}" style="color: #f60505;"/>
+											    </td>
+											 </tr>
+											 <tr>
+											    <td  width="50%">
+											         <h:outputText value="Motivo de Anulacion"  rendered="#{inquilinoMB.inquilino.sianulado}"/>
+											    </td>
+											    <td width="50%">
+											    	<h:outputText   value ="#{inquilinoMB.inquilino.motivo_anulacion}" rendered="#{inquilinoMB.inquilino.sianulado}" />
+											    </td>
+											 </tr>
+											 
+											 
+											 
+											 
+											 
+									</table> 
+									</p:panel>
+									<p:panel id="personaJuridica" header="Datos de Persona Jurídica" rendered="#{!inquilinoMB.sipersonanatural}">
+									<table width="600" style="margin: 15px;" cellspacing="10">
+									
+															
+											 <tr>
+																<td width="50%">
+																	<h:outputText  value="Razón Social:" />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{inquilinoMB.inquilino.razonsocial}" style="width: 150px;" onkeyup="convertirMayus(this);"/>
+																 </td>
+											</tr>
+											<tr>
+																<td width="50%">
+																	<h:outputText  value="RUC:" />
+																</td>
+																<td width="50%">
+																	<p:inputText value="#{inquilinoMB.inquilino.ruc}" style="width: 150px;" maxlength="11" onkeypress="return validarKey(event)"/>
+																 </td>
+											</tr>
+											<tr>
+											    <td  width="50%">
+											         <h:outputText value="Estado"  rendered="#{inquilinoMB.inquilino.sianulado}"/>
+											    </td>
+											    <td width="50%">
+											    	<h:outputText   value ="#{inquilinoMB.inquilino.sianulado=='true'? 'ANULADO':'ACTIVO'}" rendered="#{inquilinoMB.inquilino.sianulado}" style="color: #f60505;"/>
+											    </td>
+											 </tr>
+											  <tr>
+											    <td  width="50%">
+											         <h:outputText value="Motivo de Anulacion"  rendered="#{inquilinoMB.inquilino.sianulado}"/>
+											    </td>
+											    <td width="50%">
+											    	<h:outputText   value ="#{inquilinoMB.inquilino.motivo_anulacion}" rendered="#{inquilinoMB.inquilino.sianulado}" />
+											    </td>
+											 </tr>
+																					 
+									</table> 
+									</p:panel>
+								
+								</p:tab>
+								
+								
+							
+							</p:tabView>
+							
+					</h:form>
+					<h:form id="formAnularInquilino">
+									<p:growl id="growlAnularInquilino" showDetail="true" sticky="false" life="3000" />
+									<p:confirmDialog
+									message="¿Desea Anular el inquilino ?"
+									header="Anular Inquilino" severity="alert"
+									widgetVar="dlgConfirmarAnularInquilino">
+									<center>
+										<p:commandButton value="&nbsp;Aceptar"
+											actionListener="#{inquilinoMB.anularInquilino()}"
+											oncomplete="dlgConfirmarAnularInquilino.hide();dlgAnularInquilino.hide();"
+											update=":frmInquilino,:frmConsulta,:frmMaestra:listaMensajes"
+											icon="icon-save">
+										</p:commandButton>
+										<p:spacer width="15" />
+										<p:commandButton value="&nbsp;Cancelar"
+											oncomplete="dlgConfirmarAnularInquilino.hide()"
+											icon="icon-cancel" />
+									</center>
+								</p:confirmDialog>
+									<p:dialog header="Anular Inquilino" 
+									   id="dlgAnularInquilino" width="auto"  height="auto"
+									   closable="true" closeOnEscape="true" resizable="false"
+									   modal="true" showEffect="slide" hideEffect="slide"
+									   widgetVar="dlgAnularInquilino"
+									   style="border-width:9px;border-style:solid; border-color:#ffc600 ;" >
+									<h:outputText value="Usuario Responsable" style="color:#168039;" />
+												<br />
+												<p:graphicImage width="30" height="30"
+													value="../resources/images/usuarios/#{usuarioMB.usuariologueado.rutaimgusr}" />
+												<h:outputText value=" #{usuarioMB.usuariologueado.nombres}"
+													style="color:#806300;" />
+													<h:outputText value=" #{usuarioMB.usuariologueado.apellidopat}"
+													style="color:#806300;" />
+												
+												<br /><br />
+									          <h:panelGrid columns="1">									           
+												<h:outputText value="Motivo de Anulación: " />
+												<p:inputTextarea style="width:300px;" value="#{inquilinoMB.inquilino.motivo_anulacion}"  rows="3" maxlength="200" />
+												</h:panelGrid>
+												
+												<br/>
+												<center>
+												<p:commandButton value="&nbsp;Aceptar" 
+													update=":frmMaestra:listaMensajes,growlAnularInquilino"
+													actionListener="#{inquilinoMB.validarDatosAnularInquilino}" process="@form"
+													icon="icon-save"/>
+											    <p:commandButton  value="&nbsp;Cancelar" 
+											    oncomplete="dlgAnularInquilino.hide()" icon="icon-cancel"/>
+												</center>
+									          
+									          
+									
+									</p:dialog>
+									</h:form>
+					<h:form id="frmConsulta">
+								<p:dialog header="Consulta Inquilino" 
+										width="auto" height="auto" closable="true" closeOnEscape="true" showEffect="slide" hideEffect="slide"
+										resizable="false" widgetVar="dlgListaInmuebles"   
+										style="border-width:9px;border-style:solid;  border-color:#c2c2c2;">
+					
+									<h:panelGrid columns="4" style="margin-bottom:10px;margin-left:50px;" cellpadding="5" cellspacing="20" columnClasses="label, value">
+										        <p:outputLabel for="tipobusquedaInq" value="Consulta:" />
+										        <p:selectOneListbox id="tipobusquedaInq" value="#{inquilinoMB.tipoBusqueda}">
+										            <f:selectItem itemLabel="Nombres/Raz&oacute;n Social:"  itemValue="nombresRazonSocial"/>
+										            <f:selectItem itemLabel="DNI:" 			 itemValue="dni"/>
+										            <f:selectItem itemLabel="RUC:" 			 itemValue="ruc"/>
+										        </p:selectOneListbox>
+										        <p:remoteCommand name="consultaInmueble" actionListener="#{inquilinoMB.buscarInquilinoxNombres}" update="tblInquilinos,:frmMaestra:listaMensajes"/>
+										        <p:inputText id="patron"  value="#{inquilinoMB.valorbusqueda}" onkeypress="if (event.keyCode == 13) { consultaInmueble(); return false; }" >
+										        	<p:watermark for="patron" value="Ingrese campo"/>
+										        </p:inputText>
+										        
+										        
+			 						</h:panelGrid>
+									
+									<p:dataTable id="tblInquilinos" var="inquilino" value="#{inquilinoMB.listaInquilino}" 
+										emptyMessage="0 registros encontrados" filteredValue="#{inquilinoMB.listaInquilinoFilter}"
+										style="width:690px; font-size: 10px;  margin-left: 15px;text-aling:center;"
+										styleClass="ui-datatable-hor-scroll"
+										rowKey="#{inquilino.idinquilino}" rowIndexVar="row"
+										selection="#{inquilinoMB.inquilino}" selectionMode="single"
+										paginator="true" rows="15"
+										paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="15,30,45">
+										<p:ajax event="rowSelect" listener="#{inquilinoMB.seleccionarInquilino}"
+											update=":frmInquilino" oncomplete="dlgListaInmuebles.hide();" />
+										
+										<p:column headerText="Nombres/Razón Social"
+											filterBy="#{inquilino.nombrescompletos}" filterMatchMode="contains">
+											<h:outputText value="#{inquilino.nombrescompletos}"/>
+										</p:column>
+										<p:column headerText="DNI."
+											filterBy="#{inquilino.dni}" filterMatchMode="contains">
+											<h:outputText value="#{inquilino.dni}"/>
+										</p:column>
+										<p:column headerText="RUC"
+											filterBy="#{inquilino.ruc}" filterMatchMode="contains">
+											<h:outputText value="#{inquilino.ruc}"/>
+										</p:column>
+										<p:column headerText="U. Creador"
+											filterBy="#{inquilino.usrcre}" filterMatchMode="contains">
+											<h:outputText value="#{inquilino.usrcre}"/>
+										</p:column>
+										<p:column headerText="U. Creador"
+											filterBy="#{inquilino.usrcre}" filterMatchMode="contains">
+											<h:outputText value="#{inquilino.usrcre}"/>
+										</p:column>
+										<p:column headerText="Fec. Creacion"
+											filterBy="#{inquilino.feccre}" filterMatchMode="startsWith">
+											<h:outputText value="#{inquilino.feccre}">
+												<f:convertDateTime  pattern="dd/MM/yyyy hh:mm a"  timeZone="GMT-5" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Modificador"
+											filterBy="#{inquilino.usrmod}" filterMatchMode="contains">
+											<h:outputText value="#{inquilino.usrmod}"/>
+										</p:column>
+										<p:column headerText="Fec. Modificaci&oacute;n"
+											filterBy="#{inquilino.fecmod}" filterMatchMode="startsWith">
+											<h:outputText value="#{inquilino.fecmod}">
+												<f:convertDateTime  pattern="dd/MM/yyyy hh:mm a"  timeZone="GMT-5" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="U. Anula"
+											filterBy="#{inquilino.usr_anula}" filterMatchMode="contains">
+											<h:outputText value="#{inquilino.usr_anula}"/>
+										</p:column>
+										<p:column headerText="Fec. Anulaci&oacute;n"
+											filterBy="#{inquilino.fec_anula}" filterMatchMode="startsWith">
+											<h:outputText value="#{inquilino.fec_anula}">
+												<f:convertDateTime pattern="dd/MM/yyyy hh:mm a"  timeZone="GMT-5"/>
+											</h:outputText>
+										</p:column>
+
+									</p:dataTable>
+							</p:dialog>
+					</h:form>
+				
+				</div>
+			 </div>
+				
+			 <ui:include src="archivo/pgUpload.xhtml" />
+			 <ui:include src="archivo/pgDownload.xhtml"/>
+			 <script type="text/javascript">
+				  //<![CDATA[
+				function convertirMayus(e){
+					 e.value = e.value.toUpperCase();
+
+					}
+		     	function convertir_a_mayuscula(elemento) {
+					//alert("metodo");
+					elemento.value = elemento.value.toUpperCase();
+	 		   		//e.value = e.value.toUpperCase();
+				}
+		     	function validarKey(evt){
+		     	    
+		     	    // code is the decimal ASCII representation of the pressed key.
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57) { // is a number.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+				function validarLetrasNumeros(evt){
+		     	    
+		     	    // code is the decimal ASCII representation of the pressed key.
+		     	    var code = (evt.which) ? evt.which : evt.keyCode;
+		     	    
+		     	    if(code==8) { // backspace.
+		     	      return true;
+		     	    } else if(code>=48 && code<=57 || (code>=65 && code<=90) || (code>=97 && code<=122)) { // es num y letras.
+		     	      return true;
+		     	    } else{ // other keys.
+		     	      return false;
+		     	    }
+		     	}
+				
+		  	   //]]>
+		     	</script>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

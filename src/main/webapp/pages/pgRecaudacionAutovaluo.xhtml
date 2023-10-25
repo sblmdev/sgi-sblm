@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>SBLM</title>
+
+
+
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+			<script type="text/javascript">
+				function start() {
+				    statusLoading.show();
+				}
+				 
+				function stop() {
+					statusLoading.hide();
+				}
+			</script>
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="recaudacion_iconoTitulo"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Recuperaci&oacute;n Arbitrios</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Monitoreo-Recaudaci&oacute;n
+							y Autoval&uacute;o</label>
+					</div>
+				</div>
+				<div class="menuAzul_fondoOpciones">
+					<div class="menuAzul_submenuOpciones">
+						<p:commandLink id="idmenuAzul_submenOpc1"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionSupervisor.jsf'"
+							styleClass="menuAzul_submenOpc1" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc1Submenu.png"
+								alt="Bandeja" title="Supervisor" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_submenOpc2"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionCobranza.jsf'"
+							styleClass="menuAzul_submenOpc2" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc2Submenu.png"
+								alt="Cobranzas" title="Recaudacion" />
+						</p:commandLink>
+						<p:commandLink id="idmenuAzul_submenOpc3"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionAutovaluo.jsf'"
+							styleClass="menuAzul_submenOpc3" oncomplete="tabDerivacion();">
+							<p:graphicImage
+								value="/resources/images/recaudacion/menuAzul_opc3Submenu.png"
+								alt="Arbitrios" title="Autovaluo" />
+						</p:commandLink>
+					
+					</div>
+					<div class="menuAzul_submenuItems">
+						<p:commandLink id="idmenuAzul_bandejaSubmenu"
+							onclick="window.location.href='/sistemaSBLM/pages/pgRecaudacionCobranza.jsf'"
+							styleClass="menuAzul_bandejaSubmenu"
+							oncomplete="tabDerivacion();">
+							<p:graphicImage styleClass="menuAzul_imgsubmenbandeja"
+								value="/resources/images/recaudacion/menuAzul_bandejaSubmenu.png"
+								alt="Bandeja" title="Bandeja" />
+							<h:outputText style="float:left;margin-left:5px; margin-top:2px;"
+								value="Bandeja" />
+						</p:commandLink>
+						
+						<p:commandLink id="idmenuAzul_arbitriosSubmenu"
+							styleClass="menuAzul_arbitriosSubmenu"
+							oncomplete="tabDerivacion();">
+							<p:graphicImage styleClass="menuAzul_imgsubmenbandeja"
+								style="margin-top:2px;" width="22" height="22"
+								value="/resources/images/recaudacion/ico_c.png" alt="Bandeja"
+								title="Bandeja" />
+							<h:outputText
+								style="float:left;margin-left:5px; margin-top:7px;color:white;"
+								value="Cobranza" />
+						</p:commandLink>
+
+					</div>
+					
+				</div>
+				<!-- ################################### CONTENIDO PRINCIPAL ######################################## -->
+				<div class="contenidoPrincipal_SubFondo">
+					<div class="cobranza_iconoSubTitulo">
+						<h:outputText id="autova_lblSubtituloDesc2"
+							style="float:left;margin-left:48px;margin-top:18px;font-size:10px;"
+							value="Cobranzas" />
+					</div>
+					<div id="autova_lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">
+						<h:outputText style="float:left;margin-left:5px;margin-top:2px;" value="Recaudaci&oacute;n" />
+					</div>
+				<p:commandLink id="idTab01CobranzaAutovaluo" styleClass="arren_btnAtendidos">
+ 							<div class="btncentrado">Reporte</div> 
+					</p:commandLink>
+<!-- 					<p:commandLink id="idTab02CobranzaAutovaluo" styleClass="arren_btnPendientes"></p:commandLink> -->
+<!-- 					<p:commandLink id="idTab03CobranzaAutovaluo" styleClass="arren_btnPendientes"></p:commandLink> -->
+					<div class="contenidoPrincipal_fondo_formulario">
+						<div class="contenidoPrincipal_ContenedorBlano">
+							<!-- ################################################################################ -->
+							<!-- ################################# PANEL ######################################## -->
+							<div id="idDivTab01Cobranza" class="cartera_panelPendientes">
+								<ui:include src="pgCobranzaReporte.xhtml" />
+							</div>
+							<div id="idDivTab02Cobranza" class="cartera_panelPendientes">
+								<ui:include src="pgCobranzaCartera.xhtml" />
+							</div>
+							<div id="idDivTab03Cobranza" class="cartera_panelPendientes">
+								<ui:include src="pgRecaudacionAutovaluoRegistro.xhtml" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

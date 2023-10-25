@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link href="../resources/css/estilo.css" rel="stylesheet"
+		type="text/css" />
+	<script type="text/javascript">
+		// 		function limpiarForm() {
+		// 			document.getElementById("frmFormuPaginas").reset();
+		// 		}
+	</script>
+
+	<title>SBLM</title>
+</h:head>
+<h:body>
+	<ui:composition template="./paginaMaestra.xhtml">
+		<ui:define name="content">
+
+
+			<div class="contenidoPrincipal_FondoPrincipal">
+
+				<div class="contenidoPrincipal_fondoIdentificador">
+					<!-- TITULO SUBCONTENIDO -->
+					<div class="administrador_paginasIcono"></div>
+					<div class="contenidoPrincipal_SubContenido">
+						<label class="contenidoPrincipal_lblTituloSubContenido">Administracion</label><br />
+						<label class="contenidoPrincipal_lblSubTituloSubContenido">Paginas</label>
+					</div>
+				</div>
+				<div class="contenidoPrincipal_SubFondo">
+
+					<div class="administrador_paginasIconoSubcont"></div>
+					<div id="lblSubtitulo"
+						class="contenidoPrincipal_subFondo_lblTitulox">Paginas</div>
+					<div class="contenidoPrincipal_fondo_formulario">
+						<!-- CONTENIDO MODIFICABLE -->
+						<div class="administrador_paginasContenedor">
+
+
+							<div class="paginaInterior1">
+								<h:form>
+									<div class="btnNuevoRegistro">
+										<p:commandLink update=":frmFormuPaginas"
+											action="#{paginaMB.limpiarCampos}" style="margin-right:20px;">
+											<p:graphicImage
+												value="/resources/images/perfil/nuevo_mas.png"
+												alt="Limpiar formulario" title="limpiar" />
+										</p:commandLink>
+									</div>
+								</h:form>
+								<h:form id="frmFormuPaginas">
+									<p:growl id="growlRegitrar" showDetail="true" sticky="false"
+										life="3000" />
+									<div class="filaDescripcionPagina">
+										<h:outputLabel class="lblDescripcion" value="Descripcion:" />
+										<p:inputText styleClass="txtDescripcion"
+											id="txtDescripcionPagina"
+											value="#{paginaMB.paginamodulo.pagina.descripcionpagina}" />
+									</div>
+									<div class="filaPagina">
+										<h:outputLabel class="lblPagina" value="Pagina:" />
+										<p:inputText styleClass="txtPagina" id="txtnombrePagina"
+											value="#{paginaMB.paginamodulo.pagina.nombrepagina}">
+										</p:inputText>
+									</div>
+
+									<div class="filaEstadoPagina">
+										<h:outputLabel class="lblEstadoPagina" value="Estado:" />
+										<p:selectOneMenu id="cbxEstadoPagina"
+											value="#{paginaMB.paginamodulo.pagina.estado}"
+											style="width: 190px;" onchange="console.log('selectOneMenu')">
+											<f:selectItem itemLabel="Seleccione estado" itemValue="sa" />
+											<f:selectItem itemLabel="Activo" itemValue="true" />
+											<f:selectItem itemLabel="Inactivo" itemValue="false" />
+										</p:selectOneMenu>
+									</div>
+									<div class="filaModuloPagina">
+										<h:outputLabel class="lblModuloPagina" value="Modulo:" />
+										<p:selectOneMenu id="cbxModuPagina" style="width: 190px;"
+											value="#{paginaMB.paginamodulo.modulo.idmodulo}"
+											effect="fade" requiredMessage="Campo Obligatorio">
+											<f:selectItem itemLabel="Seleccione Modulo"
+												itemValue="0" />
+											<f:selectItems value="#{moduloMB.modulos}" var="modulo"
+												itemLabel="#{modulo.nombremodulo}"
+												itemValue="#{modulo.idmodulo}" />
+										</p:selectOneMenu>
+
+									</div>
+									<div class="msgModulopagina">
+										<p:message id="textOnlyMessage" for="cbxModuPagina"
+											display="text" />
+									</div>
+									<div class="filaBotonModulo">
+										<p:commandButton value="Guardar"
+											oncomplete="validacioPagina();" id="btnregistroPagina" />
+									</div>
+								</h:form>
+								<h:form id="frmdlgGuardarPagina">
+
+									<p:confirmDialog message="¿Desea Guardar esta pagina?"
+										header="Registro Pagina" severity="alert"
+										widgetVar="dlgRegistrarPagina">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTablaPaginas:tbPagina , :frmFormuPaginas,:frmMaestra,:frmPaginaInformacion"
+											actionListener="#{paginaMB.registrarPagina}"
+											oncomplete="dlgRegistrarPagina.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmFormuPaginas "
+											oncomplete="dlgRegistrarPagina.hide()" icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+
+								<h:form id="frmTablaPaginas">
+									<div class="paginaTabla">
+										<p:dataTable id="tbPagina" var="pag"
+											value="#{paginaMB.paginamodulos}"
+											rowKey="#{pag.idpaginamodulo}"
+											selection="#{paginaMB.paginamodulo}" selectionMode="single"
+											paginator="true" 
+											style="width:435px; font-size: 10px;  text-align:center;"
+											paginatorTemplate="Reg. por p&aacute;gina: {RowsPerPageDropdown}  &nbsp; {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} &nbsp;&nbsp;   {CurrentPageReport}"
+											currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Registros"
+											rowsPerPageTemplate="10,15,20" rows="10"
+											paginatorPosition="top" scrollable="true" scrollWidth="435">
+											<p:ajax event="rowSelect" listener="#{paginaMB.onRowSelect}"
+												update=":frmFormuPaginas" />
+
+											<p:column headerText="Modulo" style="width: 70px;">
+												<h:outputText value="#{pag.modulo.nombremodulo}" />
+											</p:column>
+											<p:column headerText="Descripci&oacute;n"
+												style="width: 100px;">
+												<h:outputText value="#{pag.pagina.descripcionpagina}" />
+											</p:column>
+											<p:column headerText="Pagina" style="width: 100px;">
+												<h:outputText value="#{pag.pagina.nombrepagina}" />
+											</p:column>
+
+											<p:column headerText="Usuario Creador" style="width: 120px; ">
+												<h:outputText value="#{pag.pagina.usrcre}" />
+											</p:column>
+											<p:column headerText="Fecha creacion" style="width:100px;">
+												<h:outputText value="#{pag.pagina.feccre}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="Usuario Modificador"
+												style="width: 120px; ">
+												<h:outputText value="#{pag.pagina.usrmod}" />
+											</p:column>
+											<p:column headerText="Fecha modificaci&oacute;n"
+												style="width:100px;">
+												<h:outputText value="#{pag.pagina.fecmod}">
+													<f:convertDateTime pattern="dd/MM/yyyy hh:mm a" />
+												</h:outputText>
+											</p:column>
+											<p:column headerText="Estado " width="25">
+												<p:graphicImage width="17" height="17"
+													value="/resources/icons/#{pag.pagina.estado}.png"
+													alt="Activo" title="Activo" />
+											</p:column>
+
+											<p:column width="15">
+
+												<p:commandButton oncomplete="dlgEliminar.show();"
+													style="margin-left:-4px;"
+													update=":frmEliminar, :frmFormuPaginas" icon="icon-delete"
+													title="Eliminar">
+													<f:setPropertyActionListener value="#{pag}"
+														target="#{paginaMB.paginamodulo}" />
+
+												</p:commandButton>
+
+											</p:column>
+										</p:dataTable>
+									</div>
+									<div class="perfilLeyenda">
+										<div class="perfilLeyendaTitulo">
+											<p:graphicImage width="15" height="15"
+												style="margin-top:3px;margin-left:20px;"
+												value="/resources/icons/leyendaBandera.png" alt="Activo"
+												title="Activo" />
+											<p:outputLabel style="margin-left:5px;" value="Leyenda" />
+										</div>
+										<div class="perfilLeyendaActivo">
+											<div class="perfilLeyendaActivoIcon">
+												<p:graphicImage width="20" height="20"
+													value="/resources/icons/true.png" alt="Activo"
+													title="Activo" />
+											</div>
+											<div class="perfilLeyendaActivoDes">Activo</div>
+										</div>
+
+										<div class="perfilLeyendaInactivo">
+											<div class="perfilLeyendaInactivoDesIcon">
+												<p:graphicImage width="20" height="20"
+													value="/resources/icons/false.png" alt="Inactivo"
+													title="Inactivo" />
+											</div>
+											<div class="perfilLeyendaInactivoDes">Inactivo</div>
+										</div>
+									</div>
+								</h:form>
+								<h:form id="frmEliminar">
+									<p:growl id="growlEliminar" showDetail="true" sticky="false"
+										life="4000" />
+									<p:confirmDialog id="dlgEliminar"
+										message="¿Desea eliminar esta pagina?"
+										header="Eliminar pagina" severity="alert"
+										widgetVar="dlgEliminar">
+
+										<p:commandButton value="&nbsp;Aceptar"
+											update=":frmTablaPaginas:tbPagina , :frmFormuPaginas,  :frmMaestra,:frmPaginaInformacion"
+											actionListener="#{paginaMB.eliminarPagina}"
+											oncomplete="dlgEliminar.hide()" icon="icon-save">
+
+										</p:commandButton>
+										<p:commandButton value="&nbsp;Cancelar"
+											update=":frmTablaPaginas:tbPagina "
+											oncomplete="dlgEliminar.hide()" icon="icon-cancel" />
+
+									</p:confirmDialog>
+								</h:form>
+							</div>
+							<h:form id="frmPaginaInformacion">
+								<div class="paginaInterior2">
+
+									<div class="subcontenidoInfo_Cabecera">
+										<div class="subcontenidoInfo_logoTitulo" />
+										<div class="subcontenidoInfo_descripcionTitulo">
+											Informaci&oacute;n</div>
+									</div>
+
+
+									<div class="subcontenidoInfo_detContenidoFondo">
+
+										<div class="subcontenidoInfo_Numero2">
+											<h:outputText styleClass="informacion6"
+												value="#{paginaMB.numPaginas}" />
+										</div>
+										<div class="subcontenidoInfo_textoconectadosfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="P&aacute;ginas" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_fila2Estilo"
+												value="Creadas" />
+										</div>
+									</div>
+
+									<div class="subcontenidoInfo_detUsuario">
+
+										<div class="detalleTopfiltroDerecha2">
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila1"
+												value="&Uacute;ltima p&aacute;gina creada" />
+											<br />
+
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila2"
+												value="#{paginaMB.ultimoPagina}" />
+											<br />
+											<h:outputText styleClass="subcontenidoInfo_detUsuarioFila3"
+												value="#{paginaMB.fechaultimaPagina}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</div>
+
+									</div>
+								</div>
+
+							</h:form>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

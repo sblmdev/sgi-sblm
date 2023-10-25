@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition>
+
+    <h:form id="frmCuotasPagadas" >
+
+        <p:dialog id="idEstadoCuenta" widgetVar="dlgCuotasPagadas" 
+                  resizable="false"
+                  width="auto" height="auto"  position="bottom" closeOnEscape="true">
+ <p:scrollPanel style="height:400px">                
+				<p:dataTable var="cuota" value="#{arrendamientoconsultaMB.cuotasPagadas}" 
+							selection="#{arrendamientoconsultaMB.cuotasPagadasSeleccion}"  selectionMode="multiple" 
+							rowKey="#{cuota.idcuota}"
+							emptyMessage="No se ha registrado ningún pago" 
+							style="font-size: 11px;  margin: 10px 0px 0px 0px;text-align: center;width:680px;" 
+							rowIndexVar="index" filteredValue="#{arrendamientoconsultaMB.cuotasPagadasFilter}">
+>
+							
+								<p:ajax event="rowSelect"
+									listener="#{arrendamientoconsultaMB.determinarSumaTotalCuotasPagadasSeleccion}"
+									update=":frmCuotasPagadas:totales" />
+								<p:ajax event="rowUnselect"									
+									listener="#{arrendamientoconsultaMB.determinarSumaTotalCuotasPagadasSeleccion}"
+									update=":frmCuotasPagadas:totales" />
+
+								   		<p:column  headerText="#" style="width:5px;">
+								            <h:outputText value="#{cuota.index}" />
+								        </p:column>
+								        <p:column headerText="Info." style="width:15px;">
+								            	<p:commandButton id="cbVerDetalle" style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"
+						                			 actionListener="#{arrendamientoconsultaMB.buscarComprobantesPeriodo(cuota.idcuota)}"
+													 process="@this"										 								 
+													 oncomplete="vistaPreviaComprobantesCuota.show();"
+													 icon="ui-icon-search"
+													 update=":frmDetalleComprobante"
+													 title="Ver Detalle">
+												</p:commandButton>
+								        </p:column>
+										<p:column headerText="Mes" filterBy="#{cuota.mes}" filterMatchMode="contains" style="width:45px;">
+											<h:outputText value="#{cuota.mes}" />
+										</p:column>
+
+										<p:column headerText="Período" filterBy="#{cuota.anio}" filterMatchMode="contains" style="width:15px;">
+											<h:outputText value="#{cuota.anio}" />
+										</p:column>
+
+										<p:column style="text-align: right;width:25px;" headerText="Monto">
+											<h:outputText value="#{cuota.monto}" >
+												<f:convertNumber pattern="#0.00"  />
+											</h:outputText>
+										</p:column>
+
+										<p:column style="text-align: right;width:25px;" headerText="Mora Soles">
+											<h:outputText value="#{cuota.mora}">
+											<f:convertNumber pattern="#0.00"  />
+											</h:outputText>
+										</p:column>
+										<p:column style="text-align: right;width:25px;" headerText="Penalización Soles">
+											<h:outputText value="#{cuota.montopenalizacion}">
+											<f:convertNumber pattern="#0.00"  />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Cancel." style="width:25px;">
+											<h:outputText
+												value="#{cuota.sipagado.equals('1') ? 'Sí':'No' }" />
+										</p:column>
+										
+										<p:column width="15" headerText="#Pagos" style="width:5px;">
+											<h:outputText value="#{cuota.nropagos}" />
+										</p:column>
+<!-- 										<p:column width="45" headerText="Observacion" style="width:5px;"> -->
+<!-- 											<h:outputText value="#{cuota.observacion}" /> -->
+<!-- 										</p:column> -->
+										 <p:column headerText="Observacion." style="width:15px;">
+								            	<p:commandButton id="cbVerDetalle2" style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"						                			
+													 actionListener="#{arrendamientoconsultaMB.buscarObservacionCuota(cuota.idcuota)}"
+													 process="@this"										 								 
+													 oncomplete="vistaPreviaCuota.show();"
+													 icon="ui-icon-info"
+													 update=":frmCuotaObservacion"
+													 title="Ver Detalle" rendered="#{cuota.observacion!=null}">
+												</p:commandButton>
+								        </p:column>
+										
+						</p:dataTable>
+</p:scrollPanel>												
+										<p:panelGrid id="totales" style="width: 100%;">
+												<p:row>
+													<p:column>
+														<p:outputLabel
+															value="Total Monto"
+															style="color: #2E2EFE; font-size: 15px;" />										
+													</p:column>
+													<p:column>
+														<p:outputLabel
+															value="#{arrendamientoconsultaMB.totalMontoCuotasPagadasSeleccion}"
+															style="font-size: 15px;" />
+<!-- 															<f:convertNumber pattern="###,###,###,##0.00" /> -->
+<!-- 															</p:outputLabel>										 -->
+													</p:column>
+												</p:row>
+												
+												<p:row>
+													<p:column>
+														<h:outputText value="Total Mora" 
+														style="color: #2E2EFE; font-size: 15px;"/>													
+													</p:column>
+													<p:column>
+														<p:outputLabel
+															value="#{arrendamientoconsultaMB.totalMoraCuotasPagadasSeleccion}"
+															style="font-size: 15px;" />
+<!-- 															<f:convertNumber pattern="###,###,###,##0.00" /> -->
+<!-- 															</p:outputLabel>										 -->
+													</p:column>
+												</p:row>
+										 </p:panelGrid>
+            
+        </p:dialog>
+        </h:form>
+        <h:form id="frmDetalleComprobante">
+        	<p:dialog widgetVar="vistaPreviaComprobantesCuota"   header="Información de Comprobante de Pago" styleClass="ui-datatable-hor-scroll-horizontal"
+        			  closable="true" showEffect="explode" hideEffect="slide" closeOnEscape="true" resizable="false" 
+        			  height="auto" width="auto">
+											         <p:outputPanel id="listacomprobantes" style="text-align:center;">
+											         	<p:dataTable value="#{arrendamientoconsultaMB.listaComprobantePeriodo}" var="cp"
+											         	 style="text-align:center;font-size:11px;margin-top:10px;width:630px" emptyMessage="No exite registros"
+														 scrollWidth="630" styleClass="ui-datatable-hor-scroll">
+														 
+														 <p:columnGroup type="header">
+														   <p:row>
+														       <p:column colspan="1" headerText="Tipo Doc"/>
+														       <p:column colspan="1" headerText="N° Comprobante"/>
+														       <p:column colspan="1" headerText="Total"/>
+														       <p:column colspan="1" headerText="Mora"/>
+														       <p:column colspan="1" headerText="Penalización"/>
+														       <p:column colspan="1" headerText="Fec. Emisión"/>
+														       <p:column colspan="1" headerText="Fec. Cancelación"/>
+														       <p:column colspan="1" headerText="Cobrador"/>
+														       <p:column colspan="1" headerText="Nota D&eacute;bito Ref."/>
+														       <p:column colspan="2" headerText="Nota Cr&eacute;dito Ref."/>
+														       <p:column colspan="1" headerText="Creador"/>
+														       <p:column colspan="1" headerText="Fec. Creación"/>
+														   </p:row>
+														 </p:columnGroup>
+														 		<p:column >
+																<h:outputText value="#{cp.idtipdocu}" />
+																</p:column>
+																<p:column>
+																<h:outputText value="#{cp.nroseriecomprobante}" />
+																</p:column>
+																<p:column >
+																<h:outputText value="#{cp.total}" /> 
+																</p:column>
+																<p:column>
+																<h:outputText value="#{cp.mora}" /> 
+																</p:column>
+																<p:column>
+																<h:outputText value="#{cp.penalizacion}" /> 
+																</p:column>
+																<p:column >
+																<h:outputText value="#{cp.fecEmision}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" /> 
+																</h:outputText>
+																</p:column>
+																<p:column>
+																	<h:outputText value="#{cp.fecCancelacion}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																<p:column>
+																<h:outputText value="#{cp.nombrecobrador}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																</h:outputText>
+																</p:column>
+																<p:column >
+																	<h:outputText value="#{cp.nronotadebitoref}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																<p:column >
+																	<h:outputText value="#{cp.nronotacreditoref}">
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																<p:column >
+																	<h:outputText value="#{cp.nronotacreditoref2}">
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																<p:column >
+																	<h:outputText value="#{cp.usrcre}" >
+																	</h:outputText>
+																</p:column>
+																<p:column >
+																<h:outputText value="#{cp.feccre}" > 
+																	<f:convertDateTime pattern="dd/MM/yyyy" /> 
+																	</h:outputText> 
+																</p:column>				 														 
+<!-- 											         			<p:column headerText="Tipo Doc"> -->
+<!-- 																<h:outputText value="#{cp.idtipdocu}" /> -->
+<!-- 																</p:column> -->
+<!-- 											         			<p:column headerText="N° Comprobante"> -->
+<!-- 																<h:outputText value="#{cp.nroseriecomprobante}" /> -->
+<!-- 																</p:column> -->
+<!-- 																<p:column headerText="Total"> -->
+<!-- 																<h:outputText value="#{cp.total}" /> -->
+<!-- 																</p:column> -->
+<!-- 																<p:column headerText="Mora"> -->
+<!-- 																<h:outputText value="#{cp.mora}" /> -->
+<!-- 																</p:column> -->
+<!-- 																<p:column headerText="Fec. Emisión"> -->
+<!-- 																	<h:outputText value="#{cp.fecEmision}" > -->
+<!-- 																	<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 																	</h:outputText> -->
+<!-- 																</p:column> -->
+<!-- 																<p:column headerText="Fec. Cancelación"> -->
+<!-- 																	<h:outputText value="#{cp.fecCancelacion}" > -->
+<!-- 																	<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 																	</h:outputText> -->
+<!-- 																</p:column> -->
+<!-- 																<p:column headerText="Cobrador"> -->
+<!-- 																	<h:outputText value="#{cp.nombrecobrador}" > -->
+<!-- 																	<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 																	</h:outputText> -->
+<!-- 																</p:column> -->
+																
+<!-- 																<p:column headerText="Nota D&eacute;bito Ref."> -->
+<!-- 																	<h:outputText value="#{cp.nronotadebitoref}" > -->
+<!-- 																	<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 																	</h:outputText> -->
+<!-- 																</p:column> -->
+																
+<!-- 																<p:column headerText="Nota Cr&eacute;dito Ref."> -->
+<!-- 																	<h:outputText value="#{cp.nronotacreditoref}"> -->
+<!-- 																	<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 																	</h:outputText> -->
+<!-- 																</p:column> -->
+<!-- 																<p:column headerText="Nota Cr&eacute;dito Ref."> -->
+<!-- 																	<h:outputText value="#{cp.nronotacreditoref2}"> -->
+<!-- 																	<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 																	</h:outputText> -->
+<!-- 																</p:column> -->
+<!-- 																<p:column headerText="Creador"> -->
+<!-- 																	<h:outputText value="#{cp.usrcre}" > -->
+<!-- 																	</h:outputText> -->
+<!-- 																</p:column> -->
+<!-- 																<p:column headerText="Fec. Creación"> -->
+<!-- 																	<h:outputText value="#{cp.feccre}" > -->
+<!-- 																	<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 																	</h:outputText> -->
+<!-- 																</p:column> -->
+															</p:dataTable>
+											        </p:outputPanel>
+			</p:dialog>		
+        </h:form>
+        <h:form id="frmCuotaObservacion">
+        	<p:dialog widgetVar="vistaPreviaCuota"   header="Motivo de Observación"
+        			  closable="true" showEffect="explode" hideEffect="slide" closeOnEscape="true" resizable="false" 
+        			  height="auto" width="auto">
+											         <p:outputPanel id="observacion" style="text-align:center;">
+											         	<p:dataTable value="#{arrendamientoconsultaMB.cuotasPagadasObservacion}" var="cuo"
+											         	 style="text-align:center;font-size:11px;margin-top:10px;width:630px" emptyMessage="No exite registros"
+														 scrollWidth="630" styleClass="ui-datatable-hor-scroll">
+											         			
+											         			<p:column headerText="Observación">
+																<h:outputText value="#{cuo.observacion}" />
+																</p:column>
+																
+															</p:dataTable>
+											        </p:outputPanel>
+			</p:dialog>		
+        </h:form>
+         <h:form id="frmAdendaObservacion">
+        	<p:dialog widgetVar="vistaPreviaObservacionAdenda"   header="Motivo de Observación"
+        			  closable="true" showEffect="explode" hideEffect="slide" closeOnEscape="true" resizable="false" 
+        			  height="auto" width="auto">
+											         <p:outputPanel id="observacion" style="text-align:center;">
+											         	<p:dataTable value="#{arrendamientoconsultaMB.listaDetalleAdendaObservacion}" var="ade"
+											         	 style="text-align:center;font-size:11px;margin-top:10px;width:630px" emptyMessage="No exite registros"
+														 scrollWidth="630" styleClass="ui-datatable-hor-scroll">
+											         			
+											         			<p:column headerText="Observación">
+																<h:outputText value="#{ade.observacionadenda}" />
+																</p:column>
+																
+															</p:dataTable>
+											        </p:outputPanel>
+			</p:dialog>		
+        </h:form>
+        <h:form id="frmDetalleAdenda">
+        	<p:dialog widgetVar="vistaDetalleAdenda"   header="Información de Adenda"
+        			  closable="true" showEffect="explode" hideEffect="slide" closeOnEscape="true" resizable="false" 
+        			  height="auto" width="auto">
+											         <p:outputPanel id="listaAdenda" style="text-align:center;">
+											         	<p:dataTable value="#{arrendamientoconsultaMB.listaDetalleAdenda}" var="ad"
+											         	 style="text-align:center;font-size:11px;margin-top:10px;width:630px" emptyMessage="No exite registros"
+														 scrollWidth="630" styleClass="ui-datatable-hor-scroll-horizontal" >	
+																 <p:column headerText="N° Adenda">
+																<h:outputText value="#{ad.nroadenda}" />
+																</p:column>
+											         			<p:column headerText="Finalizado">
+																<h:outputText value="#{ad.sifinalizado=='true' ? 'Sí':'No'}" />
+																</p:column>
+																<p:column headerText="Estado">
+																<h:outputText value="#{ad.estado}" />
+																</p:column>
+											         			<p:column headerText="Observación">
+																	<!-- <h:outputText value="#{ad.observacionadenda}" /> -->
+<!-- 																<p:commandButton id="cbVerDetalleObservacionAdenda" style="background: #36A6DE; color: white;padding: 4px 0px;border-radius: 7px; ;border: 0px;margin: 0px;"						                			 -->
+<!-- 																	 actionListener="#{arrendamientoconsultaMB.buscarObservacionAdenda(ad.idadenda)}" -->
+<!-- 																	 process="@this"										 								  -->
+<!-- 																	 oncomplete="vistaPreviaObservacionAdenda.show();" -->
+<!-- 																	 icon="ui-icon-info" -->
+<!-- 																	 update=":frmAdendaObservacion" -->
+<!-- 																	 title="Ver Detalle" rendered="#{ad.observacionadenda!=null}"> -->
+<!-- 																</p:commandButton> -->
+																<p:commandLink id="cbVerDetalleObservacionAdenda"  
+																		action="#{arrendamientoconsultaMB.buscarObservacionAdenda(ad.idadenda)}" process="@this" oncomplete="vistaPreviaObservacionAdenda.show();"
+																		update=":frmAdendaObservacion">
+																	<div class="btncentrado">
+<!-- 																	<p:outputLabel value="#{contrato.siadenda =='true' ? 'Sí':'No'}" -->
+<!-- 																		style="margin-bottom:5px; float:center;margin-left:0px;font-size:10px;" /> -->
+																	<p:graphicImage value="/resources/images/varios/search.png"  width="15" height="20"  style="margin-top:-6px;"
+																		alt="Registro" title="Registro" />
+																		</div>
+																</p:commandLink>
+																</p:column>
+																<p:column headerText="Fin contrato adenda">
+																<h:outputText value="#{ad.fincontratoadenda}" >
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+																</h:outputText>
+																</p:column>
+																<p:column headerText="Fin de Cobro">
+																<h:outputText value="#{ad.fincobro}" >
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+																</h:outputText>
+																</p:column>
+																<p:column headerText="Obs. Modificación">
+																<h:outputText value="#{ad.observacionmod}" />
+																</p:column>
+																<p:column headerText="U. Creador">
+																<h:outputText value="#{ad.usrcre}" />
+																</p:column>
+																<p:column headerText="Fec. Creación">
+																	<h:outputText value="#{ad.feccre}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																<p:column headerText="U. Mod">
+																<h:outputText value="#{ad.usrmod}" />
+																</p:column>
+																<p:column headerText="Fec. Mod">
+																	<h:outputText value="#{ad.fecmod}" >
+																	<f:convertDateTime pattern="dd/MM/yyyy" />
+																	</h:outputText>
+																</p:column>
+																
+																
+															</p:dataTable>
+											        </p:outputPanel>
+			</p:dialog>		
+        </h:form>
+</ui:composition>
+</html>
